@@ -21,7 +21,6 @@
     "@nestjs/passport": "^6.1.0",
     "@nestjs/platform-express": "^6.0.1",
     "@nestjs/swagger": "^3.0.1",
-    "@nestjs/testing": "^6.0.1",
     "@nestjs/typeorm": "^6.0.0",
     "@nestjs/websockets": "^6.0.1",
     "class-transformer": "^0.2.0",
@@ -43,13 +42,19 @@
     "typescript": "^3.3.1"
   },
   "devDependencies": {
+    "@nestjs/cli": "^6.11.2",
+    "@nestjs/schematics": "^6.7.0",
+    "@nestjs/testing": "^6.8.5",
     "@types/jest": "^24.0.21",
     "@types/node": "^10.12.21",
     "atob": ">=2.1.0",
     "deep-extend": ">=0.5.1",
     "extend": ">=3.0.2",
+    "husky": "^3.0.9",
     "jest": "^24.5.0",
+    "lint-staged": "^9.4.2",
     "nodemon": "^1.18.10",
+    "prettier": "^1.18.2",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.0",
     "ts-node": "^8.0.3"

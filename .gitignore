@@ -17,6 +17,7 @@ node_modules
 
 #config files
 ormconfig.json
+ormconfig.js
 .env
 
 # code testing coverage
