@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist",
+    "module": "commonjs",
+    "lib": [
+      "es2018"
+    ],
+    "target": "es2018",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "declaration": false,
+    "removeComments": true,
+    "noLib": false,
+    "allowJs": true,
+    "paths": {
+      "@app/*": [
+        "./*"
+      ],
+      "@modules/*": [
+        "./modules/*"
+      ],
+      "@lib/*": [
+        "./lib/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}
