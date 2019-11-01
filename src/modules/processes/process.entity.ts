@@ -52,7 +52,7 @@ export class Process {
   @Column({
     nullable: true
   })
-  parent_id?: number;
+  parentId?: number;
 
   @ManyToOne(type => Industry, industry => industry.processes)
   @JoinColumn({ name: 'industry_id' })
@@ -62,12 +62,15 @@ export class Process {
   children: Process[];
 
   @TreeParent()
-  @JoinColumn({
-    name: 'parent_id',
-  })
   parent?: Process;
 
   constructor(partial: Partial<Process>) {
     Object.assign(this, partial);
   }
 }
+
+/*
+  @JoinColumn({
+    name: 'parent_id',
+  })
+*/

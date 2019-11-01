@@ -21,7 +21,12 @@ import { ProcessQueryInput, ProcessInput, ProcessCreationInput } from '@modules/
 export class ProcessController {
   constructor(private readonly processService: ProcessService) {}
 
-  @Get('/')
+  @Get('tree')
+  async tree(@Query() query: ProcessQueryInput) {
+    return this.processService.tree(query);
+  }
+
+  @Get('')
   async findAll(@Query() query: ProcessQueryInput) {
     return this.processService.findAll(query);
   }
@@ -31,7 +36,7 @@ export class ProcessController {
     return this.processService.findById(id);
   }
 
-  @Post('/')
+  @Post('')
   async create(@Body() data: ProcessCreationInput) {
     return this.processService.create(data);
   }

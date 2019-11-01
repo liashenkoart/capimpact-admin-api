@@ -1,16 +1,19 @@
-import { IsOptional, IsNumber } from 'class-validator';
+import { IsOptional, Min, Max } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ProcessQueryInput {
   @IsOptional()
   @Type(() => Number)
-  readonly industry_id: number;
+  readonly industry_id?: number;
 
   @IsOptional()
+  @Min(1)
   @Type(() => Number)
-  readonly page?: number;
+  readonly page?: number = 1;
 
   @IsOptional()
+  @Min(1)
+  @Max(100)
   @Type(() => Number)
-  readonly limit?: number;
+  readonly limit?: number = 25;
 }

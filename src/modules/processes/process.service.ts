@@ -1,13 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions } from 'typeorm';
+import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
 import { ProcessQueryInput, ProcessCreationInput, ProcessInput } from '@modules/processes/dto';
 import { Process } from './process.entity';
 
 @Injectable()
 export class ProcessService {
-  constructor(@InjectRepository(Process) private readonly processRepository: Repository<Process>) {}
+  constructor(
+    @InjectRepository(Process) private readonly processRepository: Repository<Process>,
+    @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>
+  ) {}
+
+  async tree(query: ProcessQueryInput): Promise<Process> {
+    const { industry_id } = query;
+    const root = await this.processRepository.findOne({ industry_id, parentId: null });
+    if (!root) {
+      throw new NotFoundException();
+    }
+    return this.treeRepository.findDescendantsTree(root);
+  }
 
   async findAll(query: ProcessQueryInput): Promise<Process[]> {
     const options = this.getFindAllQuery(query);
@@ -37,7 +49,7 @@ export class ProcessService {
   }
 
   getFindAllQuery(query: ProcessQueryInput): FindManyOptions {
-    const { limit = 100, page = 1, ...where } = query;
+    const { limit, page, ...where } = query;
     return {
       skip: (page - 1) * limit,
       take: limit,

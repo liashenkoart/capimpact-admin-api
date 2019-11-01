@@ -9,6 +9,10 @@ export class ProcessCreationInput {
   readonly industry_id: number;
 
   @IsOptional()
+  @IsNumber()
+  readonly parentId?: number;
+
+  @IsOptional()
   readonly pcf_id?: string;
 
   @IsOptional()
@@ -22,8 +26,4 @@ export class ProcessCreationInput {
 
   @IsOptional()
   readonly metrics_avail?: boolean;
-
-  @IsOptional()
-  @IsNumber()
-  readonly parent_id: number;
 }

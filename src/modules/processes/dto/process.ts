@@ -6,7 +6,7 @@ export class ProcessInput {
 
   @IsOptional()
   @IsNumber()
-  readonly industry_id: number;
+  readonly industry_id?: number;
 
   @IsOptional()
   readonly pcf_id?: string;
@@ -25,5 +25,5 @@ export class ProcessInput {
 
   @IsOptional()
   @IsNumber()
-  readonly parent_id: number;
+  readonly parentId?: number;
 }

@@ -29,6 +29,12 @@ async function main() {
 
   // save tree processes for each industry
   for (let industry of industries) {
+    // save root industry node
+    let root = await processRepository.save({
+      name: industry.name,
+      industry,
+      parent: null,
+    });
     let data: any = await parseCsv(
       `${industry.name}.csv`,
       rows =>
@@ -70,7 +76,7 @@ async function main() {
         .join('.');
       groupByHierarchyId[proc.hierarchy_id] = await processRepository.save({
         ...proc,
-        parent: groupByHierarchyId[parent],
+        parent: groupByHierarchyId[parent] || root,
       });
     }
   }

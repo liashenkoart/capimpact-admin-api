@@ -20,7 +20,7 @@ import { IndustryInput, IndustryCreationInput } from '@modules/industries/dto';
 export class IndustryController {
   constructor(private readonly industryService: IndustryService) {}
 
-  @Get('/')
+  @Get('')
   async findAll() {
     return this.industryService.findAll();
   }
@@ -30,7 +30,7 @@ export class IndustryController {
     return this.industryService.findById(id);
   }
 
-  @Post('/')
+  @Post('')
   async create(@Body() data: IndustryCreationInput) {
     return this.industryService.create(data);
   }
