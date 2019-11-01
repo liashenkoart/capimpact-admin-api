@@ -1,0 +1,1696 @@
+PCF ID,Hierarchy ID,Name,Metrics available?
+10002,1,Develop Vision and Strategy,Y
+10014,1.1,Define the business concept and long-term vision,N
+10017,1.1.1,Assess the external environment,Y
+10021,1.1.1.1,Analyze and evaluate competition,N
+10022,1.1.1.2,Identify economic trends,N
+10023,1.1.1.3,Identify political and regulatory issues,N
+10024,1.1.1.4,Assess new technology innovations,N
+10025,1.1.1.5,Analyze demographics,N
+10026,1.1.1.6,Identify social and cultural changes,N
+10027,1.1.1.7,Identify ecological concerns,N
+10018,1.1.2,Survey market and determine customer needs and wants,N
+10028,1.1.2.1,Conduct qualitative/quantitative assessments,N
+10029,1.1.2.2,Capture and assess customer needs,N
+10019,1.1.3,Perform internal analysis,N
+10030,1.1.3.1,Analyze organizational characteristics,N
+10031,1.1.3.2,Create baselines for current processes,N
+10032,1.1.3.3,Analyze systems and technology,N
+10033,1.1.3.4,Analyze financial positions,N
+10034,1.1.3.5,Identify enterprise core competencies,N
+10020,1.1.4,Establish strategic vision,N
+10035,1.1.4.1,Align stakeholders around strategic vision,N
+10036,1.1.4.2,Communicate strategic vision to stakeholders,N
+10015,1.2,Develop business strategy,N
+10037,1.2.1,Develop overall mission statement,N
+10044,1.2.1.1,Define current business,N
+10045,1.2.1.2,Formulate mission,N
+10046,1.2.1.3,Communicate mission,N
+10038,1.2.2,Evaluate strategic options to achieve the objectives,N
+10047,1.2.2.1,Define strategic options,N
+10048,1.2.2.2,Assess and analyze impact of each option,N
+10039,1.2.3,Select long-term business strategy,N
+13285,1.2.3.1,"Define strategic mission, objectives and goals to reflect the revised business design",N
+13286,1.2.3.2,Define key components for the target vision and business design,N
+13287,1.2.3.3,Identify interdependencies in business,N
+10041,1.2.4,"Create organizational design (structure, governance, reporting, etc.)",N
+10049,1.2.4.1,Evaluate breadth and depth of organizational structure,N
+10050,1.2.4.2,Perform job specific roles mapping and value-add analyses,N
+10051,1.2.4.3,Develop role activity diagrams to assess hand-off activity,N
+10052,1.2.4.4,Perform organization redesign workshops,N
+10053,1.2.4.5,Design the relationships between organizational units,N
+10054,1.2.4.6,Develop role analysis and activity diagrams for key processes,N
+10055,1.2.4.7,Assess organizational implication of feasible alternatives,N
+10056,1.2.4.8,Migrate to new organization,N
+10042,1.2.5,Develop and set organizational goals,N
+10043,1.2.6,Formulate business unit strategies,N
+13288,1.2.7,Define operating model,N
+13289,1.2.7.1,Identify implications on key operating model business elements that require change,N
+13290,1.2.7.2,Identify implications on key technology aspects,N
+13291,1.2.7.3,Design the operating model business elements,N
+13292,1.2.7.4,Design technology models,N
+10016,1.3,Manage strategic initiatives,N
+10057,1.3.1,Develop strategic initiatives,N
+10058,1.3.2,Evaluate strategic initiatives,N
+10059,1.3.3,Select strategic initiatives,N
+10060,1.3.4,Establish high-level measures,N
+13293,1.4,Perform strategic planning,N
+13298,1.4.1,Define strategy planning framework and policies,N
+13299,1.4.2,Develop and manage strategy business models,N
+13302,1.4.2.1,Develop strategy business models,N
+13303,1.4.2.2,Value business model,N
+13300,1.4.3,Manage strategic planning,N
+13304,1.4.3.1,Manage strategic planning reporting,N
+13305,1.4.3.2,Develop capital investment targets and plans,N
+13306,1.4.3.3,Develop financial statement targets and plans,N
+13307,1.4.3.4,Develop strategic portfolio targets and plans,N
+13308,1.4.3.5,Develop free cash flow targets and plans,N
+13301,1.4.4,Develop and manage strategic and operational plans,N
+13309,1.4.4.1,Develop organization plans,N
+13310,1.4.4.2,Develop sales plan,N
+13311,1.4.4.3,Develop resource plan,N
+13312,1.4.4.4,Develop profitability plan,N
+13313,1.4.4.5,Develop enterprise infrastructure plan,N
+13294,1.5,Perform strategic management,N
+13314,1.5.1,Define and manage enterprise strategy,N
+13316,1.5.1.1,Assess current strategy,N
+13315,1.5.2,Transform strategy into measurable goals,N
+13317,1.5.2.1,Identify key value drivers for strategy,N
+13318,1.5.2.2,Map strategy to key measures of performance drivers,N
+13319,1.5.2.3,Assess and prioritize key performance drivers,N
+13320,1.5.2.4,"Define, review and agree on business goals",N
+13295,1.6,Develop business,N
+13321,1.6.1,"Develop, manage and realize business goals",N
+13322,1.6.1.1,Identify enterprise risk indicators,N
+13323,1.6.1.2,Track and manage enterprise risks,N
+13324,1.6.1.3,Agree on Key Performance Indicators (KPIs) and identify measures to cascade measure through organization,N
+13325,1.6.1.4,Define potential KPI's for key performance drivers,N
+13326,1.6.1.5,Plan and launch business goals,N
+13327,1.6.1.6,Communicate business goals,N
+13296,1.7,Manage enterprise architecture,N
+13328,1.7.1,Manage product enterprise architecture,N
+13329,1.7.2,Manage business functional enterprise architecture,N
+13297,1.8,Manage group enterprise,N
+13330,1.8.1,Plan and manage co-ordinate across business units/organization,N
+10003,2,Develop and Manage Products and Services,Y
+10061,2.1,Manage product and service portfolio,Y
+10063,2.1.1,Evaluate performance of existing products/services against market opportunities,Y
+10064,2.1.2,Define product/service development requirements,Y
+10068,2.1.2.1,Identify potential improvements to existing products and services,N
+10069,2.1.2.2,Identify potential new products and services,N
+13331,2.1.2.3,Gather and analyze new service ideas,N
+13332,2.1.2.4,Gather and analyze service information,N
+13333,2.1.2.5,Develop new service business proposal,N
+13334,2.1.2.6,Gather and analyze new resource ideas,N
+13335,2.1.2.7,Develop new resource business proposal,N
+13336,2.1.2.8,Establish service strategy and goals,N
+13337,2.1.2.9,Produce service business plans,N
+13338,2.1.2.10,Gain enterprise commitment to service,N
+13339,2.1.2.11,Manage service research,N
+13340,2.1.2.12,Define service support strategies,N
+13341,2.1.2.13,Develop service partnership requirements,N
+10065,2.1.3,Perform discovery research,Y
+10070,2.1.3.1,Identify new technologies,N
+10071,2.1.3.2,Develop new technologies,N
+10072,2.1.3.3,Assess feasibility of integrating new leading technologies into product/service concepts,N
+10066,2.1.4,Confirm alignment of product/service concepts with business strategy,N
+10073,2.1.4.1,Plan and develop cost and quality targets,N
+10074,2.1.4.2,Prioritize and select new product/service concepts,N
+10075,2.1.4.3,Specify development timing targets,N
+10076,2.1.4.4,Plan for product/service offering modifications,N
+10067,2.1.5,Manage product and service life cycle,Y
+10077,2.1.5.1,Introduce new products/services,N
+10078,2.1.5.2,Retire outdated products/services,N
+10079,2.1.5.3,Identify and refine performance indicators,N
+10062,2.2,Develop products and services,Y
+10080,2.2.1,"Design, build, and evaluate products and services",Y
+10083,2.2.1.1,Assign resources to product/service project,N
+10084,2.2.1.2,Prepare high-level business case and technical assessment,N
+10085,2.2.1.3,Develop product/service design specifications,N
+10086,2.2.1.4,Document design specifications,N
+10087,2.2.1.5,"Conduct mandatory and elective external reviews (legal, regulatory, standards, internal)",N
+10088,2.2.1.6,Build prototypes,N
+10089,2.2.1.7,Eliminate quality and reliability problems,N
+10090,2.2.1.8,Conduct in-house product/service testing and evaluate feasibility,N
+10091,2.2.1.9,Identify design/development performance indicators,N
+10092,2.2.1.10,Collaborate design with suppliers and contract manufacturers,N
+13342,2.2.1.11,Design solution,N
+13343,2.2.1.12,Finalize design,N
+13344,2.2.1.13,Allocate specific service parameters to services,N
+13345,2.2.1.14,Gather and analyze resource information,N
+13346,2.2.1.15,Develop network and technology resource strategy and policy,N
+13347,2.2.1.16,Establish resource strategy and administration,N
+13348,2.2.1.17,Produce resource business plans,N
+13349,2.2.1.18,Gain enterprise commitment to resource plans,N
+13350,2.2.1.19,Manage resource research,N
+13351,2.2.1.20,Define resource support strategies,N
+13352,2.2.1.21,Develop resource partnership requirements,N
+13353,2.2.1.22,Assess performance of new services against existing services,N
+13354,2.2.1.23,Develop detailed service specifications,N
+13355,2.2.1.24,Assess new network and technology resources,N
+13356,2.2.1.25,Develop detailed resource specifications,N
+13357,2.2.1.26,Assess performance of existing resources,N
+13358,2.2.2,Qualify product proposal capability,N
+13361,2.2.2.1,Determine technical feasibility,N
+13362,2.2.2.2,Determine resource availability,N
+13363,2.2.2.3,Assess potential for market adoption,N
+13359,2.2.3,Calculate and verify business case,N
+13360,2.2.4,Hand-over to release planning or development,N
+10081,2.2.5,Test market for new or revised products and services,Y
+10093,2.2.5.1,Prepare detailed market study,N
+10094,2.2.5.2,Conduct customer tests and interviews,N
+10095,2.2.5.3,Finalize product/service characteristics and business cases,N
+10096,2.2.5.4,Finalize technical requirements,N
+10097,2.2.5.5,Identify requirements for changes to manufacturing/delivery processes,N
+10082,2.2.6,Prepare for production,Y
+10098,2.2.6.1,Develop and test prototype production and/or service delivery process,N
+10099,2.2.6.2,Design and obtain necessary materials and equipment,N
+10100,2.2.6.3,Install and validate production process or methodology,N
+13364,2.2.6.4,Manage service development,N
+13365,2.2.6.5,Manage service deployment,N
+13366,2.2.6.6,Manage service exit,N
+13367,2.2.6.7,Manage resource development,N
+13368,2.2.6.8,Manage resource exit,N
+13369,2.2.6.9,Define network and technology resource retirement plans,N
+13370,2.2.6.10,Define new network and technology resource development plan,N
+13371,2.2.6.11,Manage network and technology resources development and retirement plans,N
+13372,2.2.6.12,Manage resources deployment,N
+13373,2.2.7,Measure success,N
+13374,2.2.7.1,Collect and analyze data to assess performance,N
+13375,2.2.7.2,Benchmark against proxies,N
+13376,2.2.7.3,Assess product success,N
+13377,2.3,Service capability delivery,N
+13379,2.3.1,Map and analyze service requirements,N
+13386,2.3.1.1,Identify service class,N
+13387,2.3.1.2,Identify product/service capability,N
+13380,2.3.2,Gain service capability investment approval,N
+13381,2.3.3,Enable Service support and operations,N
+13388,2.3.3.1,Update quoting and configuration tools,N
+13389,2.3.3.2,Identify and develop order fulfillment processes,N
+13390,2.3.3.3,Identify and develop provisioning processes,N
+13391,2.3.3.4,Update billing tables,N
+13392,2.3.3.5,Train on new processes,N
+13382,2.3.4,Manage handover to service operations,N
+13383,2.3.5,Capture service capability shortfalls,N
+13384,2.3.6,Design service capabilities,N
+13393,2.3.6.1,Define service class capabilities,N
+13394,2.3.6.2,Define service forwarding treatment and QoS capabilities,N
+13395,2.3.6.3,Define service application to service class mapping capabilities,N
+13396,2.3.6.4,Define service provisioning and deployment capabilities,N
+13397,2.3.6.5,Define service capacity capabilities,N
+13385,2.3.7,Manage service capability delivery,N
+13378,2.4,Resource capability delivery,N
+13398,2.4.1,Map and analyze resource requirements,N
+13408,2.4.1.1,Collate network and technology resource demands,N
+13409,2.4.1.2,Manage network and technology resource installation,N
+13410,2.4.1.3,Develop network and technology resource distribution plan to meet demand,N
+13399,2.4.2,Gain resource capability investment approval,N
+13400,2.4.3,Enable resource support and operations,N
+13401,2.4.4,Manage deployment and distribution of network and technology resources,N
+13402,2.4.5,Manage network and technology resources supply logistics,N
+13403,2.4.6,Manage network and technology resources operational enablement,N
+13404,2.4.7,Manage handover to resource operations,N
+13405,2.4.8,Capture resource capability shortfalls,N
+13406,2.4.9,Design resource capabilities,N
+13407,2.4.10,Manage resource capability delivery,N
+10004,3,Market and Sell Products and Services,Y
+10101,3.1,"Understand markets, customers and capabilities",Y
+10106,3.1.1,Perform customer and market intelligence analysis,N
+10108,3.1.1.1,Conduct customer and market research,N
+10109,3.1.1.2,Identify market segments,N
+10110,3.1.1.3,Analyze market and industry trends,N
+10111,3.1.1.4,"Analyze competing organizations, competitive/substitute products",N
+10112,3.1.1.5,Evaluate existing products/brands,N
+10113,3.1.1.6,Assess internal and external business environment,N
+13411,3.1.1.7,Record usage of services,N
+13412,3.1.1.8,Record customer experience,N
+10107,3.1.2,Evaluate and prioritize market opportunities,Y
+10116,3.1.2.1,Quantify market opportunities,N
+10117,3.1.2.2,Determine target segments,N
+10118,3.1.2.3,Prioritize opportunities consistent with capabilities and overall business strategy,N
+10119,3.1.2.4,Validate opportunities,N
+10102,3.2,Develop marketing strategy,Y
+11168,3.2.1,Define offering and customer's value proposition,Y
+11169,3.2.1.1,Define offering and positioning,N
+11170,3.2.1.2,Develop value proposition including brand positioning for target segments,N
+11171,3.2.1.3,Validate value proposition and shape offering to optimize with target segments,N
+11172,3.2.1.4,Develop new branding,N
+10123,3.2.2,Define pricing strategy to align to value proposition,N
+10124,3.2.2.1,Establish guidelines for applying pricing of products/services,N
+10125,3.2.2.2,Approve pricing strategies/policies,N
+10122,3.2.3,Define and manage channel strategy,Y
+10126,3.2.3.1,Evaluate channel attributes and partners,N
+10127,3.2.3.2,Determine channel fit with target segments,N
+10128,3.2.3.3,Select channels for target segments,N
+10103,3.3,Develop sales strategy,Y
+10129,3.3.1,Develop sales forecast,Y
+10134,3.3.1.1,Gather current and historic order information,N
+10135,3.3.1.2,Analyze sales trends and patterns,N
+10136,3.3.1.3,Generate sales forecast,N
+10137,3.3.1.4,Analyze historical and planned promotions and events,N
+10130,3.3.2,Develop sales partner/alliance relationships,N
+10138,3.3.2.1,Identify alliance opportunities,N
+10139,3.3.2.2,Design alliance programs and methods for selecting and managing relationships,N
+10140,3.3.2.3,Select alliances,N
+10141,3.3.2.4,Develop partner and alliance management strategies,N
+10142,3.3.2.5,Establish partner and alliance management goals,N
+10131,3.3.3,Establish overall sales budgets,Y
+10143,3.3.3.1,Calculate product revenue,N
+10144,3.3.3.2,Determine variable costs,N
+10145,3.3.3.3,Determine overhead and fixed costs,N
+10146,3.3.3.4,Calculate net profit,N
+10147,3.3.3.5,Create budget,N
+10132,3.3.4,Establish sales goals and measures,N
+10133,3.3.5,Establish customer management measures,N
+13413,3.3.6,Set service levels and standards,N
+13414,3.3.7,Develop channel strategy,N
+13416,3.3.7.1,Assess revenue models,N
+13417,3.3.7.2,Analyze profit impact based on channel structures,N
+13418,3.3.7.3,Plan scenarios,N
+13415,3.3.8,Establish revenue/coverage plan,N
+13419,3.3.8.1,Develop revenue targets in order to meet revenue objectives,N
+13420,3.3.8.2,Plan finances to support revenue objectives,N
+13421,3.3.8.3,Develop operational planning to support revenue objectives,N
+13422,3.3.8.4,Define account coverage plans to cascade company targets to sales managers,N
+13423,3.3.8.5,Leverage all channels in order to cascade company targets to sales managers,N
+13424,3.4,Market and manage offer,N
+13425,3.4.1,Develop market strategy and policy,N
+13430,3.4.1.1,Gather and analyze market information,N
+13431,3.4.1.2,Establish market strategy,N
+13432,3.4.1.3,Establish market segments,N
+13433,3.4.1.4,Link market segments and products,N
+13434,3.4.1.5,Gain commitment for market strategy,N
+13426,3.4.2,Plan product and offer portfolio,N
+13435,3.4.2.1,Gather and analyze product information,N
+13436,3.4.2.2,Establish product portfolio strategy,N
+13438,3.4.2.3,Produce product portfolio business plans,N
+13439,3.4.2.4,Gain commitment to product business plans,N
+13427,3.4.3,Deliver product and offer capability,N
+13440,3.4.3.1,Define product capability requirements,N
+13441,3.4.3.2,Capture product capability shortfalls,N
+13442,3.4.3.3,Approve product business case,N
+13443,3.4.3.4,Deliver product capability,N
+13445,3.4.3.5,Manage handover to product operations,N
+13446,3.4.3.6,Manage product capability delivery methodology,N
+13428,3.4.4,Deliver marketing capability,N
+13447,3.4.4.1,Define marketing capability requirements,N
+13448,3.4.4.2,Gain marketing capability approval,N
+13449,3.4.4.3,Deliver marketing infrastructure,N
+13450,3.4.4.4,Manage handover to marketing operations,N
+13451,3.4.4.5,Manage marketing capability delivery methodology,N
+13429,3.4.5,Develop and retire product and offer,N
+13452,3.4.5.1,Gather and analyze new product ideas,N
+13453,3.4.5.2,Assess performance of existing products,N
+13454,3.4.5.3,Develop new product business proposals,N
+13455,3.4.5.4,Develop product commercialization strategy,N
+13456,3.4.5.5,Develop detailed product specifications,N
+13457,3.4.5.6,Manage product development,N
+10005,4,Deliver Products and Services,Y
+10215,4.1,Plan for and acquire necessary resources (Supply Chain Planning),Y
+10221,4.1.1,Develop production and materials strategies,N
+10229,4.1.1.1,Define manufacturing goals,N
+10230,4.1.1.2,Define labor and materials policies,N
+10231,4.1.1.3,Define outsourcing policies,N
+10232,4.1.1.4,Define manufacturing capital expense policies,N
+10233,4.1.1.5,Define capacities,N
+10234,4.1.1.6,Define production network and supply constraints,N
+10222,4.1.2,Manage demand for products and services,N
+10235,4.1.2.1,Develop baseline forecasts,N
+10236,4.1.2.2,Collaborate with customers,N
+10237,4.1.2.3,Develop consensus forecast,N
+10238,4.1.2.4,Allocate available to promise,N
+10239,4.1.2.5,Monitor activity against forecast and revise forecast,N
+10240,4.1.2.6,Evaluate and revise forecasting approach,N
+10241,4.1.2.7,Measure forecast accuracy,Y
+10223,4.1.3,Create materials plan,N
+10242,4.1.3.1,Create unconstrained plan,N
+10243,4.1.3.2,Collaborate with supplier and contract manufacturers,N
+10244,4.1.3.3,Identify critical materials and supplier capacity,N
+10245,4.1.3.4,Monitor material specifications,N
+10246,4.1.3.5,Generate constrained plan,N
+10224,4.1.4,Create and manage master production schedule,N
+10247,4.1.4.1,Generate site level plan,N
+10248,4.1.4.2,Manage work-in-progress inventory,N
+10249,4.1.4.3,Collaborate with suppliers,N
+10250,4.1.4.4,Generate and execute site schedule,N
+10225,4.1.5,Plan distribution requirements,N
+10251,4.1.5.1,Allocate available to promise,N
+10252,4.1.5.2,Maintain master data,N
+10253,4.1.5.3,Determine finished goods inventory requirements at destination,N
+10254,4.1.5.4,Calculate requirements at destination,N
+10255,4.1.5.5,Calculate consolidation at source,N
+10256,4.1.5.6,Manage collaborative replenishment planning,N
+10257,4.1.5.7,Manage requirements for partners,N
+10258,4.1.5.8,Calculate destination dispatch plan,N
+10259,4.1.5.9,Manage dispatch plan attainment,N
+10260,4.1.5.10,Calculate destination load plans,N
+10261,4.1.5.11,Manage partner load plan,N
+10262,4.1.5.12,Manage the cost of supply,N
+10253,4.1.5.13,Determine finished goods inventory requirements at destination,N
+10226,4.1.6,Establish distribution planning constraints,N
+10267,4.1.6.1,Establish distribution center layout constraints,N
+10268,4.1.6.2,Establish inventory management constraints,N
+10269,4.1.6.3,Establish transportation management constraints,N
+10227,4.1.7,Review distribution planning policies,N
+10264,4.1.7.1,Review distribution network,N
+10265,4.1.7.2,Establish sourcing relationships,N
+10266,4.1.7.3,Establish dynamic deployment policies,N
+10228,4.1.8,Assess distribution planning performance,N
+10270,4.1.8.1,Establish appropriate performance indicators (metrics),N
+10271,4.1.8.1,Establish monitoring frequency,N
+10272,4.1.8.2,Calculate performance measures,N
+10273,4.1.8.3,Identify performance trends,N
+10274,4.1.8.4,Analyze performance benchmark gaps,N
+10275,4.1.8.5,Prepare appropriate reports,N
+10276,4.1.8.6,Develop performance improvement plan,N
+10368,4.1.9,Develop quality standards and procedures,N
+10371,4.1.9.1,Establish quality targets,N
+10372,4.1.9.2,Develop standard testing procedures,N
+10373,4.1.9.3,Communicate quality specifications,N
+10216,4.2,Procure materials and services,Y
+10277,4.2.1,Develop sourcing strategies,Y
+10281,4.2.1.1,Develop procurement plan,Y
+10282,4.2.1.2,Clarify purchasing requirements,N
+10283,4.2.1.3,Develop inventory strategy,N
+10284,4.2.1.4,Match needs to supply capabilities,N
+10285,4.2.1.5,Analyze company's spend profile,N
+10286,4.2.1.6,Seek opportunities to improve efficiency and value,N
+10287,4.2.1.7,Collaborate with suppliers to identify sourcing opportunities,N
+10278,4.2.2,Select suppliers and develop/maintain contracts,Y
+13458,4.2.2.1,Prepare long and mid term source plans,N
+13459,4.2.2.2,Develop operational source plans (against forecasts),N
+13460,4.2.2.3,Develop inventory strategy,N
+13461,4.2.2.4,Identify and analyze potential suppliers,N
+13462,4.2.2.5,"Make initial go/no-go decision regarding suppliers, prepare list of preferred suppliers",N
+10288,4.2.2.6,Select suppliers,N
+10289,4.2.2.7,Certify and validate suppliers,N
+10290,4.2.2.8,Negotiate contracts,N
+10291,4.2.2.9,Manage contracts,N
+13463,4.2.3,Order materials and services (logistics ),N
+13467,4.2.3.1,Requisition materials and services,N
+13468,4.2.3.2,Manage 'blanket' orders,N
+13469,4.2.3.3,Deliver/Receive goods and services,N
+13470,4.2.3.4,Prepare invoicing/ make payments,N
+13471,4.2.3.5,Manage damaged/ faulty goods and services,N
+13472,4.2.3.6,Monitor/Report on suppliers,N
+13464,4.2.4,Collaborate with suppliers on design/ development,N
+13473,4.2.4.1,Segment or identify products conducive to collaboration with suppliers,N
+13474,4.2.4.2,Select appropriate supplier of group for collaboration,N
+13475,4.2.4.3,Work collaboratively on design and development of specific goods and services,N
+13465,4.2.5,Manage tenders,N
+13476,4.2.5.1,Run sourcing mechanism,N
+13477,4.2.5.2,Analyze supplier responses/offerings,N
+13478,4.2.5.3,Make go /no-go decisions,N
+13466,4.2.6,Manage contracts,N
+13479,4.2.6.1,Negotiate final contract terms and conditions,N
+13480,4.2.6.2,Renegotiate/Optimize existing contracts based on supplier performance,N
+13481,4.2.6.3,Perform inventory control after contract period,N
+10280,4.2.7,Appraise and develop suppliers,Y
+10299,4.2.7.1,Monitor/Manage supplier information,N
+10300,4.2.7.2,Prepare/Analyze procurement and vendor performance,N
+10301,4.2.7.3,Support inventory and production processes,N
+13929,4.2.7.4,Monitor delivery performance of suppliers (check against contractually agreed SLAs),N
+10302,4.2.7.5,Monitor quality of product delivered,N
+10217,4.3,Produce/Manufacture/Deliver product,Y
+10303,4.3.1,Schedule production,N
+10306,4.3.1.1,Generate line level plan,N
+10307,4.3.1.2,Generate detailed schedule,N
+10308,4.3.1.3,Schedule production orders and create lots,N
+10309,4.3.1.4,Release production orders and release create lots,N
+10304,4.3.2,Produce product,Y
+10310,4.3.2.1,Manage raw material inventory,N
+10311,4.3.2.2,Execute detailed line schedule,N
+10313,4.3.2.3,Rerun defective items,N
+10314,4.3.2.4,Assess production performance,N
+10305,4.3.3,Schedule and perform maintenance,N
+10315,4.3.3.1,Determine process for preventive (planned) maintenance (Preventive Maintenance Orders),N
+10316,4.3.3.2,Determine process for requested (unplanned) maintenance (Work Order Cycle),N
+10317,4.3.3.3,Execute maintenance,N
+10318,4.3.3.4,Calibrate test equipment,N
+10319,4.3.3.5,Report maintenance issues,N
+10369,4.3.4,Perform quality testing,N
+10374,4.3.4.1,Perform testing using the standard testing procedure,Y
+10375,4.3.4.2,Record test results,N
+10370,4.3.5,Maintain production records and manage lot traceability,N
+10376,4.3.5.1,Determine lot numbering system,N
+10377,4.3.5.2,Determine lot usage,N
+10218,4.4,Deliver service to customer,Y
+10320,4.4.1,Confirm specific service requirements for individual customer,N
+10324,4.4.1.1,Process customer request,N
+10325,4.4.1.2,Create customer profile,N
+10326,4.4.1.3,Generate service order,N
+10321,4.4.2,Identify and schedule resources to meet service requirements,N
+10327,4.4.2.1,Create resourcing plan and schedule,N
+10328,4.4.2.2,Create service order fulfillment schedule,N
+10329,4.4.2.3,Develop service order,N
+13779,4.4.3,Allocate and install resource,N
+13789,4.4.3.1,Accept design request for selected product and service,N
+13790,4.4.3.2,Identify physical resources,N
+13791,4.4.3.3,Identify physical and logical network resources,N
+13792,4.4.3.4,Allocate logical or physical network equipment,N
+13793,4.4.3.5,Allocate product specific resources,N
+13794,4.4.3.6,Deliver resources to site,N
+13795,4.4.3.7,Accept resource requests for complex product configurations,N
+13796,4.4.3.8,Allocate skills profile to resources,N
+10322,4.4.4,Provide the service to specific customers,N
+10330,4.4.4.1,Organize daily service order fulfillment schedule,N
+10331,4.4.4.2,Dispatch resources,N
+10332,4.4.4.3,Manage order fulfillment progress,N
+10333,4.4.4.4,Validate order fulfillment block completion,N
+13780,4.4.5,Manage workforce,N
+10797,4.4.5.1,Post receivable entries,Y
+10798,4.4.5.2,Resolve customer billing inquiries,Y
+10799,4.4.5.3,Establish AR policies,N
+13781,4.4.6,Service activation (provisioning),N
+13800,4.4.6.1,Conduct network provisioning,N
+13801,4.4.6.2,Update relevant databases,N
+13802,4.4.6.3,Trigger end to end activation,N
+13803,4.4.6.4,Measure activation process,N
+13804,4.4.6.5,Supply service details,N
+13805,4.4.6.6,Test service end to end,N
+13806,4.4.6.7,Install service,N
+13807,4.4.6.8,Configure/Reconfigure service,N
+13808,4.4.6.9,Deliver final configuration,N
+13809,4.4.6.10,Record configured service details,N
+13782,4.4.7,Resource provisioning and activation,N
+13810,4.4.7.1,Receive initial configuration requests,N
+13811,4.4.7.2,Receive change and termination configuration requests,N
+13812,4.4.7.3,Receive activation trouble requests,N
+13813,4.4.7.4,Receive additional resource capability request,N
+13814,4.4.7.5,Resource request from Supplier/partner,N
+13815,4.4.7.6,Configure resource for service instance,N
+13816,4.4.7.7,Interact with resource inventory,N
+13817,4.4.7.8,Activate network elements,N
+13818,4.4.7.9,Test resource provisioning,N
+10323,4.4.8,Ensure quality of service,N
+10334,4.4.8.1,Identify completed orders for feedback,N
+10335,4.4.8.2,Identify incomplete orders and service failures,Y
+10336,4.4.8.3,Solicit customer feedback on services delivered,N
+10337,4.4.8.4,Process customer feedback on services delivered,N
+13783,4.4.9,Manage service quality,N
+13819,4.4.9.1,Monitor service quality,N
+13820,4.4.9.2,Analyze service quality,N
+13821,4.4.9.3,Improve service quality,N
+13822,4.4.9.4,Report service quality performance,N
+13823,4.4.9.5,Create service performance degradation report,N
+13824,4.4.9.6,Track and manage service quality performance resolution,N
+13825,4.4.9.7,Close service performance degradation report,N
+13784,4.4.10,Manage service problem,N
+13826,4.4.10.1,Create service trouble report,N
+13827,4.4.10.2,Diagnose service problem,N
+13828,4.4.10.3,Correct and resolve service problem,N
+13829,4.4.10.4,Track and manage service problem,N
+13830,4.4.10.5,Report service problem,N
+13831,4.4.10.6,Close service trouble report,N
+13832,4.4.10.7,Survey and analyze service problem,N
+13785,4.4.11,Manage resource trouble,N
+13833,4.4.11.1,Survey and analyze resource trouble,N
+13834,4.4.11.2,Localize resource trouble,N
+13835,4.4.11.3,Correct and recover resource trouble,N
+13836,4.4.11.4,Track and manage resource trouble,N
+13837,4.4.11.5,Close resource trouble,N
+13838,4.4.11.6,Report resource trouble,N
+13839,4.4.11.7,Create resource trouble report,N
+13786,4.4.12,Manage resource performance,N
+13840,4.4.12.1,Control resource performance,N
+13841,4.4.12.2,Analyze resource performance,N
+13842,4.4.12.3,Report resource performance,N
+13843,4.4.12.4,Monitor resource performance,N
+13844,4.4.12.5,Create resource performance degradation report,N
+13845,4.4.12.6,Track and manage resource performance degradation resolution,N
+13846,4.4.12.7,Close resource performance degradation report,N
+10219,4.5,Manage logistics and warehousing,Y
+10338,4.5.1,Define logistics strategy,Y
+10343,4.5.1.1,Translate customer service requirements into logistics requirements,N
+10344,4.5.1.2,Design logistics network,N
+10345,4.5.1.3,Communicate outsourcing needs,N
+10346,4.5.1.4,Develop and maintain delivery service policy,N
+10347,4.5.1.5,Optimize transportation schedules and costs,N
+10348,4.5.1.6,Define key performance measures,N
+10339,4.5.2,Plan inbound material flow,Y
+10349,4.5.2.1,Plan inbound material receipts,N
+10350,4.5.2.2,Manage inbound material flow,N
+10351,4.5.2.3,Monitor inbound delivery performance,N
+10352,4.5.2.4,Manage flow of returned products,N
+10340,4.5.3,Operate warehousing,Y
+10353,4.5.3.1,Track inventory deployment,N
+10354,4.5.3.2,"Receive, inspect, and store inbound deliveries",N
+10355,4.5.3.3,Track product availability,N
+10356,4.5.3.4,"Pick, pack, and ship product for delivery",N
+10358,4.5.3.5,Track third-party logistics storage and shipping performance,N
+10359,4.5.3.6,Manage physical finished goods inventory,N
+10341,4.5.4,Operate outbound transportation,Y
+10360,4.5.4.1,"Plan, transport, and deliver outbound product",N
+10361,4.5.4.2,Track carrier delivery performance,N
+10362,4.5.4.3,Manage transportation fleet,N
+10363,4.5.4.4,Process and audit carrier invoices and documents,N
+10342,4.5.5,Manage returns; manage reverse logistics,Y
+10364,4.5.5.1,Authorize and process returns,N
+10365,4.5.5.2,Perform reverse logistics,N
+10366,4.5.5.3,Perform salvage activities,N
+10367,4.5.5.4,Manage and process warranty claims,N
+13787,4.5.6,Manage warehouse,N
+13847,4.5.6.1,Manage warehouse strategy and policy,N
+13848,4.5.6.2,Define and manage warehouse storage location layout,N
+13849,4.5.6.3,Manage warehouse inventory,N
+13850,4.5.6.4,Track and manage physical warehouse inventory,N
+13788,4.5.7,Manage physical resource inventory,N
+13851,4.5.7.1,Manage physical inventory,N
+13852,4.5.7.2,Manage stock transfer,N
+13853,4.5.7.3,Manage receipt of goods and services,N
+13854,4.5.7.4,Manage goods issue,N
+13855,4.5.7.5,Manage inventory strategy and policy,N
+13856,4.6,"Manage service, support operation and readiness",N
+13860,4.6.1,Manage service inventory,N
+13861,4.6.2,Enable service configuration and activation,N
+13862,4.6.3,Support service problem management,N
+13863,4.6.4,Enable service quality management,N
+13876,4.6.4.1,Administer receipt of service content,N
+13877,4.6.4.2,Administer service content aggregation,N
+13878,4.6.4.3,Administer service content delivery,N
+13864,4.6.5,Support service and specific instance rating,N
+13857,4.7,"Manage resource, support operation and readiness",N
+13865,4.7.1,Support resource trouble management,N
+13866,4.7.2,Manage resource inventory,N
+13879,4.7.2.1,Monitor and manage resource inventory,N
+13880,4.7.2.2,Manage resource inventory count and audits,N
+13881,4.7.2.3,Record resource inventory,N
+13882,4.7.2.4,Define resource inventory threshold values,N
+13883,4.7.2.5,Manage Resource inventory supply and demand variability,N
+13858,4.8,Develop and manage supply chain,N
+13867,4.8.1,Strategize and plan supply chain,N
+13884,4.8.1.1,Gather and analyze supply chain information,N
+13885,4.8.1.2,Establish supply chain strategy and goals,N
+13886,4.8.1.3,Define supply chain support strategies,N
+13887,4.8.1.4,Produce supply chain business plans,N
+13888,4.8.1.5,Gain enterprise commitment to supply chain plans,N
+13868,4.8.2,Deliver supply chain capability,N
+13889,4.8.2.1,Determine sourcing requirements,N
+13890,4.8.2.2,Manage the tender process,N
+13891,4.8.2.3,Gain tender decision approval,N
+13892,4.8.2.4,Gain approval for commercial arrangements,N
+13893,4.8.2.5,Determine potential supplier/partners,N
+13894,4.8.2.6,Negotiate commercial arrangements,N
+13869,4.8.3,Develop supply chain and manage change,N
+13895,4.8.3.1,Manage supplier/partner engagement,N
+13896,4.8.3.2,Manage supply chain contract variation,N
+13897,4.8.3.3,Manage supplier partner termination,N
+13898,4.8.3.4,Manage supply chain supplier/partner termination,N
+13859,4.9,Manage supplier/partner relationship,N
+13870,4.9.1,Perform supplier/partner relationship management support and readiness,N
+13899,4.9.1.1,Support supplier/partner requisition management,N
+13900,4.9.1.2,Support supplier/partner reporting and management,N
+13901,4.9.1.3,Support supplier/partner performance management,N
+13902,4.9.1.4,Support supplier/partner settlement and payment management,N
+13903,4.9.1.5,Manage support supplier/partner interface,N
+13904,4.9.1.6,Manage supplier/partner inventory,N
+13871,4.9.2,Manage supplier/partner requisition,N
+13905,4.9.2.1,Select supplier/partner,N
+13906,4.9.2.2,Determine supplier/partner pre-requisition feasibility,N
+13907,4.9.2.3,Track and manage supplier/partner requisition,N
+13908,4.9.2.4,Receive and accept supplier/partner requisition,N
+13909,4.9.2.5,Initiate supplier /partner requisition order,N
+13910,4.9.2.6,Report supplier/partner requisition,N
+13911,4.9.2.7,Close supplier/partner requisition order,N
+13872,4.9.3,Report and manage supplier/partner problem,N
+13912,4.9.3.1,Initiate supplier/partner problem report,N
+13913,4.9.3.2,Receive supplier/partner problem report,N
+13914,4.9.3.3,Track and manage supplier/partner problem resolution,N
+13915,4.9.3.4,Report supplier/partner problem resolution,N
+13916,4.9.3.5,Close supplier/partner problem report,N
+13873,4.9.4,Manage supplier/partner performance,N
+13917,4.9.4.1,Monitor and control supplier/partner service performance,N
+13918,4.9.4.2,Track and manage supplier/partner performance resolution,N
+13919,4.9.4.3,Report supplier/partner performance,N
+13920,4.9.4.4,Close supplier/partner performance degradation report,N
+13874,4.9.5,Manage supplier/partner settlement and payment,N
+13921,4.9.5.1,Manage account,N
+13922,4.9.5.2,Receive and assess invoice,N
+13923,4.9.5.3,Negotiate and approve invoice,N
+13924,4.9.5.4,Issue settlement notice and payment,N
+13875,4.9.6,Manage supplier/partner invoice,N
+13925,4.9.6.1,Manage supplier/partner requests,N
+13926,4.9.6.2,Analyze and report supplier/partner interactions,N
+13927,4.9.6.3,Mediate and orchestrate supplier/partner interactions,N
+10006,5,Manage Customer Service,Y
+10378,5.1,Develop customer care/customer service strategy,Y
+10381,5.1.1,"Develop customer service segmentation/prioritization (e.g., tiers)",N
+10384,5.1.1.1,Analyze existing customers,N
+10385,5.1.1.2,Analyze feedback of customer's needs,N
+10382,5.1.2,Define customer service policies and procedures,N
+10383,5.1.3,Establish service levels for customers,Y
+10379,5.2,Plan and manage customer service operations,Y
+10387,5.2.1,Plan and manage customer service work force,Y
+10390,5.2.1.1,Forecast volume of customer service contacts,N
+10393,5.2.1.2,Monitor and evaluate quality of customer interactions with customer service representatives,N
+10388,5.2.2,Manage customer service requests/inquiries,Y
+10394,5.2.2.1,Receive customer requests/inquiries,N
+13482,5.2.2.2,Analyze problem/request,N
+13483,5.2.2.3,Resolve problem/request or hand over to responsible areas,N
+13484,5.2.2.4,Receive solution,N
+10395,5.2.2.5,Route customer requests/inquiries,N
+10396,5.2.2.6,Respond to customer requests/inquiries,N
+10389,5.2.3,Manage customer complaints,N
+10397,5.2.3.1,Receive customer complaints,N
+10398,5.2.3.2,Route customer complaints,N
+10399,5.2.3.3,Resolve customer complaints,N
+10400,5.2.3.4,Respond to customer complaints,N
+13485,5.2.4,Perform customer relationship management (CRM) support and readiness,N
+13487,5.2.4.1,Support customer interface management,N
+13488,5.2.4.2,Support order handling,N
+13489,5.2.4.3,Support problem handling,N
+13490,5.2.4.4,Support billing and collections,N
+13491,5.2.4.5,Support retention and loyalty,N
+13492,5.2.4.6,Support marketing fulfillment,N
+13493,5.2.4.7,Support selling,N
+13494,5.2.4.8,Manage campaigns,N
+13495,5.2.4.9,Manage customer inventory,N
+13496,5.2.4.10,Manage product offering inventory,N
+13497,5.2.4.11,Manage sales inventory,N
+13486,5.2.5,Manage customer interface,N
+13498,5.2.5.1,Manage request,N
+13499,5.2.5.2,Manage contact,N
+13500,5.2.5.3,Analyze and report on customer,N
+13501,5.2.5.4,Mediate and orchestrate customer interactions,N
+13502,5.2.6,Obtain marketing fulfillment response,N
+13508,5.2.6.1,Issue and distribute marketing collateral,N
+13509,5.2.6.2,Track marketing leads,N
+13503,5.2.7,Segment customers,N
+13510,5.2.7.1,Identify customer groups,N
+13511,5.2.7.2,Determine content requirements based on individual customer groups,N
+13512,5.2.7.3,Analyze device capabilities of individual customer groups,N
+13513,5.2.7.4,Map device against target segments,N
+13504,5.2.8,Handle orders,N
+13514,5.2.8.1,Establish order,N
+13518,5.2.8.1.1,Add directory,N
+13519,5.2.8.1.2,Assign telephone number (TN) pre-order,N
+13520,5.2.8.1.3,Add service features,N
+13521,5.2.8.1.4,Resume service,N
+13522,5.2.8.1.5,Resume service address,N
+13523,5.2.8.1.6,Remove service,N
+13524,5.2.8.1.7,Change directory listing,N
+13525,5.2.8.1.8,Move telephone numbers,N
+13526,5.2.8.1.9,Upgrade service,N
+13527,5.2.8.1.10,Add service line item,N
+13528,5.2.8.1.11,Add products,N
+13529,5.2.8.1.12,Deactivate service,N
+13530,5.2.8.1.13,Suspend customer,N
+13531,5.2.8.1.14,Suspend service address,N
+13532,5.2.8.1.15,Create commitment schedule for installation,N
+13533,5.2.8.1.16,Create commitment schedule for problem resolution,N
+13534,5.2.8.1.17,Check progress of order tasks,N
+13535,5.2.8.1.18,Perform audit reporting,N
+13515,5.2.8.2,Close customer order,N
+13516,5.2.8.3,Complete order,N
+13517,5.2.8.4,Report customer order handling,N
+13505,5.2.9,Manage customer quality of service (QoS)/ service level agreement (SLA),N
+13536,5.2.9.1,Access customer QoS/SLA management,N
+13537,5.2.9.2,Manage QoS violation,N
+13538,5.2.9.3,Report customer quality of service (QoS) performance,N
+13539,5.2.9.4,Create customer QoS performance degradation report,N
+13540,5.2.9.5,Track and manage customer QoS performance resolution,N
+13541,5.2.9.6,Close customer QoS performance degradation report,N
+13506,5.2.10,Handle problems,N
+13542,5.2.10.1,Create customer problem report,N
+13543,5.2.10.2,Isolate customer problem,N
+13544,5.2.10.3,Report customer problem,N
+13545,5.2.10.4,Track and manage customer problem,N
+13546,5.2.10.5,Close customer problem report,N
+13547,5.2.10.6,Correct and recover customer problem,N
+13507,5.2.11,Retain customers and promote loyalty,N
+13548,5.2.11.1,Establish and terminate customer relationship,N
+13549,5.2.11.2,Build customer insight,N
+13550,5.2.11.3,Personalize customer profile for retention and loyalty,N
+13551,5.2.11.4,Analyze and manage customer risk,N
+13552,5.2.11.5,Validate customer satisfaction,N
+13553,5.3,Assure service,N
+13554,5.3.1,Detect problem,N
+13560,5.3.1.1,Monitor continuously/analyze service,N
+13561,5.3.1.2,Perform regular/preventative maintenance cycles,N
+13562,5.3.1.3,Take proactive control,N
+13563,5.3.1.4,"Receive customer complaints on service assurance related problems (e.g. service outage, QoS Problems)",N
+13555,5.3.2,Correlate problems,N
+13564,5.3.2.1,Collect problems,N
+13565,5.3.2.2,Conduct fault analysis/diagnostic,N
+13566,5.3.2.3,Correlate problems to find problem hot spots (performance and fault data correlation),N
+13556,5.3.3,Analyze impact,N
+13567,5.3.3.1,"Analyze impact of service problems (violation of SLAs, network outage, etc)",N
+13568,5.3.3.2,Define severity status of problems,N
+13569,5.3.3.3,Notify customer (service) on impact of problems and expected resolution times respectively out-of-service times,N
+13557,5.3.4,Prioritize problems,N
+13570,5.3.4.1,Examine quality of service (QoS),N
+13571,5.3.4.2,Determine number of customers affected by problem,N
+13572,5.3.4.3,Determine type of customer affected by problem,N
+13573,5.3.4.4,Identify severity status,N
+13574,5.3.4.5,Prioritize problem,N
+13575,5.3.4.6,Schedule repair/restoration technicians to do work,N
+13558,5.3.5,Resolve problems/ restore service,N
+13576,5.3.5.1,Resolve problems/ restore service,N
+13577,5.3.5.2,Document cause of problem and problem resolution,N
+13578,5.3.5.3,"Update knowledge database, if available",N
+13559,5.3.6,Maintain customer service information,N
+13579,5.3.6.1,"Inform the customer/customer service on ""service restored"" status",N
+13480,5.3.6.2,Renegotiate/Optimize existing contracts based on supplier performance,N
+13581,5.3.6.3,Close trouble ticket,N
+10380,5.4,Measure and evaluate customer service operations,Y
+10401,5.4.1,Measure customer satisfaction with customer requests/inquiries handling,N
+10404,5.4.1.1,Gather and solicit post-sale customer feedback on products and services,N
+10405,5.4.1.2,Solicit post-sale customer feedback on ad effectiveness,N
+10406,5.4.1.3,Analyze product and service satisfaction data and identify improvement opportunities,N
+10407,5.4.1.4,Provide customer feedback to product management on products and services,N
+10402,5.4.2,Measure customer satisfaction with customer-complaint handling and resolution,Y
+11236,5.4.2.1,Solicit customer feedback on complaint handling and resolution,N
+11237,5.4.2.2,Analyze customer complaint data and identify improvement opportunities,N
+10403,5.4.3,Measure customer satisfaction with products and services,Y
+11238,5.4.3.1,Gather and solicit post-sale customer feedback on products and services,N
+11239,5.4.3.2,Solicit post-sale customer feedback on ad effectiveness,N
+11240,5.4.3.3,Analyze product and service satisfaction data and identify improvement opportunities,N
+11241,5.4.3.4,Provide customer feedback to product management on products and services,N
+10007,6,Develop and Manage Human Capital,Y
+10409,6.1,"Develop and manage human resources (HR) planning, policies, and strategies",Y
+10415,6.1.1,Develop human resources strategy,Y
+13582,6.1.1.1,Manage organization structure,N
+13583,6.1.1.2,Manage and co-ordinate organizational change,N
+10418,6.1.1.3,Identify strategic HR needs,N
+10419,6.1.1.4,Define HR and business function roles and accountability,N
+10420,6.1.1.5,Determine HR costs,N
+13584,6.1.1.6,Manage headcount planning,N
+13585,6.1.1.7,Map cost structure to organizational unit,N
+13586,6.1.1.8,Define employee development guidelines,N
+10421,6.1.1.9,Establish HR measures,N
+10422,6.1.1.10,Communicate HR strategies,N
+10416,6.1.2,Develop and implement human resources plans,Y
+13587,6.1.2.1,Gather skill requirements according to corporate strategy and market environment,N
+13588,6.1.2.2,Plan employee requirements per unit/organization,N
+10423,6.1.2.3,Gather skill requirements according to corporate strategy and market environment,N
+10424,6.1.2.4,Plan employee resourcing requirements per unit/organization,N
+10425,6.1.2.5,Develop compensation plan,N
+10426,6.1.2.6,Develop succession plan,Y
+10427,6.1.2.7,Develop employee diversity plan,N
+10428,6.1.2.8,Develop other HR programs,N
+10429,6.1.2.9,Develop HR policies,N
+10430,6.1.2.10,Administer HR policies,N
+10431,6.1.2.11,Plan employee benefits,N
+13589,6.1.2.12,Plan training and development programs,N
+13590,6.1.2.13,Create and maintain position and job,N
+13591,6.1.2.14,Identify workforce competency and skills,N
+13592,6.1.2.15,Define workforce competency and skill needs,N
+10432,6.1.2.16,Develop strategy for HR systems/technologies/tools,N
+10433,6.1.2.17,Develop workforce strategy models,N
+13593,6.1.2.18,Define costs of workforce strategy models,N
+10417,6.1.3,Monitor and update plans,Y
+13594,6.1.3.1,Monitor existing skill profiles of employees,N
+10434,6.1.3.2,Measure realization of objectives,N
+10435,6.1.3.3,Measure contribution to business strategy,N
+10436,6.1.3.4,Communicate plans and provide updates to stakeholders,N
+10437,6.1.3.5,Determine value added from HR function,N
+10438,6.1.3.6,Review and revise HR plans,N
+10410,6.2,"Recruit, source, and select employees",Y
+10439,6.2.1,Create and develop employee requisitions,N
+13595,6.2.1.1,Analyze corporate job,N
+13596,6.2.1.2,Define job/skill profiles,N
+10445,6.2.1.3,Align staffing plan to workforce plan and business unit strategies/resource needs,N
+10446,6.2.1.4,Develop and open job requisition,N
+10447,6.2.1.5,Develop a job description,N
+10448,6.2.1.6,Post requisition,N
+10449,6.2.1.7,Manage internal/external job posting web sites,N
+10450,6.2.1.8,Change/Update requisition,N
+10451,6.2.1.9,Notify hiring manager,N
+10452,6.2.1.10,Manage requisition date,N
+10440,6.2.2,Recruit/Source candidates,N
+10453,6.2.2.1,Determine recruitment methods,N
+10454,6.2.2.2,Perform recruiting activities/events,N
+10455,6.2.2.3,Manage recruitment vendors,N
+10441,6.2.3,Screen and select candidates,N
+10456,6.2.3.1,Identify and deploy candidate selection tools,N
+10457,6.2.3.2,Interview candidates,N
+10458,6.2.3.3,Test candidates,N
+10459,6.2.3.4,Select and reject candidates,N
+10442,6.2.4,Manage pre-placement verification,N
+10460,6.2.4.1,Complete candidate background information,N
+10461,6.2.4.2,Conduct pre-employment screening,N
+10462,6.2.4.3,Recommend/Not recommend candidate,N
+10443,6.2.5,Manage new hire/re-hire,Y
+10463,6.2.5.1,Draw up and make offer,N
+10464,6.2.5.2,Negotiate offer,N
+10465,6.2.5.3,Hire candidate,N
+10444,6.2.6,Track candidates,N
+10466,6.2.6.1,Create applicant record,N
+10467,6.2.6.2,Manage/Track applicant data,N
+10468,6.2.6.3,Archive and retain records of non-hires,N
+10411,6.3,Develop and counsel employees,Y
+10469,6.3.1,Manage employee orientation and deployment,Y
+10474,6.3.1.1,Create/Maintain employee on-boarding program,N
+10477,6.3.1.1.1,Develop employee induction program,N
+10478,6.3.1.1.2,Maintain/Update employee induction program,N
+10475,6.3.1.2,Introduce new employees to managers,N
+10476,6.3.1.3,Introduce workplace,N
+11243,6.3.1.4,Evaluate the effectiveness of the employee on-boarding program,N
+10470,6.3.2,Manage employee performance,Y
+10479,6.3.2.1,Define performance objectives,N
+10480,6.3.2.2,"Review, appraise, and manage employee performance",N
+10481,6.3.2.3,Evaluate and review performance program,N
+10471,6.3.3,Manage employee relations,Y
+10482,6.3.3.1,Manage health and safety,Y
+10483,6.3.3.2,Manage labor relations,Y
+10484,6.3.3.3,Manage collective bargaining process,N
+10485,6.3.3.4,Manage labor management partnerships,N
+10472,6.3.4,Manage employee development,Y
+10486,6.3.4.1,Develop competency management plans,N
+10487,6.3.4.2,Define employee development guidelines,N
+10488,6.3.4.3,Develop employee career plans,N
+10489,6.3.4.4,Manage employee skills development,N
+13597,6.3.4.5,Administer training and events,N
+10473,6.3.5,Develop and train employees,Y
+10490,6.3.5.1,Align employee and organization development needs,N
+10491,6.3.5.2,Develop competencies,N
+10492,6.3.5.3,Establish training needs by analysis of required and available skills,N
+10493,6.3.5.4,"Develop, conduct, and manage employee and/or management training programs",Y
+13598,6.3.5.5,Manage personnel development,N
+13599,6.3.6,Establish employee communities,N
+10412,6.4,Reward and retain employees,Y
+10494,6.4.1,"Develop and manage reward, recognition, and motivation programs",Y
+10498,6.4.1.1,Develop salary/compensation structure and plan,N
+10499,6.4.1.2,Develop benefits and reward plan,N
+10500,6.4.1.3,Perform competitive analysis of benefit and rewards,N
+10501,6.4.1.4,"Identify compensation requirements based on financial, benefits, and HR policies",N
+10502,6.4.1.5,Administer compensation and rewards to employees,N
+10503,6.4.1.6,Reward and motivate employees,N
+10495,6.4.2,Manage and administer benefits,N
+10504,6.4.2.1,Deliver employee benefits program,N
+10505,6.4.2.2,Administer benefit enrollment,N
+10506,6.4.2.3,Process claims,N
+10507,6.4.2.4,Perform benefit reconciliation,N
+10496,6.4.3,Manage employee assistance and retention,N
+10508,6.4.3.1,Deliver programs to support work/life balance for employees,N
+10509,6.4.3.2,Develop family support systems,N
+10510,6.4.3.3,Review retention and motivation indicators,N
+10511,6.4.3.4,Review compensation plan,N
+10497,6.4.4,Payroll administration,Y
+10413,6.5,Re-deploy and retire employees,Y
+10512,6.5.1,Manage promotion and demotion process,Y
+10513,6.5.2,Manage separation,Y
+10514,6.5.3,Manage retirement,N
+10515,6.5.4,Manage leave of absence,N
+10516,6.5.5,Develop and implement employee outplacement,N
+10517,6.5.6,Manage deployment of personnel,N
+10518,6.5.7,Relocate employees and manage assignments,Y
+10519,6.5.8,Manage employment reduction and retirement,N
+10520,6.5.9,Manage expatriates,Y
+10521,6.5.10,Manage employee relocation process,N
+10414,6.6,Manage employee information,Y
+10522,6.6.1,Manage reporting processes,N
+10523,6.6.2,Manage employee inquiry process,Y
+10524,6.6.3,Manage and maintain employee data,N
+10525,6.6.4,Manage human resource information systems (HRIS),N
+10526,6.6.5,Develop and manage employee metrics,N
+10527,6.6.6,Develop and manage time and attendance,N
+10528,6.6.7,Manage employee communication,N
+10529,6.6.7.1,Develop employee communication plan,N
+10530,6.6.7.2,Manage/Collect employee suggestions and perform employee research,N
+10531,6.6.7.3,Manage employee grievances,Y
+10532,6.6.7.4,Publish employee communications,N
+13600,6.6.8,Manage employee compensation,N
+13601,6.6.8.1,Manage personnel cost planning,N
+13602,6.7,Manage employee and labor relations,N
+13605,6.7.1,Manage employee relations,N
+13615,6.7.1.1,Manage terms of employment,N
+13616,6.7.1.2,Manage union contact agreements,N
+13617,6.7.1.3,Manage employee arbitration,N
+13618,6.7.1.4,Manage labor contract development,N
+13619,6.7.1.5,Manage employee counseling,N
+13603,6.8,Manage occupational health and safety,N
+13606,6.8.1,Manage health and safety planning,N
+13607,6.8.2,Track and report health and safety incidents,N
+13604,6.9,Perform workforce administration,N
+13608,6.9.1,Manage personnel profile,N
+13609,6.9.2,Manage personnel time management,N
+13610,6.9.3,Manage personnel benefit administration,N
+13611,6.9.4,Manage organization structure,N
+13612,6.9.5,Manage recruitment,N
+13613,6.9.6,Manage compensation,N
+13614,6.9.7,Manage leave,N
+10008,7,Manage Information Technology,Y
+10563,7.1,Manage the business of information technology,Y
+10570,7.1.1,Develop the enterprise IT strategy,Y
+10603,7.1.1.1,Build strategic intelligence,N
+10604,7.1.1.2,Identify long-term IT needs of the enterprise in collaboration with stakeholders,N
+10605,7.1.1.3,"Define strategic standards, guidelines and principles",N
+10606,7.1.1.4,Define and establish IT architecture and development standards,N
+10607,7.1.1.5,Define strategic vendors for IT components,N
+10608,7.1.1.6,Establish IT governance organization and processes,N
+10609,7.1.1.7,Build strategic plan to support business objectives,N
+10571,7.1.2,Define the enterprise architecture,N
+10611,7.1.2.1,Establish the enterprise architecture definition,N
+10612,7.1.2.2,Confirm enterprise architecture maintenance approach,N
+10613,7.1.2.3,Maintain the relevance of the enterprise architecture,N
+10614,7.1.2.4,Act as clearinghouse for IT research and innovation,N
+10615,7.1.2.5,Govern the enterprise architecture,N
+13620,7.1.2.6,Gather internal and external requirements,N
+13621,7.1.2.7,Define master plan for IT architecture enhancements according to business requirements,N
+13622,7.1.2.8,Incorporate technology development,N
+10572,7.1.3,Manage the IT portfolio,N
+10616,7.1.3.1,Establish the IT portfolio,N
+10617,7.1.3.2,Analyze and evaluate the value of the IT portfolio for the enterprise,N
+10618,7.1.3.3,Provision resources in accordance with strategic priorities,N
+10573,7.1.4,Perform IT research and innovation,N
+10620,7.1.4.1,Research technologies to innovate IT services and solutions,N
+10621,7.1.4.2,Transition viable technologies for IT services and solutions development,N
+10574,7.1.5,Perform IT financial management,N
+10622,7.1.5.1,Develop and maintain IT services and solutions cost transparency,N
+10623,7.1.5.2,Establish and maintain accounting process,N
+10624,7.1.5.3,Tie project funding to business case decision checkpoints,N
+10575,7.1.6,Evaluate and communicate IT business value and performance,Y
+10625,7.1.6.1,Establish and monitor key performance indicators,N
+10626,7.1.6.2,Evaluate IT plan performance,N
+10627,7.1.6.3,Communicate IT value,N
+10576,7.1.7,Perform IT staff management,N
+10628,7.1.7.1,Develop IT leadership and staff,N
+10629,7.1.7.2,Manage IT staff performance,N
+10577,7.1.8,Manage IT suppliers and contracts,N
+10630,7.1.8.1,Develop IT (development and delivery) sourcing strategies,N
+10631,7.1.8.2,Negotiate with suppliers,N
+10632,7.1.8.3,Establish and maintain supplier relationships,N
+10633,7.1.8.4,Evaluate supplier performance,N
+10634,7.1.8.5,Assess contract performance,N
+10564,7.2,Develop and manage IT customer relationships,Y
+10578,7.2.1,Develop IT services and solutions strategy,Y
+11244,7.2.1.1,Research IT services and solutions to address business and user requirements,N
+11245,7.2.1.2,Translate business and user requirements into IT services and solutions requirements,N
+11246,7.2.1.3,Formulate IT services and solutions strategic initiatives,N
+11247,7.2.1.4,Coordinate strategies with internal stakeholders to ensure alignment,N
+11248,7.2.1.5,Evaluate and select IT services and solutions strategic initiatives,N
+10579,7.2.2,Develop and manage IT service levels,N
+10640,7.2.2.1,Create and maintain the IT services and solutions catalog,N
+10641,7.2.2.2,Establish and maintain business and IT service level agreements,N
+10642,7.2.2.3,Evaluate and report service level attainment results,N
+10643,7.2.2.4,Communicate business and IT service level improvement opportunities,N
+10580,7.2.3,Perform demand side management (DSM) for IT services,N
+10644,7.2.3.1,Analyze IT services and solutions consumption and usage,N
+10645,7.2.3.2,Develop and implement incentive programs that improve consumption efficiency,N
+10646,7.2.3.3,Develop volume/unit forecast for IT services and solutions,N
+10581,7.2.4,Manage IT customer satisfaction,Y
+10647,7.2.4.1,Capture and analyze customer satisfaction,N
+10648,7.2.4.2,Assess and communicate customer satisfaction patterns,N
+10649,7.2.4.3,Initiate improvements based on customer satisfaction patterns,N
+10582,7.2.5,Market IT services and solutions,N
+10650,7.2.5.1,Develop IT services and solutions marketing strategy,N
+10651,7.2.5.2,Develop and manage IT customer strategy,N
+10652,7.2.5.3,Manage IT services and solutions advertising and promotional campaigns,N
+10653,7.2.5.4,Process and track IT services and solutions orders,N
+11216,7.3,Manage business resiliency and risk,Y
+11217,7.3.1,Develop and manage business resilience,N
+11221,7.3.1.1,Develop the business resilience strategy,N
+11222,7.3.1.2,Perform continuous business operations planning,N
+11223,7.3.1.3,Test continuous business operations,N
+11224,7.3.1.4,Maintain continuous business operations,N
+11218,7.3.2,Develop and manage regulatory compliance,N
+11225,7.3.2.1,Develop the regulatory compliance strategy,N
+11226,7.3.2.2,Establish regulatory compliance controls,N
+11227,7.3.2.3,Manage regulatory compliance remediation,N
+11219,7.3.3,Perform integrated risk management,N
+11228,7.3.3.1,Develop an integrated risk strategy and approach,N
+11229,7.3.3.2,Manage integrated risks,N
+11220,7.3.4,"Develop and implement security, privacy, and data protection controls",Y
+11230,7.3.4.1,"Establish information security, privacy, and data protection strategies and levels",N
+11231,7.3.4.2,"Test, evaluate, and implement information security, and privacy and data protection controls",N
+10565,7.4,Manage enterprise information,Y
+10583,7.4.1,Develop information and content management strategies,Y
+10654,7.4.1.1,Understand information and content management needs and the role of IT services for executing the business strategy,N
+10655,7.4.1.2,Assess the information and content management implications of new technologies,N
+10656,7.4.1.3,Identify and prioritize information and content management actions,N
+10584,7.4.2,Define the enterprise information architecture,Y
+10657,7.4.2.1,"Define information elements, composite structure, logical relationships and constraints, taxonomy, and derivation rules",N
+10658,7.4.2.2,Define information access requirements,N
+10659,7.4.2.3,Establish data custodianship,N
+10660,7.4.2.4,Manage changes to content data architecture requirements,N
+10585,7.4.3,Manage information resources,Y
+10661,7.4.3.1,Define the enterprise information/data policies and standards,N
+10662,7.4.3.2,Develop and implement data and content administration,N
+10586,7.4.4,Perform enterprise data and content management,Y
+10663,7.4.4.1,Define sources and destinations of content data,N
+10664,7.4.4.2,Manage technical interfaces to users of content,N
+10665,7.4.4.3,"Manage retention, revision, and retirement of enterprise information",N
+10566,7.5,Develop and maintain information technology solutions,Y
+10587,7.5.1,Develop the IT development strategy,Y
+10666,7.5.1.1,Establish sourcing strategy for IT development,N
+10667,7.5.1.2,"Define development processes, methodologies, and tools standards",N
+10668,7.5.1.3,Select development methodologies and tools,N
+10588,7.5.2,Perform IT services and solutions life cycle planning,N
+10669,7.5.2.1,Plan development of new requirements,N
+10670,7.5.2.2,Plan development of feature and functionality enhancement,N
+10671,7.5.2.3,Develop life cycle plan for IT services and solutions,N
+10589,7.5.3,Develop and maintain IT services and solutions architecture,N
+10672,7.5.3.1,Create IT services and solutions architecture,N
+10673,7.5.3.2,Revise IT services and solutions architecture,N
+10674,7.5.3.3,Retire IT services and solutions architecture,N
+13623,7.5.4,"Develop project plans for particular IT projects including rough timetables, project budgets",N
+13624,7.5.5,Allocate resources for projects,N
+10590,7.5.6,Create IT services and solutions,Y
+10675,7.5.6.1,Understand confirmed requirements,N
+10676,7.5.6.2,Design IT services and solutions,N
+10677,7.5.6.3,Acquire/Develop IT service/solution components,N
+10678,7.5.6.4,Train services and solutions resources,N
+10679,7.5.6.5,Test IT services/solutions,N
+10680,7.5.6.6,Confirm customer acceptance,N
+13928,7.5.7,Test IT architecture and build-up,N
+13625,7.5.7.1,Define testing and acceptance criteria,N
+13626,7.5.7.2,Conduct acceptance test,N
+13627,7.5.7.3,Implement architecture enhancements,N
+13628,7.5.7.4,Transfer to operations,N
+10591,7.5.8,Maintain IT services and solutions,Y
+10681,7.5.8.1,Understand upkeep/enhance requirements and defect analysis,N
+10682,7.5.8.2,Design change to existing IT service/solution,N
+10683,7.5.8.3,Acquire/Develop changed IT service/solution component,N
+10684,7.5.8.4,Test IT service/solution change,N
+10685,7.5.8.5,Retire solutions and services,N
+10567,7.6,Deploy information technology solutions,Y
+10592,7.6.1,Develop the IT deployment strategy,Y
+10686,7.6.1.1,Establish IT services and solutions change policies,N
+10687,7.6.1.2,"Define deployment process, procedures, and tools standards",N
+10688,7.6.1.3,Select deployment methodologies and tools,N
+10593,7.6.2,Plan and implement changes,N
+10689,7.6.2.1,Plan change deployment,N
+10690,7.6.2.2,Communicate changes to stakeholders,N
+10691,7.6.2.3,Administer change schedule,N
+10692,7.6.2.4,Train impacted users,N
+10693,7.6.2.5,Distribute and install change,N
+10694,7.6.2.6,Verify change,N
+10594,7.6.3,Plan and manage releases,N
+10695,7.6.3.1,Understand and coordinate release design and acceptance,N
+10696,7.6.3.2,Plan release rollout,N
+10697,7.6.3.3,Distribute and install release,N
+10698,7.6.3.4,Verify release,N
+10568,7.7,Deliver and support information technology services,Y
+10595,7.7.1,Develop IT services and solution delivery strategy,N
+10699,7.7.1.1,Establish sourcing strategy for IT delivery,N
+10700,7.7.1.2,"Define delivery processes, procedures, and tools standards",N
+10701,7.7.1.3,Select delivery methodologies and tools,N
+10596,7.7.2,Develop IT support strategy,N
+10702,7.7.2.1,Establish sourcing strategy for IT support,N
+10703,7.7.2.2,Define IT support services,N
+10597,7.7.3,Manage IT infrastructure resources,N
+10704,7.7.3.1,Manage IT inventory and assets,N
+10705,7.7.3.2,Manage IT resource capacity,N
+10598,7.7.4,Manage IT infrastructure operations,N
+10706,7.7.4.1,Deliver IT services and solutions,N
+10707,7.7.4.2,Perform IT operations support services,N
+10599,7.7.5,Support IT services and solutions,Y
+10708,7.7.5.1,Manage availability,N
+10709,7.7.5.2,Manage facilities,N
+10710,7.7.5.3,Manage backup/recovery,N
+10711,7.7.5.4,Manage performance and capacity,N
+10712,7.7.5.5,Manage incidents,N
+10713,7.7.5.6,Manage problems,N
+10714,7.7.5.7,Manage inquiries,N
+10569,7.8,Manage IT knowledge,Y
+10600,7.8.1,Develop IT knowledge management strategy,N
+10715,7.8.1.1,Understand IT knowledge needs,N
+10716,7.8.1.2,Understand current IT knowledge flow,N
+10717,7.8.1.3,Coordinate strategy and roles with the enterprise KM function,N
+10718,7.8.1.4,Plan IT knowledge management actions and priorities,N
+10601,7.8.2,Develop and maintain IT knowledge map,N
+10719,7.8.2.1,"Define knowledge elements, logical relationships and constraints, and currency rules",N
+10720,7.8.2.2,Identify IT knowledge sources and repositories,N
+10721,7.8.2.3,Identify IT knowledge-sharing opportunities,N
+10722,7.8.2.4,Define IT knowledge processes and approaches,N
+13629,7.8.2.5,Maintain documentation of changes,N
+13630,7.8.2.6,Gather requirements for further developments,N
+13631,7.8.2.7,Improve performance,N
+10602,7.8.3,Manage IT knowledge life cycle,N
+10723,7.8.3.1,Gather knowledge elements from IT knowledge sources,N
+10724,7.8.3.2,"Evaluate, create, and codify knowledge elements",N
+10725,7.8.3.3,Deploy codified IT knowledge,N
+10726,7.8.3.4,Update and retire IT knowledge,N
+10727,7.8.3.5,Evaluate and improve IT knowledge strategies and processes,N
+10009,8,Manage Financial Resources,Y
+10728,8.1,Perform planning and management accounting,Y
+10738,8.1.1,Perform planning/budgeting/forecasting,Y
+10771,8.1.1.1,Develop and maintain budget policies and procedures,N
+10772,8.1.1.2,Prepare periodic budgets and plans,N
+10773,8.1.1.3,Prepare periodic financial forecasts,N
+10739,8.1.2,Perform cost accounting and control,Y
+10774,8.1.2.1,Perform inventory accounting,N
+10775,8.1.2.2,Perform cost of sales analysis,N
+10776,8.1.2.3,Perform product costing,N
+10777,8.1.2.4,Perform variance analysis,N
+11175,8.1.2.5,Report on profitability,N
+10740,8.1.3,Perform cost management,N
+10778,8.1.3.1,Determine key cost drivers,N
+10779,8.1.3.2,Measure cost drivers,N
+10780,8.1.3.3,Determine critical activities,N
+10781,8.1.3.4,Manage asset resource deployment and utilization,N
+10741,8.1.4,Evaluate and manage financial performance,Y
+10782,8.1.4.1,Assess customer and product profitability,N
+10783,8.1.4.2,Evaluate new products,N
+10784,8.1.4.3,Perform life cycle costing,N
+10785,8.1.4.4,Optimize customer and product mix,N
+10786,8.1.4.5,Track performance of new customer and product strategies,N
+10787,8.1.4.6,Prepare activity-based performance measures,N
+10788,8.1.4.7,Manage continuous cost improvement,N
+10729,8.2,Perform revenue accounting,Y
+10742,8.2.1,Process customer credit,Y
+10789,8.2.1.1,Establish credit policies,Y
+10790,8.2.1.2,Analyze/Approve new account applications,Y
+10791,8.2.1.3,Review existing accounts,Y
+10792,8.2.1.4,Produce credit/collection reports,Y
+10793,8.2.1.5,Reinstate or suspend accounts based on credit policies,N
+10743,8.2.2,Invoice customer,Y
+10794,8.2.2.1,Maintain customer/product master files,Y
+10795,8.2.2.2,Generate customer billing data,Y
+10796,8.2.2.3,Transmit billing data to customers,Y
+10797,8.2.2.4,Post receivable entries,Y
+10798,8.2.2.5,Resolve customer billing inquiries,Y
+13632,8.2.3,Collect and mediate External Data Representation (xDR's),N
+13638,8.2.3.1,Collect invoice relevant data,N
+13639,8.2.3.2,Pre-process collected data,N
+13633,8.2.4,Apply rating and discounts,N
+13640,8.2.4.1,Assess individual call detail records (CDR's),N
+13641,8.2.4.2,Apply rates and discounts as applicable to customers and to customer specific conditions,N
+13642,8.2.4.3,Apply discounting rules and tariffs,N
+13634,8.2.5,Produce and distribute invoices,N
+13643,8.2.5.1,Format invoices,N
+13644,8.2.5.2,Apply invoice layouts and customization according to customer specific requests,N
+13645,8.2.5.3,Produce and distribute invoices,N
+13646,8.2.5.4,Transfer to accounts receivable,N
+13635,8.2.6,Collect payments,N
+13647,8.2.6.1,Check customer accounts,N
+13648,8.2.6.2,Transfer overdue payments to Dunning,N
+13636,8.2.7,Trigger dunning,N
+13649,8.2.7.1,Send reminder invoices,N
+13650,8.2.7.2,Notify network services in order to deactivate service for customers with overdue periods,N
+13637,8.2.8,Generate invoices for interconnection and roaming,N
+13651,8.2.8.1,Identify interconnection and roaming charges,N
+13652,8.2.8.2,Issue interconnection and roaming invoices,N
+10744,8.2.9,Process accounts receivable (AR),Y
+10799,8.2.9.1,Establish AR policies,N
+10800,8.2.9.2,Receive/Deposit customer payments,N
+10801,8.2.9.3,Apply cash remittances,N
+10802,8.2.9.4,Prepare AR reports,N
+10803,8.2.9.5,Post AR activity to the general ledger,N
+10745,8.2.10,Manage and process collections,Y
+10804,8.2.10.1,Establish policies for delinquent accounts,N
+10805,8.2.10.2,Analyze delinquent account balances,N
+10806,8.2.10.3,Correspond/Negotiate with delinquent accounts,N
+10807,8.2.10.4,Discuss account resolution with internal parties,N
+10808,8.2.10.5,Process adjustments/write-off balances,Y
+10746,8.2.11,Manage and process adjustments/deductions,Y
+10809,8.2.11.1,Establish policies/procedures for adjustments,N
+10810,8.2.11.2,Analyze adjustments,N
+10811,8.2.11.3,Correspond/Negotiate with customer,N
+10812,8.2.11.4,Discuss resolution with internal parties,N
+10813,8.2.11.5,Prepare chargeback invoices,N
+10814,8.2.11.6,Process related entries,N
+10730,8.3,Perform general accounting and reporting,Y
+10747,8.3.1,Manage policies and procedures,Y
+10815,8.3.1.1,Negotiate service level agreements,N
+10816,8.3.1.2,Establish accounting policies,N
+10817,8.3.1.3,Set and enforce approval limits,N
+10818,8.3.1.4,Establish common financial systems,N
+10748,8.3.2,Perform general accounting,Y
+10819,8.3.2.1,Maintain chart of accounts,N
+10820,8.3.2.2,Process journal entries,N
+10821,8.3.2.3,Process allocations,N
+10822,8.3.2.4,"Process period end adjustments (e.g., accruals, currency conversions, etc.)",N
+10823,8.3.2.5,Post and reconcile intercompany transactions,N
+10824,8.3.2.6,Reconcile GL accounts,N
+10825,8.3.2.7,Perform consolidations and process eliminations,N
+10826,8.3.2.8,Prepare trial balance,N
+10827,8.3.2.9,Prepare and post management adjustments,N
+10749,8.3.3,Perform fixed asset accounting,Y
+10828,8.3.3.1,Establish fixed asset policies and procedures,N
+10829,8.3.3.2,Maintain fixed asset master data files,N
+10830,8.3.3.3,Process and record fixed asset additions and retires,N
+10831,8.3.3.4,"Process and record fixed asset adjustments, enhancements, revaluations, and transfers",N
+10832,8.3.3.5,Process and record fixed asset maintenance and repair expenses,N
+10833,8.3.3.5,Calculate and record depreciation expense,N
+10834,8.3.3.6,Reconcile fixed asset ledger,N
+10835,8.3.3.7,Track fixed assets including physical inventory,N
+10836,8.3.3.8,"Provide fixed asset data to support tax, statutory, and regulatory reporting",N
+10750,8.3.4,Perform financial reporting,Y
+10837,8.3.4.1,Prepare business unit financial statements,N
+10838,8.3.4.2,Prepare consolidated financial statements,N
+10839,8.3.4.3,Perform business unit reporting/review management reports,N
+10840,8.3.4.4,Perform consolidated reporting/review of cost management reports,N
+10841,8.3.4.5,Prepare statements for board review,N
+10842,8.3.4.6,Produce quarterly/annual filings and shareholder reports,N
+10843,8.3.4.7,Produce regulatory reports,N
+10731,8.4,Manage fixed asset project accounting,Y
+10751,8.4.1,Perform capital planning and project approval,Y
+10844,8.4.1.1,Develop capital investment policies and procedures,N
+10845,8.4.1.2,Develop and approve capital expenditure plans and budgets,N
+10846,8.4.1.3,Review and approve capital projects and fixed asset acquisitions,N
+10847,8.4.1.4,Conduct financial justification for project approval,N
+10752,8.4.2,Perform capital project accounting,Y
+10848,8.4.2.1,Create project account codes,N
+10849,8.4.2.2,Record project-related transactions,N
+10850,8.4.2.3,Monitor and track capital projects and budget spending,N
+10851,8.4.2.4,Close/Capitalize projects,N
+10852,8.4.2.5,Measure financial returns on completed capital projects,N
+13653,8.4.3,Dispose asset,N
+13654,8.4.4,Setup new asset details on asset register,N
+13655,8.4.5,Maintain fixed assets register,N
+13656,8.4.6,Purchase assets,N
+13657,8.4.7,Manage asset transfer,N
+13658,8.4.8,Manage asset under construction,N
+13659,8.4.9,Depreciate asset,N
+13660,8.4.10,Manage fixed asset reporting,N
+13661,8.4.11,Manage asset scrapping,N
+10732,8.5,Process payroll,Y
+10753,8.5.1,Report time,Y
+10853,8.5.1.1,Establish policies and procedures,N
+10854,8.5.1.2,Collect and record employee time worked,N
+10855,8.5.1.3,Analyze and report paid and unpaid leave,N
+10856,8.5.1.4,"Monitor regular, overtime, and other hours",N
+10857,8.5.1.5,Analyze and report employee utilization,N
+10754,8.5.2,Manage pay,Y
+10858,8.5.2.1,Enter employee time worked into payroll system,N
+10859,8.5.2.2,Maintain and administer employee earnings information,N
+10860,8.5.2.3,Maintain and administer applicable deductions,N
+10861,8.5.2.4,Monitor changes in tax status of employees,N
+10862,8.5.2.5,Process and distribute payments,N
+10863,8.5.2.6,Process and distribute manual checks,N
+10864,8.5.2.7,Process period end adjustments,N
+10865,8.5.2.8,Respond to employee payroll inquiries,N
+10755,8.5.3,Process payroll taxes,Y
+10866,8.5.3.1,Calculate and pay applicable payroll taxes,N
+10867,8.5.3.2,Produce and distribute employee annual tax statements,N
+10868,8.5.3.3,File regulatory payroll tax forms,N
+10733,8.6,Process accounts payable and expense reimbursements,Y
+10756,8.6.1,Process accounts payable (AP),Y
+10869,8.6.1.1,Verify AP pay file with PO vendor master file,Y
+10870,8.6.1.2,Maintain/Manage electronic commerce,Y
+10871,8.6.1.3,Audit invoices and key data in AP system,Y
+10872,8.6.1.4,Approve payments,Y
+10873,8.6.1.5,Process financial accruals and reversals,Y
+10874,8.6.1.6,Process taxes,Y
+10875,8.6.1.7,Research/Resolve exceptions,Y
+10876,8.6.1.8,Process payments,Y
+10877,8.6.1.9,Respond to AP inquiries,Y
+10878,8.6.1.10,Retain records,Y
+10879,8.6.1.11,Adjust accounting records,Y
+10757,8.6.2,Process expense reimbursements,Y
+10880,8.6.2.1,Establish and communicate expense reimbursement policies and approval limits,Y
+10881,8.6.2.2,Capture and report relevant tax data,Y
+10882,8.6.2.3,Approve reimbursements and advances,Y
+10883,8.6.2.4,Process reimbursements and advances,Y
+10884,8.6.2.5,Manage personal accounts,Y
+10734,8.7,Manage treasury operations,Y
+10758,8.7.1,Manage treasury policies and procedures,N
+10885,8.7.1.1,Establish scope and governance of treasury operations,N
+10886,8.7.1.2,Establish and publish treasury policies,N
+10887,8.7.1.3,Develop treasury procedures,N
+10888,8.7.1.4,Monitor treasury procedures,N
+10889,8.7.1.5,Audit treasury procedures,N
+10890,8.7.1.6,Revise treasury procedures,N
+10891,8.7.1.7,Develop and confirm internal controls for treasury,N
+10892,8.7.1.8,Define system security requirements,N
+10759,8.7.2,Manage cash,Y
+10893,8.7.2.1,Manage and reconcile cash positions,N
+10894,8.7.2.2,Manage cash equivalents,N
+10895,8.7.2.3,Process and oversee electronic fund transfers (EFTs),N
+10896,8.7.2.4,Develop cash flow forecasts,N
+10897,8.7.2.5,Manage cash flows,N
+10898,8.7.2.6,Produce cash management accounting transactions and reports,N
+10899,8.7.2.7,Manage and oversee banking relationships,N
+10900,8.7.2.8,"Analyze, negotiate, resolve, and confirm bank fees",N
+10760,8.7.3,Manage in-house bank accounts,N
+10901,8.7.3.1,Manage in-house bank accounts for subsidiaries,N
+10902,8.7.3.2,Manage and facilitate inter-company borrowing transactions,N
+10903,8.7.3.3,Manage centralized outgoing payments on behalf of subsidiaries,N
+10904,8.7.3.4,Manage central incoming payments on behalf of subsidiaries,N
+10905,8.7.3.5,Manage internal payments and netting transactions,N
+10906,8.7.3.6,Calculate interest and fees for in-house bank accounts,N
+10907,8.7.3.7,Provide account statements for in-house bank accounts,N
+10761,8.7.4,Manage debt and investment,N
+10908,8.7.4.1,Manage financial intermediary relationships,N
+10909,8.7.4.2,Manage liquidity,N
+10910,8.7.4.3,Manage issuer exposure,N
+10911,8.7.4.4,Process and oversee debt and investment transactions,N
+10912,8.7.4.5,Process and oversee foreign currency transactions,N
+10913,8.7.4.6,Produce debt and investment accounting transaction reports,N
+11208,8.7.5,Manage financial risks,Y
+11209,8.7.5.1,Manage interest rate risk,N
+11210,8.7.5.2,Manage foreign exchange risk,N
+11211,8.7.5.3,Manage exposure risk,N
+11212,8.7.5.4,Develop and execute hedging transactions,N
+11213,8.7.5.5,Evaluate and refine hedging positions,N
+11214,8.7.5.6,Produce hedge accounting transactions and reports,N
+11215,8.7.5.7,Monitor credit,N
+10735,8.8,Manage internal controls,Y
+10762,8.8.1,"Establish internal controls, policies and procedures",Y
+10914,8.8.1.1,Establish board of directors and audit committee,N
+10915,8.8.1.2,Define and communicate code of ethics,N
+10916,8.8.1.3,Assign roles and responsibility for internal controls,N
+11250,8.8.1.4,Define business process objectives and risks,N
+11251,8.8.1.5,Define entity/unit risk tolerances,N
+10763,8.8.2,Operate controls and monitor compliance with internal controls policies and procedures,Y
+10917,8.8.2.1,Design and implement control activities,N
+10918,8.8.2.2,Monitor control effectiveness,N
+10919,8.8.2.3,Remediate control deficiencies,N
+10920,8.8.2.4,Create compliance function,N
+10921,8.8.2.5,Operate compliance function,N
+10922,8.8.2.6,Implement and maintain controls-related enabling technologies and tools,N
+10764,8.8.3,Report on internal controls compliance,Y
+10923,8.8.3.1,Report to external auditors,N
+10924,8.8.3.2,"Report to regulators, share/debt-holders, securities exchanges, etc.",N
+10925,8.8.3.3,"Report to third parties (e.g., business partners)",N
+10926,8.8.3.4,Report to internal management,N
+10736,8.9,Manage taxes,Y
+10765,8.9.1,Develop tax strategy and plan,N
+10927,8.9.1.1,"Develop foreign, national, state and local tax strategy",N
+10928,8.9.1.2,Consolidate and optimize total tax plan,N
+10929,8.9.1.3,Maintain tax master data,N
+10766,8.9.2,Process taxes,Y
+10930,8.9.2.1,Perform tax planning/strategy,N
+10931,8.9.2.2,Prepare returns,N
+10932,8.9.2.3,Prepare foreign taxes,N
+10933,8.9.2.4,Calculate deferred taxes,N
+13662,8.9.2.5,Manage deferred taxes,N
+10934,8.9.2.6,Account for taxes,N
+10935,8.9.2.7,Monitor tax compliance,N
+10936,8.9.2.8,Address tax inquiries,N
+13663,8.9.2.9,Manage withholding tax,N
+13664,8.9.2.10,Manage value added tax (VAT),N
+13665,8.9.2.11,Manage service tax,N
+10737,8.9.3,Manage international funds/consolidation,N
+10767,8.9.3.1,Monitor international rates,N
+10768,8.9.3.2,Manage transactions,N
+10769,8.9.3.3,Monitor currency exposure/hedge currency,N
+10770,8.9.3.4,Report results,N
+13666,8.10,Perform financial management,N
+13669,8.10.1,Perform account operations,N
+13676,8.10.1.1,Define enterprise generally accepted principle policies,N
+13677,8.10.1.2,Manage foreign currency exchange,N
+13678,8.10.1.3,Manage general ledger,N
+13679,8.10.1.4,Manage accounts receivable,N
+13680,8.10.1.5,Manage accounts payable,N
+13681,8.10.1.6,Manage cash liquidity management,N
+13670,8.10.2,Audit,N
+13671,8.10.3,Manage payroll,N
+13682,8.10.3.1,Manage employee payroll details,N
+13683,8.10.3.2,Manage employee compensation and reward profiles,N
+13684,8.10.3.3,Manage payroll administration and processing,N
+13685,8.10.3.4,Manage expense administration and processing,N
+13686,8.10.3.5,Manage HR development contributions and rebates,N
+13672,8.10.4,Manage treasury operations,N
+13687,8.10.4.1,Manage bank reconciliation,N
+13688,8.10.4.2,Manage treasury instruments,N
+13689,8.10.4.3,Manage treasury business partners,N
+13690,8.10.4.4,Manage treasury instrument/agreement,N
+13691,8.10.4.5,Manage treasury instrument confirmation,N
+13692,8.10.4.6,Manage treasury instrument settlement,N
+13693,8.10.4.7,Monitor investments,N
+13673,8.10.5,Manage management accounting,N
+13694,8.10.5.1,Manage profit centre accounting,N
+13695,8.10.5.2,Manage cost center and internal order accounting,N
+13696,8.10.5.3,Manage project accounting,N
+13697,8.10.5.4,Manage product cost accounting,N
+13698,8.10.5.5,Manage profitability accounting,N
+13674,8.10.6,Manage carrier accounting,N
+13699,8.10.6.1,Manage carrier settlements,N
+13700,8.10.6.2,Process carrier adjustments,N
+13701,8.10.6.3,Manage carrier payments,N
+13702,8.10.6.4,Manage carrier credits,N
+13703,8.10.6.5,Manage carrier accounts receivable reconciliation,N
+13704,8.10.6.6,Manage carrier related customer bill enquiries,N
+13705,8.10.6.7,Manage carrier revenue accruals,N
+13675,8.10.7,Manage financial planning,N
+13706,8.10.7.1,Manage budgeting and forecasting,N
+13707,8.10.7.2,Manage financial reporting,N
+13708,8.10.7.3,Manage financial performance,N
+13709,8.10.7.4,Manage budget checking,N
+13667,8.11,Manage assets,N
+13710,8.11.1,Manage real estate,N
+13711,8.11.2,Manage asset management operations,N
+13712,8.11.2.1,Define asset and asset maintenance plan,N
+13713,8.11.2.2,Establish asset strategy and policy,N
+13714,8.11.2.3,Manage asset maintenance,N
+13715,8.11.2.4,Track asset maintenance,N
+13716,8.11.2.5,Manage asset maintenance reporting,N
+13717,8.11.2.6,Manage asset maintenance performance and reporting,N
+13668,8.12,Manage procurement,N
+13718,8.12.1,Manage supplier/ purchase negotiation,N
+13723,8.12.1.1,Manage quotation,N
+13719,8.12.2,Identify demand requirements,N
+13724,8.12.2.1,Manage purchase requisition,N
+13725,8.12.2.2,Manage stock replenishments,N
+13720,8.12.3,Manage procurement strategy and policy,N
+13721,8.12.4,Manage purchase,N
+13726,8.12.4.1,Create purchase order,N
+13727,8.12.4.2,Track purchase order delivery,N
+13728,8.12.4.3,Authorize purchase order,N
+13729,8.12.4.4,Manage invoicing,N
+13730,8.12.4.5,Manage delivery,N
+13722,8.12.5,Determine source supplier/partner,N
+13731,8.12.5.1,Match sourcing arrangement to supplier/partner agreed sourcing agreements,N
+13732,8.12.5.2,Identify supplier/ partner from supplier/partner list,N
+10010,9,"Acquire, Construct, and Manage Property",Y
+10937,9.1,Design and construct/acquire non-productive assets,N
+10941,9.1.1,Develop property strategy and long term vision,N
+10955,9.1.1.1,Confirm alignment of property requirements with business strategy,N
+10956,9.1.1.2,Assess the external environment,N
+10957,9.1.1.3,Determine build or buy decision,N
+10942,9.1.2,"Develop, construct, and modify sites",N
+10943,9.1.3,Plan facility,N
+10958,9.1.3.1,Design facility,N
+10959,9.1.3.2,Analyze budget,N
+10960,9.1.3.3,Select property,N
+10961,9.1.3.4,Negotiate terms for facility,N
+10962,9.1.3.5,Manage construction or modification to building,N
+10944,9.1.4,Provide workspace and assets,N
+10963,9.1.4.1,Acquire workspace and assets,N
+10964,9.1.4.2,Change fit/form/function of workspace and assets,N
+10938,9.2,Maintain non-productive assets,Y
+10945,9.2.1,Move people and assets,N
+10965,9.2.1.1,Relocate people,N
+10966,9.2.1.2,Relocate material and tools,N
+10946,9.2.2,Repair workplace and assets,N
+10947,9.2.3,Provide preventative maintenance for workplace and assets,N
+10948,9.2.4,Manage security,N
+10949,9.2.5,Manage facilities operations,N
+10939,9.3,"Obtain, install and plan maintenance for productive assets",N
+10950,9.3.1,Develop ongoing maintenance policies for production assets,N
+10967,9.3.1.1,Analyze assets and predict maintenance requirements,N
+10968,9.3.1.2,Develop approach to integrate preventive maintenance into production schedule,N
+10951,9.3.2,Obtain and install equipment,N
+10969,9.3.2.1,Design engineering solution for the manufacturing process,N
+10970,9.3.2.2,Procure equipment,N
+10971,9.3.2.3,Install and commission equipment,N
+10940,9.4,Dispose of productive and non-productive assets,N
+10952,9.4.1,Develop exit strategy,N
+10953,9.4.2,Perform sale or trade,N
+10954,9.4.3,Perform abandonment,N
+11207,9.5,Manage physical risk,N
+11179,10,Manage Environmental Health and Safety (EHS),N
+11180,10.1,"Determine health, safety, and environment impacts",Y
+11186,10.1.1,"Evaluate environmental impact of products, services, and operations",N
+11187,10.1.2,Conduct health and safety and environmental audits,N
+11181,10.2,"Develop and execute health, safety, and environmental program",N
+11188,10.2.1,Identify regulatory and stakeholder requirements,N
+11189,10.2.2,Assess future risks and opportunities,N
+11190,10.2.3,Create EHS policy,N
+11191,10.2.4,Record and manage EHS events,N
+11182,10.3,Train and educate employees,N
+11192,10.3.1,Communicate EHS issues to stakeholders and provide support,N
+11183,10.4,"Monitor and manage health, safety, and environmental management program",N
+11193,10.4.1,Manage EHS costs and benefits,N
+11194,10.4.2,Measure and report EHS performance,N
+11196,10.4.2.1,Implement emergency response program,N
+11197,10.4.2.2,Implement pollution prevention program,N
+11195,10.4.3,Provide employees with EHS support,N
+11184,10.5,Ensure compliance with regulations,N
+11198,10.5.1,Monitor compliance,N
+11199,10.5.2,Perform compliance audit,N
+11200,10.5.3,Comply with regulatory stakeholders requirements,N
+11185,10.6,Manage remediation efforts,N
+11201,10.6.1,Create remediation plans,N
+11202,10.6.2,Contact and confer with experts,N
+11203,10.6.3,Identify/Dedicate resources,N
+11204,10.6.4,Investigate legal aspects,N
+11205,10.6.5,Investigate damage cause,N
+11206,10.6.6,Amend or create policy,N
+10012,11,Manage External Relationships,N
+11010,11.1,Build investor relationships,N
+11035,11.1.1,"Plan, build, and manage lender relations",N
+11036,11.1.2,"Plan, build, and manage analyst relations",N
+11037,11.1.3,Communicate with shareholders,N
+11011,11.2,Manage government and industry relationships,N
+11038,11.2.1,Manage government relations,N
+11039,11.2.2,Manage relations with quasi-government bodies,N
+11040,11.2.3,Manage relations with trade or industry groups,N
+11041,11.2.4,Manage lobby activities,N
+11012,11.3,Manage relations with board of directors,N
+11042,11.3.1,Report results,N
+11043,11.3.2,Report audit findings,N
+11013,11.4,Manage legal and ethical issues,N
+11044,11.4.1,Create ethics policies,N
+11045,11.4.2,Manage corporate governance policies,N
+11046,11.4.3,Develop and perform preventative law programs,N
+11047,11.4.4,Ensure compliance,N
+11053,11.4.4.1,Plan and initiate compliance program,N
+11054,11.4.4.2,Execute compliance program,N
+11048,11.4.5,Manage outside counsel,N
+11056,11.4.5.1,Assess problem and determine work requirements,N
+11057,11.4.5.2,Engage/Retain outside counsel if necessary,N
+11058,11.4.5.3,Receive strategy/budget,N
+11059,11.4.5.4,Receive work product and manage/ monitor case and work performed,N
+11060,11.4.5.5,Process payment for legal services,N
+11061,11.4.5.6,Track legal activity/performance,N
+11049,11.4.6,Protect intellectual property,N
+11062,11.4.6.1,Manage copyrights and patents,N
+11063,11.4.6.2,Maintain intellectual property rights and restrictions,N
+11064,11.4.6.3,Administer licensing terms,N
+11065,11.4.6.4,Administer options,N
+11050,11.4.7,Resolve disputes and litigations,N
+11051,11.4.8,Provide legal advice/counseling,N
+11052,11.4.9,Negotiate and document agreements/contracts,N
+11014,11.5,Manage public relations program,N
+11066,11.5.1,Manage community relations,N
+11067,11.5.2,Manage media relations,N
+11068,11.5.3,Promote political stability,N
+11069,11.5.4,Create press releases,N
+11070,11.5.5,Issue press releases,N
+10013,12,"Manage Knowledge, Improvement, and Change",Y
+11071,12.1,Create and manage organizational performance strategy,N
+11075,12.1.1,Create enterprise measurement systems model,N
+11080,12.1.1.1,Establish performance measures,N
+11081,12.1.1.2,Establish performance monitoring frequency,N
+11082,12.1.1.3,Set performance targets,N
+11076,12.1.2,Measure process productivity,N
+11077,12.1.3,Measure cost effectiveness,N
+11078,12.1.4,Measure staff efficiency,N
+11079,12.1.5,Measure cycle time,N
+11072,12.2,Benchmark performance,N
+11083,12.2.1,Conduct performance assessments,N
+11084,12.2.2,Develop benchmarking capabilities,N
+11085,12.2.3,Conduct process benchmarking,N
+11089,12.2.3.1,Compile & update list of processes & organizations to benchmark,N
+11090,12.2.3.2,Establish benchmarks,N
+11091,12.2.3.3,Measure performance against benchmarks,N
+11086,12.2.4,Conduct competitive benchmarking,N
+11092,12.2.4.1,Compile & update list of processes & organizations to benchmark,N
+11093,12.2.4.2,Establish benchmarks,N
+11094,12.2.4.3,Measure performance against benchmarks,N
+11087,12.2.5,Conduct gap analysis to understand the need for and the degree of change needed,N
+11088,12.2.6,Establish need for change,N
+11073,12.3,Develop enterprise-wide knowledge management (KM) capability,Y
+11095,12.3.1,Develop KM strategy,N
+11100,12.3.1.1,Develop governance model,N
+11101,12.3.1.2,Establish a central KM core group,N
+11102,12.3.1.3,Define roles and accountability of the core group versus operating units,N
+11103,12.3.1.4,Develop funding models,N
+11104,12.3.1.5,Identify links to key initiatives,N
+11105,12.3.1.6,Develop core KM methodologies,N
+11106,12.3.1.7,Assess IT needs and engage IT function,N
+11107,12.3.1.8,Develop training and communication plans,N
+11108,12.3.1.9,Develop change management approaches,N
+11109,12.3.1.10,Develop strategic measures and indicators,N
+11096,12.3.2,Assess knowledge management capabilities,Y
+11110,12.3.2.1,Assess maturity of existing KM initiatives,N
+11111,12.3.2.2,Evaluate existing knowledge management approaches,N
+11112,12.3.2.3,Identify gaps and needs,N
+11113,12.3.2.4,Enhance/Modify existing knowledge management approaches,N
+11114,12.3.2.5,Develop new knowledge management approaches,N
+11115,12.3.2.6,Implement new knowledge management approaches,N
+11097,12.3.3,Identify and plan KM projects,N
+11116,12.3.3.1,Identify strategic opportunities to apply KM approach(es),N
+11117,12.3.3.2,Identify KM requirements and objectives,N
+11118,12.3.3.3,Assess culture and readiness for KM approach,N
+11119,12.3.3.4,"Identify appropriate KM methodologies (e.g., self-service, communities, transfer, etc.)",N
+11120,12.3.3.5,Create business case and obtain funding,N
+11121,12.3.3.6,Develop project measures and indicators,N
+11098,12.3.4,Design and launch KM projects,N
+11122,12.3.4.1,"Design process for knowledge sharing, capture, and use",N
+11123,12.3.4.2,Define roles and resources,N
+11124,12.3.4.3,Identify specific IT requirements,N
+11125,12.3.4.4,Create training and communication plans,N
+11126,12.3.4.5,Develop change management plans,N
+11127,12.3.4.6,Design recognition and reward approaches,N
+11128,12.3.4.7,Design and plan launch of KM project,N
+11129,12.3.4.8,Deploy the KM project,N
+11099,12.3.5,Manage the KM project life cycle,N
+11130,12.3.5.1,Assess alignment with business goals,N
+11131,12.3.5.2,Evaluate impact of KM (strategy and projects) on measures and outcomes,N
+11132,12.3.5.3,Promote and sustain activity and involvement,N
+11133,12.3.5.4,Realign and refresh KM strategy and approaches,N
+11074,12.4,Manage change,N
+11134,12.4.1,Plan for change,N
+11138,12.4.1.1,Select process improvement methodology,N
+11139,12.4.1.2,Assess readiness for change,N
+11140,12.4.1.3,Determine stakeholders,N
+11141,12.4.1.4,Engage/Identify champion,N
+11142,12.4.1.5,Form design team,N
+11143,12.4.1.6,Define scope,N
+11144,12.4.1.7,Understand current state,N
+11145,12.4.1.8,Define future state,N
+11146,12.4.1.9,Conduct risk analysis,N
+11147,12.4.1.10,Assess cultural issues,N
+11148,12.4.1.11,Establish accountability for change management,N
+11149,12.4.1.12,Identify barriers to change,N
+11150,12.4.1.13,Determine change enablers,N
+11151,12.4.1.14,Identify resources and develop measures,N
+11135,12.4.2,Design the change,N
+11152,12.4.2.1,Assess connection to other initiatives,N
+11153,12.4.2.2,Develop change management plans,N
+11154,12.4.2.3,Develop training plan,N
+11155,12.4.2.4,Develop communication plan,N
+11156,12.4.2.5,Develop rewards/incentives plan,N
+11157,12.4.2.6,Establish metrics,N
+11158,12.4.2.7,Establish/Clarify new roles,N
+11159,12.4.2.8,Identify budget/roles,N
+11136,12.4.3,Implement change,N
+11160,12.4.3.1,Create commitment for improvement/change,N
+11161,12.4.3.2,Reengineer business processes and systems,N
+11162,12.4.3.3,Support transition to new roles or exit strategies for incumbents,N
+11163,12.4.3.4,Monitor change,N
+11137,12.4.4,Sustain improvement,N
+11164,12.4.4.1,Monitor improved process performance,N
+11165,12.4.4.2,Capture and reuse lessons learned from change process,N
+11166,12.4.4.3,Take corrective action as necessary,N
+13733,13,Manage and Plan Network,N
+13734,13.1,Perform strategy and logical planning,N
+13740,13.1.1,Perform market sizing and consumer analysis,N
+13741,13.1.2,Forecast demand,N
+13742,13.1.3,Assess technology need,N
+13743,13.1.4,Plan capacity and coverage,N
+13744,13.1.5,Design network architecture and fundamental technical guidelines,N
+13745,13.1.6,Establish overall expectation and budget,N
+13746,13.1.7,Complete development of strategic plan,N
+13735,13.2,Plan network structure,N
+13747,13.2.1,"Perform aggregation and analysis of key planning: subscriber base, technology, suppliers, and test results",N
+13748,13.2.2,Perform regulatory compliance,N
+13750,13.2.2.1,Identify spectrum and right of way regulatory requirements,N
+13751,13.2.2.2,Apply for rights of way and spectrum license,N
+13752,13.2.2.3,Define procedures to ensure regulatory license compliance,N
+13753,13.2.2.4,Outline plan to monitor license compliance,N
+13754,13.2.2.5,Outline plan to handle license disputes,N
+13749,13.2.3,Develop master plan,N
+13755,13.2.3.1,Short-list vendor selection,N
+13756,13.2.3.2,List general project goals and objectives,N
+13736,13.3,Carry out operational planning,N
+13757,13.3.1,"Team selection, vendor selection, project definition",N
+13758,13.3.2,Agreement about particular project modules,N
+13759,13.3.3,Rough timetables,N
+13760,13.3.4,Project budgets,N
+13761,13.3.5,Development of plan of operations,N
+13737,13.4,Plan and monitor of projects,N
+13762,13.4.1,Detail work packages,N
+13763,13.4.2,Detail time schedules,N
+13764,13.4.3,Develop project plans,N
+13765,13.4.3.1,Issue purchase order,N
+13766,13.4.3.2,Reconcile purchase order,N
+13767,13.4.3.3,Manage settlement and billing,N
+13738,13.5,Carry out network testing and buildup,N
+13768,13.5.1,Receive order to build-up network,N
+13769,13.5.2,Send order to procurement equipment and locations,N
+13770,13.5.3,Coordinate build-up,N
+13771,13.5.4,Carry out build-up,N
+13774,13.5.4.1,Install equipment,N
+13775,13.5.4.2,Coordinate network starting dates,N
+13772,13.5.5,Install equipment,N
+13773,13.5.6,Perform readiness test (ORT),N
+13739,13.6,Perform start-up network operation,N
+13776,13.6.1,Release network sections,N
+13777,13.6.2,Perform continuous monitoring,N
+13778,13.6.3,Announce availability,N

@@ -1,0 +1,1471 @@
+PCF ID,Hierarchy ID,Name,Metrics available?
+10002,1,Develop District Vision and Strategy,Y
+17040,1.1,Define the district context and long-term vision,N
+10017,1.1.1,Assess the external environment,Y
+10021,1.1.1.1,"Analyze and evaluate competition (surrounding districts, private and charter schools, virtual schools, etc.)",N
+10022,1.1.1.2,"Identify economic trends (tax base, revenue, state/federal funding and grants)",N
+10023,1.1.1.3,Identify political and regulatory issues,N
+10024,1.1.1.4,"Assess new technology innovations (instructional, administrative, and operational)",N
+10025,1.1.1.5,Analyze demographics,N
+10026,1.1.1.6,Identify social and cultural changes,N
+10027,1.1.1.7,Identify ecological concerns,N
+16790,1.1.1.8,Identify intellectual property concerns,N
+16791,1.1.1.9,Evaluate IP acquisition options,N
+10018,1.1.2,Survey stakeholders and determine customer needs and requirements,Y
+10028,1.1.2.1,Conduct qualitative/quantitative assessments,N
+19946,1.1.2.2,Capture student and stakeholder needs,N
+19947,1.1.2.3,Assess student and stakeholder needs,N
+10019,1.1.3,"Conduct internal analysis of educational programs, support, and operation services",N
+10030,1.1.3.1,Analyze organizational characteristics,N
+19948,1.1.3.2,Analyze internal operations,N
+10031,1.1.3.3,Create baselines for current processes,N
+10032,1.1.3.4,Analyze systems and technology,N
+10033,1.1.3.5,Analyze financial health,N
+10034,1.1.3.6,Identify (district) core competencies,N
+10020,1.1.4,Establish strategic vision,N
+19949,1.1.4.1,Define the strategic vision,N
+10035,1.1.4.2,Align stakeholders around strategic vision,N
+10036,1.1.4.3,Communicate strategic vision to stakeholders,N
+10015,1.2,Develop district strategy,N
+10037,1.2.1,Develop overall mission statement,N
+10044,1.2.1.1,Define current business,N
+10045,1.2.1.2,Formulate mission,N
+10046,1.2.1.3,Communicate mission,N
+10038,1.2.2,Define and evaluate strategic options to achieve the objectives,N
+10047,1.2.2.1,Define strategic options,N
+18083,1.2.2.1.1,Select partnerships and relationships to support the extended enterprise,N
+10048,1.2.2.2,Assess and analyze impact of each option,N
+13289,1.2.2.2.1,Identify implications for key operating model business elements that require change,N
+13290,1.2.2.2.2,Identify implications for key technology aspects,N
+14189,1.2.2.3,Develop sustainability strategy,N
+19951,1.2.2.4,Develop shared services strategy,N
+14197,1.2.2.5,Develop lean/continuous improvement strategy,N
+10039,1.2.3,Select long-term district strategy,N
+10040,1.2.4,Coordinate and align functional and process strategies,N
+10041,1.2.5,Create organizational design,N
+10049,1.2.5.1,Evaluate breadth and depth of district organizational structure,N
+20187,1.2.5.2,Evaluate operations and instructional staffing needs,N
+10055,1.2.5.3,Assess organizational implication of staffing,N
+10042,1.2.6,Develop and set district goals,N
+19953,1.2.6.1,Identify organizational goals,N
+19954,1.2.6.2,Establish baseline metrics,N
+20188,1.2.6.3,Seek Board of Trustee approval of strategy and strategic plan,N
+20189,1.2.6.4,Communicate and share strategic plan with all staff,N
+20190,1.2.6.5,Train employees on strategic plan and alignment with department and campus plans,N
+20191,1.2.6.6,Post Strategic Plan to website,N
+10043,1.2.7,Formulate department and campus strategies,N
+19956,1.2.7.1,Analyze department and campus strategies to district,N
+10016,1.3,Execute and measure strategic initiatives,N
+10057,1.3.1,Develop strategic initiatives,N
+10058,1.3.2,Evaluate strategic initiatives,N
+10059,1.3.3,Select strategic initiatives,N
+10060,1.3.4,Establish high-level performance measures,N
+19983,1.3.4.1,Develop district scorecards to monitor and report performance,N
+19984,1.3.4.2,Align department and campus performance measures to district level measures,N
+20944,1.4,Develop and maintain business models,N
+20945,1.4.1,Develop business models,N
+20946,1.4.1.1,Assemble business model information,N
+20947,1.4.1.2,Secure appropriate approvals,N
+20948,1.4.1.3,Identify integration points with existing models,N
+20949,1.4.1.4,Adopt the business model,N
+20950,1.4.2,Maintain business models,N
+20951,1.4.2.1,Establish business model maintenance parameters,N
+20952,1.4.2.2,Accept business model feedback parameters,N
+20953,1.4.2.3,Prioritize and manage incoming feedback,N
+20954,1.4.2.4,Update existing models,N
+20955,1.4.3,Establish business model governance,N
+20192,2,"Develop, Deliver, and Assess Curriculum, Assessment, and Instruction",N
+20193,2.1,Develop curriculum,N
+20194,2.1.1,Define/Design curriculum development procedures,N
+20195,2.1.2,Align with federal/state/local standards,N
+20196,2.1.2.1,Align with content standards developed by national organizations,N
+20197,2.1.2.2,Align to assessment performance standards,N
+20198,2.1.2.3,Ensure horizontal and vertical curriculum alignment,N
+20199,2.1.2.4,Identify and review best practice research,N
+20200,2.1.3,Provide for key customer and stakeholder input,N
+20201,2.1.4,Develop scope/sequence/timeline,N
+20202,2.1.5,Develop instructional calendars/pacing guides/local assessments,N
+20203,2.1.6,Select instructional resources,N
+20204,2.1.6.1,Develop instructional materials plan,N
+20205,2.1.6.2,"Form cross-functional team including curriculum and instruction, technology, procurement office",N
+20206,2.1.6.3,Create overall plan,N
+20207,2.1.6.4,Collaborate with suppliers and contractors,N
+20208,2.1.6.5,Identify critical materials and supplier capacity,N
+20209,2.1.6.6,Coordinate implementation plan,N
+20210,2.1.7,Pilot the curriculum,N
+20211,2.1.7.1,Evaluate effectiveness of curriculum,N
+20212,2.1.7.2,Revise curriculum based on feedback and local assessments,N
+20213,2.1.8,Implement curriculum,N
+20214,2.1.9,Monitor integrity of curriculum implementation,N
+20215,2.2,Design effective instructional programs,N
+20216,2.2.1,Use diagnostics to determine readiness to learn,N
+20217,2.2.1.1,Use formative assessment to inform ongoing instruction,N
+20218,2.2.1.2,Determine students’ readiness to learn,N
+20219,2.2.2,Identify best practices based on data,N
+20220,2.2.2.1,Document and share best practices,N
+20221,2.2.3,Establish best-practice instructional strategies,N
+20222,2.2.3.1,Engage students in the instructional process,N
+20223,2.2.4,Develop an implementation plan,N
+20224,2.2.5,Determine expectation for lesson design,N
+20225,2.2.5.1,Determine district expectations,N
+20226,2.2.5.2,Determine campus expectations,N
+20227,2.2.5.3,Determine level and rigor of instruction expectations,N
+20228,2.2.6,Provide differentiated instruction based on individual student needs,N
+20229,2.2.6.1,Identify enrichment needs,N
+20230,2.2.6.2,Identify acceleration needs,N
+20231,2.2.6.3,Identify technology for program needs,N
+20232,2.2.7,Align after school and summer program curriculum,N
+20233,2.2.8,Design instructional programs to accelerate learning for students below grade level standards,N
+20234,2.2.8.1,Plan for remedial instruction,N
+20235,2.2.8.2,Manage the classroom for differentiated instructional strategies,N
+20236,2.2.8.3,Provide academic coaches to support classroom instruction for students,N
+20237,2.3,Assess student achievement,N
+20238,2.3.1,Plan district assessment program,N
+20239,2.3.1.1,Assess current assessment program,N
+20240,2.3.1.1.1,Determine goal of the assessment program in school or system improvement,N
+20241,2.3.1.1.2,"Identify mandatory testing by local, district, state, and federal agencies",N
+20242,2.3.1.1.3,"Identify diagnostic, formative, and any voluntary assessment for program",N
+20243,2.3.1.1.4,Determine target populations of current assessments,N
+20244,2.3.1.1.5,Analyze current frequency and scheduling of assessments,N
+20245,2.3.1.1.6,Identify gaps in the assessment program; check for alignment,N
+20246,2.3.1.2,Design assessment program,N
+20247,2.3.1.2.1,Determine learning (skills) to be assessed,N
+20248,2.3.1.2.2,Determine performance standards for target populations,N
+20249,2.3.1.2.3,Select most appropriate format,N
+20250,2.3.1.2.4,Select vendor-developed assessment or develop the assessment,N
+20251,2.3.2,Develop formative assessment tools,N
+20252,2.3.2.1,Determine the scope of content and skills to be addressed,N
+20253,2.3.2.2,"Determine assessment method for each objective (multiple choice, open-ended, essay, performance, portfolio, etc.)",N
+20254,2.3.2.3,"Determine appropriate delivery format (paper/pencil, online, oral administration, etc.)",N
+20255,2.3.2.4,"Develop blueprint for test development, including number and format of items or tasks for each objective or strand",N
+20256,2.3.2.5,"Develop test item specifications (number of distracters, level of vocabulary, level of thinking or mental processing, performance required)",N
+20257,2.3.2.6,Develop rubrics that outline requirements for successful response and scoring criteria for performance tasks and open-ended items,N
+20258,2.3.2.7,Develop items or tasks (locally or contractor),N
+20259,2.3.2.8,Review items for content/adherence to blueprint and item specifications by peer review,N
+20260,2.3.2.9,Develop key or refine rubrics as necessary,N
+20261,2.3.2.9.1,Review items for sensitivity and bias,N
+20262,2.3.2.9.2,Pilot items or tasks,N
+20263,2.3.2.9.3,Review and pilot completed assessment,N
+20264,2.3.2.9.4,Revise as needed,N
+20265,2.3.3,Administer formative assessments,N
+20266,2.3.3.1,Provide necessary training,N
+20267,2.3.3.2,Distribute the tests or assessment materials,N
+20268,2.3.3.3,Assess students using appropriate formative assessment procedures,N
+20269,2.3.3.4,Monitor compliance with assessment procedures,N
+20270,2.3.3.5,Monitor provision of appropriate accommodations for students,N
+20271,2.3.3.6,Collect data on formative assessment participation and possible irregularities and report,N
+20272,2.3.3.7,Receive test materials from schools if stored and/or scored centrally,N
+20273,2.3.3.8,"Package and transmit materials to contractor, as appropriate",N
+20274,2.3.4,Administer summative assessments,N
+20275,2.3.4.1,Provide necessary training to school-based staff,N
+20276,2.3.4.2,Distribute materials,N
+20277,2.3.4.3,Assess students using appropriate summative assessment procedures,N
+20278,2.3.4.4,Collect data on summative assessment participation and possible irregularities and report,N
+20279,2.3.4.5,Receive and inventory test materials from schools,N
+20280,2.3.4.6,Package and transmit materials per contractor instructions,N
+20281,2.3.5,Score and compile assessment data,N
+20282,2.3.5.1,Plan for scoring of assessment,N
+20283,2.3.5.2,Train key staff in scoring the assessment,N
+20284,2.3.5.3,Score summative assessments,N
+20285,2.3.6,Analyze and evaluate results,N
+20286,2.3.6.1,Identify and explore anomalies,N
+20287,2.3.6.2,"Disaggregate the data at the district, school, or classroom level as appropriate (e.g., grade levels, departments, subject areas, and subgroups [socio-economic status, ethnicity])",N
+20288,2.3.6.3,Analyze for gaps and strengths in student achievement,N
+20289,2.3.6.4,Check alignment of instruction with test content,N
+20290,2.3.6.5,"Identify trends (e.g., longitudinal, cohort)",N
+20291,2.3.6.6,"Identify over/under-achieving schools, programs, grade levels, teachers, etc.",N
+20292,2.3.6.7,Determine gaps between actual student achievement and achievement targets or expectations,N
+20293,2.3.6.8,Feed data/results to appropriate decision makers,N
+20294,2.3.6.9,Provide feedback to state and federal testing agencies or test publishers on quality issues and needed improvements,N
+20295,2.3.7,Provide training on analyzing and using data,N
+20296,2.3.7.1,"Provide training on data analysis at the district, school, and classroom levels",N
+20297,2.3.7.2,"Provide data utilization training to district, school, and classroom levels",N
+20298,2.3.8,"Report assessment results to students, stakeholders, and district leadership",N
+20299,2.3.8.1,Identify a data management system to archive and retrieve data,N
+20300,2.3.8.2,Identify audiences,N
+20301,2.3.8.3,Determine information needs of each audience,N
+20302,2.3.8.4,Determine products to meet audiences’ needs,N
+20303,2.3.8.5,Determine format and content and specifications for each product,N
+20304,2.3.8.6,Develop timelines aligned with deadlines and audience requirements,N
+20305,2.3.8.7,Produce each reporting product,N
+20306,2.3.8.8,Publish each reporting product,N
+20307,2.3.8.9,Present findings,N
+20308,2.3.8.9.1,Gather feedback on the usefulness of the reports,N
+20309,2.4,Evaluate programs,N
+20310,2.4.1,Determine programs to be evaluated,N
+20311,2.4.1.1,"Determine (and develop instruments where necessary) the data to be collected, including perception and background surveys, student performance data, observation checklists, comparable schools’ data, etc.",N
+20312,2.4.1.2,Gather the data,N
+20313,2.4.1.3,Analyze the collected data,N
+20314,2.4.1.4,Evaluate the program/determine program recommendations,N
+20315,3,Design and Deliver Student Support Services,N
+20316,3.1,Identify requirements for support services,N
+20317,3.1.1,Interpret rules and regulations,N
+20318,3.1.2,Conduct a district needs assessment for support services,N
+20319,3.1.3,Provide clear process for identifying student needs for support service,N
+20320,3.1.3.1,Develop referral committee guidelines,N
+20321,3.1.4,Identify gaps in services,N
+20322,3.1.5,Collaborate between services,N
+20323,3.2,Establish entrance and exit criteria for student support services,N
+20324,3.2.1,Establish referral criteria,N
+20325,3.2.2,Establish acceptance criteria,N
+20326,3.2.3,Establish exit criteria,N
+20327,3.2.4,Develop intervention programs,N
+20328,3.2.5,Identify the Least Restrictive Environment (LRE) for special education students,N
+20329,3.3,Evaluate support programs and services,N
+20330,3.3.1,"Train educators to observe student response to intervention, support programs, and services",N
+20331,3.3.2,Monitor student progress resulting from intervention,N
+20332,3.3.3,Evaluate effectiveness of services to meet students’ needs,N
+20333,3.4,Identify and coordinate community services related to student needs,N
+20334,3.4.1,"Identify/Maintain community partnership opportunities to support mentoring, tutoring, academic enrichment, etc.",N
+20335,3.4.2,Coordinate direct services of classroom volunteers,N
+20336,3.4.2.1,Determine the capacity and expertise of community partners to deliver services,N
+20337,3.4.2.2,"Provide a connecting/marketing mechanism between community provider (before, after, and during school) and individual student/family needs",N
+20338,3.4.2.3,Connect individual needs to best available services,N
+20339,3.4.2.4,Provide support (staff development) for instructional aides,N
+20340,3.5,Design and implement parent engagement programs,N
+20341,3.5.1,Plan and evaluate student and stakeholder engagement in educational programs and services,N
+20342,3.5.1.1,Establish family engagement policies and procedures,N
+20343,3.5.1.2,Develop communication venues for key educational programs and services,N
+20344,3.5.1.3,Assess satisfaction/engagement of students and stakeholders,N
+20345,3.5.1.4,Analyze satisfaction/engagement data,N
+20346,3.5.1.5,Use data to improve satisfaction/engagement,N
+20347,3.5.2,Provide parent education,N
+20348,3.5.2.1,Identify parent education needs and services,N
+20349,3.5.2.2,Implement parent education programs/services,N
+20350,3.5.2.3,Evaluate effectiveness of parent education programs/services,N
+20351,3.5.2.4,Revise and improve parent education programs and services,N
+20352,3.5.3,Coordinate and collaborate with parent/teacher organizations,N
+20353,3.6,Design and implement counseling services,N
+20354,3.6.1,Develop academic planning and counseling services,N
+20355,3.6.1.1,Identify student needs and requirements to complete graduation requirements,N
+20356,3.6.1.1.1,Develop graduation plans,N
+20357,3.6.1.1.2,Monitor completion of graduation plans,N
+20358,3.6.1.1.3,Provide intervention to students who are not on track to complete graduation plans,N
+20359,3.6.1.2,Develop career counseling and pathways for post-graduation,N
+20360,3.6.1.3,Communicate college and career opportunities,N
+20361,3.6.1.3.1,Provide on-site and web-based information,N
+20362,3.6.1.3.2,Develop K–12 strategies to communicate college and career opportunities,N
+20363,3.6.2,Develop counseling programs,N
+20364,3.6.3,Align guidance services to support instruction,N
+20365,3.6.4,Identify barriers to student academic achievement,N
+20366,3.7,Design and implement social services,N
+20367,3.7.1,Provide social service support for families/students,N
+20368,3.7.2,Provide homeless services,N
+20369,3.7.3,Provide migrant services,N
+20370,3.7.4,Utilize case management process to streamline and avoid duplication of services to individual student,N
+20371,3.7.5,"Manage outsourced services (e.g., child psychologist)",N
+20372,3.7.6,Identify and communicate web-based support programs,N
+20373,3.8,"Design and align extra-curricular services such as interscholastic athletics, clubs, other enrichment opportunities",N
+20374,3.9,Design and implement alternative education and interventions,N
+20375,3.9.1,Create alternative academic and discipline schools or programs,N
+20376,3.9.2,Provide early intervention for at-risk students,N
+20377,3.9.3,Develop student attendance policies and procedures,N
+20378,3.9.3.1,Develop student attendance tracking methods,N
+20379,3.9.3.2,Monitor student attendance,N
+20380,3.9.3.3,Develop interventions and diversion programs for student truancy,N
+20381,3.9.3.4,Identify performance measures for student attendance and truancy,N
+20382,3.9.3.5,Report performance measures for student attendance and truancy,N
+20383,3.9.4,Develop student behavior management policies and procedures,N
+20384,3.9.4.1,Develop district discipline management plan,N
+20385,3.9.4.2,Identify levels of student discipline management,N
+20386,3.9.4.3,Identify appropriate consequences to discipline infractions,N
+20387,3.9.4.4,Track student discipline infractions,N
+20388,3.9.4.5,Develop discipline performance measures,N
+20389,3.9.4.6,Analyze discipline data,N
+20390,3.9.4.7,"Revise discipline management plan, policies, or procedures",N
+20391,3.10,Design and implement student health services,N
+20392,3.10.1,Establish nursing services,N
+20393,3.10.2,Develop pregnancy services,N
+20394,3.10.2.1,Identify student needs,N
+20395,3.10.2.2,Provide teen parenting programs,N
+20396,3.10.3,Develop health and wellness strategies,N
+20397,3.10.3.1,Develop diabetes identification and counseling services,N
+20398,3.10.3.2,Develop vision and hearing screening,N
+20399,4,Design and Manage Operations,N
+20400,4.1,Plan for and manage student enrollment,N
+20401,4.1.1,Manage student enrollment,N
+20402,4.1.1.1,Conduct demographic analysis,N
+20403,4.1.1.2,Develop long-range demographic forecast,N
+20404,4.1.1.3,Develop short- and long-term enrollment projections,N
+20405,4.1.1.4,Monitor accuracy of enrollment projections,N
+20406,4.1.2,Manage student admissions and placement,N
+20407,4.1.2.1,Develop policies and procedures for admissions and placements,N
+20408,4.1.2.2,Identify support technologies for admission and placement,N
+20409,4.1.2.3,Monitor effectiveness of admissions,N
+20410,4.1.2.3.1,Develop performance measures for admissions and placements,N
+20411,4.1.2.3.2,Solicit feedback from students and stakeholders,N
+20412,4.1.2.3.3,Improve admission and placement procedures,N
+20413,4.1.3,Develop district school year calendar,N
+20414,4.1.3.1,"Engage stakeholders (community, parents, staff, teachers, etc.)",N
+20415,4.1.3.2,Develop calendar options,N
+20416,4.1.3.3,Present calendar to board for approval,N
+10216,4.2,Procure materials and services,Y
+10277,4.2.1,Provide sourcing governance and perform category management,Y
+10281,4.2.1.1,Develop procurement plan,N
+10282,4.2.1.2,Clarify purchasing requirements,N
+10283,4.2.1.3,Establish materials management contingency plans,N
+10284,4.2.1.4,Match needs to supply capabilities,N
+10285,4.2.1.5,Analyze district’s purchasing history,N
+10286,4.2.1.6,Seek opportunities to improve efficiency and value,N
+10287,4.2.1.7,Collaborate with suppliers to identify sourcing opportunities,N
+20973,4.2.2,Develop sourcing and category management strategies,N
+10278,4.2.3,Select suppliers and develop/maintain contracts,Y
+20417,4.2.3.1,Identify suppliers (create request for bids list),N
+10289,4.2.3.2,Certify and validate suppliers (receive and accept bids; create a bids list),N
+20418,4.2.3.3,Approve bids,N
+10291,4.2.3.4,Manage contracts,N
+10279,4.2.4,Order materials and services,Y
+10292,4.2.4.1,Process/Review requisitions,N
+10293,4.2.4.2,Approve requisitions,N
+10294,4.2.4.3,Monitor vendor quotes,N
+10295,4.2.4.4,Create/Distribute purchase orders,Y
+10296,4.2.4.5,Expedite orders and satisfy inquiries,N
+10297,4.2.4.6,Reconcile purchase orders,Y
+10298,4.2.4.7,Research/Resolve exceptions,N
+10280,4.2.5,Manage suppliers,Y
+10299,4.2.5.1,Monitor/Manage supplier information,N
+10300,4.2.5.2,Prepare/Analyze spending and vendor performance,N
+10301,4.2.5.3,Support inventory processes,N
+10302,4.2.5.4,Monitor quality of product delivered,N
+10219,4.3,Manage logistics and warehousing,Y
+20419,4.3.1,Define logistics strategy,N
+10343,4.3.1.1,Translate district requirements into logistics requirements,N
+10344,4.3.1.2,Design logistics network,N
+10345,4.3.1.3,Communicate outsourcing needs,N
+10346,4.3.1.4,Develop and maintain delivery service policy,N
+10347,4.3.1.5,Optimize distribution to schools’ schedules and costs,N
+10348,4.3.1.6,Define key performance measures,N
+10339,4.3.2,Plan and manage inbound material flow,Y
+10349,4.3.2.1,Plan receipt of deliveries,N
+10350,4.3.2.2,Manage receivables flow,N
+10351,4.3.2.3,Monitor receivables delivery performance,N
+10352,4.3.2.4,Manage flow of returned products,N
+10340,4.3.3,Operate warehousing,Y
+10353,4.3.3.1,Track inventory deployment,N
+10354,4.3.3.2,"Receive, inspect, and store receivables",N
+10355,4.3.3.3,Track inventory availability,N
+10356,4.3.3.4,"Pick, pack, and ship materials delivery",N
+10357,4.3.3.5,Track inventory accuracy,N
+10358,4.3.3.6,Track third-party logistics storage and shipping performance,N
+10341,4.3.4,Operate delivery of materials,Y
+10360,4.3.4.1,"Plan, transport, and deliver materials to schools",N
+10361,4.3.4.2,Track delivery performance,N
+10362,4.3.4.3,Manage delivery fleet,N
+10363,4.3.4.4,"Process and audit work orders, requisitions, and documents",N
+10342,4.3.5,Manage returns; manage reverse logistics,Y
+10364,4.3.5.1,Authorize and process returns,N
+10365,4.3.5.2,Perform reverse logistics,N
+10366,4.3.5.3,Perform salvage activities,N
+10367,4.3.5.4,Manage and process warranty claims,N
+14195,4.3.5.5,Manage repair/refurbishment and return to customer/inventory,N
+20420,4.4,Manage transportation of students,N
+20421,4.4.1,Design routes and schedules,N
+20422,4.4.1.1,Build and maintain address and GIS (Geographic Information System) data,N
+20423,4.4.1.2,Build and maintain student residence files,N
+20424,4.4.1.3,Optimize routes and loads,N
+20425,4.4.1.4,Evaluate cost effectiveness of transportation services,N
+20426,4.4.1.4.1,Identify effectiveness/efficiency measures,N
+20427,4.4.1.4.2,Develop transportation performance reports,N
+20428,4.4.2,Plan and deliver special routes and services to support instructional needs,N
+20429,4.4.2.1,Schedule events,N
+20430,4.4.2.2,Assign resources,N
+20431,4.4.2.3,Coordination with curriculum and instructional plans,N
+20432,4.4.3,"Manage vehicle acquisition, maintenance, and replacement",N
+20433,4.4.3.1,"Inventory vehicles, maintenance logs",N
+20434,4.4.3.2,"Build requirements for vehicles, solicit bids, order",N
+20435,4.5,Manage food services,N
+20436,4.5.1,Certify individual student eligibility for meals,N
+20437,4.5.2,Comply with federal and state regulations,N
+20438,4.5.3,Develop meal plans following nutritional guidelines,N
+20439,4.5.4,Procure foods,N
+20440,4.5.5,Deliver meals,N
+20441,4.5.6,"Coordinate and collaborate with other departments (e.g., maintenance, safety, custodial, etc.)",N
+20442,4.6,Provide library and media services,N
+20443,4.6.1,Develop collection plan and acquisition budget,N
+20444,4.6.2,Identify automated library service technology,N
+20445,4.6.3,Identify digital media services,N
+20446,4.6.4,Collaborate with educational staff to develop instructional support procedures and materials,N
+10006,5,Manage Student and Stakeholder Relationship and Engagement,Y
+10378,5.1,Develop student and stakeholder listening strategies,Y
+20447,5.1.1,Determine market requirements for educational programs and services,N
+20448,5.1.1.1,Identify educational and program services needs and requirements of students and stakeholders,N
+20086,5.1.1.2,Determine student and stakeholder support requirements,N
+20449,5.1.1.3,Establish communication mechanisms for student and stakeholders to obtain educational and support services,N
+20450,5.1.1.4,Develop innovation strategies to meet and exceed student and stakeholder expectations of educational programs and support services,N
+20451,5.1.2,Develop voice of the customer strategies,N
+10381,5.1.2.1,Identify students and stakeholder segmentation,N
+20452,5.1.2.2,"Identify listening mechanisms for former, existing, and potential students and stakeholders (parents, community)",N
+20453,5.1.2.2.1,"Gather voice of the customer (VOC ) data (focus groups, surveys, etc.)",N
+20454,5.1.2.2.2,Disaggregate and analyze VOC data,N
+10385,5.1.2.3,Analyze feedback of customer needs and requirements,N
+10382,5.1.3,Define customer service policies and procedures,N
+10383,5.1.3.1,Identify district customer service standards,Y
+20455,5.1.3.1.1,Communicate district customer service standards,N
+20456,5.1.3.1.2,Conduct training on district customer service standards,N
+20457,5.1.3.1.3,Identify customer service performance measures,N
+20458,5.2,Plan and manage student and stakeholder relationship and engagement strategies,N
+20459,5.2.1,Plan and manage student and stakeholder relationship and engagement,N
+20460,5.2.1.1,Identify student and stakeholder engagement strategies,N
+20461,5.2.1.1.1,Monitor quality of student and stakeholder engagement strategies,N
+20462,5.2.1.1.2,Evaluate quality of student and stakeholder engagement strategies,N
+20463,5.2.1.2,Develop strategies to acquire and retain students and stakeholders,N
+10388,5.2.2,Manage stakeholder requests/inquiries,Y
+10394,5.2.2.1,Receive customer information/open records requests/inquiries,N
+13482,5.2.2.2,Route customer information/open records requests/inquiries,N
+10396,5.2.2.3,Respond to customer information/open records requests/inquiries,N
+10389,5.2.3,Manage student and stakeholder complaints,Y
+10397,5.2.3.1,Receive student and stakeholder complaints,N
+10398,5.2.3.2,Route student and stakeholder complaints,N
+10399,5.2.3.3,Resolve student and stakeholder complaints,N
+10400,5.2.3.4,Respond to student and stakeholder complaints,N
+20464,5.2.3.5,"Collect, track, and analyze complaint data",N
+20595,5.3,Measure and evaluate student and stakeholder service strategies,N
+10401,5.3.1,Measure customer satisfaction,N
+11687,5.3.1.1,Gather and solicit students and stakeholder feedback on educational and support services,N
+11688,5.3.1.2,Analyze educational and support services satisfaction data and identify improvement and innovation opportunities,N
+18126,5.3.1.3,Report student and stakeholder feedback on educational and support services,N
+10402,5.3.2,Measure stakeholder satisfaction with complaint handling and resolution,Y
+11236,5.3.2.1,Solicit stakeholder feedback on complaint handling and resolution,N
+11237,5.3.2.2,Analyze stakeholder complaint data and identify improvement opportunities,N
+20465,5.4,Manage district communications,N
+16848,5.4.1,Develop communication strategies,N
+18627,5.4.1.1,Formulate communication plan,N
+20466,5.4.1.1.1,Identify key messages,N
+20467,5.4.1.1.2,Identify target audiences,N
+20468,5.4.1.1.3,Identify measurable objectives,N
+20469,5.4.1.1.4,Develop strategies and tactics to support objectives,N
+20470,5.4.2,Develop district brand,N
+20471,5.4.2.1,Define unique district brand message,N
+20472,5.4.2.2,Embed brand in communications,N
+20473,5.4.2.3,Measure and reassess branding activities against district strategy and vision,N
+20474,5.4.3,Manage social media,N
+20475,5.4.3.1,Develop social media strategy,N
+20476,5.4.3.2,Define social media performance measures,N
+16627,5.4.3.3,Monitor and respond to social media activity,N
+20477,5.4.3.4,Execute social media campaigns,N
+20478,5.4.3.5,Evaluate social media performance measures,N
+20010,5.4.4,Design and develop publications,N
+10167,5.4.4.1,Define publications objectives and strategy,N
+10160,5.4.4.2,Define target audiences,N
+10171,5.4.4.3,Identify publication performance measures,N
+10159,5.4.4.4,Develop publications,N
+10170,5.4.4.5,Evaluate publication performance measures,N
+20479,5.4.5,Develop and manage media campaigns,N
+20480,5.4.5.1,Define media objectives,N
+20481,5.4.5.2,Develop marketing messages,N
+20482,5.4.5.3,Define target audience,N
+20483,5.4.5.4,Engage media provider,N
+20484,5.4.5.5,Develop and execute media campaign(s),N
+20485,5.4.5.6,Assess media campaign performance,N
+20486,5.5,Develop and manage district websites,N
+20487,5.5.1,Gather information on website design,N
+20488,5.5.2,Create plan for website development,N
+20489,5.5.3,Design websites,N
+20490,5.5.4,Develop websites,N
+20491,5.5.5,Test and launch websites,N
+20492,5.5.6,Maintain websites,N
+16614,5.5.7,Evaluate websites,N
+10007,6,Develop and Manage Human Capital,Y
+17043,6.1,"Develop and manage human resources (HR) planning, policies, and strategies",Y
+17044,6.1.1,Develop human resources strategy,N
+10418,6.1.1.1,Identify strategic HR needs,N
+10419,6.1.1.2,Define HR and business function roles and accountability,N
+10420,6.1.1.3,Determine HR costs,N
+10421,6.1.1.4,Establish HR measures,N
+10422,6.1.1.5,Communicate HR strategies,N
+10432,6.1.1.6,Develop strategy for HR systems/technologies/tools,N
+20606,6.1.1.7,Manage employer branding,N
+17045,6.1.2,Develop and implement human resources plans,N
+10423,6.1.2.1,Gather skill requirements according to district strategy and educational and operational needs,N
+10424,6.1.2.2,Plan employee resourcing requirements per department and campus,N
+10425,6.1.2.3,Develop compensation plan,N
+10426,6.1.2.4,Develop succession plan,Y
+10427,6.1.2.5,Develop employee diversity plan,N
+10428,6.1.2.6,Develop other HR programs,N
+10429,6.1.2.7,Develop HR policies,N
+10430,6.1.2.8,Administer HR policies,N
+10431,6.1.2.9,Plan employee benefits,N
+10433,6.1.2.10,Develop work force strategy models,N
+10417,6.1.3,Monitor and update plans,Y
+10434,6.1.3.1,Monitor HR performance measures,N
+10435,6.1.3.2,Analyze contribution to district goals and objectives,N
+10436,6.1.3.3,Communicate plans and provide updates to board of education/trustees,N
+20493,6.1.3.4,Determine value added from HR function,N
+10438,6.1.3.5,Review and revise HR plans,N
+10410,6.2,Recruit/Source and Screen/Select employees,Y
+10439,6.2.1,Create and develop employee requisitions/vacancy posting,N
+10445,6.2.1.1,Align staffing plan to work force plan and district strategies/resource needs,N
+10446,6.2.1.2,Develop and open job requisition,N
+10447,6.2.1.3,Develop job description,N
+10448,6.2.1.4,Post requisition,N
+10449,6.2.1.5,Manage internal/external job posting Web sites,N
+10450,6.2.1.6,Change/Update requisition,N
+10451,6.2.1.7,Notify hiring manager,N
+10452,6.2.1.8,Manage requisition date,N
+10440,6.2.2,Recruit/Source candidates,N
+10453,6.2.2.1,Determine recruitment methods,N
+10454,6.2.2.2,Perform recruiting activities/events,N
+20494,6.2.2.3,Evaluate recruitment effectiveness,N
+20123,6.2.3,Screen/Select candidates,N
+10456,6.2.3.1,Identify and deploy candidate selection tools,N
+10457,6.2.3.2,Interview candidates,N
+10458,6.2.3.3,Test candidates,N
+10459,6.2.3.4,Select and reject candidates,N
+10444,6.2.4,Manage pre-placement verification,N
+10460,6.2.4.1,Complete candidate background information,N
+20495,6.2.4.2,Conduct pre-employment screening,N
+20496,6.2.4.3,Recommend/Not recommend candidate,N
+10443,6.2.5,Manage new hire/rehire,Y
+10463,6.2.5.1,Draw up and make offer,N
+10464,6.2.5.2,Negotiate offer,N
+10465,6.2.5.3,Hire candidate,N
+20497,6.2.6,Track candidates,N
+10466,6.2.6.1,Create applicant record,N
+10467,6.2.6.2,Manage/Track applicant data,N
+10468,6.2.6.3,Archive and retain records of non-hires,N
+20498,6.2.7,Manage substitute teaching staff,N
+20499,6.2.7.1,Identify substitute qualifications and requirements,N
+20500,6.2.7.2,Develop substitute hiring methods,N
+20501,6.2.7.3,Identify and deploy substitute scheduling and tracking tools,N
+20502,6.2.7.4,Monitor substitute use and effectiveness,N
+20599,6.3,"Manage employee on boarding, development, and training",Y
+10469,6.3.1,Manage employee orientation and assignment,Y
+10474,6.3.1.1,Create/Maintain employee on-boarding program,N
+20503,6.3.1.2,Introduce new employees to managers,N
+20504,6.3.1.3,Introduce workplace,N
+11243,6.3.1.4,Evaluate the effectiveness of employee on-boarding program,N
+10470,6.3.2,Manage employee performance,Y
+10479,6.3.2.1,Define performance objectives,N
+10480,6.3.2.2,"Review, appraise, and manage employee performance",N
+10481,6.3.2.3,Evaluate and review performance program,N
+10472,6.3.3,Manage employee development,Y
+10487,6.3.3.1,Define employee development guidelines,N
+10488,6.3.3.2,Develop employee career plans,N
+17051,6.3.3.3,Manage employee skill and competency development,N
+10473,6.3.4,Develop and train employees,Y
+10490,6.3.4.1,"Align employee, school, and district development needs",N
+10491,6.3.4.2,Align learning programs with competencies,N
+10492,6.3.4.3,Establish training needs by analysis of required and available skills,N
+10493,6.3.4.4,"Develop, conduct, and manage employee and/or management training programs",Y
+20506,6.3.4.4.1,Reinforce training and development,N
+20507,6.3.4.4.2,"Provide coaching, mentoring, peer sharing",N
+20125,6.3.4.5,Manage examinations and certifications,N
+20126,6.3.4.5.1,Liaise with external certification authorities,N
+20127,6.3.4.5.2,Administer certification tests,N
+20128,6.3.4.5.3,Appraise experience qualifications,N
+20129,6.3.4.5.4,Administer certificate issue and maintenance,N
+17052,6.4,Manage employee relations,Y
+20505,6.4.1,Manage health and safety,N
+10483,6.4.2,Manage labor relations,Y
+10484,6.4.3,Manage collective bargaining process,N
+10485,6.4.4,Manage labor management partnerships,N
+10531,6.4.5,Manage employee grievances,Y
+10412,6.5,Reward and retain employees,Y
+10494,6.5.1,"Develop and manage reward, recognition, and incentive programs",Y
+10498,6.5.1.1,Develop salary/compensation structure and plan,Y
+10499,6.5.1.2,"Develop benefits, reward, and incentive plan",N
+10500,6.5.1.3,"Perform competitive analysis of benefit, rewards, and incentives",N
+10501,6.5.1.4,Identify compensation requirements based on financial benefits and HR policies,N
+10502,6.5.1.5,"Administer compensation, rewards, and incentives to employees",N
+10503,6.5.1.6,Reward and motivate employees,N
+20508,6.5.2,Develop and manage employee engagement and satisfaction,N
+20509,6.5.2.1,Determine key elements that affect workforce engagement,N
+20510,6.5.2.2,Differentiate engagement elements for different workforce groups and segments,N
+20511,6.5.2.3,Determine workforce engagement and satisfaction assessment methods,N
+20512,6.5.2.4,Administer assessments,N
+20513,6.5.2.5,Establish engagement and satisfaction performance measures,N
+20514,6.5.2.6,Analyze and report engagement and satisfaction results,N
+10495,6.5.3,Manage and administer benefits,N
+10504,6.5.3.1,Deliver employee benefits program,N
+10505,6.5.3.2,Administer benefit enrollment,N
+10506,6.5.3.3,Process claims,N
+10507,6.5.3.4,Perform benefit reconciliation,N
+10496,6.5.4,Manage employee assistance and retention,N
+10508,6.5.4.1,Deliver programs to support work/life balance for employees,N
+10509,6.5.4.2,Develop family support systems,N
+10510,6.5.4.3,Review retention and engagement indicators,N
+10511,6.5.4.4,Review compensation plan,N
+10497,6.5.5,Administer payroll,Y
+10413,6.6,Redeploy and retire employees,Y
+10512,6.6.1,Manage promotion and demotion process,Y
+10513,6.6.2,Manage separation,Y
+10514,6.6.3,Manage retirement,N
+10515,6.6.4,"Manage leave of absence, sabbatical",N
+10516,6.6.5,Develop and implement employee reduction in force policies and regulations,N
+10517,6.6.6,Manage deployment of personnel,N
+17055,6.6.7,Relocate employees and manage assignments,N
+20515,6.6.8,Manage former employees,N
+20516,6.6.8.1,Manage employee relocation process,N
+20134,6.7,Manage employee information,Y
+10522,6.7.1,Manage reporting processes,Y
+10523,6.7.2,Manage employee inquiry process,Y
+10524,6.7.3,Manage and maintain employee data,Y
+10525,6.7.4,Manage human resource information systems (HRIS),Y
+10526,6.7.5,Develop and manage employee metrics,Y
+10527,6.7.6,Develop and manage time and attendance systems,Y
+10530,6.7.7,Manage/Collect employee suggestions and perform employee research,N
+17057,6.8,Manage employee communication,Y
+10529,6.8.1,Develop employee communication plan,N
+16944,6.8.2,Conduct employee engagement surveys,N
+10532,6.9,Deliver employee communications,N
+20607,7,Manage Information Technology (IT),Y
+20608,7.1,Develop and manage IT customer relationships,Y
+20609,7.1.1,Understand IT customer needs,N
+20610,7.1.1.1,Understand IT customer communities,N
+20611,7.1.1.2,Assess IT customer operational capabilities,N
+20612,7.1.2,Identify IT customer transformation needs,N
+20613,7.1.2.1,Understand business requirements for IT capabilities,N
+20614,7.1.2.2,Understand IT landscape,N
+20615,7.1.2.3,Develop IT visioning,N
+20616,7.1.2.4,Outline IT service expectations,N
+20617,7.1.3,Plan and communicate IT services,N
+20618,7.1.3.1,Manage IT customer expectations,N
+20619,7.1.3.2,Define future IT services,N
+20620,7.1.3.3,Determine IT performance indicators,N
+20621,7.1.3.4,Create IT marketing messages,N
+20622,7.1.3.5,Create IT service marketing plan,N
+20623,7.1.4,Provide IT transformation guidance,N
+20624,7.1.4.1,Develop IT transformation plans,N
+20625,7.1.4.2,Collect IT customer requirements,N
+20937,7.1.4.3,Analyze IT customer requirements,N
+20626,7.1.4.4,Identify and prioritize IT opportunities,N
+20627,7.1.4.5,Facilitate solution design activities,N
+20628,7.1.4.6,Prioritize IT outcomes,N
+20629,7.1.4.7,Develop business cases,N
+20630,7.1.4.8,Support business case,N
+20631,7.1.4.9,Develop transformation roadmap,N
+20632,7.1.5,Develop and manage IT service levels,N
+20633,7.1.5.1,Understand IT service requirements,N
+20634,7.1.5.2,Forecast IT service demand,N
+20635,7.1.5.3,Maintain IT services catalog,N
+20636,7.1.5.4,Define service level agreement,N
+20637,7.1.5.5,Maintain IT customer contracts,N
+20638,7.1.5.6,Negotiate and establish service level agreements,N
+20640,7.1.5.7,Develop and maintain improvement processes,N
+20641,7.1.6,Manage IT customer relationships,N
+20642,7.1.6.1,Establish relationship management mechanisms,N
+20643,7.1.6.2,Understand IT customer strategy,N
+20644,7.1.6.3,Understand IT customer environment,N
+20645,7.1.6.4,Communicate IT capabilities,N
+20646,7.1.6.5,Manage IT requirements,N
+20648,7.1.7,Analyze service performance,N
+20649,7.1.7.1,Assess SLA compliance,N
+20650,7.1.7.2,Triage SLA compliance issues,N
+20647,7.1.7.3,Collect feedback about IT products and services,N
+20938,7.1.7.4,Synthesize and distribute IT performance information,N
+20652,7.2,Develop and manage IT business strategy,Y
+20653,7.2.1,Define business technology and governance strategy,N
+20654,7.2.1.1,Build and maintain IT strategic intelligence,N
+20655,7.2.1.2,Monitor and map current and emerging technologies,N
+20656,7.2.1.3,Define and communicate digital transformation strategy,N
+20657,7.2.1.4,Develop IT strategic alignment,N
+20658,7.2.1.5,Articulate IT alignment principles,N
+20659,7.2.1.6,Maintain IT strategic alignment,N
+20660,7.2.2,Manage IT portfolio strategy,N
+20661,7.2.2.1,Establish and validate IT value criteria,N
+20662,7.2.2.2,Determine IT portfolio investment balance,N
+20663,7.2.2.3,Evaluate proposed IT investment projects,N
+20664,7.2.2.4,Prioritize IT projects,N
+20665,7.2.2.5,Align IT resources to strategic priorities,N
+20667,7.2.2.6,Align IT portfolio to business objectives,N
+20668,7.2.3,Define and maintain enterprise architecture,N
+20670,7.2.3.1,Create and publish enterprise architecture principles,N
+20671,7.2.3.2,Establish and operate enterprise architecture governance,N
+20672,7.2.3.3,Research technologies to innovate IT services and solutions,N
+20673,7.2.3.4,Provide input to definition and prioritization of IT projects,N
+20674,7.2.4,Define IT service management strategy,N
+20675,7.2.4.1,Establish IT service management strategy and goals,N
+20676,7.2.4.2,Identify IT service operating and process requirements,N
+20677,7.2.4.3,Define IT service catalog,N
+20678,7.2.4.4,Establish IT service management framework,N
+20679,7.2.4.5,Define and implement IT service management,N
+20680,7.2.4.6,Define and deploy support service management process tools and methods,N
+20681,7.2.4.7,Monitor and report IT performance,N
+20682,7.2.5,Control IT management system,N
+20683,7.2.5.1,Determine IT performance measures,N
+20684,7.2.5.2,Define IT control points and assurance procedures governance model,N
+20685,7.2.5.3,Monitor and analyze overall IT performance,N
+20686,7.2.5.4,Monitor and analyze IT financial performance,N
+20687,7.2.5.5,Monitor and analyze IT value and benefits,N
+20688,7.2.5.6,Optimize IT resource allocation,N
+20689,7.2.5.7,Manage IT projects and services interdependencies,N
+20690,7.2.5.8,Report IT service and project performance,N
+20692,7.2.5.9,"Select, deploy, and operate IT performance analytics tools",N
+20693,7.2.6,Manage IT value portfolio,N
+20694,7.2.6.1,Assess performance against IT service and project value criteria,N
+20695,7.2.6.2,Quantify value of IT service and project portfolio investments,N
+20696,7.2.6.3,Communicate business technology value contribution,N
+20697,7.2.6.4,Determine and implement IT portfolio adjustments,N
+20699,7.2.7,Define and manage technology innovation,N
+20700,7.2.7.1,Establish selection criteria for research initiatives,N
+20701,7.2.7.2,Analyze emerging technology concepts,N
+20702,7.2.7.3,Identify technology concepts and capabilities,N
+20703,7.2.7.4,Execute IT research projects,N
+20939,7.2.7.5,Evaluate IT research project outcomes,N
+20704,7.2.7.6,Identify and promote viable concepts,N
+20705,7.2.7.7,Develop and plan IT investment projects,N
+20706,7.3,Develop and manage IT resilience and risk,Y
+20707,7.3.1,"Develop IT compliance, risk, and security strategy",N
+20708,7.3.1.1,Determine and evaluate IT regulatory and audit requirements,N
+20940,7.3.1.2,Understand business unit risk tolerance,N
+20709,7.3.1.3,Establish IT risk tolerance,N
+20710,7.3.1.4,Establish risk ownership,N
+20711,7.3.1.5,Establish and maintain risk management roles,N
+20712,7.3.1.6,Establish compliance objectives,N
+20941,7.3.1.7,Identify systems to support compliance,N
+20713,7.3.1.8,Identify and evaluate IT risk,N
+20714,7.3.1.9,Evaluate IT-related risks resiliency,N
+20715,7.3.1.10,Create IT risk mitigation strategies and approaches,N
+20716,7.3.2,Develop IT resilience strategy,N
+20717,7.3.2.1,Determine IT delivery resiliency,N
+20718,7.3.2.2,Determine critical IT risks,N
+20719,7.3.2.3,Prioritize IT risks,N
+20720,7.3.2.4,Establish mitigation approaches for IT risks,N
+20721,7.3.3,"Control IT risk, compliance, and security",N
+20722,7.3.3.1,Evaluate enterprise regulatory and compliance obligations,N
+20723,7.3.3.2,Analyze IT security threat impact,N
+20724,7.3.3.3,Create and maintain IT compliance requirements,N
+20942,7.3.3.4,"Create and maintain IT security policies, standards, and procedures",N
+20725,7.3.3.5,Develop and deploy risk management training,N
+20726,7.3.3.6,Establish risk reporting capabilities and responsibilities,N
+20727,7.3.3.7,Establish communication standards,N
+20728,7.3.3.8,Conduct IT risk and threat assessments,N
+20729,7.3.3.9,Monitor and manage IT activity risk,N
+20730,7.3.3.10,"Identify, supervise and monitor IT risk mitigation measures",N
+20731,7.3.4,Plan and manage IT continuity,N
+20732,7.3.4.1,Evaluate IT continuity,N
+20733,7.3.4.2,Identify IT continuity gaps,N
+20734,7.3.4.3,Manage IT business continuity,N
+20735,7.3.5,"Develop and manage IT security, privacy, and data protection",N
+20736,7.3.5.1,Assess IT regulatory and confidentiality requirements and policies,N
+20737,7.3.5.2,"Create IT security, privacy, and data protection risk governance",N
+20738,7.3.5.3,"Define IT data security and privacy policies, standards, and procedures",N
+20739,7.3.5.4,Review and monitor physical and logical IT data security measures,N
+20740,7.3.5.5,Review and monitor application security controls,N
+20741,7.3.5.6,Review and monitor IT physical environment security controls,N
+20742,7.3.5.7,Monitor/analyze network intrusion detection data and resolve threats,N
+20743,7.3.6,Conduct and analyze IT compliance assessments,N
+20744,7.3.6.1,Conduct projects to enhance IT compliance and remediate risk,N
+20745,7.3.6.2,Conduct IT compliance control auditing of internal and external services,N
+20746,7.3.6.3,Perform IT compliance reporting,N
+20747,7.3.6.4,Identify and escalate IT compliance issues and remediation requirements,N
+20748,7.3.6.5,Support external audits and reports,N
+20749,7.3.7,Develop and execute IT resilience and continuity operations,N
+20750,7.3.7.1,Conduct IT resilience improvement projects,N
+20751,7.3.7.2,"Develop, document, and maintain IT business continuity planning",N
+20752,7.3.7.3,Implement and enforce change control procedures,N
+20753,7.3.7.4,Execute recurring IT service provider business continuity,N
+20754,7.3.7.5,Provide IT resilience training,N
+20755,7.3.7.6,Execute recurring IT business operations continuity,N
+20756,7.3.8,Manage IT user identity and authorization,N
+20757,7.3.8.1,Support integration of identity and authorization policies,N
+20758,7.3.8.2,Manage IT user directory,N
+20759,7.3.8.3,Manage IT user authorization,N
+20760,7.3.8.4,Manage IT user authentication mechanisms,N
+20761,7.3.8.5,Audit IT user identity and authorization systems,N
+20762,7.3.8.6,Respond to IT information security and network breaches,N
+20763,7.3.8.7,Conduct penetration testing,N
+20764,7.3.8.8,Audit integration of user identity and authorization systems,N
+20765,7.4,Manage information,Y
+20766,7.4.1,Define business information and analytics strategy,N
+20767,7.4.1.1,"Establish data, information, and analytic objectives",N
+20768,7.4.1.2,"Establish data, information, and analytic governance",N
+20769,7.4.1.3,Access IT data/analytic capabilities,N
+20770,7.4.2,Define and maintain business information architecture,N
+20771,7.4.2.1,Determine enterprise business information requirements,N
+20772,7.4.2.2,Define enterprise data models,N
+20773,7.4.2.3,Identify and understand external data sources,N
+20774,7.4.2.4,Establish data ownership and stewardship responsibilities,N
+20775,7.4.2.5,Maintain and evolve enterprise data and information architecture,N
+20776,7.4.3,Define and execute business information lifecycle planning and control,N
+20777,7.4.3.1,"Define and maintain enterprise information policies, standards, and procedures",N
+20778,7.4.3.2,Implement and execute data administration responsibilities,N
+20779,7.4.4,Manage business information content,N
+20780,7.4.4.1,Monitor and control business information,N
+20781,7.4.4.2,Maintain business information feeds and repositories,N
+20782,7.4.4.3,Perform internal usage audits,N
+20783,7.4.4.4,Implement and administer business information access,N
+20784,7.5,Develop and manage services/solutions,Y
+20785,7.5.1,Develop service/solution and integration strategy,N
+20786,7.5.1.1,Determine IT service/solution development,N
+20787,7.5.1.2,Define IT service/solution development processes/standards,N
+20788,7.5.1.3,"Identify, deploy, and support development methodologies and tools",N
+20789,7.5.1.4,Establish service component criteria,N
+20790,7.5.1.5,Understand and select reusable service components,N
+20791,7.5.1.6,Maintain service component portfolio,N
+20792,7.5.1.7,Establish development standards exception governance,N
+20793,7.5.2,Manage service/solution lifecycle planning,N
+20794,7.5.2.1,Monitor and track emerging technology capabilities,N
+20795,7.5.2.2,Identify IT services/solutions,N
+20796,7.5.2.3,Determine IT service/solution approach,N
+20797,7.5.2.4,Define IT solution lifecycle,N
+20798,7.5.2.5,"Develop IT service/solution ""sunset"" plans",N
+20799,7.5.3,Develop and manage service/solution architecture,N
+20800,7.5.3.1,Assess IT application and infrastructure architecture constraints,N
+20801,7.5.3.2,Assess business constraints on IT service/solution,N
+20802,7.5.3.3,Determine IT component integration requirements,N
+20803,7.5.3.4,Identify opportunities for IT component reuse,N
+20804,7.5.3.5,Promote adoption of existing service/solution architecture,N
+20805,7.5.3.6,Develop and maintain service/solution architectures,N
+20806,7.5.3.7,Assess IT service/solution architecture conformance,N
+20807,7.5.3.8,Manage architectural exceptions,N
+20808,7.5.4,Execute IT service/solution creation and testing,N
+20809,7.5.4.1,Execute IT service/solution development lifecycle,N
+20810,7.5.4.1.1,Assess and validate IT service/solution requirements,N
+20811,7.5.4.1.2,Create service/solution design,N
+20812,7.5.4.1.3,Build and test IT service/solution components,N
+20813,7.5.4.1.4,Integrate IT components and services,N
+20814,7.5.4.1.5,Execute IT service/solution validation,N
+20815,7.5.4.1.6,Bundle service/solution deployment packaging,N
+20816,7.5.4.1.7,Manage service/solution process exceptions,N
+20817,7.5.5,Perform service/solution maintenance and testing,N
+20818,7.5.5.1,Execute IT service/solution maintenance lifecycle,N
+20819,7.5.5.1.1,Assess IT remediation,N
+20820,7.5.5.1.2,Modify service/solution design,N
+20821,7.5.5.1.3,Perform IT service/solution remediation,N
+20822,7.5.5.1.4,Manage service/solution operations,N
+20823,7.5.5.1.5,Prepare fixed/enhanced service/solution packaging,N
+20824,7.6,Deploy services/solutions,Y
+20825,7.6.1,Develop and manage service/solution deployment strategy,N
+20826,7.6.1.1,Assess IT deployment business impact,N
+20827,7.6.1.2,Establish IT deployment policies,N
+20828,7.6.1.3,Define and create deployment procedure workflow,N
+20829,7.6.1.4,Define IT change/release standards,N
+20830,7.6.1.5,Assign deployment approval responsibilities,N
+20831,7.6.1.6,Analyze deployments outcomes,N
+20832,7.6.2,Plan service and solution implementation,N
+20833,7.6.2.1,Assess IT deployment risk,N
+20834,7.6.2.2,Define implementation schedule and roll-out sequence,N
+20835,7.6.2.3,Determine implementation requirements,N
+20836,7.6.2.4,Plan and align user testing and resources,N
+20837,7.6.2.5,Develop IT training,N
+20838,7.6.2.6,Create implementation communications,N
+20839,7.6.2.7,Manage IT roll-back procedures,N
+20840,7.6.3,Manage change deployment control,N
+20841,7.6.3.1,Asses IT change/release impact,N
+20842,7.6.3.2,Confirm change/release compliance,N
+20843,7.6.3.3,Assess IT change/release risk,N
+20844,7.6.3.4,Consolidate IT change,N
+20845,7.6.3.5,Create and communicate deployment schedule,N
+20846,7.6.3.6,Approve change/release deployment,N
+20847,7.6.3.7,Document IT change/release outcome,N
+20848,7.6.4,Implement technology solutions,N
+20849,7.6.4.1,Confirm hardware/software operational status,N
+20850,7.6.4.2,Confirm operational availability,N
+20851,7.6.4.3,Execute internal IT implementation plan,N
+20852,7.6.4.4,Confirm implementation completion,N
+20853,7.6.4.5,Implement software change/release,N
+20854,7.6.4.6,Perform post-installation testing,N
+20855,7.6.4.7,Distribute software components network-wide,N
+20856,7.6.4.8,Verify change/release implementation success,N
+20857,7.6.4.9,Execute roll-back plan,N
+20858,7.6.5,Perform service and solution rollout,N
+20859,7.6.5.1,Conduct IT training,N
+20860,7.6.5.2,Prepare and distribute service/solution communications,N
+20861,7.6.5.3,Support organizational changes,N
+20862,7.6.5.4,Execute rollout plans,N
+20863,7.6.5.5,Provide rollout support,N
+20864,7.6.5.6,Manage rollout support capabilities,N
+20865,7.6.5.7,Monitor and record rollout issues,N
+20866,7.7,Create and manage support services/solutions,Y
+20867,7.7.1,Define and establish service delivery strategy,N
+20868,7.7.1.1,Assess business objectives and IT service delivery,N
+20869,7.7.1.2,Define IT service delivery portfolio,N
+20870,7.7.1.3,Create and maintain IT service delivery model,N
+20871,7.7.1.4,Determine IT service delivery locations and activities,N
+20872,7.7.1.5,Define IT service delivery sourcing strategy,N
+20873,7.7.2,Define and develop service support strategy,N
+20874,7.7.2.1,Assess business objectives and IT service support delivery,N
+20875,7.7.2.2,Define IT service support portfolio,N
+20876,7.7.2.3,Create and maintain IT support model,N
+20877,7.7.2.4,Develop IT support service sourcing strategy,N
+20878,7.7.2.5,Establish support service framework,N
+20879,7.7.2.6,Provide service support tools and technology,N
+20880,7.7.3,Plan and manage service delivery control,N
+20881,7.7.3.1,Plan operational activities for IT service delivery,N
+20882,7.7.3.1.1,Schedule service delivery resources,N
+20883,7.7.3.1.2,Maintain/optimize batch job schedule,N
+20884,7.7.3.1.3,Schedule change/release windows,N
+20885,7.7.3.1.4,Schedule/optimize backup and archive activities,N
+20886,7.7.3.1.5,Balance operational workloads across available infrastructure components,N
+20887,7.7.3.1.6,Determine specific problem support procedures,N
+20888,7.7.4,Develop and manage infrastructure resource planning,N
+20889,7.7.4.1,Develop IT service delivery strategy,N
+20890,7.7.4.2,Assess IT infrastructure business objectives,N
+20891,7.7.4.3,Determine ongoing IT infrastructure capabilities,N
+20892,7.7.4.4,Plan IT infrastructure change,N
+20893,7.7.4.5,Plan and budget IT license usage volumes,N
+20895,7.7.5,Define service support planning,N
+20896,7.7.5.1,Understand IT support demand patterns,N
+20897,7.7.5.2,"Determine required support resource levels, responsibilities, and capabilities",N
+20898,7.7.5.3,Maintain service support knowledge repository,N
+20943,7.7.5.4,Maintain service support learning,N
+20899,7.7.5.5,Communicate service support needs,N
+20900,7.7.5.6,Define IT escalation mechanisms,N
+20901,7.7.5.7,Manage IT service support resources,N
+20902,7.7.5.8,Coordinate with external support providers,N
+20903,7.7.5.9,Triage IT service delivery incidents,N
+20904,7.7.5.10,Monitor IT service support performance,N
+20905,7.7.6,Develop and manage service delivery operations,N
+20906,7.7.6.1,Operate and monitor online systems,N
+20907,7.7.6.2,Run and monitor batch job schedule,N
+20908,7.7.6.3,Manage service delivery workloads,N
+20909,7.7.6.4,Manage infrastructure performance and capacity,N
+20910,7.7.6.5,Respond to unplanned operational issues,N
+20911,7.7.6.6,Produce and distribute output media,N
+20912,7.7.6.7,Monitor IT infrastructure security,N
+20913,7.7.6.8,Manage IT infrastructure/data recovery,N
+20914,7.7.7,Manage infrastructure resource administration,N
+20915,7.7.7.1,Manage infrastructure configuration,N
+20916,7.7.7.2,Perform infrastructure component maintenance,N
+20917,7.7.7.3,Install/configure/upgrade infrastructure components,N
+20918,7.7.7.4,Maintain IT asset records,N
+20919,7.7.7.5,Administer IT licenses/user agreements,N
+20920,7.7.7.6,Provide IT infrastructure service and capabilities,N
+20921,7.7.8,Operate IT user support,N
+20922,7.7.8.1,Triage IT issues/requests,N
+20923,7.7.8.2,Provide IT resolution capabilities,N
+20925,7.7.8.3,Manage IT user requests,N
+20926,7.7.8.4,Escalate IT requests,N
+20927,7.7.8.5,Resolve IT issues/requests,N
+20928,7.7.8.6,Execute IT continuity and recovery action,N
+17058,8,Manage Financial Resources,Y
+10728,8.1,Perform planning and management accounting,Y
+10738,8.1.1,Perform planning/budgeting/forecasting,Y
+10771,8.1.1.1,Develop and maintain budget policies and procedures,N
+10772,8.1.1.2,Prepare periodic budgets and plans,N
+10773,8.1.1.3,Prepare periodic forecasts,N
+10739,8.1.2,Perform cost accounting and control,Y
+10774,8.1.2.1,Perform inventory accounting,N
+10740,8.1.3,Perform cost management,Y
+10778,8.1.3.1,Determine key cost drivers,N
+10779,8.1.3.2,Measure cost drivers,N
+10780,8.1.3.3,Determine critical activities,N
+10781,8.1.3.4,Manage asset resource deployment and utilization,N
+10741,8.1.4,Evaluate and manage financial performance,Y
+10782,8.1.4.1,Evaluate program and services effectiveness,N
+10783,8.1.4.2,Evaluate new programs and services,N
+10784,8.1.4.3,Perform life cycle costing,N
+10785,8.1.4.4,Optimize match of programs and services to student needs,N
+10786,8.1.4.5,Track performance of new program and services strategies,N
+10787,8.1.4.6,Prepare activity-based performance measures,N
+10788,8.1.4.7,Manage continuous cost improvement,N
+10729,8.2,Perform revenue accounting,Y
+20522,8.2.1,Process taxpayer accounts,N
+20523,8.2.1.1,Establish collection policies,N
+20524,8.2.1.2,Assess and bill new properties,N
+20525,8.2.1.3,Review existing properties,N
+20526,8.2.1.4,Produce assessment/collection reports,N
+10743,8.2.2,Invoice customer,Y
+10794,8.2.2.1,Maintain property/taxpayer master files,Y
+10795,8.2.2.2,Generate taxpayer billing data,Y
+10796,8.2.2.3,Transmit billing data to taxpayers,Y
+10797,8.2.2.4,Post receivable entries,Y
+10798,8.2.2.5,Resolve customer assessment inquiries,Y
+10744,8.2.3,Process accounts receivable (AR),Y
+10799,8.2.3.1,Establish AR policies,N
+10800,8.2.3.2,Receive/Deposit payments,N
+10801,8.2.3.3,Apply cash remittances,N
+10802,8.2.3.4,Prepare AR reports,N
+10803,8.2.3.5,Post AR activity to the general ledger,N
+10745,8.2.4,Manage and process collections,Y
+10804,8.2.4.1,Establish policies for delinquent accounts,N
+10805,8.2.4.2,Analyze delinquent account balances,N
+10806,8.2.4.3,Correspond/Negotiate with delinquent accounts,N
+10807,8.2.4.4,Discuss account resolution with internal parties,N
+10808,8.2.4.5,Process adjustments/write-off balances,Y
+10746,8.2.5,Manage and process adjustments/deductions,Y
+10809,8.2.5.1,Establish policies/procedures for adjustments,N
+10810,8.2.5.2,Analyze adjustments,N
+10811,8.2.5.3,Correspond/Negotiate with taxpayer,N
+10812,8.2.5.4,Discuss resolution with internal parties,N
+10813,8.2.5.5,Prepare assessment adjustments,N
+10814,8.2.5.6,Process related entries,N
+10730,8.3,Perform general accounting and reporting,Y
+10747,8.3.1,Manage policies and procedures,Y
+10815,8.3.1.1,Negotiate service level agreements,Y
+10816,8.3.1.2,Establish accounting policies,Y
+10817,8.3.1.3,Set up and enforce approval limits,Y
+10818,8.3.1.4,Establish common financial systems,Y
+10748,8.3.2,Perform general accounting,Y
+10819,8.3.2.1,Maintain chart of accounts,Y
+10820,8.3.2.2,Process journal entries,Y
+10821,8.3.2.3,Process allocations,Y
+10822,8.3.2.4,"Process period-end adjustments (e.g., accruals and currency conversions, etc.)",Y
+10823,8.3.2.5,Post and reconcile interagency transactions,Y
+10824,8.3.2.6,Reconcile general ledger accounts,Y
+10825,8.3.2.7,Perform consolidations and process eliminations,Y
+10826,8.3.2.8,Prepare trial balance,Y
+10827,8.3.2.9,Prepare and post management adjustments,Y
+10749,8.3.3,Perform fixed asset accounting (facilities),Y
+10828,8.3.3.1,Establish fixed asset policies and procedures,N
+10829,8.3.3.2,Maintain fixed asset master data files,N
+10830,8.3.3.3,Process and record fixed asset additions and retires,N
+10831,8.3.3.4,"Process and record fixed asset adjustments, enhancements, revaluations, and transfers",N
+10832,8.3.3.5,Process and record fixed asset maintenance and repair expenses,N
+10833,8.3.3.6,Calculate and record depreciation expense,N
+10834,8.3.3.7,Reconcile fixed asset ledger,N
+10835,8.3.3.8,Track fixed assets including physical inventory,N
+10836,8.3.3.9,"Provide fixed asset data to support tax, statutory, and regulatory reporting",N
+10750,8.3.4,Perform financial reporting,Y
+10837,8.3.4.1,Prepare departmental financial statements,Y
+10838,8.3.4.2,Prepare consolidated financial statements,Y
+10839,8.3.4.3,Perform departmental reporting/review management reports,Y
+10840,8.3.4.4,Perform consolidated reporting/review of cost management reports,Y
+10841,8.3.4.5,Prepare statements for board,Y
+10842,8.3.4.6,Produce quarterly/annual filings and public reports,Y
+10843,8.3.4.7,Produce regulatory reports,Y
+10731,8.4,Manage fixed assets budgets,Y
+10751,8.4.1,Perform capital planning and project approval,Y
+10844,8.4.1.1,Develop capital investment policies and procedures,N
+10845,8.4.1.2,Develop and approve capital expenditure plans and budgets,N
+10846,8.4.1.3,Review and approve capital projects and fixed asset acquisitions,N
+10847,8.4.1.4,Perform justification for bond/project approval,N
+10752,8.4.2,Perform capital project accounting,Y
+10848,8.4.2.1,Create project account codes,N
+10849,8.4.2.2,Record project-related transactions,N
+10850,8.4.2.3,Monitor and track capital projects and budget spending,N
+10851,8.4.2.4,Close/Capitalize projects,N
+10852,8.4.2.5,Measure variance in budgeted and actual expenditure on completed capital projects,N
+10732,8.5,Process payroll,Y
+10753,8.5.1,Report time,Y
+10853,8.5.1.1,Establish policies and procedures,N
+10854,8.5.1.2,Collect and record employee time information,N
+10855,8.5.1.3,Analyze and report paid and unpaid leave,N
+10856,8.5.1.4,Monitor regular overtime and other hours,N
+10857,8.5.1.5,Analyze and report employee utilization,N
+10754,8.5.2,Manage pay,Y
+10858,8.5.2.1,Enter employee time into payroll system,N
+10859,8.5.2.2,Maintain and administer employee earnings information,N
+10860,8.5.2.3,Maintain and administer applicable deductions,N
+10861,8.5.2.4,Monitor changes in tax status of employees,N
+10862,8.5.2.5,Process and distribute payments,N
+10863,8.5.2.6,Process and distribute manual checks,N
+10864,8.5.2.7,Process end-of-period adjustments,N
+10865,8.5.2.8,Respond to employee payroll inquiries,N
+10755,8.5.3,Process payroll taxes,Y
+10866,8.5.3.1,Calculate and pay applicable payroll taxes,N
+10867,8.5.3.2,Produce and distribute employee annual tax statements,N
+10868,8.5.3.3,File regulatory payroll tax forms,N
+10733,8.6,Process accounts payable and expense reimbursements,Y
+10756,8.6.1,Process accounts payable (AP),Y
+10869,8.6.1.1,Verify AP pay file with purchase order vendor master file,Y
+10870,8.6.1.2,Maintain/Manage electronic commerce,Y
+10871,8.6.1.3,Audit invoices and key data into AP system,Y
+10872,8.6.1.4,Approve payments,Y
+10873,8.6.1.5,Process financial accruals and reversals,Y
+10874,8.6.1.6,Process payable taxes,Y
+10875,8.6.1.7,Research/Resolve payable exceptions,Y
+10876,8.6.1.8,Process payments,Y
+10877,8.6.1.9,Respond to AP inquiries,Y
+10878,8.6.1.9.1,Retain records,Y
+10879,8.6.1.9.2,Adjust accounting records,Y
+10757,8.6.2,Process expense reimbursements,Y
+10880,8.6.2.1,Establish and communicate expense reimbursement policies and approval limits,Y
+10881,8.6.2.2,Capture and report relevant tax data,Y
+10882,8.6.2.3,Approve reimbursements and advances,Y
+10883,8.6.2.4,Process reimbursements and advances,Y
+10884,8.6.2.5,Manage personal accounts,Y
+10734,8.7,Manage treasury operations,Y
+10758,8.7.1,Manage treasury policies and procedures,Y
+10885,8.7.1.1,Establish scope and governance of treasury operations,N
+10886,8.7.1.2,Establish and publish treasury policies,N
+10887,8.7.1.3,Develop treasury procedures,N
+10888,8.7.1.4,Monitor treasury procedures,N
+10889,8.7.1.5,Audit treasury procedures,N
+10890,8.7.1.6,Revise treasury procedures,N
+10891,8.7.1.7,Develop and confirm internal controls for treasury,N
+10892,8.7.1.8,Define system security requirements,N
+10759,8.7.2,Manage cash,Y
+10893,8.7.2.1,Manage and reconcile cash positions,N
+10894,8.7.2.2,Manage cash equivalents,N
+10895,8.7.2.3,Process and oversee electronic fund transfers (EFTs),N
+10896,8.7.2.4,Develop cash flow forecasts,N
+10897,8.7.2.5,Manage cash flows,N
+10898,8.7.2.6,Produce cash management accounting transactions and reports,N
+10899,8.7.2.7,Manage and oversee banking relationships,N
+10900,8.7.2.8,"Analyze, negotiate, resolve, and confirm bank fees",N
+10761,8.7.3,Manage debt and investment,N
+10908,8.7.3.1,Manage financial intermediary relationships,N
+10909,8.7.3.2,Manage liquidity,N
+10910,8.7.3.3,Manage issuer exposure,N
+10911,8.7.3.4,Process and oversee debt and investment transactions,N
+10913,8.7.3.5,Produce debt and investment accounting transaction reports,N
+14210,8.7.3.6,Process and oversee interest rate transactions,N
+11208,8.7.4,Monitor and execute risk,Y
+11209,8.7.4.1,Manage interest-rate risk,N
+11211,8.7.4.2,Manage exposure risk,N
+11215,8.7.4.3,Monitor credit,N
+10735,8.8,Manage internal controls,Y
+10762,8.8.1,"Establish internal controls, policies, and procedures",Y
+10914,8.8.1.1,Establish board audit committee,N
+10915,8.8.1.2,Define and communicate code of ethics,N
+10916,8.8.1.3,Assign roles and responsibility for internal controls,N
+11250,8.8.1.4,Define business process objectives and risks,N
+11251,8.8.1.5,Define entity/unit risk tolerances,N
+10763,8.8.2,Operate controls and monitor compliance with internal controls policies and procedures,Y
+10917,8.8.2.1,Design and implement control activities,N
+10918,8.8.2.2,Monitor control effectiveness,N
+10919,8.8.2.3,Remediate control deficiencies,N
+10920,8.8.2.4,Create compliance function,N
+10921,8.8.2.5,Operate compliance function,N
+10922,8.8.2.6,Implement and maintain controls-related enabling technologies and tools,N
+10764,8.8.3,Report on internal controls compliance,Y
+10923,8.8.3.1,Report to external auditors,N
+10924,8.8.3.2,"Report to regulators, share-/debt-holders, securities exchanges, etc.",N
+10925,8.8.3.3,"Report to third parties (e.g., board)",N
+10926,8.8.3.4,Report to internal management,N
+20527,8.9,Manage grants,N
+20528,8.9.1,Develop grant application and management procedures,N
+20529,8.9.2,Collaborate across educational and operation functions to determine funding needs,N
+20530,8.9.3,Identify qualified grants,N
+20531,8.9.4,Submit grant proposal,N
+20532,8.9.5,Establish grant budget,N
+20533,8.9.6,Monitor grant requirements,N
+20534,8.9.7,Evaluate grant effectiveness,N
+10736,8.10,Manage taxes,Y
+10765,8.10.1,Develop tax strategy and plan,N
+10927,8.10.1.1,"Develop foreign, national, state, and local tax strategy",N
+10928,8.10.1.2,Consolidate and optimize total tax plan,N
+10929,8.10.1.3,Maintain tax master data,N
+10766,8.10.2,Process taxes,Y
+10930,8.10.2.1,Perform tax planning/strategy,N
+10931,8.10.2.2,Prepare tax returns,N
+10932,8.10.2.3,Prepare foreign taxes,N
+10933,8.10.2.4,Calculate deferred taxes,N
+10934,8.10.2.5,Account for taxes,N
+10935,8.10.2.6,Monitor tax compliance,N
+10936,8.10.2.7,Address tax inquiries,N
+19207,9,"Acquire, Construct, and Manage Facilities",N
+10937,9.1,Design and construct/acquire capital assets,N
+10941,9.1.1,Develop capital improvement plan and long-term vision,N
+10955,9.1.1.1,Confirm alignment of property requirements with district strategy,Y
+10956,9.1.1.2,Appraise the external environment,N
+10957,9.1.1.3,Make build-or-buy decision,N
+10960,9.1.1.4,Select property,N
+10942,9.1.2,"Develop, construct, and modify sites",Y
+10943,9.1.3,Plan facility,Y
+10958,9.1.3.1,Design facility,N
+10959,9.1.3.2,Analyze budget,N
+20535,9.1.3.3,Conduct bid and contract selection for facility construction,N
+10962,9.1.3.4,Manage construction or modification to building,N
+10944,9.1.4,Provide facilities,N
+10963,9.1.4.1,Acquire facilities and furnishings,N
+10964,9.1.4.2,Change fit/form/function of facilities and furnishings,N
+10938,9.2,Plan maintenance work,Y
+20536,9.2.1,Develop a work order process,N
+20537,9.2.1.1,Collect data on work order cycle time and flow,N
+20538,9.2.1.2,Monitor performance against industry standards,N
+16472,9.2.2,Perform routine maintenance,N
+16473,9.2.3,Perform corrective maintenance,N
+16474,9.2.4,Overhaul or replace equipment,N
+10949,9.2.5,Manage facilities operations,N
+10965,9.2.5.1,Relocate people,N
+10966,9.2.5.2,"Relocate materials, supplies, and furnishings",N
+10939,9.3,Obtain and install assets and equipment,N
+10950,9.3.1,Develop ongoing maintenance policies,N
+10967,9.3.1.1,"Analyze assets, and predict maintenance requirements",N
+10968,9.3.1.2,Develop approach to integrate preventive maintenance into production schedule,N
+10951,9.3.2,Obtain and install equipment,N
+10952,9.4,Dispose of facilities and assets,N
+19258,9.4.1,Develop disposition strategy,N
+10953,9.4.2,Perform sale or trade,N
+10954,9.4.3,Perform abandonment,N
+20539,9.5,Manage facility housekeeping,N
+20540,9.5.1,"Identify cleaning needs, standards, and requirements",N
+20541,9.5.2,Develop process cleaning guidelines,N
+20542,9.5.3,Evaluate cleaning effectiveness,N
+19245,9.6,Maintain grounds,N
+19246,9.6.1,Plan and develop maintenance schedules,N
+20543,9.6.2,Coordinate maintenance activities,N
+19252,9.6.3,Monitor quality of service,N
+16437,10,"Manage Enterprise Risk, Compliance, and Continuity of Operations (Resiliency)",N
+17060,10.1,Manage enterprise risk,N
+16439,10.1.1,Establish the enterprise risk framework and policies,N
+16440,10.1.1.1,Determine risk tolerance for organization,N
+16441,10.1.1.2,Develop and maintain enterprise risk policies and procedures,N
+16442,10.1.1.3,Identify and implement enterprise risk management tools,N
+16443,10.1.1.4,Coordinate the sharing of risk knowledge across the organization,N
+16444,10.1.1.5,Prepare and report enterprise risk to executive management and board,N
+16445,10.1.2,Oversee and coordinate enterprise risk management activities,N
+16446,10.1.2.1,Identify enterprise level risks,N
+16447,10.1.2.2,Assess risks to determine which to mitigate,N
+16448,10.1.2.3,"Develop risk mitigation and management strategy, and integrate with existing performance management processes",N
+16449,10.1.2.4,Verify risk mitigation plans are implemented,N
+16450,10.1.2.5,Monitor risks and risk mitigation action,N
+16451,10.1.2.6,Report on enterprise risk activities,N
+16452,10.1.3,Coordinate department/campus and functional risk management activities,N
+16453,10.1.3.1,"Monitor that each department, campus, and function follows the enterprise risk management process",N
+16454,10.1.3.2,"Monitor that each department, campus, and function follows the enterprise risk reporting process",N
+17462,10.1.4,"Manage department, campus, and function risk",N
+16456,10.1.4.1,Identify risks,N
+16457,10.1.4.2,Assess risks using enterprise risk framework policies and procedures,N
+16458,10.1.4.3,Develop mitigation plans for risks,N
+18129,10.1.4.3.1,Assess adequacy of insurance coverage,N
+16459,10.1.4.4,Implement mitigation plans for risks,N
+16460,10.1.4.5,Monitor risks,N
+16461,10.1.4.6,Analyze risk activities and update plans,N
+16462,10.1.4.7,Report on risk activities,N
+17467,10.2,Manage compliance,N
+17468,10.2.1,Establish compliance framework and policies,N
+17469,10.2.1.1,Develop enterprise compliance policies and procedures,N
+17470,10.2.1.2,Implement enterprise compliance activities,N
+14133,10.2.1.3,Manage internal audits,N
+14137,10.2.1.4,Maintain controls-related technologies and tools,N
+16463,10.2.2,Manage regulatory compliance,N
+16464,10.2.2.1,Develop the regulatory compliance strategy,N
+16465,10.2.2.2,Identify applicable regulatory requirements,N
+16466,10.2.2.3,Monitor the regulatory environment for changing or emerging regulations,N
+16467,10.2.2.4,"Assess current compliance position, and identify weaknesses or shortfalls",N
+16468,10.2.2.5,Implement missing or stronger regulatory compliance controls and policies,N
+16469,10.2.2.6,"Monitor and test, on an ongoing and scheduled basis, regulatory compliance position and existing controls, defining controls that should be added, removed, or modified as required",N
+16470,10.2.2.7,Maintain relationships with regulators as appropriate,N
+20544,10.3,Manage continuity of operations,N
+20545,10.3.1,Develop and manage continuity of operations,N
+20546,10.3.1.1,Develop the continuity of operations strategy,N
+20547,10.3.1.2,Perform continuous district operations planning,N
+20548,10.3.1.3,Test continuous district operations,N
+20549,10.3.1.4,Maintain continuous district operations,N
+20550,10.3.1.5,Share knowledge of specific risks across other parts of the organization,N
+20551,10.3.2,Ensure compliance with regulations,N
+20552,10.3.2.1,Monitor compliance,N
+20553,10.3.2.2,Perform compliance audit,N
+20554,10.3.2.3,Comply with regulatory stakeholders’ requirements,N
+11185,10.4,Manage remediation efforts,N
+11201,10.4.1,Create remediation plans,N
+11202,10.4.2,Contact and confer with experts,N
+11203,10.4.3,Identify/Dedicate resources,N
+11204,10.4.4,Investigate legal aspects,N
+11205,10.4.5,Investigate damage cause,N
+11206,10.4.6,Amend or create policy,N
+20555,10.5,Plan and develop security program,N
+20556,10.5.1,Evaluate facility security vulnerabilities,N
+20557,10.5.2,Develop security program,N
+20558,10.5.3,Identify security equipment and funding source,N
+20559,10.5.4,Install and maintain security equipment,N
+20560,10.5.5,Monitor security equipment,N
+20561,10.5.6,Implement security policies and procedures,N
+20562,10.5.7,Test efficacy of security protocols,N
+20563,10.5.8,Monitor security compliance,N
+20564,10.5.9,Evaluate security protocols,N
+10012,11,Manage External Relationships,N
+11010,11.1,Build investor relationships,N
+11035,11.1.1,"Plan, build, and manage relations with federal, state, and local funding entities",N
+11036,11.1.2,"Plan, build, and manage financial analyst/ratings relations",N
+11037,11.1.3,Communicate with stakeholders,N
+11011,11.2,Manage government and other district relationships,N
+11038,11.2.1,Manage government relations,N
+11039,11.2.2,Manage relations with quasi-government bodies,N
+11040,11.2.3,"Manage relations with associations, stakeholder, and education groups",N
+11041,11.2.4,Manage lobby activities,N
+11012,11.3,Manage relations with Board of Trustees/Education,N
+11042,11.3.1,Report financial results,N
+11043,11.3.2,Address audit findings,N
+11013,11.4,Manage legal and ethical issues,N
+11044,11.4.1,Create ethics policies,N
+20565,11.4.1.1,Identify key measures or indicators of ethical behavior,N
+20566,11.4.1.2,Monitor ethical behavior across the organization,N
+20567,11.4.1.3,Identify a confidential method to report breaches in ethical behavior,N
+20568,11.4.1.4,Implement a confidential method to report breaches in ethical behavior,N
+11045,11.4.2,Manage district governance policies,N
+11046,11.4.3,Develop and perform preventative law programs,N
+11047,11.4.4,Ensure compliance,N
+11053,11.4.4.1,Plan and initiate compliance program,N
+11054,11.4.4.2,Execute compliance program,N
+11048,11.4.5,Manage outside counsel,N
+11056,11.4.5.1,Assess problem and determine work requirements,N
+11057,11.4.5.2,Engage/Retain outside counsel if necessary,N
+11058,11.4.5.3,Receive strategy/budget,N
+11059,11.4.5.4,Receive work product and manage/monitor case and work performed,N
+11060,11.4.5.5,Process pay for legal services,N
+11061,11.4.5.6,Track legal activity/performance,N
+11049,11.4.6,Protect intellectual property,N
+11062,11.4.6.1,Manage copyrights and patents,N
+11063,11.4.6.2,Maintain intellectual property rights and restrictions,N
+11064,11.4.6.3,Administer licensing terms,N
+11065,11.4.6.4,Administer options,N
+11050,11.4.7,Resolve grievances and litigations,N
+11051,11.4.8,Provide legal advice/counseling,N
+11052,11.4.9,Negotiate and document agreements/contracts,N
+11014,11.5,Manage public relations program,N
+11066,11.5.1,Manage community relations,N
+11067,11.5.2,Manage media relations,N
+20569,11.5.3,Manage relations with association and education groups,N
+20570,11.5.4,Manage relations with vendors and suppliers,N
+11068,11.5.5,Promote political stability,N
+11069,11.5.6,Create news releases,N
+11070,11.5.7,Issue news releases,N
+10013,12,Develop and Manage District Capabilities,Y
+16378,12.1,"Manage educational programs, support services, and operational processes",N
+16379,12.1.1,Establish and maintain process management governance,N
+16380,12.1.1.1,Define and manage governance approach,N
+16381,12.1.1.2,Establish and maintain process tools and templates,N
+16383,12.1.1.3,Conduct process governance activities,N
+16384,12.1.2,Define and manage process frameworks,N
+16385,12.1.2.1,Establish and maintain process framework,N
+16386,12.1.2.2,Identify cross-functional processes,N
+16387,12.1.3,Define processes,N
+16388,12.1.3.1,Scope processes,N
+16389,12.1.3.2,Analyze processes,N
+16390,12.1.3.3,Map processes,N
+16391,12.1.3.4,Publish processes,N
+16392,12.1.4,Manage process performance,N
+16393,12.1.4.1,Provide process training,N
+16394,12.1.4.2,Support process implementation,N
+16395,12.1.4.3,Measure and report process performance,N
+16396,12.1.5,Improve processes,N
+16397,12.1.5.1,Identify and select improvement opportunities,N
+16398,12.1.5.2,Manage improvement projects,N
+16399,12.1.5.3,Perform continuous improvement activities,N
+16400,12.2,Manage district projects and programs,N
+16401,12.2.1,"Manage educational, support services, and operational program strategy",N
+16402,12.2.1.1,"Establish educational, support services, and operational program strategy",N
+16403,12.2.1.2,"Define educational, support services, and operational program governance",N
+16404,12.2.1.3,"Monitor and control educational, support services, and operational programs",N
+16405,12.2.2,"Manage educational, support services, and operational programs",N
+16406,12.2.2.1,Establish program structure and approach,N
+16407,12.2.2.2,Manage program stakeholders and partners,N
+16408,12.2.2.3,Manage program implementation,N
+16409,12.2.2.4,Review and report program performance,N
+16410,12.2.3,Manage projects,N
+16411,12.2.3.1,Establish project scope,N
+11117,12.2.3.1.1,Identify project requirements and objectives,N
+16412,12.2.3.1.2,Identify project resource requirements,N
+11118,12.2.3.1.3,Assess culture and readiness for project management approach,N
+11119,12.2.3.1.4,Identify appropriate project management methodologies,N
+11120,12.2.3.1.5,Create project rationale and obtain funding,N
+11121,12.2.3.1.6,Develop project measures and indicators,N
+16413,12.2.3.2,Develop project plans,N
+11123,12.2.3.2.1,Define roles and resources,N
+11124,12.2.3.2.2,Identify specific IT requirements,N
+11125,12.2.3.2.3,Create training and communication plans,N
+11127,12.2.3.2.4,Design recognition and reward approaches,N
+11128,12.2.3.2.5,Design and plan launch of project,N
+11129,12.2.3.2.6,Deploy the project,N
+16414,12.2.3.3,Implement projects,N
+11131,12.2.3.3.1,Evaluate impact of project management (strategy and projects) on measures and outcomes,N
+16415,12.2.3.3.2,Report the status of project,N
+16416,12.2.3.3.3,Manage project scope,N
+11132,12.2.3.3.4,Promote and sustain activity and involvement,N
+11133,12.2.3.3.5,Realign and refresh project management strategy and approaches,N
+16417,12.2.3.4,Review and report project performance,N
+16418,12.2.3.5,Close projects,N
+20571,12.3,Manage district quality and organizational performance,N
+20572,12.3.1,Develop quality strategy and plans,N
+20573,12.3.1.1,Define and maintain quality processes and standards,N
+20574,12.3.1.2,Establish quality measurements and targets,N
+20575,12.3.1.3,Establish and maintain quality tools and templates,N
+20576,12.3.2,Plan and manage quality work force,N
+20577,12.3.2.1,Develop and maintain quality assessment training,N
+20578,12.3.2.2,Develop and maintain quality-process tools training,N
+20579,12.3.2.3,Develop and maintain quality recognition programs,N
+20580,12.3.3,Perform quality assessments,N
+20581,12.3.3.1,Assess process compliance,N
+20582,12.3.3.2,Assess standards compliance,N
+20583,12.3.3.3,Perform risk assessment,N
+20584,12.3.3.4,Perform organizational effectiveness assessment,N
+20585,12.3.3.5,Measure and report quality performance,N
+11074,12.4,Manage change,N
+11134,12.4.1,Plan for change,N
+11138,12.4.1.1,Select process improvement methodology,N
+11139,12.4.1.2,Assess readiness for change,N
+11140,12.4.1.3,Determine stakeholders,N
+11141,12.4.1.4,Engage/Identify champion,N
+11142,12.4.1.5,Form design team,N
+11143,12.4.1.6,Define scope,N
+11144,12.4.1.7,Understand current state,N
+11145,12.4.1.8,Define future state,N
+11146,12.4.1.9,Conduct organizational risk analysis,N
+11147,12.4.1.9.1,Assess cultural issues,N
+11148,12.4.1.9.2,Establish accountability for change management,N
+11149,12.4.1.9.3,Identify barriers to change,N
+11150,12.4.1.9.4,Determine change enablers,N
+11151,12.4.1.9.5,Identify resources and develop measures,N
+11135,12.4.2,Design the change,N
+11152,12.4.2.1,Assess connection to other initiatives,N
+11153,12.4.2.2,Develop change management plans,N
+11154,12.4.2.3,Develop training plan,N
+11155,12.4.2.4,Develop communication plan,N
+11156,12.4.2.5,Develop rewards/incentives plan,N
+11157,12.4.2.6,Establish change adoption metrics,N
+11158,12.4.2.7,Establish/Clarify new roles,N
+11159,12.4.2.8,Identify budget/roles,N
+11136,12.4.3,Implement the change,N
+11160,12.4.3.1,Create commitment for improvement/change,N
+11161,12.4.3.2,Reengineer educational support and operational processes and systems,N
+11162,12.4.3.3,Support transition to new roles or exit strategies for incumbents,N
+11163,12.4.3.4,Monitor change,N
+11137,12.4.4,Sustain improvement,N
+11164,12.4.4.1,Monitor improved process performance,N
+11165,12.4.4.2,Capture and reuse lessons learned from change process,N
+11166,12.4.4.3,Take corrective action as necessary,N
+11073,12.5,Develop and manage enterprise-wide knowledge management (KM) capability,Y
+11095,12.5.1,Develop KM strategy,N
+11100,12.5.1.1,Develop governance model,N
+11101,12.5.1.2,Establish a central KM core group,N
+11102,12.5.1.3,Define roles and accountability of the core group versus departments/campuses,N
+11103,12.5.1.4,Develop funding models,N
+11104,12.5.1.5,Identify links to key initiatives,N
+11105,12.5.1.6,Develop core KM methodologies,N
+11106,12.5.1.7,Assess IT needs and engage IT function,N
+11107,12.5.1.8,Develop training and communication plans,N
+11108,12.5.1.9,Develop change management approaches,N
+11109,12.5.1.9.1,Develop strategic measures and indicator,N
+11096,12.5.2,Assess KM capabilities,Y
+11110,12.5.2.1,Assess maturity of existing KM initiatives,N
+11111,12.5.2.2,Evaluate existing KM approaches,N
+11112,12.5.2.3,Identify gaps and needs,N
+20965,12.5.3,Design and implement KM capabilities,N
+11114,12.5.3.1,Develop new KM approaches,N
+20966,12.5.3.2,Design resource model for KM approaches,N
+11115,12.5.3.3,Implement new KM approaches,N
+20967,12.5.3.4,Leverage and enhance IT for KM approaches,N
+20968,12.5.3.5,Develop measures,N
+20969,12.5.4,Evolve and sustain KM capabilities,N
+11113,12.5.4.1,Enhance/Modify existing KM approaches,N
+20970,12.5.4.2, Sustain awareness and engagement,N
+20971,12.5.4.3,Expand KM infrastructure to meet demand,N
+16436,12.6,Measure and benchmark,N
+11071,12.6.1,Create and manage organizational performance,N
+11075,12.6.1.1,Create enterprise measurement systems model,N
+11076,12.6.1.2,Measure process productivity,N
+11077,12.6.1.3,Measure cost effectiveness,N
+11078,12.6.1.4,Measure staff efficiency,N
+11079,12.6.1.5,Measure cycle time,N
+11072,12.6.2,Benchmark performance,N
+11083,12.6.2.1,Conduct performance assessments,N
+11084,12.6.2.2,Develop benchmarking capabilities,N
+11085,12.6.2.3,Conduct internal process and external competitive benchmarking,N
+11087,12.6.2.4,Conduct gap analysis to understand need for change and degree needed,N
+20147,12.6.3,Evaluate process performance,N
+10270,12.6.3.1,Establish appropriate performance indicators (metrics),N
+10271,12.6.3.2,Establish monitoring frequency,N
+20148,12.6.3.3,Collect performance data,N
+10272,12.6.3.4,Calculate performance measures,N
+10273,12.6.3.5,Identify performance trends,N
+10274,12.6.3.6,Analyze performance against benchmark data,N
+10275,12.6.3.7,Prepare reports,N
+10276,12.6.3.8,Develop performance improvement plan,N
+11179,12.7,Manage environmental health and safety (EHS),N
+11180,12.7.1,Determine environmental health and safety impacts,Y
+11186,12.7.1.1,"Evaluate environmental impact of products, services, and operations",N
+11187,12.7.1.2,Conduct health and safety and environmental audits,N
+11181,12.7.2,Develop and execute functional EHS program,N
+11188,12.7.2.1,Identify regulatory and stakeholder requirements,N
+11189,12.7.2.2,Assess future risks and opportunities,N
+11190,12.7.2.3,Create EHS policy,N
+11191,12.7.2.4,Record and manage EHS events,N
+11182,12.7.3,Train and educate functional employees,N
+11192,12.7.3.1,Communicate EHS issues to stakeholders and provide support,N
+11183,12.7.4,Monitor and manage functional EHS management program,N
+11193,12.7.4.1,Manage EHS costs and benefits,N
+11194,12.7.4.2,Measure and report EHS performance,N
+11196,12.7.4.3,Implement emergency response program,N
+11197,12.7.4.4,Implement pollution prevention program,N
+11195,12.7.4.5,Provide employees with EHS support,N
+20959,12.8,"Develop, Manage, and Deliver Analytics",N
+20960,12.8.1,Develop and manage hypotheses,N
+20961,12.8.2,Collect data,N
+20962,12.8.3,Analyze data,N
+20963,12.8.4,Report on data,N
+20964,12.8.5,Identify remedial actions,N
