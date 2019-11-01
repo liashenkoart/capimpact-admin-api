@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { UsersService } from '@app/modules/users/user.service';
+import { UsersService } from '@modules/users/user.service';
 import { UserCreationInput } from '@modules/users/dto';
 
 import { AuthService } from './auth.service';

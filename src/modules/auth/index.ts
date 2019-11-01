@@ -11,13 +11,13 @@ import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
-    PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECERT,
       signOptions: {
         expiresIn: process.env.JWT_EXPIRE_IN,
       },
     }),
+    PassportModule,
     UsersModule,
   ],
   controllers: [AuthController],

@@ -8,7 +8,7 @@ import {
   TreeChildren,
   TreeParent,
 } from 'typeorm';
-import { Industry } from '@app/modules/industries/industry.entity';
+import { Industry } from '@modules/industries/industry.entity';
 
 @Entity('processes')
 @Tree('materialized-path')
@@ -44,9 +44,19 @@ export class Process {
   })
   metrics_avail?: boolean;
 
+  @Column({
+    nullable: true,
+  })
+  industry_id?: number;
+
+  @Column({
+    nullable: true
+  })
+  parent_id?: number;
+
   @ManyToOne(type => Industry, industry => industry.processes)
   @JoinColumn({ name: 'industry_id' })
-  industry: Industry;
+  industry?: Industry;
 
   @TreeChildren()
   children: Process[];
@@ -55,5 +65,9 @@ export class Process {
   @JoinColumn({
     name: 'parent_id',
   })
-  parent: Process;
+  parent?: Process;
+
+  constructor(partial: Partial<Process>) {
+    Object.assign(this, partial);
+  }
 }

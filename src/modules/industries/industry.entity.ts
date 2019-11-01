@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
-import { Process } from '@app/modules/processes/process.entity';
+import { Process } from '@modules/processes/process.entity';
 
 @Entity('industries')
 export class Industry {
@@ -13,4 +13,8 @@ export class Industry {
     cascade: true,
   })
   processes: Process[];
+
+  constructor(partial: Partial<Industry>) {
+    Object.assign(this, partial);
+  }
 }

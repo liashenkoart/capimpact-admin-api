@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { UsersService } from '@app/modules/users/user.service';
+import { UsersService } from '@modules/users/user.service';
 
 import passwordCrypt from '@lib/passwordCrypt';
 
