@@ -1,28 +1,24 @@
-# CapAdmin API
+# APCQ
 
-----------
+## Description
 
-# Getting started
+### Tech Stacks
+
+- Language: NodeJS + TypeScript
+- Runtime: NodeJS 10.x
+- DataBase: PostgresSQL
+- ORM: TypeORM
+- Docker with `docker-compose`
 
 ## Installation
 
-Clone the repository
+```bash
+$ yarn
 
-    git clone git@github.com:lujakob/nestjs-realworld-example-app.git
-
-Switch to the repo folder
-
-    cd nestjs-realworld-example-app
-
-Install dependencies
-
-    npm install
-
-Copy config file and set JsonWebToken secret key
-
-    cp .env.example .env
-
-----------
+# ts-node
+npm install -g ts-node
+npm install -g typescript
+```
 
 ## Database
 
@@ -51,34 +47,29 @@ Start local postgres server and create new database 'postgres'
 
 On application start, tables for all entities will be created.
 
-----------
+## Running the app
 
-## NPM scripts
+### API keys and secrets
 
-- `npm start` - Start application in production mode
-- `npm run dev` - Start application in dev mode
-- `npm run build` - Build application
-- `npm run test` - run Jest test runner
+You should pass env vars directly from the shell. In development mode, you can create the `.env` file. See example in `.example.env`.
 
-----------
+### create database
 
-## API Specification
+You should create database before the first time you run the repo locally. Just run the below script in postgresSQL:
 
-----------
+```bash
+# use default docker-compose
+docker-compose up -d
+# use environment variables docker-compose
+POSTGRES_DB=cap POSTGRES_PORT=5432 POSTGRES_PASSWORD=postgres POSTGRES_PASSWORD=postgres docker-compose up -d
+```
 
-## Start application
+### Scripts
 
-- `npm dev`
-- Test api with `http://localhost:4000/api/articles` in your favourite browser
+```bash
+# apcq script
+$ yarn apqc
 
-----------
-
-# Authentication
-
-This applications uses JSON Web Token (JWT) to handle authentication. The token is passed with each request using the `Authorization` header with `Token` scheme. The JWT authentication middleware handles the validation and authentication of the token. Please check the following sources to learn more about JWT.
-
-----------
-
-# Swagger API docs
-
-This example repo uses the NestJS swagger module for API documentation. [NestJS Swagger](https://github.com/nestjs/swagger) - [www.swagger.io](https://swagger.io/)
+# or
+ts-node -r dotenv/config scripts/apqc.ts
+```

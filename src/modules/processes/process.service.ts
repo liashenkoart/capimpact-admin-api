@@ -39,8 +39,9 @@ export class ProcessService {
     return this.processRepository.save(process);
   }
 
-  async save(id: number, data: ProcessInput): Promise<Process> {
-    const process = new Process({ ...data, id });
+  async save(id: any, data: ProcessInput): Promise<Process> {
+    const process = new Process({ ...data });
+    process.id = parseInt(id, 10);
     return this.processRepository.save(process);
   }
 
