@@ -1,4 +1,4 @@
-# APCQ
+# APQC
 
 ## Description
 
@@ -67,7 +67,7 @@ POSTGRES_DB=cap POSTGRES_PORT=5432 POSTGRES_PASSWORD=postgres POSTGRES_PASSWORD=
 ### Scripts
 
 ```bash
-# apcq script
+# apqc script
 $ yarn apqc
 
 # or
