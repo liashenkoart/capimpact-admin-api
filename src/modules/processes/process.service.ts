@@ -36,17 +36,21 @@ export class ProcessService {
 
   async create(data: ProcessCreationInput): Promise<Process> {
     const process = new Process(data);
+    process.parent = await this.findById(process.parentId);
     return this.processRepository.save(process);
   }
 
   async save(id: any, data: ProcessInput): Promise<Process> {
     const process = new Process({ ...data });
     process.id = parseInt(id, 10);
+    if (process.parentId) {
+      process.parent = await this.findById(process.parentId);
+    }
     return this.processRepository.save(process);
   }
 
-  async remove(id: number) {
-    return this.processRepository.delete(id);
+  async remove(id: any) {
+    return this.processRepository.delete(parseInt(id, 10));
   }
 
   getFindAllQuery(query: ProcessQueryInput): FindManyOptions {
