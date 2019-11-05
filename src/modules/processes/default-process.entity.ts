@@ -10,9 +10,9 @@ import {
 } from 'typeorm';
 import { Industry } from '@modules/industries/industry.entity';
 
-@Entity('processes')
+@Entity('default-processes')
 @Tree('materialized-path')
-export class Process {
+export class DefaultProcess {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -50,7 +50,7 @@ export class Process {
   industry_id?: number;
 
   @Column({
-    nullable: true
+    nullable: true,
   })
   parentId?: number;
 
@@ -59,12 +59,12 @@ export class Process {
   industry?: Industry;
 
   @TreeChildren()
-  children: Process[];
+  children: DefaultProcess[];
 
   @TreeParent()
-  parent?: Process;
+  parent?: DefaultProcess;
 
-  constructor(partial: Partial<Process>) {
+  constructor(partial: Partial<DefaultProcess>) {
     Object.assign(this, partial);
   }
 }

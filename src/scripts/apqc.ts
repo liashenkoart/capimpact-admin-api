@@ -2,6 +2,7 @@ import { createConnection, getRepository, getTreeRepository, TreeRepository } fr
 import _ from 'lodash';
 
 import { Industry } from '@modules/industries/industry.entity';
+import { DefaultProcess } from '@modules/processes/default-process.entity';
 import { Process } from '@modules/processes/process.entity';
 
 import { parseCsv } from '@lib/parseCsv';
@@ -16,6 +17,7 @@ async function main() {
   }
 
   const industryRepository = getRepository(Industry);
+  const defaultProcessRepository = getRepository(DefaultProcess);
   const processRepository = getRepository(Process);
 
   // save industries
@@ -30,11 +32,12 @@ async function main() {
   // save tree processes for each industry
   for (let industry of industries) {
     // save root industry node
-    let root = await processRepository.save({
+    let root = await defaultProcessRepository.save({
       name: industry.name,
       industry,
       parent: null,
     });
+    processRepository.save(root);
     let data: any = await parseCsv(
       `${industry.name}.csv`,
       rows =>
@@ -74,12 +77,19 @@ async function main() {
         .split('.')
         .slice(0, -1)
         .join('.');
-      groupByHierarchyId[proc.hierarchy_id] = await processRepository.save({
+      groupByHierarchyId[proc.hierarchy_id] = await defaultProcessRepository.save({
         ...proc,
         parent: groupByHierarchyId[parent] || root,
       });
+      await processRepository.save(groupByHierarchyId[proc.hierarchy_id]);
     }
   }
+
+  /*
+  const processes = await defaultProcessRepository.find();
+  await processRepository.save(processes);
+  */
+
   /*
   // Test tree
   const treeRepository = getTreeRepository(Process);
