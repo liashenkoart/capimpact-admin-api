@@ -1,14 +1,8 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  BeforeInsert,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import passwordCrypt from '@lib/passwordCrypt';
+
+import { Process } from '@modules/processes/process.entity';
 
 @Entity('users')
 export class User {
@@ -23,28 +17,24 @@ export class User {
   password: string;
 
   @Column({
-    nullable: true
+    nullable: true,
   })
   firstName: string;
 
   @Column({
-    nullable: true
+    nullable: true,
   })
   lastName: string;
+
+  @OneToMany(type => Process, proces => proces.user, {
+    cascade: true,
+  })
+  processes: Process[];
 
   @BeforeInsert()
   hashPassword() {
     this.password = passwordCrypt.encrypt(this.password);
   }
-
-  /*
-  @ManyToMany(type => ArticleEntity)
-  @JoinTable()
-  favorites: ArticleEntity[];
-
-  @OneToMany(type => ArticleEntity, article => article.author)
-  articles: ArticleEntity[];
-  */
 
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);
