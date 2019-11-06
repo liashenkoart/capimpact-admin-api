@@ -5,10 +5,11 @@
   "main": "dist/main.js",
   "private": true,
   "scripts": {
-    "start": "node dist/main.js",
+    "start": "node -r ./tsconfig-paths-bootstrap.js dist/index.js",
     "dev": "nodemon src/main.ts",
     "prebuild": "rm -rf dist",
     "build": "tsc",
+    "format:code": "prettier --write src/**/*.{ts,js,graphql}",
     "test": "jest --config=jest.json",
     "test:watch": "jest --watch --config=jest.json",
     "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage",
