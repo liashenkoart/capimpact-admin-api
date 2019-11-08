@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
@@ -11,7 +11,7 @@ import { Process } from './process.entity';
   imports: [
     TypeOrmModule.forFeature([Process]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    IndustriesModule,
+    forwardRef(() => IndustriesModule),
   ],
   controllers: [ProcessController],
   providers: [ProcessService],

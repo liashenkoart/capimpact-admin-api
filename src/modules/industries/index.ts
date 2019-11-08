@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
+import { ProcessesModule } from '@modules/processes';
 import { IndustryController } from './industry.controller';
 import { IndustryService } from './industry.service';
 import { Industry } from './industry.entity';
@@ -10,6 +11,7 @@ import { Industry } from './industry.entity';
   imports: [
     TypeOrmModule.forFeature([Industry]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
+    forwardRef(() => ProcessesModule),
   ],
   controllers: [IndustryController],
   providers: [IndustryService],

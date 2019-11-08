@@ -1,13 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { ProcessService } from '@modules/processes/process.service';
 import { IndustryCreationInput, IndustryInput } from '@modules/industries/dto';
 import { Industry } from './industry.entity';
 
 @Injectable()
 export class IndustryService {
   constructor(
+    @Inject(forwardRef(() => ProcessService))
+    private readonly processService: ProcessService,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 

@@ -37,7 +37,7 @@ async function main() {
       industry,
       parent: null,
     });
-    processRepository.save(root);
+    await processRepository.save(root);
     let data: any = await parseCsv(
       `${industry.name}.csv`,
       rows =>

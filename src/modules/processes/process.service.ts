@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
@@ -10,9 +10,10 @@ import { Process } from './process.entity';
 @Injectable()
 export class ProcessService {
   constructor(
+    @Inject(forwardRef(() => IndustryService))
+    private readonly industryService: IndustryService,
     @InjectRepository(Process) private readonly processRepository: Repository<Process>,
-    @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>,
-    private readonly industryService: IndustryService
+    @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>
   ) {}
 
   async tree(query: ProcessQueryInput): Promise<Process> {
@@ -116,3 +117,7 @@ export class ProcessService {
     };
   }
 }
+
+/*
+    @Inject(forwardRef(() => IndustryService))
+    private readonly industryService: IndustryService,*/
