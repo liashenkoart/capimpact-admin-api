@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
+import { IndustryService } from '@modules/industries/industry.service';
+import { IndustryCreationInput } from '@modules/industries/dto';
 import { ProcessQueryInput, ProcessCreationInput, ProcessInput } from '@modules/processes/dto';
 import { Process } from './process.entity';
 
@@ -9,7 +11,8 @@ import { Process } from './process.entity';
 export class ProcessService {
   constructor(
     @InjectRepository(Process) private readonly processRepository: Repository<Process>,
-    @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>
+    @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>,
+    private readonly industryService: IndustryService
   ) {}
 
   async tree(query: ProcessQueryInput): Promise<Process> {
@@ -41,16 +44,60 @@ export class ProcessService {
   }
 
   async save(id: any, data: ProcessInput): Promise<Process> {
-    const process = new Process({ ...data });
+    let process = new Process({ ...data });
     process.id = parseInt(id, 10);
     if (process.parentId) {
       process.parent = await this.findById(process.parentId);
     }
-    return this.processRepository.save(process);
+    process = await this.processRepository.save(process);
+    process = await this.processRepository.findOne({ id: process.id });
+    if (process.parentId === null) {
+      await this.industryService.save(process.industry_id, { name: process.name });
+    }
+    return process;
+  }
+
+  async clone(id: any): Promise<Process> {
+    const industryId = parseInt(id, 10);
+    let node = null;
+    let industry = await this.industryService.findById(industryId);
+    let root = await this.processRepository.findOne({ industry_id: industryId, parentId: null });
+    let descendants = await this.treeRepository.findDescendants(root);
+    let groupByName = {};
+    for (let descendant of descendants) {
+      if (descendant.parentId === null) {
+        let copiedIndustry = new IndustryCreationInput();
+        copiedIndustry.name = `${industry.name} Copy`;
+        industry = await this.industryService.create(copiedIndustry);
+        root = await this.processRepository.save({
+          name: industry.name,
+          industry_id: industry.id,
+          parent: null,
+        });
+      } else {
+        const parentNode = descendants.find(it => it.id === descendant.parentId);
+        const parent = (parentNode && groupByName[parentNode.name]) || root;
+        node = await this.processRepository.save({
+          name: descendant.name,
+          industry_id: industry.id,
+          parent,
+        });
+        groupByName[node.name] = node;
+      }
+    }
+    return this.tree({ industry_id: industry.id });
   }
 
   async remove(id: any) {
-    return this.processRepository.delete(parseInt(id, 10));
+    id = parseInt(id, 10);
+    const node = await this.processRepository.findOne({ id });
+    let descendants = await this.treeRepository.findDescendants(node);
+    await this.processRepository.remove(descendants);
+    await this.processRepository.remove(node);
+    if (node.parentId === null) {
+      await this.industryService.remove(node.industry_id);
+    }
+    return true;
   }
 
   getFindAllQuery(query: ProcessQueryInput): FindManyOptions {

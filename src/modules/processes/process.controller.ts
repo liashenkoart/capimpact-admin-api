@@ -9,6 +9,7 @@ import {
   Param,
   Delete,
   Query,
+  Put,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -21,14 +22,14 @@ import { ProcessQueryInput, ProcessInput, ProcessCreationInput } from '@modules/
 export class ProcessController {
   constructor(private readonly processService: ProcessService) {}
 
-  @Get('tree')
-  async tree(@Query() query: ProcessQueryInput) {
-    return this.processService.tree(query);
-  }
-
   @Get('')
   async findAll(@Query() query: ProcessQueryInput) {
     return this.processService.findAll(query);
+  }
+
+  @Get('tree')
+  async tree(@Query() query: ProcessQueryInput) {
+    return this.processService.tree(query);
   }
 
   @Get('/:id')
@@ -43,7 +44,13 @@ export class ProcessController {
 
   @Post('/:id')
   async save(@Param('id') id: number, @Body() data: ProcessInput) {
+    console.log(id, data)
     return this.processService.save(id, data);
+  }
+
+  @Post('/:industryId/clone')
+  async clone(@Param('industryId') industryId: number) {
+    return this.processService.clone(industryId);
   }
 
   @Delete('/:id')

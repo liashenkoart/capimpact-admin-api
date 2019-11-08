@@ -19,17 +19,14 @@ export class IndustryService {
     return this.industryRepository.findOne(id);
   }
 
-  async findByEmail(email: string): Promise<Industry> {
-    return this.industryRepository.findOne({ where: { email } });
-  }
-
   async create(data: IndustryCreationInput): Promise<Industry> {
     const industry = new Industry(data);
     return this.industryRepository.save(industry);
   }
 
-  async save(id: number, data: IndustryInput): Promise<Industry> {
-    const industry = new Industry({ ...data, id });
+  async save(id: any, data: IndustryInput): Promise<Industry> {
+    const industry = new Industry({ ...data });
+    industry.id = parseInt(id, 10);
     return this.industryRepository.save(industry);
   }
 

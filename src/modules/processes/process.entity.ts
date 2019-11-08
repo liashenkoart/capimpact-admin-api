@@ -76,7 +76,9 @@ export class Process {
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;
 
-  @TreeChildren()
+  @TreeChildren({
+    cascade: true
+  })
   children: Process[];
 
   @TreeParent()
