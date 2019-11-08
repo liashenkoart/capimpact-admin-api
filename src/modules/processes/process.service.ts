@@ -50,12 +50,14 @@ export class ProcessService {
     return this.processRepository.save(process);
   }
 
-  async createTreeFromIndustry(industry: Industry): Promise<Process> {
+  async createTreeFromIndustry(industry: Industry, context: any): Promise<Process> {
+    const { user } = context;
     // save root industry node
     let root = await this.processRepository.save({
       name: industry.name,
       industry,
       parent: null,
+      user,
     });
     let data: any = await parseCsv(
       `CrossIndustry.csv`,
@@ -70,6 +72,7 @@ export class ProcessService {
               metrics_avail: row.metrics_avail === 'Y',
               hierarchy_id,
               industry,
+              user,
             },
           };
         }, {}),

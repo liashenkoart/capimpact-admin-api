@@ -28,9 +28,9 @@ export class IndustryService {
     return this.industryRepository.save(industry);
   }
 
-  async createWithTreeProcesses(data: IndustryCreationInput): Promise<Industry> {
+  async createWithTreeProcesses(data: IndustryCreationInput, context: any): Promise<Industry> {
     const industry = await this.create(data);
-    await this.processService.createTreeFromIndustry(industry);
+    await this.processService.createTreeFromIndustry(industry, context);
     return industry;
   }
 

@@ -8,6 +8,7 @@ import {
   ClassSerializerInterceptor,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -36,8 +37,8 @@ export class IndustryController {
   }
 
   @Post('/processes')
-  async createWithTreeProcesses(@Body() data: IndustryCreationInput) {
-    return this.industryService.createWithTreeProcesses(data);
+  async createWithTreeProcesses(@Body() data: IndustryCreationInput, @Req() req: any) {
+    return this.industryService.createWithTreeProcesses(data, { user: req.user });
   }
 
   @Post('/:id')
