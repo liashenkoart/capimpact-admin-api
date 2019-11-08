@@ -37,15 +37,19 @@ export class ProcessService {
     return this.processRepository.findOne({ where: { email } });
   }
 
-  async create(data: ProcessCreationInput): Promise<Process> {
+  async create(data: ProcessCreationInput, context: any): Promise<Process> {
+    const { user } = context;
     const process = new Process(data);
     process.parent = await this.findById(process.parentId);
+    process.user = user;
     return this.processRepository.save(process);
   }
 
-  async save(id: any, data: ProcessInput): Promise<Process> {
+  async save(id: any, data: ProcessInput, context: any): Promise<Process> {
+    const { user } = context;
     let process = new Process({ ...data });
     process.id = parseInt(id, 10);
+    process.user = user;
     if (process.parentId) {
       process.parent = await this.findById(process.parentId);
     }
@@ -57,7 +61,8 @@ export class ProcessService {
     return process;
   }
 
-  async clone(id: any): Promise<Process> {
+  async clone(id: any, context: any): Promise<Process> {
+    const { user } = context;
     const industryId = parseInt(id, 10);
     let node = null;
     let industry = await this.industryService.findById(industryId);
@@ -73,6 +78,7 @@ export class ProcessService {
           name: industry.name,
           industry_id: industry.id,
           parent: null,
+          user,
         });
       } else {
         const parentNode = descendants.find(it => it.id === descendant.parentId);
@@ -81,6 +87,7 @@ export class ProcessService {
           name: descendant.name,
           industry_id: industry.id,
           parent,
+          user,
         });
         groupByName[node.name] = node;
       }

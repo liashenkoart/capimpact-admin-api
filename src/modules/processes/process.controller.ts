@@ -10,6 +10,7 @@ import {
   Delete,
   Query,
   Put,
+  Req,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -38,19 +39,18 @@ export class ProcessController {
   }
 
   @Post('')
-  async create(@Body() data: ProcessCreationInput) {
-    return this.processService.create(data);
+  async create(@Body() data: ProcessCreationInput, @Req() req: any) {
+    return this.processService.create(data, { user: req.user });
   }
 
   @Post('/:id')
-  async save(@Param('id') id: number, @Body() data: ProcessInput) {
-    console.log(id, data)
-    return this.processService.save(id, data);
+  async save(@Param('id') id: number, @Body() data: ProcessInput, @Req() req: any) {
+    return this.processService.save(id, data, { user: req.user });
   }
 
   @Post('/:industryId/clone')
-  async clone(@Param('industryId') industryId: number) {
-    return this.processService.clone(industryId);
+  async clone(@Param('industryId') industryId: number, @Req() req: any) {
+    return this.processService.clone(industryId, { user: req.user });
   }
 
   @Delete('/:id')
