@@ -2,7 +2,11 @@ import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/commo
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
+import { parseCsv } from '@lib/parseCsv';
+import { getPath } from '@lib/getPath';
+
 import { IndustryService } from '@modules/industries/industry.service';
+import { Industry } from '@modules/industries/industry.entity';
 import { IndustryCreationInput } from '@modules/industries/dto';
 import { ProcessQueryInput, ProcessCreationInput, ProcessInput } from '@modules/processes/dto';
 import { Process } from './process.entity';
@@ -44,6 +48,60 @@ export class ProcessService {
     process.parent = await this.findById(process.parentId);
     process.user = user;
     return this.processRepository.save(process);
+  }
+
+  async createTreeFromIndustry(industry: Industry): Promise<Process> {
+    // save root industry node
+    let root = await this.processRepository.save({
+      name: industry.name,
+      industry,
+      parent: null,
+    });
+    let data: any = await parseCsv(
+      `CrossIndustry.csv`,
+      rows =>
+        // { '1': {...}, '2': {...} ...}
+        rows.reduce((o, row) => {
+          const hierarchy_id = getPath(row.hierarchy_id);
+          return {
+            ...o,
+            [hierarchy_id]: {
+              ...row,
+              metrics_avail: row.metrics_avail === 'Y',
+              hierarchy_id,
+              industry,
+            },
+          };
+        }, {}),
+      {
+        renameHeaders: true,
+        headers: [
+          'pcf_id',
+          'hierarchy_id',
+          'name',
+          'difference_idx',
+          'change_details',
+          'metrics_avail',
+        ],
+      }
+    );
+    // Contain saved data by hierarchy_id key
+    let groupByHierarchyId = {};
+    // Convert to array
+    let processes: any = Object.values(data);
+    // Save process one by one
+    for (let proc of processes) {
+      // 1.2.3.4.5 -> 1.2.3.4
+      let parent = proc.hierarchy_id
+        .split('.')
+        .slice(0, -1)
+        .join('.');
+      groupByHierarchyId[proc.hierarchy_id] = await this.processRepository.save({
+        ...proc,
+        parent: groupByHierarchyId[parent] || root,
+      });
+    }
+    return this.tree({ industry_id: industry.id });
   }
 
   async save(id: any, data: ProcessInput, context: any): Promise<Process> {
@@ -96,7 +154,7 @@ export class ProcessService {
     return this.tree({ industry_id: industry.id });
   }
 
-  async remove(id: any) {
+  async remove(id: any): Promise<Process> {
     id = parseInt(id, 10);
     const node = await this.processRepository.findOne({ id });
     let descendants = await this.treeRepository.findDescendants(node);
@@ -105,7 +163,7 @@ export class ProcessService {
     if (node.parentId === null) {
       await this.industryService.remove(node.industry_id);
     }
-    return true;
+    return node;
   }
 
   getFindAllQuery(query: ProcessQueryInput): FindManyOptions {
@@ -117,7 +175,3 @@ export class ProcessService {
     };
   }
 }
-
-/*
-    @Inject(forwardRef(() => IndustryService))
-    private readonly industryService: IndustryService,*/

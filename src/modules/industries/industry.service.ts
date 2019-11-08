@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ProcessService } from '@modules/processes/process.service';
+import { Process } from '@modules/processes/process.entity';
 import { IndustryCreationInput, IndustryInput } from '@modules/industries/dto';
 import { Industry } from './industry.entity';
 
@@ -25,6 +26,12 @@ export class IndustryService {
   async create(data: IndustryCreationInput): Promise<Industry> {
     const industry = new Industry(data);
     return this.industryRepository.save(industry);
+  }
+
+  async createWithTreeProcesses(data: IndustryCreationInput): Promise<Industry> {
+    const industry = await this.create(data);
+    await this.processService.createTreeFromIndustry(industry);
+    return industry;
   }
 
   async save(id: any, data: IndustryInput): Promise<Industry> {

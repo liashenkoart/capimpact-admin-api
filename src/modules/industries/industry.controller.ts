@@ -35,6 +35,11 @@ export class IndustryController {
     return this.industryService.create(data);
   }
 
+  @Post('/processes')
+  async createWithTreeProcesses(@Body() data: IndustryCreationInput) {
+    return this.industryService.createWithTreeProcesses(data);
+  }
+
   @Post('/:id')
   async save(@Param('id') id: number, @Body() data: IndustryInput) {
     return this.industryService.save(id, data);
