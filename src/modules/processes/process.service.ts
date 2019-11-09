@@ -123,6 +123,16 @@ export class ProcessService {
     return process;
   }
 
+  async saveMany(input: ProcessInput[], context: any) {
+    const { user } = context;
+    const data = input.map(candidate => {
+      let process = new Process({ ...candidate });
+      process.user = user;
+      return process;
+    });
+    return await this.processRepository.save(data);
+  }
+
   async clone(id: any, context: any): Promise<Process> {
     const { user } = context;
     const industryId = parseInt(id, 10);

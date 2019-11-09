@@ -1,6 +1,10 @@
 import { IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 
 export class ProcessInput {
+  @IsOptional()
+  @IsNumber()
+  readonly id?: number;
+
   @IsNotEmpty()
   readonly name: string;
 
