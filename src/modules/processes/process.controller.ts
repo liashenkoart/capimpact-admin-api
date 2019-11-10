@@ -33,6 +33,11 @@ export class ProcessController {
     return this.processService.tree(query);
   }
 
+  @Get('default-tree')
+  async defaultTree(@Query() query: ProcessQueryInput) {
+    return this.processService.defaultTree(query);
+  }
+
   @Get('/:id')
   async findOne(@Param('id') id: number) {
     return this.processService.findById(id);

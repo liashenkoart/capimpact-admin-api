@@ -10,6 +10,7 @@ import { Industry } from '@modules/industries/industry.entity';
 import { IndustryCreationInput } from '@modules/industries/dto';
 import { ProcessQueryInput, ProcessCreationInput, ProcessInput } from '@modules/processes/dto';
 import { Process } from './process.entity';
+import { DefaultProcess } from './default-process.entity';
 
 @Injectable()
 export class ProcessService {
@@ -17,7 +18,11 @@ export class ProcessService {
     @Inject(forwardRef(() => IndustryService))
     private readonly industryService: IndustryService,
     @InjectRepository(Process) private readonly processRepository: Repository<Process>,
-    @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>
+    @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>,
+    @InjectRepository(DefaultProcess)
+    private readonly defaultProcessRepository: Repository<DefaultProcess>,
+    @InjectRepository(DefaultProcess)
+    private readonly defaultTreeRepository: TreeRepository<DefaultProcess>
   ) {}
 
   async tree(query: ProcessQueryInput): Promise<Process> {
@@ -27,6 +32,15 @@ export class ProcessService {
       throw new NotFoundException();
     }
     return this.treeRepository.findDescendantsTree(root);
+  }
+
+  async defaultTree(query: ProcessQueryInput): Promise<DefaultProcess> {
+    const { industry_id } = query;
+    const root = await this.defaultProcessRepository.findOne({ industry_id, parentId: null });
+    if (!root) {
+      throw new NotFoundException();
+    }
+    return this.defaultTreeRepository.findDescendantsTree(root);
   }
 
   async findAll(query: ProcessQueryInput): Promise<Process[]> {

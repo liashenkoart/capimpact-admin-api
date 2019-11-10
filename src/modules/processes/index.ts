@@ -6,10 +6,11 @@ import { IndustriesModule } from '@modules/industries';
 import { ProcessController } from './process.controller';
 import { ProcessService } from './process.service';
 import { Process } from './process.entity';
+import { DefaultProcess } from './default-process.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Process]),
+    TypeOrmModule.forFeature([Process, DefaultProcess]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     forwardRef(() => IndustriesModule),
   ],
