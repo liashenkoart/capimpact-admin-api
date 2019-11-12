@@ -29,5 +29,5 @@ export class ProcessInput {
 
   @IsOptional()
   @IsNumber()
-  readonly parentId?: number;
+  readonly parent_id?: number;
 }

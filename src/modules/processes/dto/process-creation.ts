@@ -10,7 +10,7 @@ export class ProcessCreationInput {
 
   @IsOptional()
   @IsNumber()
-  readonly parentId?: number;
+  readonly parent_id?: number;
 
   @IsOptional()
   readonly pcf_id?: string;
