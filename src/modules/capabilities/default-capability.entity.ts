@@ -52,7 +52,7 @@ export class DefaultCapability {
   @Column({
     nullable: true,
   })
-  parent_id?: number;
+  parentId?: number;
 
   @ManyToOne(type => Industry, industry => industry.capabilities)
   @JoinColumn({ name: 'industry_id' })

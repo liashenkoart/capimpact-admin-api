@@ -17,5 +17,5 @@ export class CapabilityInput {
 
   @IsOptional()
   @IsNumber()
-  readonly parent_id?: number;
+  readonly parentId?: number;
 }

@@ -82,7 +82,7 @@ export class CapabilityService {
       user,
     });
     let data: any = await parseCsv(
-      `CapabilityIndustry.csv`,
+      `capabilities/Telco.csv`,
       rows =>
         // { '1': {...}, '2': {...} ...}
         rows.reduce((o, row) => {
@@ -91,7 +91,6 @@ export class CapabilityService {
             ...o,
             [hierarchy_id]: {
               ...row,
-              metrics_avail: row.metrics_avail === 'Y',
               hierarchy_id,
               industry,
               user,

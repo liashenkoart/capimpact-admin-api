@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ProcessService } from '@modules/processes/process.service';
-import { Process } from '@modules/processes/process.entity';
+import { CapabilityService } from '@modules/capabilities/capability.service';
 import { IndustryCreationInput, IndustryInput } from '@modules/industries/dto';
 import { Industry } from './industry.entity';
 
@@ -12,6 +12,8 @@ export class IndustryService {
   constructor(
     @Inject(forwardRef(() => ProcessService))
     private readonly processService: ProcessService,
+    @Inject(forwardRef(() => CapabilityService))
+    private readonly capabilityService: CapabilityService,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 
@@ -31,6 +33,12 @@ export class IndustryService {
   async createWithTreeProcesses(data: IndustryCreationInput, context: any): Promise<Industry> {
     const industry = await this.create(data);
     await this.processService.createTreeFromIndustry(industry, context);
+    return industry;
+  }
+
+  async createWithTreeCapabilities(data: IndustryCreationInput, context: any): Promise<Industry> {
+    const industry = await this.create(data);
+    await this.capabilityService.createTreeFromIndustry(industry, context);
     return industry;
   }
 

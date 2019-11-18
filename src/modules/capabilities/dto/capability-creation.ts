@@ -10,7 +10,7 @@ export class CapabilityCreationInput {
 
   @IsOptional()
   @IsNumber()
-  readonly parent_id?: number;
+  readonly parentId?: number;
 
   @IsOptional()
   readonly hierarchy_id?: string;
