@@ -49,7 +49,7 @@ export class ProcessController {
   }
 
   @Post('/bulk')
-  async saveMany(@Body() data: ProcessInput [], @Req() req: any) {
+  async saveMany(@Body() data: ProcessInput[], @Req() req: any) {
     return this.processService.saveMany(data, { user: req.user });
   }
 

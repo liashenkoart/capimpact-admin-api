@@ -77,7 +77,7 @@ export class Process {
   industry?: Industry;
 
   @TreeChildren({
-    cascade: true
+    cascade: true,
   })
   children: Process[];
 
