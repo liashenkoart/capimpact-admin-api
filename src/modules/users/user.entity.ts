@@ -3,6 +3,7 @@ import { Exclude } from 'class-transformer';
 import passwordCrypt from '@lib/passwordCrypt';
 
 import { Process } from '@modules/processes/process.entity';
+import { Capability } from '@modules/capabilities/capability.entity';
 
 @Entity('users')
 export class User {
@@ -26,10 +27,23 @@ export class User {
   })
   lastName: string;
 
-  @OneToMany(type => Process, proces => proces.user, {
-    cascade: true,
-  })
+  @OneToMany(
+    type => Process,
+    proces => proces.user,
+    {
+      cascade: true,
+    }
+  )
   processes: Process[];
+
+  @OneToMany(
+    type => Capability,
+    capability => capability.user,
+    {
+      cascade: true,
+    }
+  )
+  capabilities: Capability[];
 
   @BeforeInsert()
   hashPassword() {

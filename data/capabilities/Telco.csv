@@ -1,0 +1,568 @@
+hier_id,name
+1,Asset Management
+1.1,Due Diligence
+1.2,Resource Management
+10,Infrastructure Lifecycle Management
+10.1,Marketing and Offer Management
+10.1.1,Marketing Capability
+10.1.2,Product and Offering Portfolio
+10.2,Resource Development and Management
+10.3,Resource and Operations Delivery
+10.4,Service Development
+10.4.1,Service and Operations Delivery
+10.5,Supply Chain Capability Availability
+11,Marketing and Communications
+11.1,Awareness
+11.1.1,Advertising
+11.1.2,Brand Management
+11.1.3,Events
+11.1.4,Social Media
+11.2,Customer Acquisition
+11.3,Market Analytics / Analysis
+11.3.1,Competitive Assessment
+11.3.2,Customer Segmentation
+11.4,Marketing
+11.4.1,Agency Management
+11.4.2,Channels / Networks
+11.4.3,Collateral
+11.4.4,Promotions
+11.5,PR
+11.5.1,Media Management
+11.5.2,Recall Management
+12,Network and Systems Management
+12.1,Network Data Management
+12.2,Network Inventory Management
+12.3,Network Maintenance and Restoration
+12.4,Network Planning and Development
+12.5,Network Provisioning
+13,Operations
+13.1,Customer Relationship Management (CRM)
+13.2,Resource Management & Operations (RM&O)
+13.3,Service Management and Operations (SM&O)
+13.4,Supplier Relationship Management (S/PRM
+14,Power Generation
+14.1,Construction
+14.2,Distribution
+14.3,Engineering
+14.4,Power Generation Services
+14.4.1,Diesel
+14.4.2,Fuel Cell
+14.4.3,Green
+14.4.4,Hybrid
+14.4.5,Renewable
+14.5,Storage
+15,Product Lifecycle Management
+15.1,Marketing and Offer Management
+15.1.1,Marketing Communications and Promotion
+15.1.2,Product Development
+15.1.3,Product Retirement
+15.1.4,"Product, Marketing and Customer Performance Assessment"
+15.1.5,Sales and Chanel Development
+15.2,Resource Development
+15.2.1,Resource Development
+15.2.2,Resource Performance Assessment
+15.3,Service Development and Management
+15.3.1,Service Development and Retirement
+15.3.2,Service Performance Assessment
+15.4,Supply Chain Development
+15.4.1,Change Management
+15.4.2,Supply Chain Development
+15.4.3,Supply Chain Performance Assessment
+16,Resource Management and Operations
+16.1,Assurance
+16.1.1,Quality Reporting
+16.1.2,Resource Data Analysis
+16.1.3,Resource Problem Management
+16.1.4,Resource Quality Analysis
+16.2,Fulfillment
+16.2.1,Resource Provisioning
+16.3,Operational Support and Readiness
+16.3.1,RM&O Support
+16.3.2,Resource Management
+17,Revenue Assurance
+17.1,Billing
+17.2,Collections
+17.3,Fraud Management
+17.4,Mediation
+17.5,OSS/OSS
+18,Risk and Regulatory Management
+18.1,Asset Management
+18.1.1,Electronic Asset Management
+18.1.2,IP Management
+18.10,Reporting and Submissions
+18.10.1,Compliance
+18.10.2,Legal
+18.10.3,Regulatory
+18.11,Risk Management Platform / Software
+18.2,Compliance Management
+18.2.1,Compliance Training and Monitoring
+18.3,Data Management
+18.3.1,Cyber Security
+18.3.2,Data Insurance
+18.3.3,Data Privacy
+18.4,Environmental Protection
+18.4.1,Clean Water Treatment
+18.4.2,Hazardous Materials Management
+18.4.2.1,Disposal Management
+18.5,Health and Safety
+18.6,Incident Management
+18.6.1,Recall Management
+18.6.2,Security and Safety
+18.7,Public Affairs Lobbying
+18.8,Quality Management and Monitoring
+18.9,Regulatory Management
+18.9.1,Building Codes and Inspection
+19,Sales
+19.1,Channel Management
+19.1.1,After Market sales
+19.1.2,Distributor
+19.1.2.1,Contract Management
+19.1.2.2,Servicing
+19.1.2.3,Sourcing and Acquisition
+19.1.3,Field Sales
+19.1.4,Omni Channel
+19.1.4.1,APIs and Electronic Data Integration
+19.1.4.2,Call Center
+19.1.4.3,Events
+19.1.4.4,Portal
+19.1.5,Partner
+19.1.6,Pricing and Quoting
+19.1.6.1,Configure Price Quote CPQ
+19.1.7,Social Media
+19.1.8,eCommerce
+19.2,Customer Analysis and Segmentation
+19.3,Customer Relationship Management
+19.3.1,Customer Service
+19.4,Offer Management
+19.5,Sales Management
+19.5.1,Inbound
+19.5.2,Outbound
+19.5.3,Sales Reporting
+2,Assurance
+2.1,Customer Relationship Management
+2.1.1,Customer QoS / SLA Management
+2.1.2,Problem Handling
+2.2,Fulfillment
+2.2.1,S/P Buying
+2.2.2,S/P Purchase Order Management
+2.3,Resource Management & Operations
+2.3.1,Data Collection and Analysis
+2.3.1.1,Application Data Collection and Analysis
+2.3.1.2,Computing Data Collection and Analysis
+2.3.1.3,Network Data Collection and Analysis
+2.3.2,Quality Reporting
+2.3.3,Resource Data Analysis
+2.3.4,Resource Problem Management
+2.3.5,Resource Quality Analysis
+2.3.6,Restoration
+2.3.6.1,Application Restoration
+2.3.6.2,Computing Restoration
+2.3.6.3,Network Restoration
+2.4,Service Management and Operations
+2.4.1,Service Problem Management
+2.4.2,Service Quality
+2.4.3,Service Reporting
+2.5,Supplier Relationship Management
+2.5.1,S/P Performance Management
+2.5.2,S/P Problem Reporting
+20,Security
+20.1,Cyber Security
+20.2,Single Sign-on
+20.2.1,Authentication
+20.2.2,Encryption
+20.2.3,Role-based Access
+20.3,Site Security
+20.3.1,CCTV tower units
+20.3.2,biometric access control
+20.3.3,integrated site monitoring services
+20.4,Surveillance and Monitoring
+20.4.1,3D modeling
+20.4.10,underwater survey and inspections
+20.4.2,Drones
+20.4.3,Security Monitoring Services
+20.4.4,Sensors
+20.4.5,Wind Turbines
+20.4.6,aerial surveillance and inspection
+20.4.7,offshore structure monitoring
+20.4.8,orthophotos
+20.4.9,pipeline
+21,Service Management and Operations
+21.1,Fulfillment
+21.1.1,Service Configuration and Activation
+21.2,Rating and Discounting
+21.3,Service Configuration
+21.4,Service Planning and Development
+21.5,Service Problem Management
+21.6,Service Quality Management
+22,"Strategy, Infrastructure and Product"
+22.1,Marketing and Offer Management
+22.2,Resource Development and Management
+22.3,Service Development and Management
+22.4,Supply Chain Development and Management
+23,Supplier Management
+23.1,Assurance
+23.1.1,S/P Performance Management
+23.1.2,S/P Problem Reporting
+23.2,Fulfillment
+23.2.1,S/P Buying
+23.2.2,S/P Purchase Order Management
+23.3,Operations Support and Readiness
+23.3.1,S/P Relationship Management
+23.3.2,S/PRM Operations Support
+24,Supply Chain Management
+24.1,Capability Availability
+24.2,Performance Assessment
+24.3,Strategy and Policy
+24.4,Supply Chain Planning
+25,Technology Applications
+25.1,Agricultural Services
+25.10,Data Processing
+25.11,Device Management
+25.11.1,Device-to-Device Communications
+25.12,Energy
+25.12.1,Distributed Power
+25.12.2,Electricity
+25.12.3,Energy Optimization
+25.12.4,Energy Retailing
+25.12.5,Micro Power
+25.12.6,Natural Gas
+25.12.7,Solar
+25.12.8,Wind Turbines
+25.13,Enterprise Mobility Services
+25.13.1,Field Services
+25.14,Interaction
+25.14.1,Alerts
+25.14.2,Human Interaction
+25.14.3,Remote Control
+25.14.4,Remote Interactions
+25.15,Internet of Things (IOT)
+25.15.1,Predictive Analytics
+25.15.2,Predictive Behaviors
+25.15.3,Preemptive Behavior
+25.15.4,Prevention
+25.15.5,RF Emission from ISM Equipment
+25.15.6,Sensors
+25.15.6.1,Harmonization of IoT Devices and Systems
+25.15.6.2,Lidar
+25.15.6.3,Precision Time Stamp
+25.15.6.4,RFID Radio Frequency Identification
+25.15.6.5,Radio Sensing
+25.15.6.6,Sensor Networks
+25.16,Mapping
+25.16.1,Geo Spatial Mapping
+25.16.2,Geospatial Data Analysis
+25.16.3,Logistics Analysis
+25.16.4,Satcomms
+25.16.5,Satellete Observation Platform
+25.16.5.1,GNSS Antenna
+25.16.6,Satellite data management
+25.16.7,Space-based Radio Frequency (RF)
+25.16.7.1,Ad Serving
+25.16.7.2,Digital Campaign Management
+25.17,Massive MIMO
+25.18,Meda Services
+25.18.1,Content Production
+25.18.2,Entertainment Content
+25.18.3,Marketing Services
+25.18.4,Online Advertising
+25.18.5,Television Advertising Services
+25.19,Media Transmissions
+25.19.1,Radio transmission
+25.19.2,Television
+25.2,Audio
+25.2.1,Artificial Intelligence for Voice
+25.2.2,Chat-bot
+25.2.3,Conversational AI
+25.2.4,ML
+25.2.5,VOIP
+25.20,Millimeter Wave and Terahertz Band
+25.21,Mixed Reality
+25.21.1,Augmented Reality
+25.21.2,Virtual Reality
+25.21.3,XR
+25.22,Network Function Virtualization (NVF)
+25.23,Payments
+25.23.1,Blockchain
+25.23.2,Cards
+25.23.3,Crytocurrency
+25.23.4,Electronic Payments
+25.23.5,Mobile
+25.23.6,Pre-Paid
+25.23.7,Top Up
+25.24,Pollution Management
+25.25,Radio Access Techniques
+25.26,Space Monitoring
+25.26.1,Inspace Connectivity Services
+25.26.2,Satellite Communications
+25.26.3,Spacecraft Technologies
+25.27,Sports
+25.27.1,Live Streaming
+25.28,Supply Chain
+25.28.1,Monitoring
+25.28.2,Optimization
+25.28.3,RFID
+25.29,Tactile Internet
+25.3,Automation
+25.30,Ultra-Densification
+25.31,Unified Communications as a Service
+25.31.1,UCaaS
+25.32,Video Streaming
+25.32.1,Video Resolution
+25.33,Wholesale Long Distance Services
+25.34,Wireless
+25.34.1,Wireless Software Defined Networking (WSDN)
+25.35,Workspace as a Service
+25.4,Blockchain
+25.4.2,Distributed Database
+25.4.3,Dynamic Registries
+25.4.4,Identify Management
+25.4.5,Payments Infrastructure
+25.4.6,Smart Contracts
+25.4.7,Static Registry
+25.5,Cloud Business Applications
+25.5.1,Data On Premises
+25.5.2,Private Clouds
+25.5.3,Public Cloud Management
+25.6,Communications Platform as a Service (CPaaS
+25.6.1,CPaaS
+25.7,Communications Platform as a Service CPaaS
+25.8,Contact Center as a Service (CCaaS)
+25.8.1,CCaaS
+25.9,Data Monetization Services
+26,Technology Infrastructure
+26.1,Devices
+26.1.1,Configurable
+26.1.2,Device-to-Device Communications
+26.1.3,Multi-band mode
+26.1.4,Programmable
+26.1.5,Unified Communciation Terminal Solutions
+26.2,Network Management
+26.2.1,Cable Services
+26.2.1.1,Digital Cable
+26.2.1.2,Satellite Services
+26.2.1.3,Subscription based Services
+26.2.1.4,Video On Demand
+26.2.10,Network Function Virtualization (NVF)
+26.2.11,Optical Fiber Networks
+26.2.12,Series Grid Critical Infrastructure
+26.2.13,Series Interoperability
+26.2.14,Series Power Line Communications (PLC)
+26.2.15,Telephone Exchange Services
+26.2.16,Traffic Management
+26.2.17,Virtual Infrastructure Services
+26.2.18,Wireless Mobile Broadband
+26.2.18.1,802.11
+26.2.18.2,Fronthaul
+26.2.18.3,LAN/MAN
+26.2.19,Wireless Software Defined Networking (WSDN)
+26.2.2,Communications Towers
+26.2.2.1,Communications Equipment
+26.2.3,Distributed Network Protocol
+26.2.4,Energy Efficiency Management
+26.2.4.1,Propagation
+26.2.5,Engineering Services
+26.2.5.1,Build
+26.2.5.2,Design
+26.2.5.3,Fiber to the Home FTTH
+26.2.5.4,Maintain and Repair
+26.2.6,Infrastructure as a Service IaaS
+26.2.7,Integrated Telecommunication Servcies
+26.2.8,Low Voltage Solutions ELV
+26.2.9,Network Aggregation
+26.3,Network Optimization
+26.3.1,Cognitive computing
+26.3.1.1,compliance automation
+26.3.1.2,fraud detection
+26.3.1.3,pattern recognition
+26.3.10,Network Virtualization
+26.3.11,Quantum Computing
+26.3.12,Radio Access Techniques
+26.3.13,Spectral Efficiency
+26.3.14,Spectrum Management
+26.3.15,Ultra-Densification
+26.3.16,VOIP
+26.3.2,Connection Density
+26.3.3,Device management
+26.3.4,Distributed Network Optimization
+26.3.4.1,ISP services
+26.3.4.2,Optical Processing
+26.3.5,Latency Management
+26.3.6,Machine Learning
+26.3.7,Massive MIMO
+26.3.8,Millimeter Wave and Terahertz Band
+26.3.9,Network Slicing
+26.4,Storage
+26.4.1,Battery
+26.4.2,Error-Correction-Codes (ECC)
+26.4.3,Storage Optimization
+26.5,Unified Communications
+26.5.1,UCaaS
+26.5.2,Unified Communications as a Service (UCaaS)
+3,Billing
+3.1,Customer Relationship Management
+3.1.1,Billing and Collections Management
+3.1.1.1,Reconciliation
+3.1.1.2,Settlements and Billing Management
+3.1.2,Retention and Loyalty
+3.2,Fulfillment
+3.3,OSS/BSS
+3.4,Rating and Billing
+3.4.1,Discount Ratings
+3.4.2,Instance Ratings
+3.5,Resource Management and Operations
+3.5.1,Resource Data Collection and Analysis
+3.5.1.1,Application Data Collection and Analysis
+3.5.1.2,Computing Data Collection and Analysis
+3.5.1.3,Network Data Collection and Analysis
+3.6,Service management and Operations
+3.6.1,Instance Rating
+3.7,Supplier Relationship Management
+3.7.1,S/P Performance Management
+3.7.2,S/P Problem Reporting
+4,Business Management
+4.1,Asset and Facilities Management
+4.10,Human Resources Management
+4.10.1,Employee and Labor Relations Management
+4.10.2,HR Policies
+4.10.3,Workforce Management
+4.11,Legal and IP Management
+4.12,Partnership Management
+4.13,Regulatory and Compliance
+4.14,Risk Management and Security
+4.15,Stakeholder and External Relations
+4.15.1,Board Management
+4.15.2,Communication Relations
+4.15.3,Corporate Communications
+4.15.4,Legal Management
+4.15.5,Regulatory Management
+4.15.6,Shareholder Relations Management
+4.16,Strategy and Planning
+4.2,Business Development
+4.3,Commercialization
+4.4,Communications and PR
+4.4.1,Advertising
+4.4.2,Brand Management
+4.4.3,Communications and PR
+4.4.3.1,Market Research
+4.4.3.2,Stakeholder and External Relationships Management
+4.4.4,Market Research
+4.5,"Disaster Recovery, Security and Fraud Management"
+4.5.1,Contingency Planning
+4.5.2,Fraud Management
+4.5.3,Security Management
+4.6,Enterprise Planning
+4.6.1,Business Development
+4.6.2,Business Planning
+4.6.3,Enterprise Architecture Planning
+4.6.4,Group Enterprise Management
+4.7,Enterprise Quality Management
+4.7.1,Knowledge Management
+4.7.2,Process Architecture
+4.8,External Relations
+4.9,Financial and Asset Management
+4.9.1,Asset Management
+4.9.2,Financial Management
+4.9.3,Procurement Management
+4.9.4,Real Estate Management
+5,Customer Relationship Management
+5.1,Call Scheduling
+5.10,Sales and Channel Management
+5.2,Churn Management
+5.3,Customer QoS Management
+5.4,Invoicing and Collections
+5.5,Operations Support
+5.6,Order Handling
+5.7,Problem Handling
+5.8,Retention & Loyalty
+5.9,Sales
+6,Cyber Security
+6.1,Connectivity
+6.2,Data Management
+6.3,Latency
+6.4,Monitoring
+6.4.1,AI network security
+6.5,Privacy
+6.6,Security
+6.6.1,Encryption and Authentication
+7,Finance and Accounting
+7.1,Accounting
+7.2,Audit
+7.3,"Billing, Collections and Bad Debt"
+7.3.1,Group Billing
+7.4,Budget Management
+7.5,Payments
+7.5.1,AP / AR
+7.5.2,Commissions
+7.5.3,Denials
+7.5.4,Payment Processing
+7.5.5,Reconciliation
+7.5.6,Settlements
+7.6,Tax Management
+7.7,Treasury Services
+7.7.1,Cash Forecasting
+7.7.2,Cash Management
+7.7.3,Commercial Banking Services
+8,Fulfillment
+8.1,Customer Engagement
+8.1.1,Marketing Fulfillment Response
+8.1.2,Order Handling
+8.1.3,Retention & Loyalty
+8.1.4,Selling
+8.2,Resource Management
+8.2.1,Provisioning
+8.2.1.1,Application
+8.2.1.2,Automated Provisioning Services
+8.2.1.3,Automated Service Creation
+8.2.1.4,Computing
+8.2.1.5,Dynamic SLA Creation
+8.2.1.6,Network
+8.2.1.7,On Demand Service Creation
+8.3,Service Management
+8.3.1,Activation
+8.3.2,Service Configuration
+8.4,Supplier / Partner Relationship
+8.4.1,Buying
+8.4.2,Interface Management
+8.4.3,Purchase Order Management
+9,Industry Applications 5G
+9.1,Education
+9.10,Video Streaming
+9.10.1,Programmable Video
+9.10.2,WebRTC programmable video
+9.2,Energy Management
+9.2.1,Energy Aware Electronics
+9.2.2,Energy Optimization
+9.2.3,Universal Power Adapter for Mobile Devices
+9.3,Healthcare
+9.3.1,Acute Care Coordination
+9.3.10,eHealth
+9.3.2,Diagnostics
+9.3.3,Digital Health Services
+9.3.4,Facilities Management
+9.3.5,Medical Device Monitoring
+9.3.6,Monitoring
+9.3.7,RF Emission from ISM Equipment
+9.3.8,Remote health check
+9.3.9,Telehealth
+9.4,Industry Automation
+9.5,Real Estate
+9.5.1,Commercial
+9.5.1.1,3D modeling
+9.5.1.2,Building Database
+9.5.1.3,Engineering Services
+9.5.2,Residential
+9.6,Smart City
+9.7,Smart Grid
+9.7.1,Distributed Network Protocol
+9.7.2,Series Grid Critical Infrastructure
+9.7.3,Series Interoperability
+9.8,Smart Home
+9.8.1,Home Networking
+9.8.2,LAN/MAN
+9.8.3,Series PLC
+9.8.4,Smart Energy Profile
+9.9,Transportation
+9.9.1,Emergency Management System
+9.9.2,Self Driving Vehicles
+9.9.3,Series Power Line Communications (PLC)
+9.9.4,Services Wireless Access Vehicle Environment

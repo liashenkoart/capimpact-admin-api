@@ -7,12 +7,15 @@ import {
   Tree,
   TreeChildren,
   TreeParent,
+  BeforeUpdate,
 } from 'typeorm';
 import { Industry } from '@modules/industries/industry.entity';
 
-@Entity('default-processes')
+import { User } from '@modules/users/user.entity';
+
+@Entity('capabilities')
 @Tree('materialized-path')
-export class DefaultProcess {
+export class Capability {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,27 +25,12 @@ export class DefaultProcess {
   @Column({
     nullable: true,
   })
-  pcf_id?: string;
-
-  @Column({
-    nullable: true,
-  })
   hierarchy_id?: string;
 
   @Column({
     nullable: true,
   })
-  difference_idx?: string;
-
-  @Column({
-    nullable: true,
-  })
-  change_details?: string;
-
-  @Column({
-    default: false,
-  })
-  metrics_avail?: boolean;
+  user_id?: number;
 
   @Column({
     nullable: true,
@@ -54,17 +42,40 @@ export class DefaultProcess {
   })
   parentId?: number;
 
-  @ManyToOne(type => Industry, industry => industry.processes)
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+  })
+  last_update: Date;
+
+  @ManyToOne(
+    type => User,
+    user => user.capabilities
+  )
+  @JoinColumn({ name: 'user_id' })
+  user?: User;
+
+  @ManyToOne(
+    type => Industry,
+    industry => industry.capabilities
+  )
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;
 
-  @TreeChildren()
-  children: DefaultProcess[];
+  @TreeChildren({
+    cascade: true,
+  })
+  children: Capability[];
 
   @TreeParent()
-  parent?: DefaultProcess;
+  parent?: Capability;
 
-  constructor(partial: Partial<DefaultProcess>) {
+  @BeforeUpdate()
+  updateDates() {
+    this.last_update = new Date();
+  }
+
+  constructor(partial: Partial<Capability>) {
     Object.assign(this, partial);
   }
 }

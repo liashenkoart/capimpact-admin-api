@@ -60,7 +60,7 @@ export class Process {
   @Column({
     nullable: true,
   })
-  parent_id?: number;
+  parentId?: number;
 
   @Column({
     type: 'timestamp',
@@ -68,11 +68,17 @@ export class Process {
   })
   last_update: Date;
 
-  @ManyToOne(type => User, user => user.processes)
+  @ManyToOne(
+    type => User,
+    user => user.processes
+  )
   @JoinColumn({ name: 'user_id' })
   user?: User;
 
-  @ManyToOne(type => Industry, industry => industry.processes)
+  @ManyToOne(
+    type => Industry,
+    industry => industry.processes
+  )
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;
 

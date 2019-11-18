@@ -13,7 +13,9 @@
     "test": "jest --config=jest.json",
     "test:watch": "jest --watch --config=jest.json",
     "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage",
-    "apqc": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/apqc.ts"
+    "apqc": "yarn industries && ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/apqc.ts",
+    "industries": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industries.ts",
+    "capabilities": "yarn industries && ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities.ts"
   },
   "license": "ISC",
   "dependencies": {

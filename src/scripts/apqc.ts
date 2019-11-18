@@ -15,6 +15,8 @@ async function main() {
   if (!connection.isConnected) {
     throw new Error('connection is not established');
   }
+  let root = null;
+  let data: any = [];
 
   const industryRepository = getRepository(Industry);
   const defaultProcessRepository = getRepository(DefaultProcess);
@@ -31,14 +33,8 @@ async function main() {
 
   // save tree processes for each industry
   for (let industry of industries) {
-    // save root industry node
-    let root = await defaultProcessRepository.save({
-      name: industry.name,
-      industry,
-      parent: null,
-    });
-    await processRepository.save(root);
-    let data: any = await parseCsv(
+    // Get csv data
+    data = await parseCsv(
       `${industry.name}.csv`,
       rows =>
         // { '1': {...}, '2': {...} ...}
@@ -66,6 +62,13 @@ async function main() {
         ],
       }
     );
+    // save root industry node
+    root = await defaultProcessRepository.save({
+      name: industry.name,
+      industry,
+      parent: null,
+    });
+    await processRepository.save(root);
     // Contain saved data by hierarchy_id key
     let groupByHierarchyId = {};
     // Convert to array

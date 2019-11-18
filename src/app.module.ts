@@ -7,6 +7,7 @@ import { UsersModule } from '@modules/users';
 import { AuthModule } from '@modules/auth';
 import { IndustriesModule } from '@modules/industries';
 import { ProcessesModule } from '@modules/processes';
+import { CapabilitiesModule } from '@modules/capabilities';
 
 import { AppController } from './app.controller';
 
@@ -18,6 +19,7 @@ import { AppController } from './app.controller';
     AuthModule,
     IndustriesModule,
     ProcessesModule,
+    CapabilitiesModule,
   ],
   controllers: [AppController],
   providers: [],
@@ -25,11 +27,3 @@ import { AppController } from './app.controller';
 export class ApplicationModule {
   constructor(private readonly connection: Connection) {}
 }
-
-/*
-import { ArticleModule } from './article/article.module';
-import { UserModule } from './user/user.module';
-import { ProfileModule } from './profile/profile.module';
-import { TagModule } from './tag/tag.module';
-ArticleModule, UserModule, ProfileModule, TagModule
-*/
