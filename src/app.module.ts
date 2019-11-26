@@ -5,9 +5,7 @@ import { Connection } from 'typeorm';
 
 import { UsersModule } from '@modules/users';
 import { AuthModule } from '@modules/auth';
-import { IndustriesModule } from '@modules/industries';
-import { ProcessesModule } from '@modules/processes';
-import { CapabilitiesModule } from '@modules/capabilities';
+import { CapsModule } from '@modules/caps';
 
 import { AppController } from './app.controller';
 
@@ -17,9 +15,7 @@ import { AppController } from './app.controller';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     UsersModule,
     AuthModule,
-    IndustriesModule,
-    ProcessesModule,
-    CapabilitiesModule,
+    CapsModule,
   ],
   controllers: [AppController],
   providers: [],

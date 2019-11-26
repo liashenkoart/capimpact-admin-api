@@ -2,8 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToMany } from 
 import { Exclude } from 'class-transformer';
 import passwordCrypt from '@lib/passwordCrypt';
 
-import { Process } from '@modules/processes/process.entity';
-import { Capability } from '@modules/capabilities/capability.entity';
+import { Process, Capability, Company } from '@modules/caps/entities';
 
 @Entity('users')
 export class User {
@@ -44,6 +43,15 @@ export class User {
     }
   )
   capabilities: Capability[];
+
+  @OneToMany(
+    type => Company,
+    company => company.user,
+    {
+      cascade: true,
+    }
+  )
+  companies: Company[];
 
   @BeforeInsert()
   hashPassword() {
