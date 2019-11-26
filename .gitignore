@@ -22,3 +22,6 @@ ormconfig.js
 
 # code testing coverage
 coverage
+
+# build
+dist
