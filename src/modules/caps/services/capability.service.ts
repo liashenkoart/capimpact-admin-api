@@ -75,7 +75,7 @@ export class CapabilityService {
       user,
     });
     let data: any = await parseCsv(
-      `capabilities/Telco.csv`,
+      `capabilities/Telecommunications.csv`,
       rows =>
         // { '1': {...}, '2': {...} ...}
         rows.reduce((o, row) => {

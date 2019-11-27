@@ -1,9 +1,7 @@
 import { createConnection, getRepository } from 'typeorm';
 import _ from 'lodash';
 
-import { Industry } from '@modules/industries/industry.entity';
-//import { DefaultCapability } from '@modules/capabilities/default-capability.entity';
-import { Capability } from '@modules/capabilities/capability.entity';
+import { Industry, Capability, DefaultCapability } from '@modules/caps/entities';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
@@ -19,15 +17,15 @@ async function main() {
   let data: any = null;
 
   const industryRepository = getRepository(Industry);
-  //const defaultCapabilityRepository = getRepository(DefaultCapability);
   const capabilityRepository = getRepository(Capability);
+  //const defaultCapabilityRepository = getRepository(DefaultCapability);
 
-  // get Telco industry
+  // get industries
   let industries = await industryRepository.find();
 
   // save tree capabilities for each industry
   for (let industry of industries) {
-    if (['Telco'].includes(industry.name)) {
+    if (['Telecommunications'].includes(industry.name)) {
       data = await parseCsv(
         `capabilities/${industry.name}.csv`,
         rows =>

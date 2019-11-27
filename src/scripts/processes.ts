@@ -1,9 +1,7 @@
 import { createConnection, getRepository, getTreeRepository, TreeRepository } from 'typeorm';
 import _ from 'lodash';
 
-import { Industry } from '@modules/industries/industry.entity';
-import { DefaultProcess } from '@modules/processes/default-process.entity';
-import { Process } from '@modules/processes/process.entity';
+import { Industry, Process, DefaultProcess } from '@modules/caps/entities';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
@@ -22,20 +20,14 @@ async function main() {
   const defaultProcessRepository = getRepository(DefaultProcess);
   const processRepository = getRepository(Process);
 
-  // save industries
-  let industries: any = await parseCsv('industries.csv', rows =>
-    rows.map(row => ({
-      ...row,
-      id: parseInt(row.id, 10),
-    }))
-  );
-  industries = await industryRepository.save(industries);
+  // get industries
+  let industries = await industryRepository.find();
 
   // save tree processes for each industry
   for (let industry of industries) {
     // Get csv data
     data = await parseCsv(
-      `${industry.name}.csv`,
+      `processes/${industry.name}.csv`,
       rows =>
         // { '1': {...}, '2': {...} ...}
         rows.reduce((o, row) => {
@@ -63,12 +55,12 @@ async function main() {
       }
     );
     // save root industry node
-    root = await defaultProcessRepository.save({
+    root = await processRepository.save({
       name: industry.name,
       industry,
       parent: null,
     });
-    await processRepository.save(root);
+    await defaultProcessRepository.save(root);
     // Contain saved data by hierarchy_id key
     let groupByHierarchyId = {};
     // Convert to array
@@ -80,11 +72,11 @@ async function main() {
         .split('.')
         .slice(0, -1)
         .join('.');
-      groupByHierarchyId[proc.hierarchy_id] = await defaultProcessRepository.save({
+      groupByHierarchyId[proc.hierarchy_id] = await processRepository.save({
         ...proc,
         parent: groupByHierarchyId[parent] || root,
       });
-      await processRepository.save(groupByHierarchyId[proc.hierarchy_id]);
+      await defaultProcessRepository.save(groupByHierarchyId[proc.hierarchy_id]);
     }
   }
 

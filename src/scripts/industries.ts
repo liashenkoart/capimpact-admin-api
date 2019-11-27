@@ -1,7 +1,7 @@
 import { createConnection, getRepository } from 'typeorm';
 import _ from 'lodash';
 
-import { Industry } from '@modules/industries/industry.entity';
+import { Industry } from '@modules/caps/entities';
 
 import { parseCsv } from '@lib/parseCsv';
 
