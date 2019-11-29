@@ -56,7 +56,8 @@ export class DefaultProcess {
 
   @ManyToOne(
     type => Industry,
-    industry => industry.processes
+    industry => industry.processes,
+    { cascade: true }
   )
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;

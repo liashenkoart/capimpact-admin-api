@@ -79,7 +79,7 @@ export class ProcessService {
       user,
     });
     let data: any = await parseCsv(
-      `CrossIndustry.csv`,
+      `processes/CrossIndustry.csv`,
       rows =>
         // { '1': {...}, '2': {...} ...}
         rows.reduce((o, row) => {
@@ -196,6 +196,11 @@ export class ProcessService {
       await this.industryService.remove(node.industry_id);
     }
     return node;
+  }
+
+  async removeByIndustry(industryId: any) {
+    industryId = parseInt(industryId, 10);
+    return this.processRepository.delete({ industry_id: industryId });
   }
 
   getFindAllQuery(query: ProcessQueryInput): FindManyOptions {

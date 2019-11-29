@@ -56,7 +56,8 @@ export class DefaultCapability {
 
   @ManyToOne(
     type => Industry,
-    industry => industry.capabilities
+    industry => industry.capabilities,
+    { cascade: true }
   )
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;

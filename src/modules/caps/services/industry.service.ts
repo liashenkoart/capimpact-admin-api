@@ -28,6 +28,27 @@ export class IndustryService {
     return this.industryRepository.save(industry);
   }
 
+  async cloneWithProcesses(
+    id: number,
+    data: IndustryCreationInput,
+    context: any
+  ): Promise<Industry> {
+    const industry = await this.create(data);
+    await this.processService.createTreeFromIndustry(industry, context);
+    return industry;
+  }
+
+  async cloneWithCapabilities(
+    id: number,
+    data: IndustryCreationInput,
+    context: any
+  ): Promise<Industry> {
+    const industry = await this.create(data);
+    await this.capabilityService.createTreeFromIndustry(industry, context);
+    return industry;
+  }
+
+  /*
   async createWithTreeProcesses(data: IndustryCreationInput, context: any): Promise<Industry> {
     const industry = await this.create(data);
     await this.processService.createTreeFromIndustry(industry, context);
@@ -39,6 +60,7 @@ export class IndustryService {
     await this.capabilityService.createTreeFromIndustry(industry, context);
     return industry;
   }
+  */
 
   async save(id: any, data: IndustryInput): Promise<Industry> {
     const industry = new Industry({ ...data });
@@ -47,6 +69,8 @@ export class IndustryService {
   }
 
   async remove(id: number) {
+    await this.processService.removeByIndustry(id);
+    await this.capabilityService.removeByIndustry(id);
     return this.industryRepository.delete(id);
   }
 }

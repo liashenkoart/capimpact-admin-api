@@ -189,6 +189,11 @@ export class CapabilityService {
     return node;
   }
 
+  async removeByIndustry(industryId: any) {
+    industryId = parseInt(industryId, 10);
+    return this.capabilityRepository.delete({ industry_id: industryId });
+  }
+
   getFindAllQuery(query: CapabilityQueryInput): FindManyOptions {
     const { limit, page, ...where } = query;
     return {

@@ -12,28 +12,19 @@ export class Industry {
 
   @OneToMany(
     type => Process,
-    proces => proces.industry,
-    {
-      cascade: true,
-    }
+    proces => proces.industry
   )
   processes: Process[];
 
   @OneToMany(
     type => Capability,
-    capability => capability.industry,
-    {
-      cascade: true,
-    }
+    capability => capability.industry
   )
   capabilities: Capability[];
 
   @OneToMany(
     type => Company,
-    company => company.industry,
-    {
-      cascade: true,
-    }
+    company => company.industry
   )
   companies: Company[];
 
