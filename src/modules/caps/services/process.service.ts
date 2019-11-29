@@ -32,7 +32,7 @@ export class ProcessService {
 
   async tree(query: ProcessQueryInput): Promise<Process> {
     const { industry_id } = query;
-    const root = await this.processRepository.findOne({ industry_id, parent_id: null });
+    const root = await this.processRepository.findOne({ industry_id, parentId: null });
     if (!root) {
       throw new NotFoundException();
     }
@@ -41,7 +41,7 @@ export class ProcessService {
 
   async defaultTree(query: ProcessQueryInput): Promise<DefaultProcess> {
     const { industry_id } = query;
-    const root = await this.defaultProcessRepository.findOne({ industry_id, parent_id: null });
+    const root = await this.defaultProcessRepository.findOne({ industry_id, parentId: null });
     if (!root) {
       throw new NotFoundException();
     }
@@ -64,7 +64,7 @@ export class ProcessService {
   async create(data: ProcessCreationInput, context: any): Promise<Process> {
     const { user } = context;
     const process = new Process(data);
-    process.parent = await this.findById(process.parent_id);
+    process.parent = await this.findById(process.parentId);
     process.user = user;
     return this.processRepository.save(process);
   }
@@ -131,12 +131,12 @@ export class ProcessService {
     let process = new Process({ ...data });
     process.id = parseInt(id, 10);
     process.user = user;
-    if (process.parent_id) {
-      process.parent = await this.findById(process.parent_id);
+    if (process.parentId) {
+      process.parent = await this.findById(process.parentId);
     }
     process = await this.processRepository.save(process);
     process = await this.processRepository.findOne({ id: process.id });
-    if (process.parent_id === null) {
+    if (process.parentId === null) {
       await this.industryService.save(process.industry_id, { name: process.name });
     }
     return process;
@@ -157,11 +157,11 @@ export class ProcessService {
     const industryId = parseInt(id, 10);
     let node = null;
     let industry = await this.industryService.findById(industryId);
-    let root = await this.processRepository.findOne({ industry_id: industryId, parent_id: null });
+    let root = await this.processRepository.findOne({ industry_id: industryId, parentId: null });
     let descendants = await this.treeRepository.findDescendants(root);
     let groupByName = {};
     for (let descendant of descendants) {
-      if (descendant.parent_id === null) {
+      if (descendant.parentId === null) {
         let copiedIndustry = new IndustryCreationInput();
         copiedIndustry.name = `${industry.name} Copy`;
         industry = await this.industryService.create(copiedIndustry);
@@ -172,7 +172,7 @@ export class ProcessService {
           user,
         });
       } else {
-        const parentNode = descendants.find(it => it.id === descendant.parent_id);
+        const parentNode = descendants.find(it => it.id === descendant.parentId);
         const parent = (parentNode && groupByName[parentNode.name]) || root;
         node = await this.processRepository.save({
           name: descendant.name,
@@ -192,7 +192,7 @@ export class ProcessService {
     let descendants = await this.treeRepository.findDescendants(node);
     await this.processRepository.remove(descendants);
     await this.processRepository.remove(node);
-    if (node.parent_id === null) {
+    if (node.parentId === null) {
       await this.industryService.remove(node.industry_id);
     }
     return node;

@@ -52,7 +52,7 @@ export class DefaultProcess {
   @Column({
     nullable: true,
   })
-  parent_id?: number;
+  parentId?: number;
 
   @ManyToOne(
     type => Industry,

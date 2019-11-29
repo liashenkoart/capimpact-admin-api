@@ -61,7 +61,7 @@ export class Process {
   @Column({
     nullable: true,
   })
-  parent_id?: number;
+  parentId?: number;
 
   @Column({
     type: 'timestamp',
