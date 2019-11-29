@@ -20,6 +20,9 @@ async function main() {
   const capabilityRepository = getRepository(Capability);
   //const defaultCapabilityRepository = getRepository(DefaultCapability);
 
+  // clear
+  //await capabilityRepository.clear();
+
   // get industries
   let industries = await industryRepository.find();
 

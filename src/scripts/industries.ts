@@ -15,6 +15,9 @@ async function main() {
 
   const industryRepository = getRepository(Industry);
 
+  // clear
+  //await industryRepository.clear()
+
   // save industries
   let industries: any = await parseCsv('industries.csv', rows =>
     rows.map(row => ({

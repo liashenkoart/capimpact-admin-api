@@ -20,6 +20,10 @@ async function main() {
   const defaultProcessRepository = getRepository(DefaultProcess);
   const processRepository = getRepository(Process);
 
+  // clear
+  //await defaultProcessRepository.clear();
+  //await processRepository.clear();
+
   // get industries
   let industries = await industryRepository.find();
 
