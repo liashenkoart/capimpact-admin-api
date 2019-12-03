@@ -5,7 +5,6 @@ export const setupSwaggerModule = ({ app }) => {
     .setTitle('CapAdmin API')
     .setDescription('description')
     .setVersion('1.0')
-    .setBasePath('api')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
