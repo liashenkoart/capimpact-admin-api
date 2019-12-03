@@ -23,9 +23,20 @@ export class IndustryService {
     return this.industryRepository.findOne(id);
   }
 
-  async create(data: IndustryCreationInput): Promise<Industry> {
-    const industry = new Industry(data);
-    return this.industryRepository.save(industry);
+  async create(data: IndustryCreationInput, context: any): Promise<Industry> {
+    let industry = new Industry(data);
+    industry = await this.industryRepository.save(industry);
+    await this.processService.createTreeFromIndustry(industry, context);
+    await this.capabilityService.createTreeFromIndustry(industry, context);
+    return industry;
+  }
+
+  async clone(id: number, data: IndustryCreationInput, context: any): Promise<Industry> {
+    let industry = new Industry(data);
+    industry = await this.industryRepository.save(industry);
+    await this.processService.createTreeFromIndustry(industry, context);
+    await this.capabilityService.createTreeFromIndustry(industry, context);
+    return industry;
   }
 
   async cloneWithProcesses(
@@ -33,7 +44,8 @@ export class IndustryService {
     data: IndustryCreationInput,
     context: any
   ): Promise<Industry> {
-    const industry = await this.create(data);
+    let industry = new Industry(data);
+    industry = await this.industryRepository.save(industry);
     await this.processService.createTreeFromIndustry(industry, context);
     return industry;
   }
@@ -43,7 +55,8 @@ export class IndustryService {
     data: IndustryCreationInput,
     context: any
   ): Promise<Industry> {
-    const industry = await this.create(data);
+    let industry = new Industry(data);
+    industry = await this.industryRepository.save(industry);
     await this.capabilityService.createTreeFromIndustry(industry, context);
     return industry;
   }

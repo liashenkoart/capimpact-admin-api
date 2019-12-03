@@ -1,0 +1,173 @@
+hier_id,name
+1,Asset Management
+1.1,Due Diligence
+1.2,Resource Management
+11,Marketing and Communications
+11.1,Awareness
+11.1.1,Advertising
+11.1.2,Brand Management
+11.1.3,Events
+11.1.4,Social Media
+11.2,Customer Acquisition
+11.3,Market Analytics / Analysis
+11.3.1,Competitive Assessment
+11.3.2,Customer Segmentation
+11.4,Marketing
+11.4.1,Agency Management
+11.4.2,Channels / Networks
+11.4.3,Collateral
+11.4.4,Promotions
+11.5,PR
+11.5.1,Media Management
+11.5.2,Recall Management
+13,Operations
+13.1,Customer Relationship Management (CRM)
+13.2,Resource Management & Operations (RM&O)
+13.3,Service Management and Operations (SM&O)
+13.4,Supplier Relationship Management (S/PRM
+16,Resource Management and Operations
+16.1,Assurance
+16.1.1,Quality Reporting
+16.1.2,Resource Data Analysis
+16.1.3,Resource Problem Management
+16.1.4,Resource Quality Analysis
+16.2,Fulfillment
+16.2.1,Resource Provisioning
+16.3,Operational Support and Readiness
+16.3.1,RM&O Support
+16.3.2,Resource Management
+19,Sales
+19.1,Channel Management
+19.1.1,After Market sales
+19.1.2,Distributor
+19.1.2.1,Contract Management
+19.1.2.2,Servicing
+19.1.2.3,Sourcing and Acquisition
+19.1.3,Field Sales
+19.1.4,Omni Channel
+19.1.4.1,APIs and Electronic Data Integration
+19.1.4.2,Call Center
+19.1.4.3,Events
+19.1.4.4,Portal
+19.1.5,Partner
+19.1.6,Pricing and Quoting
+19.1.6.1,Configure Price Quote CPQ
+19.1.7,Social Media
+19.1.8,eCommerce
+19.2,Customer Analysis and Segmentation
+19.3,Customer Relationship Management
+19.3.1,Customer Service
+19.4,Offer Management
+19.5,Sales Management
+19.5.1,Inbound
+19.5.2,Outbound
+19.5.3,Sales Reporting
+2,Assurance
+2.1,Customer Relationship Management
+2.1.1,Customer QoS / SLA Management
+2.1.2,Problem Handling
+2.2,Fulfillment
+2.2.1,S/P Buying
+2.2.2,S/P Purchase Order Management
+2.3,Resource Management & Operations
+2.3.1,Data Collection and Analysis
+2.3.1.1,Application Data Collection and Analysis
+2.3.1.2,Computing Data Collection and Analysis
+2.3.1.3,Network Data Collection and Analysis
+2.3.2,Quality Reporting
+2.3.3,Resource Data Analysis
+2.3.4,Resource Problem Management
+2.3.5,Resource Quality Analysis
+2.3.6,Restoration
+2.3.6.1,Application Restoration
+2.3.6.2,Computing Restoration
+2.3.6.3,Network Restoration
+2.4,Service Management and Operations
+2.4.1,Service Problem Management
+2.4.2,Service Quality
+2.4.3,Service Reporting
+2.5,Supplier Relationship Management
+2.5.1,S/P Performance Management
+2.5.2,S/P Problem Reporting
+21,Service Management and Operations
+21.1,Fulfillment
+21.1.1,Service Configuration and Activation
+21.2,Rating and Discounting
+21.3,Service Configuration
+21.4,Service Planning and Development
+21.5,Service Problem Management
+21.6,Service Quality Management
+4,Business Management
+4.1,Asset and Facilities Management
+4.10,Human Resources Management
+4.10.1,Employee and Labor Relations Management
+4.10.2,HR Policies
+4.10.3,Workforce Management
+4.11,Legal and IP Management
+4.12,Partnership Management
+4.13,Regulatory and Compliance
+4.14,Risk Management and Security
+4.15,Stakeholder and External Relations
+4.15.1,Board Management
+4.15.2,Communication Relations
+4.15.3,Corporate Communications
+4.15.4,Legal Management
+4.15.5,Regulatory Management
+4.15.6,Shareholder Relations Management
+4.16,Strategy and Planning
+4.2,Business Development
+4.3,Commercialization
+4.4,Communications and PR
+4.4.1,Advertising
+4.4.2,Brand Management
+4.4.3,Communications and PR
+4.4.3.1,Market Research
+4.4.3.2,Stakeholder and External Relationships Management
+4.4.4,Market Research
+4.5,"Disaster Recovery, Security and Fraud Management"
+4.5.1,Contingency Planning
+4.5.2,Fraud Management
+4.5.3,Security Management
+4.6,Enterprise Planning
+4.6.1,Business Development
+4.6.2,Business Planning
+4.6.3,Enterprise Architecture Planning
+4.6.4,Group Enterprise Management
+4.7,Enterprise Quality Management
+4.7.1,Knowledge Management
+4.7.2,Process Architecture
+4.8,External Relations
+4.9,Financial and Asset Management
+4.9.1,Asset Management
+4.9.2,Financial Management
+4.9.3,Procurement Management
+4.9.4,Real Estate Management
+5,Customer Relationship Management
+5.1,Call Scheduling
+5.10,Sales and Channel Management
+5.2,Churn Management
+5.3,Customer QoS Management
+5.4,Invoicing and Collections
+5.5,Operations Support
+5.6,Order Handling
+5.7,Problem Handling
+5.8,Retention & Loyalty
+5.9,Sales
+7,Finance and Accounting
+7.1,Accounting
+7.2,Audit
+7.3,"Billing, Collections and Bad Debt"
+7.3.1,Group Billing
+7.4,Budget Management
+7.5,Payments
+7.5.1,AP / AR
+7.5.2,Commissions
+7.5.3,Denials
+7.5.4,Payment Processing
+7.5.5,Reconciliation
+7.5.6,Settlements
+7.6,Tax Management
+7.7,Treasury Services
+7.7.1,Cash Forecasting
+7.7.2,Cash Management
+7.7.3,Commercial Banking Services

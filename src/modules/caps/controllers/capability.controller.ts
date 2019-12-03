@@ -59,11 +59,6 @@ export class CapabilityController {
     return this.capabilityService.save(id, data, { user: req.user });
   }
 
-  @Post('/:industryId/clone')
-  async clone(@Param('industryId') industryId: number, @Req() req: any) {
-    return this.capabilityService.clone(industryId, { user: req.user });
-  }
-
   @Delete('/:id')
   async remove(@Param('id') id: number) {
     return this.capabilityService.remove(id);

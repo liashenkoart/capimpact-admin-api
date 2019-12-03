@@ -79,7 +79,7 @@ export class ProcessService {
       user,
     });
     let data: any = await parseCsv(
-      `processes/CrossIndustry.csv`,
+      `processes/default.csv`,
       rows =>
         // { '1': {...}, '2': {...} ...}
         rows.reduce((o, row) => {
@@ -152,6 +152,7 @@ export class ProcessService {
     return await this.processRepository.save(data);
   }
 
+  /*
   async clone(id: any, context: any): Promise<Process> {
     const { user } = context;
     const industryId = parseInt(id, 10);
@@ -164,7 +165,7 @@ export class ProcessService {
       if (descendant.parentId === null) {
         let copiedIndustry = new IndustryCreationInput();
         copiedIndustry.name = `${industry.name} Copy`;
-        industry = await this.industryService.create(copiedIndustry);
+        industry = await this.industryService.create(copiedIndustry, context);
         root = await this.processRepository.save({
           name: industry.name,
           industry_id: industry.id,
@@ -185,6 +186,7 @@ export class ProcessService {
     }
     return this.tree({ industry_id: industry.id });
   }
+  */
 
   async remove(id: any): Promise<Process> {
     id = parseInt(id, 10);

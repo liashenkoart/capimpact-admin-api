@@ -32,8 +32,8 @@ export class IndustryController {
   }
 
   @Post('')
-  async create(@Body() data: IndustryCreationInput) {
-    return this.industryService.create(data);
+  async create(@Body() data: IndustryCreationInput, @Req() req: any) {
+    return this.industryService.create(data, { user: req.user });
   }
 
   /*

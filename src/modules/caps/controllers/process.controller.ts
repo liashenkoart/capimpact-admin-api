@@ -58,11 +58,6 @@ export class ProcessController {
     return this.processService.save(id, data, { user: req.user });
   }
 
-  @Post('/:industryId/clone')
-  async clone(@Param('industryId') industryId: number, @Req() req: any) {
-    return this.processService.clone(industryId, { user: req.user });
-  }
-
   @Delete('/:id')
   async remove(@Param('id') id: number) {
     return this.processService.remove(id);
