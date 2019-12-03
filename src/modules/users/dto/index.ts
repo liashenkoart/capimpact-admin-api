@@ -1,2 +1,2 @@
-export { UserCreationInput } from './user-creation';
-export { UserInput } from './user';
+export { UserCreationInput } from './user-creation.dto';
+export { UserInput } from './user.dto';

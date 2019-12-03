@@ -1,11 +1,11 @@
-export { IndustryCreationInput } from './industry-creation';
-export { IndustryInput } from './industry';
-export { IndustryQueryInput } from './industry-query';
+export { IndustryCreationInput } from './industry-creation.dto';
+export { IndustryInput } from './industry.dto';
+export { IndustryQueryInput } from './industry-query.dto';
 
-export { ProcessCreationInput } from './process-creation';
-export { ProcessInput } from './process';
-export { ProcessQueryInput } from './process-query';
+export { ProcessCreationInput } from './process-creation.dto';
+export { ProcessInput } from './process.dto';
+export { ProcessQueryInput } from './process-query.dto';
 
-export { CapabilityCreationInput } from './capability-creation';
-export { CapabilityInput } from './capability';
-export { CapabilityQueryInput } from './capability-query';
+export { CapabilityCreationInput } from './capability-creation.dto';
+export { CapabilityInput } from './capability.dto';
+export { CapabilityQueryInput } from './capability-query.dto';
