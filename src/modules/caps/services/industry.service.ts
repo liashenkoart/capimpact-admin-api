@@ -16,7 +16,7 @@ export class IndustryService {
   ) {}
 
   async findAll(): Promise<Industry[]> {
-    return this.industryRepository.find();
+    return this.industryRepository.find({ order: { name: 'ASC' } });
   }
 
   async findById(id: number): Promise<Industry> {
