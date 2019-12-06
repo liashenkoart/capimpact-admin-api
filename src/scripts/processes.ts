@@ -1,5 +1,4 @@
-import { createConnection, getRepository, getTreeRepository, TreeRepository } from 'typeorm';
-import _ from 'lodash';
+import { createConnection, getManager } from 'typeorm';
 
 import { Industry, Process, DefaultProcess } from '@modules/caps/entities';
 
@@ -15,86 +14,82 @@ async function main() {
   }
   let root = null;
   let data: any = [];
+  let resultDeleted = null;
 
-  const industryRepository = getRepository(Industry);
-  const defaultProcessRepository = getRepository(DefaultProcess);
-  const processRepository = getRepository(Process);
+  await getManager().transaction(async transactionalEntityManager => {
+    // get industries
+    let industries = await transactionalEntityManager.find(Industry);
 
-  // clear
-  //await defaultProcessRepository.clear();
-  //await processRepository.clear();
-
-  // get industries
-  let industries = await industryRepository.find();
-
-  // save tree processes for each industry
-  for (let industry of industries) {
-    // Get csv data
-    data = await parseCsv(
-      `processes/${industry.name}.csv`,
-      rows =>
-        // { '1': {...}, '2': {...} ...}
-        rows.reduce((o, row) => {
-          const hierarchy_id = getPath(row.hierarchy_id);
-          return {
-            ...o,
-            [hierarchy_id]: {
-              ...row,
-              metrics_avail: row.metrics_avail === 'Y',
-              hierarchy_id,
-              industry,
-            },
-          };
-        }, {}),
-      {
-        renameHeaders: true,
-        headers: [
-          'pcf_id',
-          'hierarchy_id',
-          'name',
-          'difference_idx',
-          'change_details',
-          'metrics_avail',
-        ],
-      }
-    );
-    // save root industry node
-    root = await processRepository.save({
-      name: industry.name,
-      industry,
-      parent: null,
-    });
-    await defaultProcessRepository.save(root);
-    // Contain saved data by hierarchy_id key
-    let groupByHierarchyId = {};
-    // Convert to array
-    let processes: any = Object.values(data);
-    // Save process one by one
-    for (let proc of processes) {
-      // 1.2.3.4.5 -> 1.2.3.4
-      let parent = proc.hierarchy_id
-        .split('.')
-        .slice(0, -1)
-        .join('.');
-      groupByHierarchyId[proc.hierarchy_id] = await processRepository.save({
-        ...proc,
-        parent: groupByHierarchyId[parent] || root,
-      });
-      await defaultProcessRepository.save(groupByHierarchyId[proc.hierarchy_id]);
+    // clear all processes
+    resultDeleted = await transactionalEntityManager.delete(Process, {});
+    if (resultDeleted) {
+      console.log(`Process: Number of deleted records ${resultDeleted.affected}`);
     }
-  }
+    resultDeleted = await transactionalEntityManager.delete(DefaultProcess, {});
+    if (resultDeleted) {
+      console.log(`DefaultProcess: Number of deleted records ${resultDeleted.affected}`);
+    }
 
-  /*
-  const processes = await defaultProcessRepository.find();
-  await processRepository.save(processes);
-  */
-
-  /*
-  // Test tree
-  const treeRepository = getTreeRepository(Process);
-  const trees = await treeRepository.findTrees();
-  console.log(trees);
-  */
+    // save tree processes for each industry
+    for (let industry of industries) {
+      // Get csv data
+      data = await parseCsv(
+        `processes/${industry.name}.csv`,
+        rows =>
+          // { '1': {...}, '2': {...} ...}
+          rows.reduce((o, row) => {
+            const hierarchy_id = getPath(row.hierarchy_id);
+            return {
+              ...o,
+              [hierarchy_id]: {
+                ...row,
+                metrics_avail: row.metrics_avail === 'Y',
+                hierarchy_id,
+                industry,
+              },
+            };
+          }, {}),
+        {
+          renameHeaders: true,
+          headers: [
+            'pcf_id',
+            'hierarchy_id',
+            'name',
+            'difference_idx',
+            'change_details',
+            'metrics_avail',
+          ],
+        }
+      );
+      // save root industry node
+      root = await transactionalEntityManager.save(Process, {
+        name: industry.name,
+        industry,
+        parent: null,
+      });
+      await transactionalEntityManager.save(DefaultProcess, root);
+      // Contain saved data by hierarchy_id key
+      let groupByHierarchyId = {};
+      // Convert to array
+      let processes: any = Object.values(data);
+      // Save process one by one
+      for (let proc of processes) {
+        // 1.2.3.4.5 -> 1.2.3.4
+        let parent = proc.hierarchy_id
+          .split('.')
+          .slice(0, -1)
+          .join('.');
+        groupByHierarchyId[proc.hierarchy_id] = await transactionalEntityManager.save(Process, {
+          ...proc,
+          parent: groupByHierarchyId[parent] || root,
+        });
+        await transactionalEntityManager.save(
+          DefaultProcess,
+          groupByHierarchyId[proc.hierarchy_id]
+        );
+      }
+    }
+  });
 }
 
 main();

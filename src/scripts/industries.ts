@@ -1,5 +1,4 @@
-import { createConnection, getRepository } from 'typeorm';
-import _ from 'lodash';
+import { createConnection, getManager } from 'typeorm';
 
 import { Industry } from '@modules/caps/entities';
 
@@ -13,19 +12,15 @@ async function main() {
     throw new Error('connection is not established');
   }
 
-  const industryRepository = getRepository(Industry);
-
-  // clear
-  //await industryRepository.clear()
-
-  // save industries
-  let industries: any = await parseCsv('industries.csv', rows =>
-    rows.map(row => ({
-      ...row,
-      id: parseInt(row.id, 10),
-    }))
-  );
-  industries = await industryRepository.save(industries);
+  await getManager().transaction(async transactionalEntityManager => {
+    let industries: any = await parseCsv('industries.csv', rows =>
+      rows.map((row: any) => ({
+        ...row,
+        id: +row.id,
+      }))
+    );
+    await transactionalEntityManager.save(Industry, industries);
+  });
 }
 
 main();
