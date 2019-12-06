@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Industry } from '@modules/caps/entities/industry.entity';
 
-@Entity('default-processes')
+@Entity('default_processes')
 @Tree('materialized-path')
 export class DefaultProcess {
   @PrimaryGeneratedColumn()

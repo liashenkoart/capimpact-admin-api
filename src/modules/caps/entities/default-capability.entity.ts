@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Industry } from '@modules/caps/entities/industry.entity';
 
-@Entity('default-capabilities')
+@Entity('default_capabilities')
 @Tree('materialized-path')
 export class DefaultCapability {
   @PrimaryGeneratedColumn()
