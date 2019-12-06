@@ -84,6 +84,7 @@ export class IndustryService {
   async remove(id: number) {
     await this.processService.removeByIndustry(id);
     await this.capabilityService.removeByIndustry(id);
-    return this.industryRepository.delete(id);
+    await this.industryRepository.delete(id);
+    return { id };
   }
 }

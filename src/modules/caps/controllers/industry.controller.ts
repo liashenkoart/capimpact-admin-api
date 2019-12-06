@@ -68,6 +68,6 @@ export class IndustryController {
 
   @Delete('/:id')
   async remove(@Param('id') id: number) {
-    return this.industryService.remove(id);
+    return this.industryService.remove(+id);
   }
 }
