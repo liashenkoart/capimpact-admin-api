@@ -179,7 +179,7 @@ export class CapabilityService {
   }
   */
 
-  async remove(id: any): Promise<Capability> {
+  async remove(id: any) {
     id = parseInt(id, 10);
     const node = await this.capabilityRepository.findOne({ id });
     let descendants = await this.treeRepository.findDescendants(node);
@@ -188,7 +188,7 @@ export class CapabilityService {
     if (node.parentId === null) {
       await this.industryService.remove(node.industry_id);
     }
-    return node;
+    return { id };
   }
 
   async removeByIndustry(industryId: any) {

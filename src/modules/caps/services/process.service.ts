@@ -188,7 +188,7 @@ export class ProcessService {
   }
   */
 
-  async remove(id: any): Promise<Process> {
+  async remove(id: any) {
     id = parseInt(id, 10);
     const node = await this.processRepository.findOne({ id });
     let descendants = await this.treeRepository.findDescendants(node);
@@ -197,7 +197,7 @@ export class ProcessService {
     if (node.parentId === null) {
       await this.industryService.remove(node.industry_id);
     }
-    return node;
+    return { id };
   }
 
   async removeByIndustry(industryId: any) {
