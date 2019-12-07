@@ -22,6 +22,9 @@ import {
   CapabilityController,
 } from '@modules/caps/controllers';
 
+// Resolvers
+import { IndustryResolver } from '@modules/caps/resolvers';
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -35,7 +38,7 @@ import {
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [IndustryController, ProcessController, CapabilityController],
-  providers: [ProcessService, IndustryService, CapabilityService],
+  providers: [ProcessService, IndustryService, CapabilityService, IndustryResolver],
   exports: [IndustryService, ProcessService, CapabilityService],
 })
 export class CapsModule {}

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { Connection } from 'typeorm';
@@ -16,6 +17,11 @@ import { AppController } from './app.controller';
     UsersModule,
     AuthModule,
     CapsModule,
+    GraphQLModule.forRoot({
+      //include: [UsersModule],
+      autoSchemaFile: 'schema.gql',
+      installSubscriptionHandlers: true,
+    }),
   ],
   controllers: [AppController],
   providers: [],

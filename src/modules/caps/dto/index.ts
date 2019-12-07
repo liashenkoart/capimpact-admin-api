@@ -1,6 +1,7 @@
 export { IndustryCreationInput } from './industry-creation.dto';
 export { IndustryInput } from './industry.dto';
 export { IndustryQueryInput } from './industry-query.dto';
+export { IndustriesArgs } from './industries.args';
 
 export { ProcessCreationInput } from './process-creation.dto';
 export { ProcessInput } from './process.dto';

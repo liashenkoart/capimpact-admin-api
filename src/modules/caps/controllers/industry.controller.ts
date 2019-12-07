@@ -13,7 +13,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 
 import { IndustryService } from '@modules/caps/services/industry.service';
-import { IndustryInput, IndustryCreationInput } from '@modules/caps/dto';
+import { IndustryInput, IndustryCreationInput, IndustriesArgs } from '@modules/caps/dto';
 
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
@@ -22,8 +22,8 @@ export class IndustryController {
   constructor(private readonly industryService: IndustryService) {}
 
   @Get('')
-  async findAll() {
-    return this.industryService.findAll();
+  async findAll(@Param() args: IndustriesArgs) {
+    return this.industryService.findAll(args);
   }
 
   @Get('/:id')

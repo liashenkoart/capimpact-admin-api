@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import { ProcessService } from './process.service';
 import { CapabilityService } from './capability.service';
-import { IndustryCreationInput, IndustryInput } from '@modules/caps/dto';
+import { IndustryCreationInput, IndustryInput, IndustriesArgs } from '@modules/caps/dto';
 import { Industry } from '@modules/caps/entities/industry.entity';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class IndustryService {
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 
-  async findAll(): Promise<Industry[]> {
+  async findAll(args: IndustriesArgs): Promise<Industry[]> {
     return this.industryRepository.find({ order: { name: 'ASC' } });
   }
 

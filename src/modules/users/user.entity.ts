@@ -1,26 +1,38 @@
+import { Field, Int, ObjectType } from 'type-graphql';
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
+
 import passwordCrypt from '@lib/passwordCrypt';
 
 import { Process, Capability, Company } from '@modules/caps/entities';
 
+@ObjectType()
 @Entity('users')
 export class User {
+  @Field(type => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field()
   @Column()
   email: string;
 
+  @Field()
   @Column()
   @Exclude()
   password: string;
 
+  @Field({
+    nullable: true,
+  })
   @Column({
     nullable: true,
   })
   firstName: string;
 
+  @Field({
+    nullable: true,
+  })
   @Column({
     nullable: true,
   })
