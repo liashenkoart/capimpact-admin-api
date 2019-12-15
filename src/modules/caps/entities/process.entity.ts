@@ -118,3 +118,5 @@ export class Process {
     Object.assign(this, partial);
   }
 }
+
+// update tree set path = DESTINATION_PATH || subpath(path, nlevel(SOURCE_PATH)-1) where path <@ SOURCE_PATH;

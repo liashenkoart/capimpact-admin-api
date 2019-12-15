@@ -4,10 +4,14 @@
   "port": 5432,
   "username": "postgres",
   "password": "postgres",
-  "database": "cap",
+  "database": "apqc_r721",
   "entities": [
     "src/modules/**/**.entity{.ts,.js}"
   ],
   "synchronize": true,
-  "logging": true
+  "logging": true,
+  "migrations": ["migration/*{.ts,.js}"],
+  "cli": {
+    "migrationsDir": "migration"
+  }
 }
