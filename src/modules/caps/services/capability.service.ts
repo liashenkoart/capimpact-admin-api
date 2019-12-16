@@ -216,7 +216,7 @@ export class CapabilityService {
     if (node.hierarchy_id) return node;
     let hierarchyId = '';
     let parent = await this.capabilityRepository.findOne(+node.parentId);
-    if (parent) {
+    if (parent && parent.hierarchy_id) {
       hierarchyId = `${parent.hierarchy_id}.`;
     }
     let nodes = await this.capabilityRepository.find({ where: { parentId: +node.parentId } });
