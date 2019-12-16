@@ -10,6 +10,7 @@
   ],
   "synchronize": true,
   "logging": true,
+  "migrationsRun": true,
   "migrations": ["migration/*{.ts,.js}"],
   "cli": {
     "migrationsDir": "migration"

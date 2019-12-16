@@ -215,14 +215,17 @@ export class CapabilityService {
   async updateHierarchyIdNode(node: Capability): Promise<Capability> {
     if (node.hierarchy_id) return node;
     let hierarchyId = '';
+    let maxValue = 0;
     let parent = await this.capabilityRepository.findOne(+node.parentId);
     if (parent && parent.hierarchy_id) {
       hierarchyId = `${parent.hierarchy_id}.`;
     }
-    let nodes = await this.capabilityRepository.find({ where: { parentId: +node.parentId } });
-    nodes = nodes.filter(n => !!n.hierarchy_id);
-    let hierarchyIds = nodes.map(n => +n.hierarchy_id.split('.').pop());
-    let maxValue = Math.max(...hierarchyIds);
+    let siblings = await this.capabilityRepository.find({ where: { parentId: +node.parentId } });
+    siblings = siblings.filter(n => !!n.hierarchy_id);
+    if (siblings && siblings.length) {
+      let hierarchyIds = siblings.map(n => +n.hierarchy_id.split('.').pop());
+      maxValue = Math.max(...hierarchyIds);
+    }
     node.hierarchy_id = `${hierarchyId}${maxValue + 1}`;
     await this.capabilityRepository.save(node);
     return node;
