@@ -119,7 +119,7 @@ export class CapabilityService {
   async save(id: any, data: CapabilityInput, context: any): Promise<Capability> {
     const { user } = context;
     let capability = new Capability({ ...data });
-    capability.id = parseInt(id, 10);
+    capability.id = +id;
     capability.user = user;
     if (capability.parentId) {
       capability.parent = await this.findById(capability.parentId);
@@ -187,20 +187,20 @@ export class CapabilityService {
   */
 
   async remove(id: any) {
-    id = parseInt(id, 10);
-    const node = await this.capabilityRepository.findOne({ id });
-    let descendants = await this.treeRepository.findDescendants(node);
-    await this.capabilityRepository.remove(descendants);
-    await this.capabilityRepository.remove(node);
-    if (node.parentId === null) {
-      await this.industryService.remove(node.industry_id);
+    const node = await this.capabilityRepository.findOne(+id);
+    if (node) {
+      let descendants = await this.treeRepository.findDescendants(node);
+      await this.capabilityRepository.remove(descendants);
+      await this.capabilityRepository.remove(node);
+      if (node.parentId === null) {
+        await this.industryService.remove(node.industry_id);
+      }
     }
     return { id };
   }
 
   async removeByIndustry(industryId: any) {
-    industryId = parseInt(industryId, 10);
-    return this.capabilityRepository.delete({ industry_id: industryId });
+    return this.capabilityRepository.delete({ industry_id: +industryId });
   }
 
   getFindAllQuery(query: CapabilityQueryInput): FindManyOptions {
