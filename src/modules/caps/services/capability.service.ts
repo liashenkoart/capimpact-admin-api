@@ -59,10 +59,12 @@ export class CapabilityService {
 
   async create(data: CapabilityCreationInput, context: any): Promise<Capability> {
     const { user } = context;
-    const capability = new Capability(data);
+    let capability = new Capability(data);
     capability.parent = await this.findById(capability.parentId);
     capability.user = user;
-    return this.capabilityRepository.save(capability);
+    capability = await this.capabilityRepository.save(capability);
+    await this.updateHierarchyIdNode(capability);
+    return capability;
   }
 
   async createTreeFromIndustry(industry: Industry, context: any): Promise<Capability> {
@@ -127,6 +129,7 @@ export class CapabilityService {
     if (capability.parentId === null) {
       await this.industryService.save(capability.industry_id, { name: capability.name });
     }
+    await this.updateHierarchyIdNode(capability);
     return capability;
   }
 
@@ -137,7 +140,11 @@ export class CapabilityService {
       capability.user = user;
       return capability;
     });
-    return await this.capabilityRepository.save(data);
+    let result = await this.capabilityRepository.save(data);
+    for (let node of result) {
+      await this.updateHierarchyIdNode(node);
+    }
+    return result;
   }
 
   /*
@@ -203,5 +210,21 @@ export class CapabilityService {
       take: limit,
       where,
     };
+  }
+
+  async updateHierarchyIdNode(node: Capability): Promise<Capability> {
+    if (node.hierarchy_id) return node;
+    let hierarchyId = '';
+    let parent = await this.capabilityRepository.findOne(+node.parentId);
+    if (parent) {
+      hierarchyId = `${parent.hierarchy_id}.`;
+    }
+    let nodes = await this.capabilityRepository.find({ where: { parentId: +node.parentId } });
+    nodes = nodes.filter(n => !!n.hierarchy_id);
+    let hierarchyIds = nodes.map(n => +n.hierarchy_id.split('.').pop());
+    let maxValue = Math.max(...hierarchyIds);
+    node.hierarchy_id = `${hierarchyId}${maxValue + 1}`;
+    await this.capabilityRepository.save(node);
+    return node;
   }
 }
