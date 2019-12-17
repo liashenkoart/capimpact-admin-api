@@ -187,7 +187,8 @@ export class CapabilityService {
   */
 
   async remove(id: any) {
-    const node = await this.capabilityRepository.findOne(+id);
+    id = parseInt(id, 10);
+    const node = await this.capabilityRepository.findOne(id);
     if (node) {
       let descendants = await this.treeRepository.findDescendants(node);
       await this.capabilityRepository.remove(descendants);
