@@ -5,16 +5,14 @@ import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
-import { Industry } from '@modules/caps/entities/industry.entity';
+import { Industry, Capability } from '@modules/caps/entities';
+import { IndustryService } from '@modules/caps/services';
 import {
   IndustryCreationInput,
   CapabilityQueryInput,
   CapabilityCreationInput,
   CapabilityInput,
 } from '@modules/caps/dto';
-import { IndustryService } from '@modules/caps/services/industry.service';
-import { Capability } from '@modules/caps/entities/capability.entity';
-//import { DefaultCapability } from './default-capability.entity';
 
 @Injectable()
 export class CapabilityService {

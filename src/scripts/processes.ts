@@ -1,6 +1,6 @@
 import { createConnection, getManager } from 'typeorm';
 
-import { Industry, Process, DefaultProcess } from '@modules/caps/entities';
+import { Industry, Process } from '@modules/caps/entities';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
@@ -24,10 +24,6 @@ async function main() {
     resultDeleted = await transactionalEntityManager.delete(Process, {});
     if (resultDeleted) {
       console.log(`Process: Number of deleted records ${resultDeleted.affected}`);
-    }
-    resultDeleted = await transactionalEntityManager.delete(DefaultProcess, {});
-    if (resultDeleted) {
-      console.log(`DefaultProcess: Number of deleted records ${resultDeleted.affected}`);
     }
 
     // save tree processes for each industry
@@ -67,7 +63,6 @@ async function main() {
         industry,
         parent: null,
       });
-      await transactionalEntityManager.save(DefaultProcess, root);
       // Contain saved data by hierarchy_id key
       let groupByHierarchyId = {};
       // Convert to array
@@ -83,10 +78,6 @@ async function main() {
           ...proc,
           parent: groupByHierarchyId[parent] || root,
         });
-        await transactionalEntityManager.save(
-          DefaultProcess,
-          groupByHierarchyId[proc.hierarchy_id]
-        );
       }
     }
   });

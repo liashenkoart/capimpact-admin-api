@@ -1,7 +1,7 @@
 import { createConnection, getManager } from 'typeorm';
 import _ from 'lodash';
 
-import { Industry, Capability, DefaultCapability } from '@modules/caps/entities';
+import { Industry, Capability } from '@modules/caps/entities';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';

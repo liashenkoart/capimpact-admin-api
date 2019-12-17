@@ -5,27 +5,20 @@ import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
-import { Industry } from '@modules/caps/entities/industry.entity';
-import { IndustryService } from '@modules/caps/services/industry.service';
-
+import { Industry, Process } from '@modules/caps/entities';
+import { IndustryService } from '@modules/caps/services';
 import {
   IndustryCreationInput,
   ProcessQueryInput,
   ProcessCreationInput,
   ProcessInput,
 } from '@modules/caps/dto';
-import { Process } from '@modules/caps/entities/process.entity';
-import { DefaultProcess } from '@modules/caps/entities/default-process.entity';
 
 @Injectable()
 export class ProcessService {
   constructor(
     @InjectRepository(Process) private readonly processRepository: Repository<Process>,
     @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>,
-    @InjectRepository(DefaultProcess)
-    private readonly defaultProcessRepository: Repository<DefaultProcess>,
-    @InjectRepository(DefaultProcess)
-    private readonly defaultTreeRepository: TreeRepository<DefaultProcess>,
     @Inject(forwardRef(() => IndustryService))
     private readonly industryService: IndustryService
   ) {}
@@ -39,13 +32,20 @@ export class ProcessService {
     return this.treeRepository.findDescendantsTree(root);
   }
 
-  async defaultTree(query: ProcessQueryInput): Promise<DefaultProcess> {
+  async defaultTree(query: ProcessQueryInput): Promise<any> {
     const { industry_id } = query;
+    const industry = await this.industryService.findById(industry_id);
+    if (industry) {
+      return await this.getDataFromIndustryCsvFile({ industry });
+    }
+    /*
     const root = await this.defaultProcessRepository.findOne({ industry_id, parentId: null });
     if (!root) {
       throw new NotFoundException();
     }
     return this.defaultTreeRepository.findDescendantsTree(root);
+    */
+    return null;
   }
 
   async findAll(query: ProcessQueryInput): Promise<Process[]> {
@@ -212,5 +212,48 @@ export class ProcessService {
       take: limit,
       where,
     };
+  }
+
+  async getDataFromIndustryCsvFile({ industry }) {
+    let data: any = await parseCsv(
+      `processes/${industry.name}.csv`,
+      rows =>
+        rows
+          .map((row, index) => {
+            const id = industry.id * 10000 + index + 1;
+            const hierarchy_id = getPath(row.hierarchy_id);
+            const industry_id = industry.id;
+            const metrics_avail = row.metrics_avail === 'Y';
+            const parent_path = hierarchy_id
+              .split('.')
+              .slice(0, -1)
+              .join('.');
+            return {
+              ...row,
+              id,
+              hierarchy_id,
+              industry_id,
+              metrics_avail,
+              parent_path,
+            };
+          })
+          .map((row, index, allData) => {
+            const parent = allData.find(it => it.hierarchy_id === row.parent_path);
+            const parentId = (parent && parent.id) || null;
+            return { ...row, parentId, parent_id: parentId };
+          }),
+      {
+        renameHeaders: true,
+        headers: [
+          'pcf_id',
+          'hierarchy_id',
+          'name',
+          'difference_idx',
+          'change_details',
+          'metrics_avail',
+        ],
+      }
+    );
+    return data;
   }
 }
