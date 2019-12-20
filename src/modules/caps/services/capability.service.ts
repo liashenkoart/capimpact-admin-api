@@ -117,7 +117,7 @@ export class CapabilityService {
   async save(id: any, data: CapabilityInput, context: any): Promise<Capability> {
     const { user } = context;
     let capability = new Capability({ ...data });
-    capability.id = +id;
+    capability.id = parseInt(id, 10);
     capability.user = user;
     if (capability.parentId) {
       capability.parent = await this.findById(capability.parentId);
@@ -139,9 +139,11 @@ export class CapabilityService {
       return capability;
     });
     let result = await this.capabilityRepository.save(data);
+    /*
     for (let node of result) {
       await this.updateHierarchyIdNode(node);
     }
+    */
     return result;
   }
 
@@ -226,6 +228,7 @@ export class CapabilityService {
       maxValue = Math.max(...hierarchyIds);
     }
     node.hierarchy_id = `${hierarchyId}${maxValue + 1}`;
+    console.log('updateHierarchyIdNode', node);
     await this.capabilityRepository.save(node);
     return node;
   }
