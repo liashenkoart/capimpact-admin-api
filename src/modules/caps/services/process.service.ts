@@ -7,12 +7,7 @@ import { getPath } from '@lib/getPath';
 
 import { Industry, Process } from '@modules/caps/entities';
 import { IndustryService } from '@modules/caps/services';
-import {
-  IndustryCreationInput,
-  ProcessQueryInput,
-  ProcessCreationInput,
-  ProcessInput,
-} from '@modules/caps/dto';
+import { ProcessArgs, ProcessCreationInput, ProcessInput } from '@modules/caps/dto';
 
 @Injectable()
 export class ProcessService {
@@ -23,7 +18,7 @@ export class ProcessService {
     private readonly industryService: IndustryService
   ) {}
 
-  async tree(query: ProcessQueryInput): Promise<Process> {
+  async tree(query: ProcessArgs): Promise<Process> {
     const { industry_id } = query;
     const root = await this.processRepository.findOne({ industry_id, parentId: null });
     if (!root) {
@@ -32,7 +27,7 @@ export class ProcessService {
     return this.treeRepository.findDescendantsTree(root);
   }
 
-  async defaultTree(query: ProcessQueryInput): Promise<any> {
+  async defaultTree(query: ProcessArgs): Promise<any> {
     const { industry_id } = query;
     const industry = await this.industryService.findById(industry_id);
     if (industry) {
@@ -48,7 +43,7 @@ export class ProcessService {
     return null;
   }
 
-  async findAll(query: ProcessQueryInput): Promise<Process[]> {
+  async findAll(query: ProcessArgs): Promise<Process[]> {
     const options = this.getFindAllQuery(query);
     return this.processRepository.find(options);
   }
@@ -57,16 +52,13 @@ export class ProcessService {
     return this.processRepository.findOne(id);
   }
 
-  async findByEmail(email: string): Promise<Process> {
-    return this.processRepository.findOne({ where: { email } });
-  }
-
   async create(data: ProcessCreationInput, context: any): Promise<Process> {
     const { user } = context;
     const process = new Process(data);
     process.parent = await this.findById(process.parentId);
     process.user = user;
-    return this.processRepository.save(process);
+    await this.processRepository.save(process);
+    return await this.findById(process.id);
   }
 
   async createTreeFromIndustry(industry: Industry, context: any): Promise<Process> {
@@ -139,7 +131,7 @@ export class ProcessService {
     if (process.parentId === null) {
       await this.industryService.save(process.industry_id, { name: process.name });
     }
-    return process;
+    return await this.findById(process.id);
   }
 
   async saveMany(input: ProcessInput[], context: any) {
@@ -149,7 +141,8 @@ export class ProcessService {
       process.user = user;
       return process;
     });
-    return await this.processRepository.save(data);
+    await this.processRepository.save(data);
+    return await this.processRepository.findByIds(data.map(p => p.id));
   }
 
   /*
@@ -205,8 +198,8 @@ export class ProcessService {
     return this.processRepository.delete({ industry_id: industryId });
   }
 
-  getFindAllQuery(query: ProcessQueryInput): FindManyOptions {
-    const { limit, page, ...where } = query;
+  getFindAllQuery(query: ProcessArgs): FindManyOptions {
+    const { page, skip, limit, ...where } = query;
     return {
       skip: (page - 1) * limit,
       take: limit,

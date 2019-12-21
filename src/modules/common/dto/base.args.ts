@@ -1,14 +1,25 @@
 import { ArgsType, Field, Int } from 'type-graphql';
-import { Min, Max } from 'class-validator';
+import { Min, Max, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 
 @ArgsType()
 export class BaseArgs {
-  @Field(type => Int)
-  @Min(0)
-  skip: number = 0;
+  @Field(() => Int, { nullable: true })
+  @IsOptional()
+  @Min(1)
+  @Type(() => Number)
+  page?: number = 1;
 
-  @Field(type => Int)
+  @Field(() => Int, { nullable: true })
+  @IsOptional()
+  @Min(0)
+  @Type(() => Number)
+  skip?: number = 0;
+
+  @Field(() => Int, { nullable: true })
+  @IsOptional()
   @Min(1)
   @Max(100)
-  limit: number = 25;
+  @Type(() => Number)
+  limit?: number = 25;
 }

@@ -13,8 +13,23 @@ type Capability {
   last_update: Date
   user: User!
   industry: Industry!
-  children: [Capability!]
-  parent: Capability
+  children: [Capability!]!
+  parent: Capability!
+}
+
+input CapabilityCreationInput {
+  name: String!
+  industry_id: ID!
+  parentId: ID
+  hierarchy_id: String
+}
+
+input CapabilityInput {
+  id: ID!
+  name: String
+  hierarchy_id: String
+  industry_id: ID
+  parentId: ID
 }
 
 type Company {
@@ -49,6 +64,16 @@ input IndustryInput {
 type Mutation {
   createIndustry(data: IndustryCreationInput!): Industry!
   saveIndustry(data: IndustryInput!, id: ID!): Industry!
+  cloneIndustry(data: IndustryCreationInput!, id: ID!): Industry!
+  removeIndustry(id: ID!): Industry!
+  createProcess(data: ProcessCreationInput!): Process!
+  saveProcess(data: ProcessInput!, id: ID!): Process!
+  saveProcesses(data: [ProcessInput!]!): [Process!]!
+  removeProcess(id: ID!): Process!
+  createCapability(data: CapabilityCreationInput!): Capability!
+  saveCapability(data: CapabilityInput!, id: ID!): Capability!
+  saveCapabilities(data: [CapabilityInput!]!): [Capability!]!
+  removeCapability(id: ID!): Capability!
 }
 
 type Process {
@@ -65,21 +90,47 @@ type Process {
   last_update: Date
   user: User!
   industry: Industry!
-  children: [Process!]
-  parent: Process
+  children: [Process!]!
+  parent: Process!
+}
+
+input ProcessCreationInput {
+  name: String!
+  industry_id: ID!
+  parentId: ID
+  pcf_id: String
+  hierarchy_id: String
+  difference_idx: String
+  change_details: String
+  metrics_avail: Boolean
+}
+
+input ProcessInput {
+  id: ID!
+  name: String
+  industry_id: ID
+  pcf_id: String
+  hierarchy_id: String
+  difference_idx: String
+  change_details: String
+  metrics_avail: Boolean
+  parentId: ID
 }
 
 type Query {
-  users(skip: Int = 0, limit: Int = 25): [User!]!
+  users(page: Int = 1, skip: Int = 0, limit: Int = 25): [User!]!
   user(id: ID!): User!
-  industries(skip: Int = 0, limit: Int = 25): [Industry!]!
+  industries(page: Int = 1, skip: Int = 0, limit: Int = 25): [Industry!]!
   industry(id: ID!): Industry!
+  processes(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, parentId: ID): [Process!]!
+  process(id: ID!): Process!
+  capabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, parentId: ID): [Capability!]!
+  capability(id: ID!): Capability!
 }
 
 type User {
   id: Int!
   email: String!
-  password: String!
   firstName: String
   lastName: String
 }

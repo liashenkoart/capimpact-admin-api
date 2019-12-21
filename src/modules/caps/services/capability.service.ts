@@ -7,12 +7,7 @@ import { getPath } from '@lib/getPath';
 
 import { Industry, Capability } from '@modules/caps/entities';
 import { IndustryService } from '@modules/caps/services';
-import {
-  IndustryCreationInput,
-  CapabilityQueryInput,
-  CapabilityCreationInput,
-  CapabilityInput,
-} from '@modules/caps/dto';
+import { ProcessArgs, CapabilityCreationInput, CapabilityInput } from '@modules/caps/dto';
 
 @Injectable()
 export class CapabilityService {
@@ -23,7 +18,7 @@ export class CapabilityService {
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>
   ) {}
 
-  async tree(query: CapabilityQueryInput): Promise<Capability> {
+  async tree(query: ProcessArgs): Promise<Capability> {
     const { industry_id } = query;
     const root = await this.capabilityRepository.findOne({ industry_id, parentId: null });
     if (!root) {
@@ -32,7 +27,7 @@ export class CapabilityService {
     return this.treeRepository.findDescendantsTree(root);
   }
   /*
-  async defaultTree(query: CapabilityQueryInput): Promise<DefaultCapability> {
+  async defaultTree(query: ProcessArgs): Promise<DefaultCapability> {
     const { industry_id } = query;
     const root = await this.defaultCapabilityRepository.findOne({ industry_id, parentId: null });
     if (!root) {
@@ -42,17 +37,13 @@ export class CapabilityService {
   }
   */
 
-  async findAll(query: CapabilityQueryInput): Promise<Capability[]> {
+  async findAll(query: ProcessArgs): Promise<Capability[]> {
     const options = this.getFindAllQuery(query);
     return this.capabilityRepository.find(options);
   }
 
   async findById(id: number): Promise<Capability> {
     return this.capabilityRepository.findOne(id);
-  }
-
-  async findByEmail(email: string): Promise<Capability> {
-    return this.capabilityRepository.findOne({ where: { email } });
   }
 
   async create(data: CapabilityCreationInput, context: any): Promise<Capability> {
@@ -62,7 +53,7 @@ export class CapabilityService {
     capability.user = user;
     capability = await this.capabilityRepository.save(capability);
     await this.updateHierarchyIdNode(capability);
-    return capability;
+    return await this.findById(capability.id);
   }
 
   async createTreeFromIndustry(industry: Industry, context: any): Promise<Capability> {
@@ -128,7 +119,7 @@ export class CapabilityService {
       await this.industryService.save(capability.industry_id, { name: capability.name });
     }
     await this.updateHierarchyIdNode(capability);
-    return capability;
+    return await this.findById(capability.id);
   }
 
   async saveMany(input: CapabilityInput[], context: any) {
@@ -144,7 +135,7 @@ export class CapabilityService {
       await this.updateHierarchyIdNode(node);
     }
     */
-    return result;
+    return await this.capabilityRepository.findByIds(data.map(p => p.id));
   }
 
   /*
@@ -204,8 +195,8 @@ export class CapabilityService {
     return this.capabilityRepository.delete({ industry_id: +industryId });
   }
 
-  getFindAllQuery(query: CapabilityQueryInput): FindManyOptions {
-    const { limit, page, ...where } = query;
+  getFindAllQuery(query: ProcessArgs): FindManyOptions {
+    const { page, skip, limit, ...where } = query;
     return {
       skip: (page - 1) * limit,
       take: limit,
@@ -228,8 +219,9 @@ export class CapabilityService {
       maxValue = Math.max(...hierarchyIds);
     }
     node.hierarchy_id = `${hierarchyId}${maxValue + 1}`;
-    console.log('updateHierarchyIdNode', node);
-    await this.capabilityRepository.save(node);
-    return node;
+    await this.capabilityRepository.save(
+      new Capability({ id: node.id, hierarchy_id: node.hierarchy_id })
+    );
+    return await this.findById(node.id);
   }
 }

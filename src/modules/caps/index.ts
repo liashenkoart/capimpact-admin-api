@@ -16,7 +16,7 @@ import {
 } from '@modules/caps/controllers';
 
 // Resolvers
-import { IndustryResolver } from '@modules/caps/resolvers';
+import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/caps/resolvers';
 
 @Module({
   imports: [
@@ -24,7 +24,14 @@ import { IndustryResolver } from '@modules/caps/resolvers';
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [IndustryController, ProcessController, CapabilityController],
-  providers: [ProcessService, IndustryService, CapabilityService, IndustryResolver],
+  providers: [
+    ProcessService,
+    IndustryService,
+    CapabilityService,
+    IndustryResolver,
+    ProcessResolver,
+    CapabilityResolver,
+  ],
   exports: [IndustryService, ProcessService, CapabilityService],
 })
 export class CapsModule {}
