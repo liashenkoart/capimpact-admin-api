@@ -1,5 +1,7 @@
 import { createConnection, getManager } from 'typeorm';
 import _ from 'lodash';
+import fs from 'fs';
+import path from 'path';
 
 import { Industry, Capability } from '@modules/caps/entities';
 
@@ -28,7 +30,9 @@ async function main() {
 
     // save tree capabilities for each industry
     for (let industry of industries) {
-      if (['Telecommunications'].includes(industry.name)) {
+      // load capabilities for `industry`
+      let filePath = path.resolve(__dirname, '../../data', `capabilities/${industry.name}.csv`);
+      if (fs.existsSync(filePath)) {
         data = await parseCsv(
           `capabilities/${industry.name}.csv`,
           rows =>
@@ -50,6 +54,7 @@ async function main() {
           }
         );
       } else {
+        // load default if no csv exists for `industry`
         data = await parseCsv(
           `capabilities/default.csv`,
           rows =>

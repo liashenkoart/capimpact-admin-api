@@ -1,20 +1,21 @@
 id,name
-1,Aerospace and Defense
-2,Airline
-3,Automotive
-4,Banking
-5,Broadcasting
-6,City Government
-7,Consumer Electronics
+34,Aerospace and Defense
+35,Airline
+36,Automotive
+37,Banking
+38,Broadcasting
+39,City Government
+40,Consumer Electronics
 8,Consumer Products
-9,Education
-10,Healthcare Provider
-11,Health Insurance Payor
-12,Telecommunications
-13,Retail
-14,Life Sciences
-15,Petroleum Downstream
-16,Petroleum Upstream
+41,Education
+47,Furniture Retail
+43,Health Insurance Payor
+42,Healthcare Provider
+48,Industrial Manufacturing
+46,Life Sciences
+44,Petroleum Downstream
+45,Petroleum Upstream
 17,Property and Casualty Insurance
+13,Retail
+33,Telecommunications
 18,Utilities
-19,Telco
