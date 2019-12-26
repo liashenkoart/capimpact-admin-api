@@ -52,6 +52,10 @@ export class ProcessService {
     return this.processRepository.findOne(id);
   }
 
+  async countDocuments(query: ProcessArgs): Promise<number> {
+    return this.processRepository.count(query);
+  }
+
   async create(data: ProcessCreationInput, context: any): Promise<Process> {
     const { user } = context;
     const process = new Process(data);

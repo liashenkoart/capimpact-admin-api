@@ -31,51 +31,26 @@ async function main() {
     // save tree capabilities for each industry
     for (let industry of industries) {
       // load capabilities for `industry`
-      let filePath = path.resolve(__dirname, '../../data', `capabilities/${industry.name}.csv`);
-      if (fs.existsSync(filePath)) {
-        data = await parseCsv(
-          `capabilities/${industry.name}.csv`,
-          rows =>
-            // { '1': {...}, '2': {...} ...}
-            rows.reduce((o, row) => {
-              const hierarchy_id = getPath(row.hierarchy_id);
-              return {
-                ...o,
-                [hierarchy_id]: {
-                  ...row,
-                  hierarchy_id,
-                  industry,
-                },
-              };
-            }, {}),
-          {
-            renameHeaders: true,
-            headers: ['hierarchy_id', 'name'],
-          }
-        );
-      } else {
-        // load default if no csv exists for `industry`
-        data = await parseCsv(
-          `capabilities/default.csv`,
-          rows =>
-            // { '1': {...}, '2': {...} ...}
-            rows.reduce((o, row) => {
-              const hierarchy_id = getPath(row.hierarchy_id);
-              return {
-                ...o,
-                [hierarchy_id]: {
-                  ...row,
-                  hierarchy_id,
-                  industry,
-                },
-              };
-            }, {}),
-          {
-            renameHeaders: true,
-            headers: ['hierarchy_id', 'name'],
-          }
-        );
-      }
+      data = await parseCsv(
+        `capabilities/${industry.name}.csv`,
+        rows =>
+          // { '1': {...}, '2': {...} ...}
+          rows.reduce((o, row) => {
+            const hierarchy_id = getPath(row.hierarchy_id);
+            return {
+              ...o,
+              [hierarchy_id]: {
+                ...row,
+                hierarchy_id,
+                industry,
+              },
+            };
+          }, {}),
+        {
+          renameHeaders: true,
+          headers: ['hierarchy_id', 'name'],
+        }
+      );
       root = await transactionalEntityManager.save(Capability, {
         name: industry.name,
         industry,

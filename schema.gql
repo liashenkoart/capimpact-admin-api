@@ -47,6 +47,8 @@ scalar Date
 type Industry {
   id: Int!
   name: String!
+  countProcesses: Float!
+  countCapabilities: Float!
   processes: [Process!]!
   capabilities: [Capability!]!
   companies: [Company!]!

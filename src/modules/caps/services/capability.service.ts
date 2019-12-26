@@ -7,7 +7,7 @@ import { getPath } from '@lib/getPath';
 
 import { Industry, Capability } from '@modules/caps/entities';
 import { IndustryService } from '@modules/caps/services';
-import { ProcessArgs, CapabilityCreationInput, CapabilityInput } from '@modules/caps/dto';
+import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '@modules/caps/dto';
 
 @Injectable()
 export class CapabilityService {
@@ -18,7 +18,7 @@ export class CapabilityService {
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>
   ) {}
 
-  async tree(query: ProcessArgs): Promise<Capability> {
+  async tree(query: CapabilitiesArgs): Promise<Capability> {
     const { industry_id } = query;
     const root = await this.capabilityRepository.findOne({ industry_id, parentId: null });
     if (!root) {
@@ -27,7 +27,7 @@ export class CapabilityService {
     return this.treeRepository.findDescendantsTree(root);
   }
   /*
-  async defaultTree(query: ProcessArgs): Promise<DefaultCapability> {
+  async defaultTree(query: CapabilitiesArgs): Promise<DefaultCapability> {
     const { industry_id } = query;
     const root = await this.defaultCapabilityRepository.findOne({ industry_id, parentId: null });
     if (!root) {
@@ -37,13 +37,17 @@ export class CapabilityService {
   }
   */
 
-  async findAll(query: ProcessArgs): Promise<Capability[]> {
+  async findAll(query: CapabilitiesArgs): Promise<Capability[]> {
     const options = this.getFindAllQuery(query);
     return this.capabilityRepository.find(options);
   }
 
   async findById(id: number): Promise<Capability> {
     return this.capabilityRepository.findOne(id);
+  }
+
+  async countDocuments(query: CapabilitiesArgs): Promise<number> {
+    return this.capabilityRepository.count(query);
   }
 
   async create(data: CapabilityCreationInput, context: any): Promise<Capability> {
@@ -195,7 +199,7 @@ export class CapabilityService {
     return this.capabilityRepository.delete({ industry_id: +industryId });
   }
 
-  getFindAllQuery(query: ProcessArgs): FindManyOptions {
+  getFindAllQuery(query: CapabilitiesArgs): FindManyOptions {
     const { page, skip, limit, ...where } = query;
     return {
       skip: (page - 1) * limit,
