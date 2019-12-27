@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, PrimaryColumn } from 'typeorm';
+import { Entity, Column, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
 import { Process, Capability, Company } from '@modules/caps/entities';
@@ -7,7 +7,7 @@ import { Process, Capability, Company } from '@modules/caps/entities';
 @Entity('industries')
 export class Industry {
   @Field(() => Int)
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Field()
