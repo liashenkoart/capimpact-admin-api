@@ -7,12 +7,7 @@ import { getPath } from '@lib/getPath';
 
 import { Industry, Process } from '@modules/caps/entities';
 import { IndustryService } from '@modules/caps/services';
-import {
-  ProcessArgs,
-  ProcessCreationInput,
-  IndustryCreationInput,
-  ProcessInput,
-} from '@modules/caps/dto';
+import { ProcessArgs, ProcessCreationInput, ProcessInput } from '@modules/caps/dto';
 
 @Injectable()
 export class ProcessService {
