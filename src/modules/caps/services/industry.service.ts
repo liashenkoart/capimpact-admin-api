@@ -43,8 +43,8 @@ export class IndustryService {
   async clone(id: number, data: IndustryCreationInput, context: any): Promise<Industry> {
     let industry = new Industry(data);
     industry = await this.industryRepository.save(industry);
-    await this.processService.createTreeFromIndustry(industry, context);
-    await this.capabilityService.createTreeFromIndustry(industry, context);
+    await this.processService.cloneTreeFromIndustry(id, industry, context);
+    await this.capabilityService.cloneTreeFromIndustry(id, industry, context);
     return industry;
   }
 

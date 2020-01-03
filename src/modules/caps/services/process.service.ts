@@ -7,7 +7,12 @@ import { getPath } from '@lib/getPath';
 
 import { Industry, Process } from '@modules/caps/entities';
 import { IndustryService } from '@modules/caps/services';
-import { ProcessArgs, ProcessCreationInput, ProcessInput } from '@modules/caps/dto';
+import {
+  ProcessArgs,
+  ProcessCreationInput,
+  IndustryCreationInput,
+  ProcessInput,
+} from '@modules/caps/dto';
 
 @Injectable()
 export class ProcessService {
@@ -142,27 +147,25 @@ export class ProcessService {
     return await this.processRepository.findByIds(data.map(p => p.id));
   }
 
-  /*
-  async clone(id: any, context: any): Promise<Process> {
+  async cloneTreeFromIndustry(id: any, industry: Industry, context: any): Promise<Process> {
     const { user } = context;
-    const industryId = parseInt(id, 10);
+    const industryId = parseInt(id, 10); // cloned industry id
     let node = null;
-    let industry = await this.industryService.findById(industryId);
-    let root = await this.processRepository.findOne({ industry_id: industryId, parentId: null });
-    let descendants = await this.treeRepository.findDescendants(root);
+    // save root industry node
+    let root = await this.processRepository.save({
+      name: industry.name,
+      industry,
+      parent: null,
+      user,
+    });
+    let clonedRoot = await this.processRepository.findOne({
+      industry_id: industryId,
+      parentId: null,
+    });
+    let descendants = await this.treeRepository.findDescendants(clonedRoot);
     let groupByName = {};
     for (let descendant of descendants) {
-      if (descendant.parentId === null) {
-        let copiedIndustry = new IndustryCreationInput();
-        copiedIndustry.name = `${industry.name} Copy`;
-        industry = await this.industryService.create(copiedIndustry, context);
-        root = await this.processRepository.save({
-          name: industry.name,
-          industry_id: industry.id,
-          parent: null,
-          user,
-        });
-      } else {
+      if (descendant.parentId) {
         const parentNode = descendants.find(it => it.id === descendant.parentId);
         const parent = (parentNode && groupByName[parentNode.name]) || root;
         node = await this.processRepository.save({
@@ -176,7 +179,6 @@ export class ProcessService {
     }
     return this.tree({ industry_id: industry.id });
   }
-  */
 
   async remove(id: any) {
     id = parseInt(id, 10);

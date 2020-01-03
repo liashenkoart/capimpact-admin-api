@@ -132,30 +132,25 @@ export class CapabilityService {
     return await this.capabilityRepository.findByIds(data.map(p => p.id));
   }
 
-  /*
-  async clone(id: any, context: any): Promise<Capability> {
+  async cloneTreeFromIndustry(id: any, industry: Industry, context: any): Promise<Capability> {
     const { user } = context;
-    const industryId = parseInt(id, 10);
+    const industryId = parseInt(id, 10); // cloned industry id
     let node = null;
-    let industry = await this.industryService.findById(industryId);
-    let root = await this.capabilityRepository.findOne({
+    // save root industry node
+    let root = await this.capabilityRepository.save({
+      name: industry.name,
+      industry,
+      parent: null,
+      user,
+    });
+    let clonedRoot = await this.capabilityRepository.findOne({
       industry_id: industryId,
       parentId: null,
     });
-    let descendants = await this.treeRepository.findDescendants(root);
+    let descendants = await this.treeRepository.findDescendants(clonedRoot);
     let groupByName = {};
     for (let descendant of descendants) {
-      if (descendant.parentId === null) {
-        let copiedIndustry = new IndustryCreationInput();
-        copiedIndustry.name = `${industry.name} Copy`;
-        industry = await this.industryService.create(copiedIndustry, context);
-        root = await this.capabilityRepository.save({
-          name: industry.name,
-          industry_id: industry.id,
-          parent: null,
-          user,
-        });
-      } else {
+      if (descendant.parentId) {
         const parentNode = descendants.find(it => it.id === descendant.parentId);
         const parent = (parentNode && groupByName[parentNode.name]) || root;
         node = await this.capabilityRepository.save({
@@ -169,7 +164,6 @@ export class CapabilityService {
     }
     return this.tree({ industry_id: industry.id });
   }
-  */
 
   async remove(id: any) {
     id = parseInt(id, 10);
