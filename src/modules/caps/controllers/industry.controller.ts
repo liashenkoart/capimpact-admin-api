@@ -22,9 +22,8 @@ import { IndustryInput, IndustryCreationInput, IndustriesArgs } from '@modules/c
 @Controller('industries')
 export class IndustryController {
   constructor(
-    private readonly industryService: IndustryService
-  ) //@Inject(CACHE_MANAGER) private cacheManager
-  {}
+    private readonly industryService: IndustryService //@Inject(CACHE_MANAGER) private cacheManager
+  ) {}
 
   @Get('')
   async findAll(@Param() args: IndustriesArgs) {

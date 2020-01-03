@@ -31,8 +31,7 @@
     }
   },
   "include": [
-    "src/**/*",
-    "migration/1576449267444-tree.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",

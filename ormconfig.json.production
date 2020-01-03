@@ -6,13 +6,13 @@
   "password": "postgres",
   "database": "apqc_r721",
   "entities": [
-    "src/modules/**/**.entity{.ts,.js}"
+    "dist/modules/**/**.entity.js"
   ],
   "synchronize": true,
   "logging": true,
   "migrationsRun": true,
-  "migrations": ["src/migration/*{.ts,.js}"],
+  "migrations": ["dist/migration/*.js"],
   "cli": {
-    "migrationsDir": "src/migration"
+    "migrationsDir": "dist/migration"
   }
 }
