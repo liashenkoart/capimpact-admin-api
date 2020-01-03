@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
+// import { APP_INTERCEPTOR } from '@nestjs/core';
+import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
-import { Connection } from 'typeorm';
 
 import { UsersModule } from '@modules/users';
 import { AuthModule } from '@modules/auth';
@@ -12,6 +12,11 @@ import { AppController } from './app.controller';
 
 @Module({
   imports: [
+    /*
+    CacheModule.register({
+      ttl: 60, // secs
+    }),
+    */
     TypeOrmModule.forRoot(),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     UsersModule,
@@ -24,8 +29,13 @@ import { AppController } from './app.controller';
     }),
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    /*
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+    */
+  ],
 })
-export class ApplicationModule {
-  constructor(private readonly connection: Connection) {}
-}
+export class ApplicationModule {}

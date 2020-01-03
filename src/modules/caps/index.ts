@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
@@ -22,6 +22,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
   imports: [
     TypeOrmModule.forFeature([Industry, Process, Capability, Company]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
+    HttpModule,
   ],
   controllers: [IndustryController, ProcessController, CapabilityController],
   providers: [

@@ -9,6 +9,8 @@ import {
   Param,
   Delete,
   Req,
+  Inject,
+  CACHE_MANAGER,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -19,7 +21,10 @@ import { IndustryInput, IndustryCreationInput, IndustriesArgs } from '@modules/c
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('industries')
 export class IndustryController {
-  constructor(private readonly industryService: IndustryService) {}
+  constructor(
+    private readonly industryService: IndustryService
+  ) //@Inject(CACHE_MANAGER) private cacheManager
+  {}
 
   @Get('')
   async findAll(@Param() args: IndustriesArgs) {

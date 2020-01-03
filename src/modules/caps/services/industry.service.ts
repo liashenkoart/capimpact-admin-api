@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -12,7 +12,8 @@ export class IndustryService {
   constructor(
     private readonly processService: ProcessService,
     private readonly capabilityService: CapabilityService,
-    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
+    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
+    private readonly httpService: HttpService
   ) {}
 
   async findAll(args: IndustriesArgs): Promise<Industry[]> {
@@ -23,7 +24,19 @@ export class IndustryService {
       const countCapabilities = await this.capabilityService.countDocuments({
         industry_id: industry.id,
       });
-      industries.push({ ...industry, countProcesses, countCapabilities });
+      const { data } = await this.httpService
+        .get(
+          `http://35.153.253.163:5001/api/v1/startups/industry/count?industry_id=${industry.id}`,
+          {
+            responseType: 'json',
+            headers: {
+              Authorization: `Bearer ${process.env.TOKEN_STARTUPS_API}`,
+            },
+          }
+        )
+        .toPromise();
+      const countStartups = data.total;
+      industries.push({ ...industry, countProcesses, countCapabilities, countStartups });
     }
     return industries;
   }
