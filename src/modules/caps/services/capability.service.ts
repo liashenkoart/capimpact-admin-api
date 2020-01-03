@@ -152,14 +152,14 @@ export class CapabilityService {
     for (let descendant of descendants) {
       if (descendant.parentId) {
         const parentNode = descendants.find(it => it.id === descendant.parentId);
-        const parent = (parentNode && groupByName[parentNode.name]) || root;
+        const parent = (parentNode && groupByName[parentNode.id]) || root;
         node = await this.capabilityRepository.save({
           name: descendant.name,
           industry_id: industry.id,
           parent,
           user,
         });
-        groupByName[node.name] = node;
+        groupByName[descendant.id] = node;
       }
     }
     return this.tree({ industry_id: industry.id });
