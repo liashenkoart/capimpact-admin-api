@@ -26,16 +26,6 @@ export class CapabilityService {
     }
     return this.treeRepository.findDescendantsTree(root);
   }
-  /*
-  async defaultTree(query: CapabilitiesArgs): Promise<DefaultCapability> {
-    const { industry_id } = query;
-    const root = await this.defaultCapabilityRepository.findOne({ industry_id, parentId: null });
-    if (!root) {
-      throw new NotFoundException();
-    }
-    return this.defaultTreeRepository.findDescendantsTree(root);
-  }
-  */
 
   async findAll(query: CapabilitiesArgs): Promise<Capability[]> {
     const options = this.getFindAllQuery(query);

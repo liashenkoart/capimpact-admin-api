@@ -36,34 +36,14 @@ export class IndustryController {
     return this.industryService.create(data, { user: req.user });
   }
 
-  /*
-  @Post('/processes')
-  async createWithTreeProcesses(@Body() data: IndustryCreationInput, @Req() req: any) {
-    return this.industryService.createWithTreeProcesses(data, { user: req.user });
-  }
-  */
-
   @Post('/:id')
   async save(@Param('id') id: number, @Body() data: IndustryInput) {
     return this.industryService.save(id, data);
   }
 
-  @Post('/:id/clone/processes')
-  async cloneWithProcesses(
-    @Param('id') id: number,
-    @Body() data: IndustryCreationInput,
-    @Req() req: any
-  ) {
-    return this.industryService.cloneWithProcesses(id, data, { user: req.user });
-  }
-
-  @Post('/:id/clone/capabilities')
-  async cloneWithCapabilities(
-    @Param('id') id: number,
-    @Body() data: IndustryCreationInput,
-    @Req() req: any
-  ) {
-    return this.industryService.cloneWithCapabilities(id, data, { user: req.user });
+  @Post('/:id/clone')
+  async clone(@Param('id') id: number, @Body() data: IndustryCreationInput, @Req() req: any) {
+    return this.industryService.clone(id, data, { user: req.user });
   }
 
   @Delete('/:id')

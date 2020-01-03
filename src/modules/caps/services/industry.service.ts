@@ -48,42 +48,6 @@ export class IndustryService {
     return industry;
   }
 
-  async cloneWithProcesses(
-    id: number,
-    data: IndustryCreationInput,
-    context: any
-  ): Promise<Industry> {
-    let industry = new Industry(data);
-    industry = await this.industryRepository.save(industry);
-    await this.processService.createTreeFromIndustry(industry, context);
-    return industry;
-  }
-
-  async cloneWithCapabilities(
-    id: number,
-    data: IndustryCreationInput,
-    context: any
-  ): Promise<Industry> {
-    let industry = new Industry(data);
-    industry = await this.industryRepository.save(industry);
-    await this.capabilityService.createTreeFromIndustry(industry, context);
-    return industry;
-  }
-
-  /*
-  async createWithTreeProcesses(data: IndustryCreationInput, context: any): Promise<Industry> {
-    const industry = await this.create(data);
-    await this.processService.createTreeFromIndustry(industry, context);
-    return industry;
-  }
-
-  async createWithTreeCapabilities(data: IndustryCreationInput, context: any): Promise<Industry> {
-    const industry = await this.create(data);
-    await this.capabilityService.createTreeFromIndustry(industry, context);
-    return industry;
-  }
-  */
-
   async save(id: any, data: IndustryInput): Promise<Industry> {
     const industry = new Industry({ ...data });
     industry.id = parseInt(id, 10);

@@ -33,13 +33,6 @@ export class ProcessService {
     if (industry) {
       return await this.getDataFromIndustryCsvFile({ industry });
     }
-    /*
-    const root = await this.defaultProcessRepository.findOne({ industry_id, parentId: null });
-    if (!root) {
-      throw new NotFoundException();
-    }
-    return this.defaultTreeRepository.findDescendantsTree(root);
-    */
     return null;
   }
 

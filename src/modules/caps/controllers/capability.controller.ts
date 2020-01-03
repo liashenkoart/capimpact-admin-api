@@ -33,12 +33,6 @@ export class CapabilityController {
     return this.capabilityService.tree(query);
   }
 
-  /*
-  @Get('default-tree')
-  async defaultTree(@Query() query: CapabilityQueryInput) {
-    return this.capabilityService.defaultTree(query);
-  }*/
-
   @Get('/:id')
   async findOne(@Param('id') id: number) {
     return this.capabilityService.findById(id);
