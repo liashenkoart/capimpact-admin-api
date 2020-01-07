@@ -12,3 +12,7 @@ export { CapabilityCreationInput } from './capability-creation.dto';
 export { CapabilityInput } from './capability.dto';
 export { CapabilityQueryInput } from './capability-query.dto';
 export { CapabilitiesArgs } from './capabilities.args';
+
+export { CompanyCreationInput } from './company-creation.dto';
+export { CompanyInput } from './company.dto';
+export { CompaniesArgs } from './companies.args';

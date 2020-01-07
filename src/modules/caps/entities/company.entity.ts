@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
-  BeforeUpdate,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
@@ -45,7 +38,8 @@ export class Company {
   @Field(() => Industry)
   @ManyToOne(
     type => Industry,
-    industry => industry.companies
+    industry => industry.companies,
+    { eager: true }
   )
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;

@@ -6,13 +6,19 @@ import { PassportModule } from '@nestjs/passport';
 import { Industry, Process, Capability, Company } from '@modules/caps/entities';
 
 // Services
-import { IndustryService, ProcessService, CapabilityService } from '@modules/caps/services';
+import {
+  IndustryService,
+  ProcessService,
+  CapabilityService,
+  CompanyService,
+} from '@modules/caps/services';
 
 // Controllers
 import {
   IndustryController,
   ProcessController,
   CapabilityController,
+  CompanyController,
 } from '@modules/caps/controllers';
 
 // Resolvers
@@ -24,11 +30,12 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     PassportModule.register({ defaultStrategy: 'jwt' }),
     HttpModule,
   ],
-  controllers: [IndustryController, ProcessController, CapabilityController],
+  controllers: [IndustryController, ProcessController, CapabilityController, CompanyController],
   providers: [
     ProcessService,
     IndustryService,
     CapabilityService,
+    CompanyService,
     IndustryResolver,
     ProcessResolver,
     CapabilityResolver,

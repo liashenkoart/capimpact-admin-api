@@ -41,6 +41,17 @@ type Company {
   industry: Industry!
 }
 
+input CompanyCreationInput {
+  name: String!
+  industry_id: ID!
+}
+
+input CompanyInput {
+  id: ID!
+  name: String
+  industry_id: ID
+}
+
 """Date custom scalar type"""
 scalar Date
 
