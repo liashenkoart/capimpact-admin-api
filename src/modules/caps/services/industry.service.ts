@@ -24,6 +24,7 @@ export class IndustryService {
       const countCapabilities = await this.capabilityService.countDocuments({
         industry_id: industry.id,
       });
+      /*
       const { data } = await this.httpService
         .get(
           `http://35.153.253.163:5001/api/v1/startups/industry/count?industry_id=${industry.id}`,
@@ -35,7 +36,8 @@ export class IndustryService {
           }
         )
         .toPromise();
-      const countStartups = data.total;
+      */
+      const countStartups = 1; //data.total;
       industries.push({ ...industry, countProcesses, countCapabilities, countStartups });
     }
     return industries;
