@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Industry } from '@modules/caps/entities';
 import { ProcessService } from './process.service';
 import { CapabilityService } from './capability.service';
+import { CompanyService } from './company.service';
 import { IndustryCreationInput, IndustryInput, IndustriesArgs } from '@modules/caps/dto';
 
 @Injectable()
@@ -12,6 +13,7 @@ export class IndustryService {
   constructor(
     private readonly processService: ProcessService,
     private readonly capabilityService: CapabilityService,
+    private readonly companyService: CompanyService,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
     private readonly httpService: HttpService
   ) {}
@@ -22,6 +24,9 @@ export class IndustryService {
     for (let industry of result) {
       const countProcesses = await this.processService.countDocuments({ industry_id: industry.id });
       const countCapabilities = await this.capabilityService.countDocuments({
+        industry_id: industry.id,
+      });
+      const countCompanies = await this.companyService.countDocuments({
         industry_id: industry.id,
       });
       /*
@@ -38,7 +43,13 @@ export class IndustryService {
         .toPromise();
       */
       const countStartups = 1; //data.total;
-      industries.push({ ...industry, countProcesses, countCapabilities, countStartups });
+      industries.push({
+        ...industry,
+        countProcesses,
+        countCapabilities,
+        countCompanies,
+        countStartups,
+      });
     }
     return industries;
   }

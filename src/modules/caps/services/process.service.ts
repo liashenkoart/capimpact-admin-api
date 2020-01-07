@@ -6,7 +6,6 @@ import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
 import { Industry, Process } from '@modules/caps/entities';
-import { IndustryService } from '@modules/caps/services';
 import { ProcessArgs, ProcessCreationInput, ProcessInput } from '@modules/caps/dto';
 
 @Injectable()
@@ -14,8 +13,7 @@ export class ProcessService {
   constructor(
     @InjectRepository(Process) private readonly processRepository: Repository<Process>,
     @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>,
-    @Inject(forwardRef(() => IndustryService))
-    private readonly industryService: IndustryService
+    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 
   async tree(query: ProcessArgs): Promise<Process> {
@@ -29,7 +27,7 @@ export class ProcessService {
 
   async defaultTree(query: ProcessArgs): Promise<any> {
     const { industry_id } = query;
-    const industry = await this.industryService.findById(industry_id);
+    const industry = await this.industryRepository.findOne(industry_id);
     if (industry) {
       return await this.getDataFromIndustryCsvFile({ industry });
     }
@@ -126,7 +124,7 @@ export class ProcessService {
     process = await this.processRepository.save(process);
     process = await this.processRepository.findOne({ id: process.id });
     if (process.parentId === null) {
-      await this.industryService.save(process.industry_id, { name: process.name });
+      await this.industryRepository.save({ id: +process.industry_id, name: process.name });
     }
     return await this.findById(process.id);
   }
@@ -182,7 +180,7 @@ export class ProcessService {
     await this.processRepository.remove(descendants);
     await this.processRepository.remove(node);
     if (node.parentId === null) {
-      await this.industryService.remove(node.industry_id);
+      await this.industryRepository.delete({ id: +node.industry_id });
     }
     return { id };
   }

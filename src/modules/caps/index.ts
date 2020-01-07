@@ -40,6 +40,6 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     ProcessResolver,
     CapabilityResolver,
   ],
-  exports: [IndustryService, ProcessService, CapabilityService],
+  exports: [IndustryService, ProcessService, CapabilityService, CompanyService],
 })
 export class CapsModule {}

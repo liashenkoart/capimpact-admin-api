@@ -3,19 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
 
 import { Company } from '@modules/caps/entities';
-import { ProcessService } from './process.service';
-import { CapabilityService } from './capability.service';
-import { IndustryService } from './industry.service';
+//import { ProcessService } from './process.service';
+//import { CapabilityService } from './capability.service';
+//import { IndustryService } from './industry.service';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '@modules/caps/dto';
 
 @Injectable()
 export class CompanyService {
-  constructor(
-    private readonly processService: ProcessService,
-    private readonly capabilityService: CapabilityService,
-    private readonly industryService: IndustryService,
-    @InjectRepository(Company) private readonly companyRepository: Repository<Company>
-  ) {}
+  constructor(@InjectRepository(Company) private readonly companyRepository: Repository<Company>) {}
 
   async findAll(query: CompaniesArgs): Promise<Company[]> {
     const options = this.getFindAllQuery(query);
@@ -25,6 +20,10 @@ export class CompanyService {
 
   async findOneById(id: number): Promise<Company> {
     return this.companyRepository.findOne(id);
+  }
+
+  async countDocuments(query: CompaniesArgs): Promise<number> {
+    return this.companyRepository.count(query);
   }
 
   async create(data: CompanyCreationInput, context: any): Promise<Company> {

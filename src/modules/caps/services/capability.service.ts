@@ -6,16 +6,14 @@ import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
 import { Industry, Capability } from '@modules/caps/entities';
-import { IndustryService } from '@modules/caps/services';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '@modules/caps/dto';
 
 @Injectable()
 export class CapabilityService {
   constructor(
-    @Inject(forwardRef(() => IndustryService))
-    private readonly industryService: IndustryService,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
-    @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>
+    @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
+    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 
   async tree(query: CapabilitiesArgs): Promise<Capability> {
@@ -110,7 +108,7 @@ export class CapabilityService {
     capability = await this.capabilityRepository.save(capability);
     capability = await this.capabilityRepository.findOne({ id: capability.id });
     if (capability.parentId === null) {
-      await this.industryService.save(capability.industry_id, { name: capability.name });
+      await this.industryRepository.save({ id: +capability.industry_id, name: capability.name });
     }
     await this.updateHierarchyIdNode(capability);
     return await this.findById(capability.id);
@@ -173,7 +171,7 @@ export class CapabilityService {
       await this.capabilityRepository.remove(descendants);
       await this.capabilityRepository.remove(node);
       if (node.parentId === null) {
-        await this.industryService.remove(node.industry_id);
+        await this.industryRepository.delete({ id: +node.industry_id });
       }
     }
     return { id };

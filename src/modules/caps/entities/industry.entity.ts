@@ -20,6 +20,9 @@ export class Industry {
   @Field()
   countCapabilities: number;
 
+  @Field()
+  countCompanies: number;
+
   @Field(() => [Process])
   @OneToMany(
     type => Process,

@@ -60,6 +60,7 @@ type Industry {
   name: String!
   countProcesses: Float!
   countCapabilities: Float!
+  countCompanies: Float!
   processes: [Process!]!
   capabilities: [Capability!]!
   companies: [Company!]!
