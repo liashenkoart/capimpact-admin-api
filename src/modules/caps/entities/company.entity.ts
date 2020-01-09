@@ -1,8 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
-import { Industry } from '@modules/caps/entities/industry.entity';
+import { Industry, Capability, Process } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('companies')
@@ -43,6 +43,20 @@ export class Company {
   )
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;
+
+  @Field(() => [Capability])
+  @OneToMany(
+    type => Capability,
+    capability => capability.industry
+  )
+  capabilities: Capability[];
+
+  @Field(() => [Process])
+  @OneToMany(
+    type => Process,
+    proces => proces.industry
+  )
+  processes: Process[];
 
   constructor(partial: Partial<Company>) {
     Object.assign(this, partial);

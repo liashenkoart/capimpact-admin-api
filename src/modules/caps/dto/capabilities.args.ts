@@ -14,5 +14,10 @@ export class CapabilitiesArgs extends BaseArgs {
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @Type(() => Number)
+  company_id?: number;
+
+  @Field(() => ID, { nullable: true })
+  @IsOptional()
+  @Type(() => Number)
   parentId?: number;
 }

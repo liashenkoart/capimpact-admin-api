@@ -14,6 +14,18 @@ export class CapabilityCreationInput {
   @Type(() => Number)
   readonly industry_id: number;
 
+  @Field({ nullable: true })
+  @IsOptional()
+  readonly capitalCosts?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  readonly fte?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  readonly salaryCosts?: number;
+
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @IsNumber()

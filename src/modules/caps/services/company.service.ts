@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions } from 'typeorm';
+import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
-import { Company } from '@modules/caps/entities';
+import { Company, Capability } from '@modules/caps/entities';
 //import { ProcessService } from './process.service';
 //import { CapabilityService } from './capability.service';
 //import { IndustryService } from './industry.service';
@@ -10,7 +10,12 @@ import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '@modules/caps
 
 @Injectable()
 export class CompanyService {
-  constructor(@InjectRepository(Company) private readonly companyRepository: Repository<Company>) {}
+  constructor(
+    @InjectRepository(Company) private readonly companyRepository: Repository<Company>,
+    @InjectRepository(Capability)
+    private readonly capabilityTreeRepository: TreeRepository<Capability>,
+    @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>
+  ) {}
 
   async findAll(query: CompaniesArgs): Promise<Company[]> {
     const options = this.getFindAllQuery(query);
@@ -31,6 +36,40 @@ export class CompanyService {
     let company = new Company(data);
     company.user = user;
     company = await this.companyRepository.save(company);
+
+    // Copy caps from industry tree
+    let root = await this.capabilityRepository.findOne({
+      industry_id: company.industry_id,
+      parentId: null,
+    });
+    const tree = await this.capabilityTreeRepository.findDescendantsTree(root);
+    let descendants = tree.children.reduce((prev, cap) => {
+      return prev.concat(
+        [{ id: cap.id, name: cap.name, parentId: cap.parentId }],
+        cap.children.map(child => ({ id: child.id, name: child.name, parentId: child.parentId }))
+      );
+    }, []);
+    root = await this.capabilityRepository.save({
+      name: company.name,
+      company,
+      parent: null,
+      user,
+    });
+    let nodes = {};
+    let node = null;
+    for (let descendant of descendants) {
+      if (descendant.parentId) {
+        const parentNode = descendants.find(it => it.id === descendant.parentId);
+        const parent = (parentNode && nodes[parentNode.id]) || root;
+        node = await this.capabilityRepository.save({
+          name: descendant.name,
+          company,
+          parent,
+          user,
+        });
+        nodes[descendant.id] = node;
+      }
+    }
     return company;
   }
 

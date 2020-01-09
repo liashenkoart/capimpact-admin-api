@@ -6,13 +6,18 @@
 type Capability {
   id: Int!
   name: String!
+  capitalCosts: Float
+  fte: Float
+  salaryCosts: Float
   hierarchy_id: String
   user_id: Int
   industry_id: Int
+  company_id: Int
   parentId: Int
   last_update: Date
-  user: User!
+  user: User
   industry: Industry!
+  company: Company
   children: [Capability!]!
   parent: Capability!
 }
@@ -20,6 +25,9 @@ type Capability {
 input CapabilityCreationInput {
   name: String!
   industry_id: ID!
+  capitalCosts: Float
+  fte: Float
+  salaryCosts: Float
   parentId: ID
   hierarchy_id: String
 }
@@ -27,6 +35,9 @@ input CapabilityCreationInput {
 input CapabilityInput {
   id: ID!
   name: String
+  capitalCosts: Float
+  fte: Float
+  salaryCosts: Float
   hierarchy_id: String
   industry_id: ID
   parentId: ID
@@ -39,6 +50,8 @@ type Company {
   industry_id: Int
   user: User!
   industry: Industry!
+  capabilities: [Capability!]!
+  processes: [Process!]!
 }
 
 input CompanyCreationInput {
@@ -100,10 +113,12 @@ type Process {
   metrics_avail: Boolean
   user_id: Int
   industry_id: Int
+  company_id: Int
   parentId: Int
   last_update: Date
   user: User!
   industry: Industry!
+  company: Company!
   children: [Process!]!
   parent: Process!
 }
@@ -138,7 +153,7 @@ type Query {
   industry(id: ID!): Industry!
   processes(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, parentId: ID): [Process!]!
   process(id: ID!): Process!
-  capabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, parentId: ID): [Capability!]!
+  capabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, company_id: ID, parentId: ID): [Capability!]!
   capability(id: ID!): Capability!
 }
 

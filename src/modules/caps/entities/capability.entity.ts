@@ -9,10 +9,10 @@ import {
   TreeParent,
   BeforeUpdate,
 } from 'typeorm';
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, Int, Float } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
-import { Industry } from '@modules/caps/entities/industry.entity';
+import { Industry, Company } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('capabilities')
@@ -25,6 +25,24 @@ export class Capability {
   @Field()
   @Column()
   name: string;
+
+  @Field(() => Float, { nullable: true })
+  @Column('decimal', {
+    nullable: true,
+  })
+  readonly capitalCosts?: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column('decimal', {
+    nullable: true,
+  })
+  readonly fte?: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column('decimal', {
+    nullable: true,
+  })
+  readonly salaryCosts?: number;
 
   @Field({ nullable: true })
   @Column({
@@ -48,6 +66,12 @@ export class Capability {
   @Column({
     nullable: true,
   })
+  company_id?: number;
+
+  @Field(() => Int, { nullable: true })
+  @Column({
+    nullable: true,
+  })
   parentId?: number;
 
   @Field(() => Date, { nullable: true })
@@ -57,7 +81,7 @@ export class Capability {
   })
   last_update: Date;
 
-  @Field(() => User)
+  @Field(() => User, { nullable: true })
   @ManyToOne(
     type => User,
     user => user.capabilities
@@ -65,7 +89,7 @@ export class Capability {
   @JoinColumn({ name: 'user_id' })
   user?: User;
 
-  @Field(() => Industry)
+  @Field(() => Industry, { nullable: true })
   @ManyToOne(
     type => Industry,
     industry => industry.capabilities,
@@ -73,6 +97,15 @@ export class Capability {
   )
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;
+
+  @Field(() => Company, { nullable: true })
+  @ManyToOne(
+    type => Company,
+    company => company.capabilities,
+    { cascade: true }
+  )
+  @JoinColumn({ name: 'company_id' })
+  company?: Company;
 
   @Field(() => [Capability], { nullable: true })
   @TreeChildren({

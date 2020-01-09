@@ -16,6 +16,18 @@ export class CapabilityInput {
 
   @Field({ nullable: true })
   @IsOptional()
+  readonly capitalCosts?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  readonly fte?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  readonly salaryCosts?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
   readonly hierarchy_id?: string;
 
   @Field(() => ID, { nullable: true })

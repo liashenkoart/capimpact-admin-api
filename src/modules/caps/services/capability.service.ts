@@ -17,8 +17,13 @@ export class CapabilityService {
   ) {}
 
   async tree(query: CapabilitiesArgs): Promise<Capability> {
-    const { industry_id } = query;
-    const root = await this.capabilityRepository.findOne({ industry_id, parentId: null });
+    const { industry_id, company_id } = query;
+    let root = null;
+    if (industry_id) {
+      root = await this.capabilityRepository.findOne({ industry_id, parentId: null });
+    } else if (company_id) {
+      root = await this.capabilityRepository.findOne({ company_id, parentId: null });
+    }
     if (!root) {
       throw new NotFoundException();
     }

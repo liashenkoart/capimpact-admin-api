@@ -12,8 +12,7 @@ import {
 import { ObjectType, Field, Int } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
-
-import { Industry } from '@modules/caps/entities/industry.entity';
+import { Industry, Company } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('processes')
@@ -73,6 +72,12 @@ export class Process {
   @Column({
     nullable: true,
   })
+  company_id?: number;
+
+  @Field(() => Int, { nullable: true })
+  @Column({
+    nullable: true,
+  })
   parentId?: number;
 
   @Field(() => Date, { nullable: true })
@@ -98,6 +103,15 @@ export class Process {
   )
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;
+
+  @Field(() => Company)
+  @ManyToOne(
+    type => Company,
+    company => company.capabilities,
+    { cascade: true }
+  )
+  @JoinColumn({ name: 'company_id' })
+  company?: Company;
 
   @Field(() => [Process], { nullable: true })
   @TreeChildren({
