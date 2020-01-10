@@ -54,11 +54,11 @@ export class IndustryService {
     return industries;
   }
 
-  async findById(id: number): Promise<Industry> {
+  async findOneById(id: number): Promise<Industry> {
     return this.industryRepository.findOne(id);
   }
 
-  async create(data: IndustryCreationInput, context: any): Promise<Industry> {
+  async create(data: IndustryCreationInput, context?: any): Promise<Industry> {
     let industry = new Industry(data);
     industry = await this.industryRepository.save(industry);
     await this.processService.createTreeFromIndustry(industry, context);
@@ -66,7 +66,7 @@ export class IndustryService {
     return industry;
   }
 
-  async clone(id: number, data: IndustryCreationInput, context: any): Promise<Industry> {
+  async clone(id: number, data: IndustryCreationInput, context?: any): Promise<Industry> {
     let industry = new Industry(data);
     industry = await this.industryRepository.save(industry);
     await this.processService.cloneTreeFromIndustry(id, industry, context);
@@ -78,6 +78,15 @@ export class IndustryService {
     const industry = new Industry({ ...data });
     industry.id = parseInt(id, 10);
     return this.industryRepository.save(industry);
+  }
+
+  async saveMany(input: IndustryInput[], context?: any) {
+    const data = input.map(candidate => {
+      let industry = new Industry({ ...candidate });
+      return industry;
+    });
+    await this.industryRepository.save(data);
+    return await this.industryRepository.findByIds(data.map(p => p.id));
   }
 
   async remove(id: number) {

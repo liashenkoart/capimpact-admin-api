@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, ID } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
 import { Industry, Capability, Process } from '@modules/caps/entities';
@@ -7,7 +7,7 @@ import { Industry, Capability, Process } from '@modules/caps/entities';
 @ObjectType()
 @Entity('companies')
 export class Company {
-  @Field(() => Int)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,13 +15,13 @@ export class Company {
   @Column()
   name: string;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => ID, { nullable: true })
   @Column({
     nullable: true,
   })
   user_id?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => ID, { nullable: true })
   @Column({
     nullable: true,
   })
@@ -33,7 +33,7 @@ export class Company {
     user => user.companies
   )
   @JoinColumn({ name: 'user_id' })
-  user?: User;
+  user: User;
 
   @Field(() => Industry)
   @ManyToOne(
@@ -42,21 +42,21 @@ export class Company {
     { eager: true }
   )
   @JoinColumn({ name: 'industry_id' })
-  industry?: Industry;
+  industry: Industry;
 
-  @Field(() => [Capability])
+  @Field(() => [Capability], { nullable: true })
   @OneToMany(
     type => Capability,
     capability => capability.industry
   )
-  capabilities: Capability[];
+  capabilities?: Capability[];
 
-  @Field(() => [Process])
+  @Field(() => [Process], { nullable: true })
   @OneToMany(
     type => Process,
     proces => proces.industry
   )
-  processes: Process[];
+  processes?: Process[];
 
   constructor(partial: Partial<Company>) {
     Object.assign(this, partial);

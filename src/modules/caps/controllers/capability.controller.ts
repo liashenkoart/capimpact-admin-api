@@ -9,13 +9,12 @@ import {
   Param,
   Delete,
   Query,
-  Put,
   Req,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { CapabilityService } from '@modules/caps/services';
-import { CapabilityQueryInput, CapabilityInput, CapabilityCreationInput } from '@modules/caps/dto';
+import { CapabilitiesArgs, CapabilityInput, CapabilityCreationInput } from '@modules/caps/dto';
 
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
@@ -24,18 +23,18 @@ export class CapabilityController {
   constructor(private readonly capabilityService: CapabilityService) {}
 
   @Get('')
-  async findAll(@Query() query: CapabilityQueryInput) {
+  async findAll(@Query() query: CapabilitiesArgs) {
     return this.capabilityService.findAll(query);
   }
 
   @Get('tree')
-  async tree(@Query() query: CapabilityQueryInput) {
+  async tree(@Query() query: CapabilitiesArgs) {
     return this.capabilityService.tree(query);
   }
 
   @Get('/:id')
   async findOne(@Param('id') id: number) {
-    return this.capabilityService.findById(id);
+    return this.capabilityService.findOneById(id);
   }
 
   @Post('')

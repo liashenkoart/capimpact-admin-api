@@ -13,7 +13,7 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  async findById(id: number): Promise<User> {
+  async findOneById(id: number): Promise<User> {
     return this.userRepository.findOne(id);
   }
 

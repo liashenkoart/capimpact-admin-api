@@ -31,7 +31,7 @@ export class CompanyService {
     return this.companyRepository.count(query);
   }
 
-  async create(data: CompanyCreationInput, context: any): Promise<Company> {
+  async create(data: CompanyCreationInput, context?: any): Promise<Company> {
     const { user } = context;
     let company = new Company(data);
     company.user = user;
@@ -73,7 +73,7 @@ export class CompanyService {
     return company;
   }
 
-  async clone(id: number, data: CompanyCreationInput, context: any): Promise<Company> {
+  async clone(id: number, data: CompanyCreationInput, context?: any): Promise<Company> {
     let company = new Company(data);
     company = await this.companyRepository.save(company);
     return company;
@@ -85,7 +85,7 @@ export class CompanyService {
     return this.companyRepository.save(company);
   }
 
-  async saveMany(input: CompanyInput[], context: any) {
+  async saveMany(input: CompanyInput[], context?: any) {
     const { user } = context;
     const data = input.map(candidate => {
       let company = new Company({ ...candidate });

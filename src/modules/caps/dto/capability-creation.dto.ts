@@ -8,17 +8,17 @@ export class CapabilityCreationInput {
   @IsNotEmpty()
   readonly name: string;
 
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true })
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  readonly industry_id: number;
+  readonly industry_id?: number;
 
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true })
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  readonly company_id: number;
+  readonly company_id?: number;
 
   @Field({ nullable: true })
   @IsOptional()

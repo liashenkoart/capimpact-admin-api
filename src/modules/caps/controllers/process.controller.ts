@@ -9,13 +9,12 @@ import {
   Param,
   Delete,
   Query,
-  Put,
   Req,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { ProcessService } from '@modules/caps/services/process.service';
-import { ProcessQueryInput, ProcessInput, ProcessCreationInput } from '@modules/caps/dto';
+import { ProcessesArgs, ProcessInput, ProcessCreationInput } from '@modules/caps/dto';
 
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
@@ -24,23 +23,23 @@ export class ProcessController {
   constructor(private readonly processService: ProcessService) {}
 
   @Get('')
-  async findAll(@Query() query: ProcessQueryInput) {
+  async findAll(@Query() query: ProcessesArgs) {
     return this.processService.findAll(query);
   }
 
   @Get('tree')
-  async tree(@Query() query: ProcessQueryInput) {
+  async tree(@Query() query: ProcessesArgs) {
     return this.processService.tree(query);
   }
 
   @Get('default-tree')
-  async defaultTree(@Query() query: ProcessQueryInput) {
+  async defaultTree(@Query() query: ProcessesArgs) {
     return this.processService.defaultTree(query);
   }
 
   @Get('/:id')
   async findOne(@Param('id') id: number) {
-    return this.processService.findById(id);
+    return this.processService.findOneById(id);
   }
 
   @Post('')

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
@@ -6,7 +6,7 @@ import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
 import { Industry, Process } from '@modules/caps/entities';
-import { ProcessArgs, ProcessCreationInput, ProcessInput } from '@modules/caps/dto';
+import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '@modules/caps/dto';
 
 @Injectable()
 export class ProcessService {
@@ -16,7 +16,7 @@ export class ProcessService {
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 
-  async tree(query: ProcessArgs): Promise<Process> {
+  async tree(query: ProcessesArgs): Promise<Process> {
     const { industry_id } = query;
     const root = await this.processRepository.findOne({ industry_id, parentId: null });
     if (!root) {
@@ -25,7 +25,7 @@ export class ProcessService {
     return this.treeRepository.findDescendantsTree(root);
   }
 
-  async defaultTree(query: ProcessArgs): Promise<any> {
+  async defaultTree(query: ProcessesArgs): Promise<any> {
     const { industry_id } = query;
     const industry = await this.industryRepository.findOne(industry_id);
     if (industry) {
@@ -34,29 +34,29 @@ export class ProcessService {
     return null;
   }
 
-  async findAll(query: ProcessArgs): Promise<Process[]> {
+  async findAll(query: ProcessesArgs): Promise<Process[]> {
     const options = this.getFindAllQuery(query);
     return this.processRepository.find(options);
   }
 
-  async findById(id: number): Promise<Process> {
+  async findOneById(id: number): Promise<Process> {
     return this.processRepository.findOne(id);
   }
 
-  async countDocuments(query: ProcessArgs): Promise<number> {
+  async countDocuments(query: ProcessesArgs): Promise<number> {
     return this.processRepository.count(query);
   }
 
-  async create(data: ProcessCreationInput, context: any): Promise<Process> {
+  async create(data: ProcessCreationInput, context?: any): Promise<Process> {
     const { user } = context;
     const process = new Process(data);
-    process.parent = await this.findById(process.parentId);
+    process.parent = await this.findOneById(process.parentId);
     process.user = user;
     await this.processRepository.save(process);
-    return await this.findById(process.id);
+    return await this.findOneById(process.id);
   }
 
-  async createTreeFromIndustry(industry: Industry, context: any): Promise<Process> {
+  async createTreeFromIndustry(industry: Industry, context?: any): Promise<Process> {
     const { user } = context;
     // save root industry node
     let root = await this.processRepository.save({
@@ -113,23 +113,23 @@ export class ProcessService {
     return this.tree({ industry_id: industry.id });
   }
 
-  async save(id: any, data: ProcessInput, context: any): Promise<Process> {
+  async save(id: any, data: ProcessInput, context?: any): Promise<Process> {
     const { user } = context;
     let process = new Process({ ...data });
     process.id = parseInt(id, 10);
     process.user = user;
     if (process.parentId) {
-      process.parent = await this.findById(process.parentId);
+      process.parent = await this.findOneById(process.parentId);
     }
     process = await this.processRepository.save(process);
     process = await this.processRepository.findOne({ id: process.id });
     if (process.parentId === null) {
       await this.industryRepository.save({ id: +process.industry_id, name: process.name });
     }
-    return await this.findById(process.id);
+    return await this.findOneById(process.id);
   }
 
-  async saveMany(input: ProcessInput[], context: any) {
+  async saveMany(input: ProcessInput[], context?: any) {
     const { user } = context;
     const data = input.map(candidate => {
       let process = new Process({ ...candidate });
@@ -140,7 +140,7 @@ export class ProcessService {
     return await this.processRepository.findByIds(data.map(p => p.id));
   }
 
-  async cloneTreeFromIndustry(id: any, industry: Industry, context: any): Promise<Process> {
+  async cloneTreeFromIndustry(id: any, industry: Industry, context?: any): Promise<Process> {
     const { user } = context;
     const industryId = parseInt(id, 10); // cloned industry id
     let node = null;
@@ -190,7 +190,7 @@ export class ProcessService {
     return this.processRepository.delete({ industry_id: industryId });
   }
 
-  getFindAllQuery(query: ProcessArgs): FindManyOptions {
+  getFindAllQuery(query: ProcessesArgs): FindManyOptions {
     const { page, skip, limit, ...where } = query;
     return {
       skip: (page - 1) * limit,

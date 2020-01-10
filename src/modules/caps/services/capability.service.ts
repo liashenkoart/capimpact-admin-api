@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
@@ -35,7 +35,7 @@ export class CapabilityService {
     return this.capabilityRepository.find(options);
   }
 
-  async findById(id: number): Promise<Capability> {
+  async findOneById(id: number): Promise<Capability> {
     return this.capabilityRepository.findOne(id);
   }
 
@@ -43,17 +43,17 @@ export class CapabilityService {
     return this.capabilityRepository.count(query);
   }
 
-  async create(data: CapabilityCreationInput, context: any): Promise<Capability> {
+  async create(data: CapabilityCreationInput, context?: any): Promise<Capability> {
     const { user } = context;
     let capability = new Capability(data);
-    capability.parent = await this.findById(capability.parentId);
+    capability.parent = await this.findOneById(capability.parentId);
     capability.user = user;
     capability = await this.capabilityRepository.save(capability);
     await this.updateHierarchyIdNode(capability);
-    return await this.findById(capability.id);
+    return await this.findOneById(capability.id);
   }
 
-  async createTreeFromIndustry(industry: Industry, context: any): Promise<Capability> {
+  async createTreeFromIndustry(industry: Industry, context?: any): Promise<Capability> {
     const { user } = context;
     // save root industry node
     let root = await this.capabilityRepository.save({
@@ -102,13 +102,13 @@ export class CapabilityService {
     return this.tree({ industry_id: industry.id });
   }
 
-  async save(id: any, data: CapabilityInput, context: any): Promise<Capability> {
+  async save(id: any, data: CapabilityInput, context?: any): Promise<Capability> {
     const { user } = context;
     let capability = new Capability({ ...data });
     capability.id = parseInt(id, 10);
     capability.user = user;
     if (capability.parentId) {
-      capability.parent = await this.findById(capability.parentId);
+      capability.parent = await this.findOneById(capability.parentId);
     }
     capability = await this.capabilityRepository.save(capability);
     capability = await this.capabilityRepository.findOne({ id: capability.id });
@@ -116,10 +116,10 @@ export class CapabilityService {
       await this.industryRepository.save({ id: +capability.industry_id, name: capability.name });
     }
     await this.updateHierarchyIdNode(capability);
-    return await this.findById(capability.id);
+    return await this.findOneById(capability.id);
   }
 
-  async saveMany(input: CapabilityInput[], context: any) {
+  async saveMany(input: CapabilityInput[], context?: any) {
     const { user } = context;
     const data = input.map(candidate => {
       let capability = new Capability({ ...candidate });
@@ -135,7 +135,7 @@ export class CapabilityService {
     return await this.capabilityRepository.findByIds(data.map(p => p.id));
   }
 
-  async cloneTreeFromIndustry(id: any, industry: Industry, context: any): Promise<Capability> {
+  async cloneTreeFromIndustry(id: any, industry: Industry, context?: any): Promise<Capability> {
     const { user } = context;
     const industryId = parseInt(id, 10); // cloned industry id
     let node = null;
@@ -213,6 +213,6 @@ export class CapabilityService {
     await this.capabilityRepository.save(
       new Capability({ id: node.id, hierarchy_id: node.hierarchy_id })
     );
-    return await this.findById(node.id);
+    return await this.findOneById(node.id);
   }
 }

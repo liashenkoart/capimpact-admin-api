@@ -9,8 +9,6 @@ import {
   Param,
   Delete,
   Req,
-  Inject,
-  CACHE_MANAGER,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -32,7 +30,7 @@ export class IndustryController {
 
   @Get('/:id')
   async findOne(@Param('id') id: number) {
-    return this.industryService.findById(id);
+    return this.industryService.findOneById(id);
   }
 
   @Post('')

@@ -9,7 +9,7 @@ import {
   TreeParent,
   BeforeUpdate,
 } from 'typeorm';
-import { ObjectType, Field, Int, Float } from 'type-graphql';
+import { ObjectType, Field, Float, ID } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
 import { Industry, Company } from '@modules/caps/entities';
@@ -18,7 +18,7 @@ import { Industry, Company } from '@modules/caps/entities';
 @Entity('capabilities')
 @Tree('materialized-path')
 export class Capability {
-  @Field(() => Int)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -50,25 +50,25 @@ export class Capability {
   })
   hierarchy_id?: string;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => ID, { nullable: true })
   @Column({
     nullable: true,
   })
   user_id?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => ID, { nullable: true })
   @Column({
     nullable: true,
   })
   industry_id?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => ID, { nullable: true })
   @Column({
     nullable: true,
   })
   company_id?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => ID, { nullable: true })
   @Column({
     nullable: true,
   })
@@ -111,7 +111,7 @@ export class Capability {
   @TreeChildren({
     cascade: true,
   })
-  children: Capability[];
+  children?: Capability[];
 
   @Field(() => Capability, { nullable: true })
   @TreeParent()

@@ -4,28 +4,28 @@
 # -----------------------------------------------
 
 type Capability {
-  id: Int!
+  id: ID!
   name: String!
   capitalCosts: Float
   fte: Float
   salaryCosts: Float
   hierarchy_id: String
-  user_id: Int
-  industry_id: Int
-  company_id: Int
-  parentId: Int
+  user_id: ID
+  industry_id: ID
+  company_id: ID
+  parentId: ID
   last_update: Date
   user: User
-  industry: Industry!
+  industry: Industry
   company: Company
-  children: [Capability!]!
-  parent: Capability!
+  children: [Capability!]
+  parent: Capability
 }
 
 input CapabilityCreationInput {
   name: String!
-  industry_id: ID!
-  company_id: ID!
+  industry_id: ID
+  company_id: ID
   capitalCosts: Float
   fte: Float
   salaryCosts: Float
@@ -41,18 +41,19 @@ input CapabilityInput {
   salaryCosts: Float
   hierarchy_id: String
   industry_id: ID
+  company_id: ID
   parentId: ID
 }
 
 type Company {
-  id: Int!
+  id: ID!
   name: String!
-  user_id: Int
-  industry_id: Int
+  user_id: ID
+  industry_id: ID
   user: User!
   industry: Industry!
-  capabilities: [Capability!]!
-  processes: [Process!]!
+  capabilities: [Capability!]
+  processes: [Process!]
 }
 
 input CompanyCreationInput {
@@ -70,14 +71,14 @@ input CompanyInput {
 scalar Date
 
 type Industry {
-  id: Int!
+  id: ID!
   name: String!
-  countProcesses: Float!
-  countCapabilities: Float!
-  countCompanies: Float!
-  processes: [Process!]!
-  capabilities: [Capability!]!
-  companies: [Company!]!
+  countProcesses: Int
+  countCapabilities: Int
+  countCompanies: Int
+  processes: [Process!]
+  capabilities: [Capability!]
+  companies: [Company!]
 }
 
 input IndustryCreationInput {
@@ -86,42 +87,44 @@ input IndustryCreationInput {
 }
 
 input IndustryInput {
+  id: ID!
   name: String!
 }
 
 type Mutation {
   createIndustry(data: IndustryCreationInput!): Industry!
-  saveIndustry(data: IndustryInput!, id: ID!): Industry!
+  saveIndustry(data: IndustryInput!): Industry!
+  saveIndustries(data: [IndustryInput!]!): [Industry!]!
   cloneIndustry(data: IndustryCreationInput!, id: ID!): Industry!
   removeIndustry(id: ID!): Industry!
   createProcess(data: ProcessCreationInput!): Process!
-  saveProcess(data: ProcessInput!, id: ID!): Process!
+  saveProcess(data: ProcessInput!): Process!
   saveProcesses(data: [ProcessInput!]!): [Process!]!
   removeProcess(id: ID!): Process!
   createCapability(data: CapabilityCreationInput!): Capability!
-  saveCapability(data: CapabilityInput!, id: ID!): Capability!
+  saveCapability(data: CapabilityInput!): Capability!
   saveCapabilities(data: [CapabilityInput!]!): [Capability!]!
   removeCapability(id: ID!): Capability!
 }
 
 type Process {
-  id: Int!
+  id: ID!
   name: String!
   pcf_id: String
   hierarchy_id: String
   difference_idx: String
   change_details: String
   metrics_avail: Boolean
-  user_id: Int
-  industry_id: Int
-  company_id: Int
-  parentId: Int
+  user_id: ID
+  industry_id: ID
+  company_id: ID
+  parentId: ID
   last_update: Date
-  user: User!
-  industry: Industry!
-  company: Company!
-  children: [Process!]!
-  parent: Process!
+  user: User
+  industry: Industry
+  company: Company
+  children: [Process!]
+  parent: Process
 }
 
 input ProcessCreationInput {
@@ -153,8 +156,11 @@ type Query {
   industries(page: Int = 1, skip: Int = 0, limit: Int = 25): [Industry!]!
   industry(id: ID!): Industry!
   processes(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, parentId: ID): [Process!]!
+  treeProcesses(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, parentId: ID): Process!
+  defaultTreeProcesses(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, parentId: ID): Process!
   process(id: ID!): Process!
   capabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, company_id: ID, parentId: ID): [Capability!]!
+  treeCapabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, company_id: ID, parentId: ID): Capability!
   capability(id: ID!): Capability!
 }
 

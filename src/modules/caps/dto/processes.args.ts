@@ -2,10 +2,10 @@ import { ArgsType, Field, ID } from 'type-graphql';
 import { IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 
-import { BaseArgs } from '@app/modules/common/dto/base.args';
+import { BaseArgs } from '@modules/common/dto/base.args';
 
 @ArgsType()
-export class ProcessArgs extends BaseArgs {
+export class ProcessesArgs extends BaseArgs {
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @Type(() => Number)

@@ -1,12 +1,12 @@
 import { Entity, Column, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, ID, Int } from 'type-graphql';
 
 import { Process, Capability, Company } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('industries')
 export class Industry {
-  @Field(() => Int)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -14,35 +14,35 @@ export class Industry {
   @Column()
   name: string;
 
-  @Field()
+  @Field(() => Int, { nullable: true })
   countProcesses: number;
 
-  @Field()
+  @Field(() => Int, { nullable: true })
   countCapabilities: number;
 
-  @Field()
+  @Field(() => Int, { nullable: true })
   countCompanies: number;
 
-  @Field(() => [Process])
+  @Field(() => [Process], { nullable: true })
   @OneToMany(
     type => Process,
     proces => proces.industry
   )
-  processes: Process[];
+  processes?: Process[];
 
-  @Field(() => [Capability])
+  @Field(() => [Capability], { nullable: true })
   @OneToMany(
     type => Capability,
     capability => capability.industry
   )
-  capabilities: Capability[];
+  capabilities?: Capability[];
 
-  @Field(() => [Company])
+  @Field(() => [Company], { nullable: true })
   @OneToMany(
     type => Company,
     company => company.industry
   )
-  companies: Company[];
+  companies?: Company[];
 
   constructor(partial: Partial<Industry>) {
     Object.assign(this, partial);

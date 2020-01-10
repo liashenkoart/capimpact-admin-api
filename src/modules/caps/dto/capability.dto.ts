@@ -40,5 +40,11 @@ export class CapabilityInput {
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
+  readonly company_id?: number;
+
+  @Field(() => ID, { nullable: true })
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
   readonly parentId?: number;
 }
