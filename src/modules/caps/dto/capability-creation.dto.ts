@@ -9,10 +9,16 @@ export class CapabilityCreationInput {
   readonly name: string;
 
   @Field(() => ID)
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @Type(() => Number)
   readonly industry_id: number;
+
+  @Field(() => ID)
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  readonly company_id: number;
 
   @Field({ nullable: true })
   @IsOptional()

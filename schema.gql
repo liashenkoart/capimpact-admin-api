@@ -25,6 +25,7 @@ type Capability {
 input CapabilityCreationInput {
   name: String!
   industry_id: ID!
+  company_id: ID!
   capitalCosts: Float
   fte: Float
   salaryCosts: Float
