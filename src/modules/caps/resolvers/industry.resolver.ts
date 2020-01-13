@@ -4,14 +4,9 @@ import { ID } from 'type-graphql';
 
 import { GqlAuthGuard } from '@modules/common/guards';
 
-import { Industry, Process, Capability, Company } from '@modules/caps/entities';
-import {
-  IndustryService,
-  ProcessService,
-  CapabilityService,
-  CompanyService,
-} from '@modules/caps/services';
-import { IndustriesArgs, IndustryCreationInput, IndustryInput } from '@modules/caps/dto';
+import { Industry, Process, Capability, Company } from '../entities';
+import { IndustryService, ProcessService, CapabilityService, CompanyService } from '../services';
+import { IndustriesArgs, IndustryCreationInput, IndustryInput } from '../dto';
 
 @UseGuards(GqlAuthGuard)
 @Resolver(() => Industry)

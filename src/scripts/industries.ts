@@ -19,7 +19,19 @@ async function main() {
         id: +row.id,
       }))
     );
-    await transactionalEntityManager.save(Industry, industries);
+    for (let industry of industries) {
+      const found = await transactionalEntityManager.findOne(Industry, {
+        where: { name: industry.name },
+      });
+      if (!found) {
+        await transactionalEntityManager
+          .createQueryBuilder()
+          .insert()
+          .into('industries', ['id', 'name'])
+          .values([industry])
+          .execute();
+      }
+    }
   });
 }
 

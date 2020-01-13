@@ -6,9 +6,9 @@ import { GqlAuthGuard } from '@modules/common/guards';
 import { CurrentUser } from '@modules/common/decorators';
 import { User } from '@modules/users/user.entity';
 
-import { Capability, Industry, Company } from '@modules/caps/entities';
-import { CapabilityService, IndustryService, CompanyService } from '@modules/caps/services';
-import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '@modules/caps/dto';
+import { Capability, Industry, Company } from '../entities';
+import { CapabilityService, IndustryService, CompanyService } from '../services';
+import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
 @UseGuards(GqlAuthGuard)
 @Resolver(() => Capability)

@@ -8,7 +8,7 @@ import {
   TreeChildren,
   TreeParent,
 } from 'typeorm';
-import { Industry } from '@modules/caps/entities/industry.entity';
+import { Industry } from '@modules/caps/entities';
 
 @Entity('default_processes')
 @Tree('materialized-path')

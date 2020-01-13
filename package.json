@@ -17,8 +17,8 @@
     "typeorm": "ts-node -r dotenv/config -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "apqc": "yarn processes",
     "industries": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industries.ts",
-    "processes": "yarn industries && ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/processes.ts",
-    "capabilities": "yarn industries && ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities.ts"
+    "processes": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/processes.ts",
+    "capabilities": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities.ts"
   },
   "license": "ISC",
   "dependencies": {

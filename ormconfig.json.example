@@ -6,7 +6,7 @@
   "password": "postgres",
   "database": "apqc_r721",
   "entities": [
-    "src/modules/**/**.entity{.ts,.js}"
+    "src/modules/**/*.entity{.ts,.js}"
   ],
   "synchronize": true,
   "logging": true,

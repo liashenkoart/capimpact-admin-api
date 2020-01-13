@@ -17,8 +17,28 @@ async function main() {
   let resultDeleted = null;
 
   await getManager().transaction(async transactionalEntityManager => {
+    let industries: any = await parseCsv('industries.csv', rows =>
+      rows.map((row: any) => ({
+        ...row,
+        id: +row.id,
+      }))
+    );
+    for (let industry of industries) {
+      const found = await transactionalEntityManager.findOne(Industry, {
+        where: { name: industry.name },
+      });
+      if (!found) {
+        await transactionalEntityManager
+          .createQueryBuilder()
+          .insert()
+          .into('industries', ['id', 'name'])
+          .values([industry])
+          .execute();
+      }
+    }
+
     // get industries
-    let industries = await transactionalEntityManager.find(Industry);
+    industries = await transactionalEntityManager.find(Industry);
 
     // clear all processes
     resultDeleted = await transactionalEntityManager.delete(Process, {});

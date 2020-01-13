@@ -6,9 +6,9 @@ import { GqlAuthGuard } from '@modules/common/guards';
 import { CurrentUser } from '@modules/common/decorators';
 import { User } from '@modules/users/user.entity';
 
-import { Process, Industry } from '@modules/caps/entities';
-import { ProcessService, IndustryService } from '@modules/caps/services';
-import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '@modules/caps/dto';
+import { Process, Industry } from '../entities';
+import { ProcessService, IndustryService } from '../services';
+import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '../dto';
 
 @UseGuards(GqlAuthGuard)
 @Resolver(() => Process)

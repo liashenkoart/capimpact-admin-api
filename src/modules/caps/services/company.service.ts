@@ -3,9 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
 import { Company, Capability } from '@modules/caps/entities';
-//import { ProcessService } from './process.service';
-//import { CapabilityService } from './capability.service';
-//import { IndustryService } from './industry.service';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '@modules/caps/dto';
 
 @Injectable()
