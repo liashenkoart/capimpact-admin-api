@@ -26,7 +26,7 @@ import { AppController } from './app.controller';
       //include: [UsersModule],
       autoSchemaFile: 'schema.gql',
       installSubscriptionHandlers: true,
-      context: ({ req }) => ({ req })
+      context: ({ req }) => ({ req }),
     }),
   ],
   controllers: [AppController],
