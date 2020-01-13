@@ -5,8 +5,8 @@ import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
-import { Industry, Capability } from '@modules/caps/entities';
-import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '@modules/caps/dto';
+import { Industry, Capability } from '../entities';
+import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
 @Injectable()
 export class CapabilityService {

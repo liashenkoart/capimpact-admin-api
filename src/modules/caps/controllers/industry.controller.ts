@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { IndustryService } from '@modules/caps/services/industry.service';
-import { IndustryInput, IndustryCreationInput, IndustriesArgs } from '@modules/caps/dto';
+import { IndustryService } from '../services';
+import { IndustryInput, IndustryCreationInput, IndustriesArgs } from '../dto';
 
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)

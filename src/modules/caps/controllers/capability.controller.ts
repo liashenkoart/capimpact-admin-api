@@ -13,8 +13,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { CapabilityService } from '@modules/caps/services';
-import { CapabilitiesArgs, CapabilityInput, CapabilityCreationInput } from '@modules/caps/dto';
+import { CapabilityService } from '../services';
+import { CapabilitiesArgs, CapabilityInput, CapabilityCreationInput } from '../dto';
 
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)

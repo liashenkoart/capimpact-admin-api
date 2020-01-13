@@ -1,7 +1,9 @@
 import { Entity, Column, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectType, Field, ID, Int } from 'type-graphql';
 
-import { Process, Capability, Company } from '@modules/caps/entities';
+import { Process } from './process.entity';
+import { Capability } from './capability.entity';
+import { Company } from './company.entity';
 
 @ObjectType()
 @Entity('industries')

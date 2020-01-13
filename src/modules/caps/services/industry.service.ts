@@ -3,10 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Industry } from '../entities';
+import { IndustryCreationInput, IndustryInput, IndustriesArgs } from '../dto';
+
 import { ProcessService } from './process.service';
 import { CapabilityService } from './capability.service';
 import { CompanyService } from './company.service';
-import { IndustryCreationInput, IndustryInput, IndustriesArgs } from '../dto';
 
 @Injectable()
 export class IndustryService {

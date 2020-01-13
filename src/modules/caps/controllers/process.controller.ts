@@ -13,8 +13,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { ProcessService } from '@modules/caps/services/process.service';
-import { ProcessesArgs, ProcessInput, ProcessCreationInput } from '@modules/caps/dto';
+import { ProcessService } from '../services';
+import { ProcessesArgs, ProcessInput, ProcessCreationInput } from '../dto';
 
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)

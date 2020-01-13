@@ -5,8 +5,8 @@ import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
-import { Industry, Process } from '@modules/caps/entities';
-import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '@modules/caps/dto';
+import { Industry, Process } from '../entities';
+import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '../dto';
 
 @Injectable()
 export class ProcessService {

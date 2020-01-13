@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
-import { Company, Capability } from '@modules/caps/entities';
-import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '@modules/caps/dto';
+import { Company, Capability } from '../entities';
+import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
 
 @Injectable()
 export class CompanyService {

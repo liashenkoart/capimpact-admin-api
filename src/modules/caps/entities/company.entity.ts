@@ -2,7 +2,9 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColum
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
-import { Industry, Capability, Process } from '@modules/caps/entities';
+import { Industry } from './industry.entity';
+import { Capability } from './capability.entity';
+import { Process } from './process.entity';
 
 @ObjectType()
 @Entity('companies')

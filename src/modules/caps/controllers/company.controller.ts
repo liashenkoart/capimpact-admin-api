@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { CompanyService } from '@modules/caps/services';
-import { CompanyInput, CompanyCreationInput, CompaniesArgs } from '@modules/caps/dto';
+import { CompanyService } from '../services';
+import { CompanyInput, CompanyCreationInput, CompaniesArgs } from '../dto';
 
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
