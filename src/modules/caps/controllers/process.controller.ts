@@ -10,6 +10,7 @@ import {
   Delete,
   Query,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -38,7 +39,7 @@ export class ProcessController {
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.processService.findOneById(id);
   }
 
@@ -53,12 +54,16 @@ export class ProcessController {
   }
 
   @Post('/:id')
-  async save(@Param('id') id: number, @Body() data: ProcessInput, @Req() req: any) {
+  async save(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: ProcessInput,
+    @Req() req: any
+  ) {
     return this.processService.save(id, data, { user: req.user });
   }
 
   @Delete('/:id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.processService.remove(id);
   }
 }

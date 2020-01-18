@@ -9,6 +9,7 @@ import {
   Param,
   Delete,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -29,7 +30,7 @@ export class IndustryController {
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.industryService.findOneById(id);
   }
 
@@ -39,17 +40,21 @@ export class IndustryController {
   }
 
   @Post('/:id')
-  async save(@Param('id') id: number, @Body() data: IndustryInput) {
+  async save(@Param('id', new ParseIntPipe()) id: number, @Body() data: IndustryInput) {
     return this.industryService.save(id, data);
   }
 
   @Post('/:id/clone')
-  async clone(@Param('id') id: number, @Body() data: IndustryCreationInput, @Req() req: any) {
+  async clone(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: IndustryCreationInput,
+    @Req() req: any
+  ) {
     return this.industryService.clone(id, data, { user: req.user });
   }
 
   @Delete('/:id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.industryService.remove(+id);
   }
 }

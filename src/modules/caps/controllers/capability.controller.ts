@@ -10,6 +10,7 @@ import {
   Delete,
   Query,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -33,7 +34,7 @@ export class CapabilityController {
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityService.findOneById(id);
   }
 
@@ -48,12 +49,16 @@ export class CapabilityController {
   }
 
   @Post('/:id')
-  async save(@Param('id') id: number, @Body() data: CapabilityInput, @Req() req: any) {
+  async save(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: CapabilityInput,
+    @Req() req: any
+  ) {
     return this.capabilityService.save(id, data, { user: req.user });
   }
 
   @Delete('/:id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityService.remove(id);
   }
 }

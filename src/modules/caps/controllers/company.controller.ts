@@ -9,6 +9,7 @@ import {
   Param,
   Delete,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -27,7 +28,7 @@ export class CompanyController {
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.companyService.findOneById(id);
   }
 
@@ -42,17 +43,21 @@ export class CompanyController {
   }
 
   @Post('/:id')
-  async save(@Param('id') id: number, @Body() data: CompanyInput) {
+  async save(@Param('id', new ParseIntPipe()) id: number, @Body() data: CompanyInput) {
     return this.companyService.save(id, data);
   }
 
   @Post('/:id/clone')
-  async clone(@Param('id') id: number, @Body() data: CompanyCreationInput, @Req() req: any) {
+  async clone(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: CompanyCreationInput,
+    @Req() req: any
+  ) {
     return this.companyService.clone(id, data, { user: req.user });
   }
 
   @Delete('/:id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.companyService.remove(+id);
   }
 }
