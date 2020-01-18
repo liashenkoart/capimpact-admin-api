@@ -23,6 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@nestjs/common": "^6.10.10",
+    "@nestjs/config": "^0.0.9",
     "@nestjs/core": "^6.10.10",
     "@nestjs/graphql": "^6.5.3",
     "@nestjs/jwt": "^6.1.1",

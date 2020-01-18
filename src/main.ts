@@ -14,9 +14,9 @@ async function bootstrap() {
 
   setupSwaggerModule({ app });
 
-  await app.listen(process.env.PORT);
-
   await setupFixtures();
+
+  await app.listen(process.env.PORT);
 
   console.log(`🚀  Server ready at ${process.env.PORT}`);
 }
