@@ -37,7 +37,7 @@ import { CapsModule } from '@modules/caps';
         database: configService.get('database.db'),
         synchronize: true,
         logging: true,
-        migrationsRun: true,
+        migrationsRun: false,
         entities: [User, Industry, Company, Process, Capability],
         migrations: ['src/migration/*.ts'],
         cli: {
