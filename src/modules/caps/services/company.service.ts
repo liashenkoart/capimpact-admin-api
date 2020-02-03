@@ -100,6 +100,7 @@ export class CompanyService {
   }
 
   async remove(id: number) {
+    await this.capabilityRepository.delete({ company_id: id });
     await this.companyRepository.delete(id);
     return { id };
   }
