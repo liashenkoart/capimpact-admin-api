@@ -50,7 +50,7 @@ export class CompanyController {
   @Post('/:id/clone')
   async clone(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body() data: CompanyCreationInput,
+    @Body() data: CompanyInput,
     @Req() req: any
   ) {
     return this.companyService.clone(id, data, { user: req.user });

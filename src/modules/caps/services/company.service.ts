@@ -70,8 +70,11 @@ export class CompanyService {
     return company;
   }
 
-  async clone(id: number, data: CompanyCreationInput, context?: any): Promise<Company> {
+  async clone(id: number, data: CompanyInput, context?: any): Promise<Company> {
+    let originalCompany = await this.companyRepository.findOne(id);
     let company = new Company(data);
+    company.industry_id = originalCompany.industry_id;
+    company.id = null;
     company = await this.companyRepository.save(company);
     return company;
   }
