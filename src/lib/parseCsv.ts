@@ -1,4 +1,4 @@
-import csv from 'fast-csv';
+import { parseFile } from '@fast-csv/parse';
 import path from 'path';
 import fs from 'fs';
 
@@ -17,13 +17,12 @@ export const parseCsv = (filepath: string, transform = data => data, options = {
           .join('/')
       );
     }
-    csv
-      .parseFile(filePath, {
-        headers: true,
-        ignoreEmpty: true,
-        trim: true,
-        ...options,
-      })
+    parseFile(filePath, {
+      headers: true,
+      ignoreEmpty: true,
+      trim: true,
+      ...options,
+    })
       .on('error', error => console.error(error))
       .on('data', row => data.push(row))
       .on('end', () => resolve(transform(data)));
