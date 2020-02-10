@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
 // Entities
-import { Industry, Process, Capability, Company } from '@modules/caps/entities';
+import { Industry, Process, Capability, Company, Startup } from '@modules/caps/entities';
 
 // Services
 import {
@@ -11,6 +11,7 @@ import {
   ProcessService,
   CapabilityService,
   CompanyService,
+  StartupService,
 } from '@modules/caps/services';
 
 // Controllers
@@ -19,6 +20,7 @@ import {
   ProcessController,
   CapabilityController,
   CompanyController,
+  StartupController,
 } from '@modules/caps/controllers';
 
 // Resolvers
@@ -26,11 +28,17 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Industry, Process, Capability, Company]),
+    TypeOrmModule.forFeature([Industry, Process, Capability, Company, Startup]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     HttpModule,
   ],
-  controllers: [IndustryController, ProcessController, CapabilityController, CompanyController],
+  controllers: [
+    IndustryController,
+    ProcessController,
+    CapabilityController,
+    CompanyController,
+    StartupController,
+  ],
   providers: [
     ProcessService,
     IndustryService,
@@ -39,7 +47,8 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     IndustryResolver,
     ProcessResolver,
     CapabilityResolver,
+    StartupService,
   ],
-  exports: [IndustryService, ProcessService, CapabilityService, CompanyService],
+  exports: [IndustryService, ProcessService, CapabilityService, CompanyService, StartupService],
 })
 export class CapsModule {}

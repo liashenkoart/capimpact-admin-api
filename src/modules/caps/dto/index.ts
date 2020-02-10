@@ -13,3 +13,7 @@ export { CapabilitiesArgs } from './capabilities.args';
 export { CompanyCreationInput } from './company-creation.dto';
 export { CompanyInput } from './company.dto';
 export { CompaniesArgs } from './companies.args';
+
+export { StartupCreationInput } from './startup-creation.dto';
+export { StartupInput } from './startup.dto';
+export { StartupsArgs } from './startups.args';

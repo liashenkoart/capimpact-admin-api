@@ -4,6 +4,7 @@ import { ObjectType, Field, ID, Int } from 'type-graphql';
 import { Process } from './process.entity';
 import { Capability } from './capability.entity';
 import { Company } from './company.entity';
+import { Startup } from './startup.entity';
 
 @ObjectType()
 @Entity('industries')
@@ -45,6 +46,13 @@ export class Industry {
     company => company.industry
   )
   companies?: Company[];
+
+  @Field(() => [Startup], { nullable: true })
+  @OneToMany(
+    type => Startup,
+    startup => startup.industry
+  )
+  startups?: Startup[];
 
   constructor(partial: Partial<Industry>) {
     Object.assign(this, partial);

@@ -79,6 +79,7 @@ type Industry {
   processes: [Process!]
   capabilities: [Capability!]
   companies: [Company!]
+  startups: [Startup!]
 }
 
 input IndustryCreationInput {
@@ -162,6 +163,34 @@ type Query {
   capabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, company_id: ID, parentId: ID): [Capability!]!
   treeCapabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, company_id: ID, parentId: ID): Capability!
   capability(id: ID!): Capability!
+}
+
+type Startup {
+  cid: ID!
+  name: String!
+  first_financing_date: Date
+  first_financing_size: Float
+  last_financing_date: Date
+  last_financing_size: Float
+  revenue: Float
+  year_founded: Int
+  primary_industry_group: String
+  primary_industry_code: String
+  verticals: String
+  capabilities: String
+  description: String
+  industry_id: ID
+  company_id: ID
+  industry: Industry
+}
+
+input StartupCreationInput {
+  name: String!
+}
+
+input StartupInput {
+  cid: ID!
+  name: String!
 }
 
 type User {
