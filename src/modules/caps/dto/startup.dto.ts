@@ -1,14 +1,17 @@
 import { InputType, Field, ID } from 'type-graphql';
-import { IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 @InputType()
 export class StartupInput {
   @Field(() => ID)
   @IsOptional()
-  @IsNumber()
   readonly cid?: string;
 
   @Field()
-  @IsNotEmpty()
-  name: string;
+  @IsOptional()
+  name?: string;
+
+  @Field()
+  @IsOptional()
+  capabilities?: string;
 }

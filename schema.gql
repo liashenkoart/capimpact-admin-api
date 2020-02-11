@@ -191,6 +191,7 @@ input StartupCreationInput {
 input StartupInput {
   cid: ID!
   name: String!
+  capabilities: String!
 }
 
 type User {

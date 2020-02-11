@@ -19,7 +19,7 @@ export class BaseArgs {
   @Field(() => Int, { nullable: true })
   @IsOptional()
   @Min(1)
-  @Max(100)
+  @Max(1000)
   @Type(() => Number)
   limit?: number = 25;
 }
