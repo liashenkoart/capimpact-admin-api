@@ -23,7 +23,6 @@ export class StartupService {
 
   async count(args: StartupsArgs) {
     const count = await this.startupRepository.count({ where: args });
-    console.log(count)
     return { total: count };
   }
 
