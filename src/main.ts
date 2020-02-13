@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 import { ApplicationModule } from './app.module';
 import { setupSwaggerModule } from './setupSwaggerModule';
@@ -12,13 +13,16 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
+  const configService = app.get(ConfigService);
+  const port = configService.get('PORT');
+
   setupSwaggerModule({ app });
 
   await setupFixtures();
 
-  await app.listen(process.env.PORT);
+  await app.listen(port);
 
-  console.log(`🚀  Server ready at ${process.env.PORT}`);
+  console.log(`🚀  Server ready at ${port}`);
 }
 
 bootstrap();
