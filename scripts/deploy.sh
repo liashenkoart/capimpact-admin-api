@@ -12,3 +12,4 @@ ssh ec2-user@3.89.79.145 tar -xvzf /home/ec2-user/capadmin-docker/tmp/capadmin-a
 echo "Restarting container!"
 ssh ec2-user@3.89.79.145 "cd /home/ec2-user/capadmin-docker && docker-compose up --detach --build --force-recreate"
 echo "Done"
+node ./scripts/slack.js

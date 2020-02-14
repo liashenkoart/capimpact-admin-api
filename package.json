@@ -72,6 +72,7 @@
     "lint-staged": "^10.0.7",
     "nodemon": "^2.0.2",
     "prettier": "^1.18.2",
+    "slack-webhook": "^1.0.0",
     "supertest": "^4.0.2",
     "ts-jest": "^25.2.0",
     "ts-node": "^8.6.2"
