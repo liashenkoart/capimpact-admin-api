@@ -6,6 +6,7 @@
 type Capability {
   id: ID!
   name: String!
+  default: Boolean
   capitalCosts: Float
   fte: Float
   salaryCosts: Float

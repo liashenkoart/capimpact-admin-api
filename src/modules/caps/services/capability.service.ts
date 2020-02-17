@@ -58,6 +58,7 @@ export class CapabilityService {
     // save root industry node
     let root = await this.capabilityRepository.save({
       name: industry.name,
+      default: true,
       industry,
       parent: null,
       user,
@@ -88,14 +89,15 @@ export class CapabilityService {
     // Convert to array
     let capabilities: any = Object.values(data);
     // Save capability one by one
-    for (let proc of capabilities) {
+    for (let cap of capabilities) {
       // 1.2.3.4.5 -> 1.2.3.4
-      let parent = proc.hierarchy_id
+      let parent = cap.hierarchy_id
         .split('.')
         .slice(0, -1)
         .join('.');
-      groupByHierarchyId[proc.hierarchy_id] = await this.capabilityRepository.save({
-        ...proc,
+      groupByHierarchyId[cap.hierarchy_id] = await this.capabilityRepository.save({
+        ...cap,
+        default: true,
         parent: groupByHierarchyId[parent] || root,
       });
     }
@@ -142,6 +144,7 @@ export class CapabilityService {
     // save root industry node
     let root = await this.capabilityRepository.save({
       name: industry.name,
+      default: true,
       industry,
       parent: null,
       user,
@@ -158,6 +161,7 @@ export class CapabilityService {
         const parent = (parentNode && groupByName[parentNode.id]) || root;
         node = await this.capabilityRepository.save({
           name: descendant.name,
+          default: true,
           industry_id: industry.id,
           parent,
           user,

@@ -27,6 +27,10 @@ export class Capability {
   @Column()
   name: string;
 
+  @Field(() => Boolean, { defaultValue: false })
+  @Column('boolean', { default: false })
+  default?: boolean;
+
   @Field(() => Float, { nullable: true })
   @Column('decimal', {
     nullable: true,
