@@ -8,7 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { database, jwt } from './config';
 
 import { User } from '@modules/users/user.entity';
-import { Industry, Company, Process, Capability, Startup } from '@modules/caps/entities';
+import { Industry, Company, Process, Capability, Startup, Classification, Lense } from '@modules/caps/entities';
 
 import { UsersModule } from '@modules/users';
 import { AuthModule } from '@modules/auth';
@@ -38,7 +38,7 @@ import { CapsModule } from '@modules/caps';
         synchronize: true,
         logging: true,
         migrationsRun: false,
-        entities: [User, Industry, Company, Process, Capability, Startup],
+        entities: [User, Industry, Company, Process, Capability, Startup, Classification, Lense],
         migrations: ['src/migration/*.ts'],
         cli: {
           migrationsDir: 'src/migration',
