@@ -21,13 +21,7 @@ let connection = null;
       })).value()
     });
 
-    console.log(lenses)
-
     for (let lense of lenses) {
-      // for (let classification of lense.classifications) {
-      //   console.log(classification)
-      // }
-
       let lenseObject = await transactionalEntityManager.findOne(Lense, {
         where: { name: lense.name },
       });
