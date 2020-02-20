@@ -17,3 +17,5 @@ export { CompaniesArgs } from './companies.args';
 export { StartupCreationInput } from './startup-creation.dto';
 export { StartupInput } from './startup.dto';
 export { StartupsArgs } from './startups.args';
+
+export { LensesArgs } from './lenses.args';
