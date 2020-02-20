@@ -17,6 +17,10 @@ export class Company {
   @Column()
   name: string;
 
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  cid?: string;
+
   @Field(() => ID, { nullable: true })
   @Column({
     nullable: true,

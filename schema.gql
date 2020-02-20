@@ -49,6 +49,7 @@ input CapabilityInput {
 type Company {
   id: ID!
   name: String!
+  cid: String
   user_id: ID
   industry_id: ID
   user: User!
@@ -60,12 +61,14 @@ type Company {
 input CompanyCreationInput {
   name: String!
   industry_id: ID!
+  cid: String
 }
 
 input CompanyInput {
   id: ID!
   name: String
   industry_id: ID
+  cid: String
 }
 
 """Date custom scalar type"""

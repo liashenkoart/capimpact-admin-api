@@ -19,4 +19,8 @@ export class CompanyInput {
   @IsNumber()
   @Type(() => Number)
   readonly industry_id?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  readonly cid?: string;
 }
