@@ -12,9 +12,9 @@ import { User } from '@modules/users/user.entity';
 
 @Controller()
 export class AppController {
-  @Get()
-  root(): string {
-    return 'Hello World!';
+  @Get('/')
+  health() {
+    return 'OK';
   }
 
   @UseGuards(AuthGuard())

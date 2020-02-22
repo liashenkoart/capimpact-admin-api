@@ -12,9 +12,10 @@ import { Industry, Company, Process, Capability, Startup } from '@modules/caps/e
 
 import { UsersModule } from '@modules/users';
 import { AuthModule } from '@modules/auth';
+import { Neo4jModule } from '@modules/neo4j';
 import { CapsModule } from '@modules/caps';
 
-//import { AppController } from './app.controller';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -46,18 +47,20 @@ import { CapsModule } from '@modules/caps';
       }),
       inject: [ConfigService],
     }),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-    AuthModule,
-    UsersModule,
-    CapsModule,
     GraphQLModule.forRoot({
       //include: [UsersModule],
       autoSchemaFile: 'schema.gql',
       installSubscriptionHandlers: true,
       context: ({ req }) => ({ req }),
     }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    Neo4jModule,
+
+    AuthModule,
+    UsersModule,
+    CapsModule,
   ],
-  //controllers: [AppController],
+  controllers: [AppController],
   providers: [
     /*
     {
