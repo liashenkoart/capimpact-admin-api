@@ -4,6 +4,7 @@ import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
 import { Company, Capability } from '../entities';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
+import { Neo4jService } from '@modules/neo4j/services';
 
 @Injectable()
 export class CompanyService {
@@ -11,7 +12,8 @@ export class CompanyService {
     @InjectRepository(Company) private readonly companyRepository: Repository<Company>,
     @InjectRepository(Capability)
     private readonly capabilityTreeRepository: TreeRepository<Capability>,
-    @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>
+    @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
+    private readonly neo4jService: Neo4jService
   ) {}
 
   async findAll(query: CompaniesArgs): Promise<Company[]> {

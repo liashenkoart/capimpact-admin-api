@@ -2,8 +2,19 @@ import { Module, HttpModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
+// Modules
+import { Neo4jModule } from '@modules/neo4j';
+
 // Entities
-import { Industry, Process, Capability, Company, Startup, Lense, Classification } from '@modules/caps/entities';
+import {
+  Industry,
+  Process,
+  Capability,
+  Company,
+  Startup,
+  Lense,
+  Classification,
+} from '@modules/caps/entities';
 
 // Services
 import {
@@ -30,9 +41,18 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Industry, Process, Capability, Company, Startup, Lense, Classification]),
+    TypeOrmModule.forFeature([
+      Industry,
+      Process,
+      Capability,
+      Company,
+      Startup,
+      Lense,
+      Classification,
+    ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     HttpModule,
+    Neo4jModule,
   ],
   controllers: [
     IndustryController,
@@ -53,6 +73,13 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     StartupService,
     LenseService,
   ],
-  exports: [IndustryService, ProcessService, CapabilityService, CompanyService, StartupService, LenseService],
+  exports: [
+    IndustryService,
+    ProcessService,
+    CapabilityService,
+    CompanyService,
+    StartupService,
+    LenseService,
+  ],
 })
 export class CapsModule {}

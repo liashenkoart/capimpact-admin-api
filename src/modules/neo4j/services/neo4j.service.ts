@@ -1,15 +1,22 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Driver } from 'neo4j-driver';
+import _ from 'lodash';
 
 @Injectable()
 export class Neo4jService {
   constructor(@Inject('Neo4j') private readonly neo4j: Driver) {}
 
-  async findAll(): Promise<any> {
-    const { records } = await this.neo4j.session().run('MATCH (n:Company) RETURN n LIMIT 5');
+  async findPartnerNetworksByCid(cid: string): Promise<any> {
+    const {
+      records,
+    } = await this.neo4j
+      .session()
+      .run('match p=(n:Company {cid: $cid})-[*..2]->() RETURN p;', { cid });
+
     return records.map(record => {
-      let node = record.get('n');
-      return node.properties;
+      let node: any = record.toObject();
+      //console.log(node);
+      return _.omit(node.p.end.properties, 'ts_upd');
     });
   }
 }

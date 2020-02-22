@@ -15,12 +15,16 @@ import { AuthGuard } from '@nestjs/passport';
 
 import { CompanyService } from '../services';
 import { CompanyInput, CompanyCreationInput, CompaniesArgs } from '../dto';
+import { Neo4jService } from '@modules/neo4j/services';
 
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('companies')
 export class CompanyController {
-  constructor(private readonly companyService: CompanyService) {}
+  constructor(
+    private readonly companyService: CompanyService,
+    private readonly neo4jService: Neo4jService
+  ) {}
 
   @Get('')
   async findAll(@Param() args: CompaniesArgs) {
@@ -30,6 +34,11 @@ export class CompanyController {
   @Get('/:id')
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.companyService.findOneById(id);
+  }
+
+  @Get('/:cid/partner-networks')
+  async findPartnerNetworksByCid(@Param('cid') cid: string) {
+    return this.neo4jService.findPartnerNetworksByCid(cid);
   }
 
   @Post('')
