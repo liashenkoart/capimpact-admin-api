@@ -46,6 +46,12 @@ input CapabilityInput {
   parentId: ID
 }
 
+type Classification {
+  id: ID!
+  name: String!
+  lense_id: ID
+}
+
 type Company {
   id: ID!
   name: String!
@@ -94,6 +100,12 @@ input IndustryCreationInput {
 input IndustryInput {
   id: ID!
   name: String!
+}
+
+type Lense {
+  id: ID!
+  name: String!
+  classifications: [Classification!]
 }
 
 type Mutation {

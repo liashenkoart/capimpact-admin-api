@@ -19,7 +19,8 @@
     "apqc": "yarn processes",
     "industries": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industries.ts",
     "processes": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/processes.ts",
-    "capabilities": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities.ts"
+    "capabilities": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities.ts",
+    "lenses": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/lenses.ts"
   },
   "license": "ISC",
   "dependencies": {
