@@ -5,10 +5,10 @@ import { Type } from 'class-transformer';
 @InputType()
 export class CompanyInput {
   @Field(() => ID)
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  readonly id: number;
+  readonly id?: number;
 
   @Field({ nullable: true })
   @IsOptional()
@@ -23,4 +23,7 @@ export class CompanyInput {
   @Field({ nullable: true })
   @IsOptional()
   readonly cid?: string;
+
+  @IsOptional()
+  readonly capabilities?: any[];
 }

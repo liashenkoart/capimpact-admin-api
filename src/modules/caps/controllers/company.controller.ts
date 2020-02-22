@@ -41,6 +41,11 @@ export class CompanyController {
     return this.neo4jService.findPartnerNetworksByCid(cid);
   }
 
+  @Post('/:cid/capabilities')
+  async saveCompanyCapabilitiesByCid(@Param('cid') cid: string, @Body() data: CompanyInput) {
+    return this.neo4jService.saveCompanyCapabilitiesByCid(cid, data);
+  }
+
   @Post('')
   async create(@Body() data: CompanyCreationInput, @Req() req: any) {
     return this.companyService.create(data, { user: req.user });
