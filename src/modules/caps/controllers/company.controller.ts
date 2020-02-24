@@ -41,6 +41,11 @@ export class CompanyController {
     return this.neo4jService.findPartnerNetworksByCid(cid);
   }
 
+  @Get('/partner-networks/:cid')
+  async findOnePartnerNetworkByCid(@Param('cid') cid: string) {
+    return this.neo4jService.findOnePartnerNetworkByCid(cid);
+  }
+
   @Post('/:cid/capabilities')
   async saveCompanyCapabilitiesByCid(@Param('cid') cid: string, @Body() data: CompanyInput) {
     return this.neo4jService.saveCompanyCapabilitiesByCid(cid, data);
