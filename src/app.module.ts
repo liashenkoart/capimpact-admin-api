@@ -5,14 +5,20 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
-import { database, jwt } from './config';
-
 import { User } from '@modules/users/user.entity';
-import { Industry, Company, Process, Capability, Startup, Classification, Lense } from '@modules/caps/entities';
+import {
+  Industry,
+  Company,
+  Process,
+  Capability,
+  Startup,
+  Classification,
+  Lense,
+} from '@modules/caps/entities';
 
 import { UsersModule } from '@modules/users';
 import { AuthModule } from '@modules/auth';
-import { Neo4jModule } from '@modules/neo4j';
+import { Neo4jModule, createNeo4jGraphQL } from '@modules/neo4j';
 import { CapsModule } from '@modules/caps';
 
 import { AppController } from './app.controller';
@@ -21,7 +27,7 @@ import { AppController } from './app.controller';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [database, jwt],
+      load: Object.values(require('./config')),
     }),
     /*
     CacheModule.register({
@@ -47,11 +53,18 @@ import { AppController } from './app.controller';
       }),
       inject: [ConfigService],
     }),
-    GraphQLModule.forRoot({
-      //include: [UsersModule],
-      autoSchemaFile: 'schema.gql',
-      installSubscriptionHandlers: true,
-      context: ({ req }) => ({ req }),
+    GraphQLModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => {
+        const { schema, driver } = createNeo4jGraphQL({ configService });
+        return {
+          //include: [UsersModule],
+          schema,
+          //autoSchemaFile: 'schema.gql',
+          //installSubscriptionHandlers: true,
+          context: ({ req }) => ({ req, driver }),
+        };
+      },
+      inject: [ConfigService],
     }),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     Neo4jModule,
