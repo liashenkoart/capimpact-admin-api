@@ -130,6 +130,7 @@ export class Capability {
     eager: true,
     cascade: true,
   })
+
   @JoinTable()
   classifications: Classification[];
 

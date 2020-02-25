@@ -1,7 +1,8 @@
 import { InputType, Field, ID } from 'type-graphql';
 import { IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Classification } from '../entities'
+import { ClassificationInput } from './classification.dto'
+import { Classification } from '../entities';
 
 @InputType()
 export class CapabilityInput {
@@ -50,5 +51,5 @@ export class CapabilityInput {
   readonly parentId?: number;
 
   @IsOptional()
-  readonly classifications?: Classification[];
+  readonly classifications?: ClassificationInput[];
 }

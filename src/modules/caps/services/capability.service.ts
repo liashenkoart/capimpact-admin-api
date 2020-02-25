@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 
@@ -14,8 +14,7 @@ export class CapabilityService {
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
-    @InjectRepository(Classification)
-    private readonly classificationRepository: Repository<Classification>
+    @InjectRepository(Classification) private readonly classificationRepository: Repository<Classification>,
   ) {}
 
   async tree(query: CapabilitiesArgs): Promise<Capability> {
@@ -32,17 +31,10 @@ export class CapabilityService {
     return this.treeRepository.findDescendantsTree(root);
   }
 
-  async findAll(query: CapabilitiesArgs): Promise<Capability[]> {
+  async findAll(query: CapabilitiesArgs): Promise<Capability[] | void> {
     const options = this.getFindAllQuery(query);
-    return this.capabilityRepository.find(options);
-  }
 
-  async findAllByIds(ids: number[]): Promise<Capability[]> {
-    return this.capabilityRepository.find({
-      where: {
-        id: In(ids),
-      },
-    });
+    return this.capabilityRepository.find(options);
   }
 
   async findOneById(id: number): Promise<Capability> {
@@ -147,12 +139,6 @@ export class CapabilityService {
     return await this.capabilityRepository.findByIds(data.map(p => p.id));
   }
 
-  async updateMany(input: CapabilityInput[], context?: any) {
-    await this.capabilityRepository.save(input);
-
-    return await this.capabilityRepository.findByIds(input.map(c => c.id));
-  }
-
   async cloneTreeFromIndustry(id: any, industry: Industry, context?: any): Promise<Capability> {
     const { user } = context;
     const industryId = parseInt(id, 10); // cloned industry id
@@ -207,7 +193,13 @@ export class CapabilityService {
   }
 
   getFindAllQuery(query: CapabilitiesArgs): FindManyOptions {
-    const { page, skip, limit, ...where } = query;
+    const { page, skip, limit, ids, ...params } = query;
+    let where: any = params;
+
+    if (ids && ids.length) {
+      where.id = In(ids)
+    }
+
     return {
       skip: (page - 1) * limit,
       take: limit,
