@@ -21,6 +21,7 @@ type Capability {
   company: Company
   children: [Capability!]
   parent: Capability
+  classifications: [Classification!]
 }
 
 input CapabilityCreationInput {

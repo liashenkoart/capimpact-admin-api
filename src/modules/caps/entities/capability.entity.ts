@@ -8,12 +8,15 @@ import {
   TreeChildren,
   TreeParent,
   BeforeUpdate,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ObjectType, Field, Float, ID } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
 import { Industry } from './industry.entity';
 import { Company } from './company.entity';
+import { Classification } from './classification.entity'
 
 @ObjectType()
 @Entity('capabilities')
@@ -121,6 +124,13 @@ export class Capability {
   @Field(() => Capability, { nullable: true })
   @TreeParent()
   parent?: Capability;
+
+  @Field(() => [Classification], { nullable: true })
+  @ManyToMany(type => Classification, {
+    eager: true
+  })
+  @JoinTable()
+  classifications: Classification[];
 
   @BeforeUpdate()
   updateDates() {
