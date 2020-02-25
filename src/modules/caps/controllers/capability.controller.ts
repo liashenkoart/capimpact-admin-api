@@ -28,6 +28,11 @@ export class CapabilityController {
     return this.capabilityService.findAll(query);
   }
 
+  @Get('/byIds')
+  async findByIds(@Query() query: CapabilitiesArgs) {
+    return this.capabilityService.findAllByIds(query.ids);
+  }
+
   @Get('tree')
   async tree(@Query() query: CapabilitiesArgs) {
     return this.capabilityService.tree(query);
@@ -41,6 +46,14 @@ export class CapabilityController {
   @Post('')
   async create(@Body() data: CapabilityCreationInput, @Req() req: any) {
     return this.capabilityService.create(data, { user: req.user });
+  }
+
+  @Post('/classification')
+  async saveClassification(
+    @Body() data: CapabilityInput[],
+    @Req() req: any
+  ) {
+    return this.capabilityService.updateMany(data, { user: req.user });
   }
 
   @Post('/bulk')

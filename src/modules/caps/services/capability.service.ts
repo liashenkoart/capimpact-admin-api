@@ -1,11 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
+import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
-import { Industry, Capability } from '../entities';
+import { Industry, Capability, Classification } from '../entities';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
 @Injectable()
@@ -13,7 +13,8 @@ export class CapabilityService {
   constructor(
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
-    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
+    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
+    @InjectRepository(Classification) private readonly classificationRepository: Repository<Classification>,
   ) {}
 
   async tree(query: CapabilitiesArgs): Promise<Capability> {
@@ -33,6 +34,14 @@ export class CapabilityService {
   async findAll(query: CapabilitiesArgs): Promise<Capability[]> {
     const options = this.getFindAllQuery(query);
     return this.capabilityRepository.find(options);
+  }
+
+  async findAllByIds(ids: number[]): Promise<Capability[]> {
+    return this.capabilityRepository.find({
+      where: {
+        id: In(ids)
+      }
+    })
   }
 
   async findOneById(id: number): Promise<Capability> {
@@ -135,6 +144,12 @@ export class CapabilityService {
     }
     */
     return await this.capabilityRepository.findByIds(data.map(p => p.id));
+  }
+
+  async updateMany(input: CapabilityInput[], context?: any) {
+    await this.capabilityRepository.save(input)
+
+    return await this.capabilityRepository.findByIds(input.map(c => c.id));
   }
 
   async cloneTreeFromIndustry(id: any, industry: Industry, context?: any): Promise<Capability> {

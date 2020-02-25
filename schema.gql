@@ -177,8 +177,8 @@ type Query {
   treeProcesses(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, parentId: ID): Process!
   defaultTreeProcesses(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, parentId: ID): Process!
   process(id: ID!): Process!
-  capabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, company_id: ID, parentId: ID): [Capability!]!
-  treeCapabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, company_id: ID, parentId: ID): Capability!
+  capabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, company_id: ID, parentId: ID, ids: [ID!]): [Capability!]!
+  treeCapabilities(page: Int = 1, skip: Int = 0, limit: Int = 25, industry_id: ID, company_id: ID, parentId: ID, ids: [ID!]): Capability!
   capability(id: ID!): Capability!
 }
 

@@ -18,7 +18,9 @@ export class Classification {
   @Column()
   lense_id: number;
 
-  @ManyToOne(type => Lense, lense => lense.classifications)
+  @ManyToOne(type => Lense, lense => lense.classifications, {
+    eager: true,
+  })
   @JoinColumn({ name: 'lense_id' })
   lense: Lense;
 

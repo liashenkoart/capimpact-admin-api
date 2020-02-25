@@ -127,7 +127,8 @@ export class Capability {
 
   @Field(() => [Classification], { nullable: true })
   @ManyToMany(type => Classification, {
-    eager: true
+    eager: true,
+    cascade: true,
   })
   @JoinTable()
   classifications: Classification[];
