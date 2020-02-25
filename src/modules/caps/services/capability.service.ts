@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 
@@ -14,7 +14,8 @@ export class CapabilityService {
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
-    @InjectRepository(Classification) private readonly classificationRepository: Repository<Classification>,
+    @InjectRepository(Classification)
+    private readonly classificationRepository: Repository<Classification>
   ) {}
 
   async tree(query: CapabilitiesArgs): Promise<Capability> {
