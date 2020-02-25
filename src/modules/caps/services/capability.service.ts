@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 
@@ -14,7 +14,8 @@ export class CapabilityService {
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
-    @InjectRepository(Classification) private readonly classificationRepository: Repository<Classification>,
+    @InjectRepository(Classification)
+    private readonly classificationRepository: Repository<Classification>
   ) {}
 
   async tree(query: CapabilitiesArgs): Promise<Capability> {
@@ -39,9 +40,9 @@ export class CapabilityService {
   async findAllByIds(ids: number[]): Promise<Capability[]> {
     return this.capabilityRepository.find({
       where: {
-        id: In(ids)
-      }
-    })
+        id: In(ids),
+      },
+    });
   }
 
   async findOneById(id: number): Promise<Capability> {
@@ -147,7 +148,7 @@ export class CapabilityService {
   }
 
   async updateMany(input: CapabilityInput[], context?: any) {
-    await this.capabilityRepository.save(input)
+    await this.capabilityRepository.save(input);
 
     return await this.capabilityRepository.findByIds(input.map(c => c.id));
   }

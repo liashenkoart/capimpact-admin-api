@@ -30,6 +30,7 @@ export class CapabilityController {
 
   @Get('/byIds')
   async findByIds(@Query() query: CapabilitiesArgs) {
+    console.log(query);
     return this.capabilityService.findAllByIds(query.ids);
   }
 
@@ -49,10 +50,7 @@ export class CapabilityController {
   }
 
   @Post('/classification')
-  async saveClassification(
-    @Body() data: CapabilityInput[],
-    @Req() req: any
-  ) {
+  async saveClassification(@Body() data: CapabilityInput[], @Req() req: any) {
     return this.capabilityService.updateMany(data, { user: req.user });
   }
 
