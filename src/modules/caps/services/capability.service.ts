@@ -5,7 +5,7 @@ import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
-import { Industry, Capability, Classification } from '../entities';
+import { Industry, Capability } from '../entities';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
 @Injectable()
@@ -14,8 +14,6 @@ export class CapabilityService {
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
-    @InjectRepository(Classification)
-    private readonly classificationRepository: Repository<Classification>
   ) {}
 
   async tree(query: CapabilitiesArgs): Promise<Capability> {
@@ -129,8 +127,10 @@ export class CapabilityService {
     const data = input.map(candidate => {
       let capability = new Capability({ ...candidate });
       capability.user = user;
+
       return capability;
     });
+
     let result = await this.capabilityRepository.save(data);
     /*
     for (let node of result) {
