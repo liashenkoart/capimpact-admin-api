@@ -15,9 +15,31 @@ export class Neo4jService {
 
     return records.map(record => {
       let node: any = record.toObject();
-      //console.log(node);
       return _.omit(node.p.end.properties, 'ts_upd');
     });
+  }
+
+  async findOnePartnerNetworkByCid(cid: string) {
+    const { records } = await this.neo4j
+      .session()
+      .run('match (p:Company {cid: $cid}) RETURN p;', { cid });
+
+    const result = records.map(record => {
+      let node: any = record.toObject();
+      return _.omit(node.p.properties, 'ts_upd');
+    });
+
+    return result[0];
+  }
+
+  async saveCompanyCapabilitiesByCid(cid: string, data: any) {
+    const { capabilities } = data;
+    return await this.neo4j
+      .session()
+      .run('match (n:Company {cid: $cid}) set n.capabilities = $capabilities;', {
+        cid,
+        capabilities: capabilities.map(({ id, name }) => `${id}:${name}`),
+      });
   }
 }
 
