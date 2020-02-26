@@ -20,4 +20,9 @@ export class CapabilitiesArgs extends BaseArgs {
   @IsOptional()
   @Type(() => Number)
   parentId?: number;
+
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  @Type(() => Number)
+  ids?: number[];
 }

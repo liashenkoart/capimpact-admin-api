@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
+import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
@@ -13,7 +13,7 @@ export class CapabilityService {
   constructor(
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
-    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
+    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
   ) {}
 
   async tree(query: CapabilitiesArgs): Promise<Capability> {
@@ -30,8 +30,9 @@ export class CapabilityService {
     return this.treeRepository.findDescendantsTree(root);
   }
 
-  async findAll(query: CapabilitiesArgs): Promise<Capability[]> {
+  async findAll(query: CapabilitiesArgs): Promise<Capability[] | void> {
     const options = this.getFindAllQuery(query);
+
     return this.capabilityRepository.find(options);
   }
 
@@ -126,8 +127,10 @@ export class CapabilityService {
     const data = input.map(candidate => {
       let capability = new Capability({ ...candidate });
       capability.user = user;
+
       return capability;
     });
+
     let result = await this.capabilityRepository.save(data);
     /*
     for (let node of result) {
@@ -191,7 +194,13 @@ export class CapabilityService {
   }
 
   getFindAllQuery(query: CapabilitiesArgs): FindManyOptions {
-    const { page, skip, limit, ...where } = query;
+    const { page, skip, limit, ids, ...params } = query;
+    let where: any = params;
+
+    if (ids && ids.length) {
+      where.id = In(ids)
+    }
+
     return {
       skip: (page - 1) * limit,
       take: limit,
