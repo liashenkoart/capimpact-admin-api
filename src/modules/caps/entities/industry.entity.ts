@@ -5,6 +5,7 @@ import { Process } from './process.entity';
 import { Capability } from './capability.entity';
 import { Company } from './company.entity';
 import { Startup } from './startup.entity';
+import { Benchmark } from './benchmark.entity';
 
 @ObjectType()
 @Entity('industries')
@@ -53,6 +54,13 @@ export class Industry {
     startup => startup.industry
   )
   startups?: Startup[];
+
+  @Field(() => [Benchmark], { nullable: true })
+  @OneToMany(
+    type => Benchmark,
+    benchmark => benchmark.industry
+  )
+  benchmarks?: Benchmark[];
 
   constructor(partial: Partial<Industry>) {
     Object.assign(this, partial);

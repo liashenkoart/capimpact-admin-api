@@ -15,12 +15,18 @@ export class Classification {
   name: string;
 
   @Field(() => ID, { nullable: true })
-  @Column()
+  @Column({
+    name: 'lense_id',
+  })
   lense_id: number;
 
-  @ManyToOne(type => Lense, lense => lense.classifications, {
-    eager: true,
-  })
+  @ManyToOne(
+    type => Lense,
+    lense => lense.classifications,
+    {
+      eager: true,
+    }
+  )
   @JoinColumn({ name: 'lense_id' })
   lense: Lense;
 

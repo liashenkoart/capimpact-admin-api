@@ -16,7 +16,7 @@ import { ObjectType, Field, Float, ID } from 'type-graphql';
 import { User } from '@modules/users/user.entity';
 import { Industry } from './industry.entity';
 import { Company } from './company.entity';
-import { Classification } from './classification.entity'
+import { Classification } from './classification.entity';
 
 @ObjectType()
 @Entity('capabilities')
@@ -60,18 +60,21 @@ export class Capability {
 
   @Field(() => ID, { nullable: true })
   @Column({
+    name: 'user_id',
     nullable: true,
   })
   user_id?: number;
 
   @Field(() => ID, { nullable: true })
   @Column({
+    name: 'industry_id',
     nullable: true,
   })
   industry_id?: number;
 
   @Field(() => ID, { nullable: true })
   @Column({
+    name: 'company_id',
     nullable: true,
   })
   company_id?: number;
@@ -130,7 +133,6 @@ export class Capability {
     eager: true,
     cascade: true,
   })
-
   @JoinTable()
   classifications: Classification[];
 

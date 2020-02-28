@@ -15,7 +15,10 @@ export class Lense {
   name: string;
 
   @Field(() => [Classification], { nullable: true })
-  @OneToMany(type => Classification, classification => classification.lense)
+  @OneToMany(
+    type => Classification,
+    classification => classification.lense
+  )
   classifications: Classification[];
 
   constructor(partial: Partial<Lense>) {

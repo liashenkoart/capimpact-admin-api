@@ -1,7 +1,7 @@
 import { InputType, Field, ID } from 'type-graphql';
 import { IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ClassificationInput } from './classification.dto'
+import { ClassificationInput } from './classification.dto';
 import { Classification } from '../entities';
 
 @InputType()

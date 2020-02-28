@@ -15,6 +15,7 @@ import {
   Lense,
   Classification,
   KpiLib,
+  Benchmark,
 } from '@modules/caps/entities';
 
 // Services
@@ -53,6 +54,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
       Lense,
       Classification,
       KpiLib,
+      Benchmark,
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     HttpModule,

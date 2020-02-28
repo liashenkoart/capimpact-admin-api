@@ -1,6 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
+import { Benchmark } from './benchmark.entity';
+
 export enum KpiLibStatus {
   Revenue = 'Revenue',
   CostSaving = 'Cost Saving',
@@ -41,6 +43,13 @@ export class KpiLib {
   @Field({ nullable: true })
   @Column({ name: 'is_active', nullable: true })
   isActive?: boolean;
+
+  @Field(() => [Benchmark], { nullable: true })
+  @OneToMany(
+    type => Benchmark,
+    benchmark => benchmark.kpilib
+  )
+  benchmarks?: Benchmark[];
 
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);

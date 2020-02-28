@@ -23,12 +23,14 @@ export class Company {
 
   @Field(() => ID, { nullable: true })
   @Column({
+    name: 'user_id',
     nullable: true,
   })
   user_id?: number;
 
   @Field(() => ID, { nullable: true })
   @Column({
+    name: 'industry_id',
     nullable: true,
   })
   industry_id?: number;

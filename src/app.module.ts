@@ -15,6 +15,7 @@ import {
   Classification,
   Lense,
   KpiLib,
+  Benchmark,
 } from '@modules/caps/entities';
 
 import { UsersModule } from '@modules/users';
@@ -56,6 +57,7 @@ import { AppController } from './app.controller';
           Classification,
           Lense,
           KpiLib,
+          Benchmark,
         ],
         migrations: ['src/migration/*.ts'],
         cli: {
