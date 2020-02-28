@@ -14,6 +14,7 @@ import {
   Startup,
   Classification,
   Lense,
+  KpiLib,
 } from '@modules/caps/entities';
 
 import { UsersModule } from '@modules/users';
@@ -45,7 +46,17 @@ import { AppController } from './app.controller';
         synchronize: true,
         logging: true,
         migrationsRun: false,
-        entities: [User, Industry, Company, Process, Capability, Startup, Classification, Lense],
+        entities: [
+          User,
+          Industry,
+          Company,
+          Process,
+          Capability,
+          Startup,
+          Classification,
+          Lense,
+          KpiLib,
+        ],
         migrations: ['src/migration/*.ts'],
         cli: {
           migrationsDir: 'src/migration',

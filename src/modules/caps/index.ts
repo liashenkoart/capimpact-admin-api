@@ -14,6 +14,7 @@ import {
   Startup,
   Lense,
   Classification,
+  KpiLib,
 } from '@modules/caps/entities';
 
 // Services
@@ -24,6 +25,7 @@ import {
   CompanyService,
   StartupService,
   LenseService,
+  KpiLibService,
 } from '@modules/caps/services';
 
 // Controllers
@@ -34,6 +36,7 @@ import {
   CompanyController,
   StartupController,
   LenseController,
+  KpiLibController,
 } from '@modules/caps/controllers';
 
 // Resolvers
@@ -49,6 +52,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
       Startup,
       Lense,
       Classification,
+      KpiLib,
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     HttpModule,
@@ -61,6 +65,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     CompanyController,
     StartupController,
     LenseController,
+    KpiLibController,
   ],
   providers: [
     ProcessService,
@@ -72,6 +77,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     CapabilityResolver,
     StartupService,
     LenseService,
+    KpiLibService,
   ],
   exports: [
     IndustryService,
@@ -80,6 +86,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     CompanyService,
     StartupService,
     LenseService,
+    KpiLibService,
   ],
 })
 export class CapsModule {}

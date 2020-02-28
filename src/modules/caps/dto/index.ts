@@ -19,3 +19,7 @@ export { StartupInput } from './startup.dto';
 export { StartupsArgs } from './startups.args';
 
 export { LensesArgs } from './lenses.args';
+
+export { KpiLibCreationInput } from './kpi-lib-creation.dto';
+export { KpiLibInput } from './kpi-lib.dto';
+export { KpiLibsArgs } from './kpi-libs.args';
