@@ -16,7 +16,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { KpiLibService } from '../services';
 import { KpiLibInput, KpiLibCreationInput, KpiLibsArgs } from '../dto';
 
-@UseGuards(AuthGuard())
+//@UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('kpilibs')
 export class KpiLibController {
