@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions } from 'typeorm';
+import { Repository } from 'typeorm';
+
+import { BaseService } from 'modules/common/services';
 
 import { KpiLib } from '../entities';
 import { KpiLibCreationInput, KpiLibInput, KpiLibsArgs } from '../dto';
 
 @Injectable()
-export class KpiLibService {
-  constructor(@InjectRepository(KpiLib) private readonly kpilibRepository: Repository<KpiLib>) {}
+export class KpiLibService extends BaseService {
+  constructor(@InjectRepository(KpiLib) private readonly kpilibRepository: Repository<KpiLib>) {
+    super();
+  }
 
   async findAll(args: KpiLibsArgs): Promise<KpiLib[]> {
     return await this.kpilibRepository.find(this.getFindAllQuery(args));
@@ -42,14 +46,5 @@ export class KpiLibService {
   async remove(id: number) {
     await this.kpilibRepository.delete(id);
     return { id };
-  }
-
-  getFindAllQuery(query: KpiLibsArgs): FindManyOptions {
-    const { page, skip, limit, ...where } = query;
-    return {
-      skip: skip > 0 ? skip : (page - 1) * limit,
-      take: limit,
-      where,
-    };
   }
 }
