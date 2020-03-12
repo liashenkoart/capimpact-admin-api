@@ -9,6 +9,7 @@ import { User } from '@modules/users/user.entity';
 import {
   Industry,
   Company,
+  Challenge,
   Process,
   Capability,
   Startup,
@@ -38,19 +39,12 @@ import { AppController } from './app.controller';
     */
     TypeOrmModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
-        type: configService.get('database.type'),
-        host: configService.get('database.host'),
-        port: configService.get('database.port'),
-        username: configService.get('database.username'),
-        password: configService.get('database.password'),
-        database: configService.get('database.db'),
-        synchronize: true,
-        logging: true,
-        migrationsRun: false,
+        ...configService.get('database'),
         entities: [
           User,
           Industry,
           Company,
+          Challenge,
           Process,
           Capability,
           Startup,
@@ -59,10 +53,6 @@ import { AppController } from './app.controller';
           KpiLib,
           Benchmark,
         ],
-        migrations: ['src/migration/*.ts'],
-        cli: {
-          migrationsDir: 'src/migration',
-        },
       }),
       inject: [ConfigService],
     }),

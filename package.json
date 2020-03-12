@@ -16,7 +16,7 @@
     "test:watch": "jest --watch --config=jest.json",
     "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage",
     "typeorm": "ts-node -r dotenv/config -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "ssh": "ssh -L 63333:localhost:5432 capdata-dev",
+    "ssh": "ssh -L 63333:localhost:5432 cap-dev",
     "apqc": "yarn processes",
     "industries": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industries.ts",
     "processes": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/processes.ts",

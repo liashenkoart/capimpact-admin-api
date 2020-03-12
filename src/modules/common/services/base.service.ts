@@ -4,6 +4,7 @@ import { fromPairs } from 'lodash';
 export abstract class BaseService {
   protected getFindAllQuery(query: any): FindManyOptions {
     const { page, skip, limit, sort, ...where } = query;
+    console.log(sort);
     return {
       skip: skip > 0 ? skip : (page - 1) * limit,
       take: limit,

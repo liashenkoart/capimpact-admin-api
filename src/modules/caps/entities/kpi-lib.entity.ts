@@ -1,9 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+  Unique,
+} from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { Benchmark } from './benchmark.entity';
 
-export enum KpiLibStatus {
+export enum BenefitType {
   Revenue = 'Revenue',
   CostSaving = 'Cost Saving',
   Productivity = 'Productivity',
@@ -11,6 +19,7 @@ export enum KpiLibStatus {
 
 @ObjectType()
 @Entity('kpi_libs')
+@Unique(['label'])
 export class KpiLib {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
@@ -37,8 +46,8 @@ export class KpiLib {
   source?: string;
 
   @Field({ nullable: true })
-  @Column({ type: 'enum', enum: KpiLibStatus, default: KpiLibStatus.Revenue })
-  status?: KpiLibStatus;
+  @Column({ type: 'enum', enum: BenefitType, default: BenefitType.Revenue, nullable: true })
+  benefitType?: BenefitType;
 
   @Field({ nullable: true })
   @Column({ name: 'is_active', nullable: true })

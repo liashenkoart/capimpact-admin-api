@@ -1,6 +1,6 @@
 import { InputType, Field } from 'type-graphql';
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { KpiLibStatus } from '../entities';
+import { BenefitType } from '../entities';
 
 @InputType()
 export class KpiLibCreationInput {
@@ -26,7 +26,7 @@ export class KpiLibCreationInput {
 
   @Field({ nullable: true })
   @IsOptional()
-  readonly status?: KpiLibStatus;
+  readonly benefitType?: BenefitType;
 
   @Field({ nullable: true })
   @IsOptional()
