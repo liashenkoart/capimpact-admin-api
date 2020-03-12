@@ -13,6 +13,7 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import _ from 'lodash';
 
 import { CapabilityService } from '../services';
 import { CapabilitiesArgs, CapabilityInput, CapabilityCreationInput } from '../dto';
@@ -25,7 +26,7 @@ export class CapabilityController {
 
   @Get('')
   async findAll(@Query() query: CapabilitiesArgs) {
-    return this.capabilityService.findAll(query);
+    return this.capabilityService.findAll(this.parseArgs(query));
   }
 
   @Get('tree')
@@ -60,5 +61,13 @@ export class CapabilityController {
   @Delete('/:id')
   async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityService.remove(id);
+  }
+
+  private parseArgs(args: CapabilitiesArgs): CapabilitiesArgs {
+    if (args.ids && !_.isArray(args.ids)) {
+      args.ids = Object.values(args.ids).map(id => Number(id));
+      args.limit = 0;
+    }
+    return args;
   }
 }
