@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
 
+import { BaseService } from '@modules/common/services';
 import { Startup } from '../entities';
 import { StartupCreationInput, StartupInput, StartupsArgs } from '../dto';
 
@@ -10,8 +11,10 @@ import { StartupCreationInput, StartupInput, StartupsArgs } from '../dto';
 //import { CompanyService } from './company.service';
 
 @Injectable()
-export class StartupService {
-  constructor(@InjectRepository(Startup) private readonly startupRepository: Repository<Startup>) {}
+export class StartupService extends BaseService {
+  constructor(@InjectRepository(Startup) private readonly startupRepository: Repository<Startup>) {
+    super();
+  }
 
   async findAll(args: StartupsArgs): Promise<Startup[]> {
     const options = this.getFindAllQuery(args);
@@ -43,14 +46,5 @@ export class StartupService {
   async remove(cid: string) {
     await this.startupRepository.delete(cid);
     return { cid };
-  }
-
-  getFindAllQuery(query: StartupsArgs): FindManyOptions {
-    const { page, skip, limit, ...where } = query;
-    return {
-      skip: skip > 0 ? skip : (page - 1) * limit,
-      take: limit,
-      where,
-    };
   }
 }
