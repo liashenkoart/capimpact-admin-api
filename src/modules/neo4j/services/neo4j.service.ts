@@ -32,6 +32,30 @@ export class Neo4jService {
     return result[0];
   }
 
+  async saveCapability(id: number, data: any) {
+    const { name } = data;
+    try {
+      return await this.neo4j.session().run('match (n:Capability {id: $id}) set n.name = $name;', {
+        id,
+        name,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async saveProcess(id: number, data: any) {
+    const { name } = data;
+    try {
+      return await this.neo4j.session().run('match (n:Process {id: $id}) set n.name = $name;', {
+        id,
+        name,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async saveCompanyCapabilitiesByCid(cid: string, data: any) {
     const { capabilities } = data;
     return await this.neo4j

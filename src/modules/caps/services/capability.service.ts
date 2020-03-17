@@ -5,15 +5,18 @@ import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
+import { Neo4jService } from '@modules/neo4j/services';
+
 import { Industry, Capability } from '../entities';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
 @Injectable()
 export class CapabilityService {
   constructor(
+    private readonly neo4jService: Neo4jService,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
-    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
+    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 
   async tree(query: CapabilitiesArgs): Promise<Capability> {
@@ -119,6 +122,7 @@ export class CapabilityService {
       await this.industryRepository.save({ id: +capability.industry_id, name: capability.name });
     }
     await this.updateHierarchyIdNode(capability);
+    await this.neo4jService.saveCapability(capability.id, { name: capability.name });
     return await this.findOneById(capability.id);
   }
 
@@ -132,6 +136,9 @@ export class CapabilityService {
     });
 
     let result = await this.capabilityRepository.save(data);
+    for (let node of result) {
+      await this.neo4jService.saveCapability(node.id, { name: node.name });
+    }
     /*
     for (let node of result) {
       await this.updateHierarchyIdNode(node);
@@ -198,7 +205,7 @@ export class CapabilityService {
     let where: any = params;
 
     if (ids && ids.length) {
-      where.id = In(ids)
+      where.id = In(ids);
     }
 
     return {

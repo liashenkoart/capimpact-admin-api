@@ -5,12 +5,15 @@ import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 
+import { Neo4jService } from '@modules/neo4j/services';
+
 import { Industry, Process } from '../entities';
 import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '../dto';
 
 @Injectable()
 export class ProcessService {
   constructor(
+    private readonly neo4jService: Neo4jService,
     @InjectRepository(Process) private readonly processRepository: Repository<Process>,
     @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
@@ -126,6 +129,7 @@ export class ProcessService {
     if (process.parentId === null) {
       await this.industryRepository.save({ id: +process.industry_id, name: process.name });
     }
+    await this.neo4jService.saveProcess(process.id, { name: process.name });
     return await this.findOneById(process.id);
   }
 
@@ -136,7 +140,10 @@ export class ProcessService {
       process.user = user;
       return process;
     });
-    await this.processRepository.save(data);
+    const result = await this.processRepository.save(data);
+    for (let node of result) {
+      await this.neo4jService.saveProcess(node.id, { name: node.name });
+    }
     return await this.processRepository.findByIds(data.map(p => p.id));
   }
 
