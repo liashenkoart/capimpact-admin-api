@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
 
 import { Industry } from './industry.entity';
+import { Capability } from './capability.entity';
 
 @ObjectType()
 @Entity('startup')
@@ -81,12 +82,12 @@ export class Startup {
   })
   verticals?: string;
 
-  @Field({ nullable: true })
+  @Field(() => [Capability], { nullable: true })
   @Column({
-    type: 'text',
+    type: 'simple-json',
     nullable: true,
   })
-  capabilities?: string;
+  capabilities?: Capability[];
 
   @Field({ nullable: true })
   @Column({

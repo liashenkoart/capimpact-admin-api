@@ -11,7 +11,6 @@ export class StartupInput {
   @IsOptional()
   name?: string;
 
-  @Field()
   @IsOptional()
-  capabilities?: string;
+  capabilities?: any;
 }

@@ -56,14 +56,32 @@ export class Neo4jService {
     }
   }
 
+  async saveIndustryCapabilitiesById(id: number, data: any) {
+    const { capabilities } = data;
+    try {
+      return await this.neo4j
+        .session()
+        .run('match (n:Industry {id: $id}) set n.capabilities = $capabilities;', {
+          id,
+          capabilities: capabilities.map(cap => cap.hierarchy_id),
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async saveCompanyCapabilitiesByCid(cid: string, data: any) {
     const { capabilities } = data;
-    return await this.neo4j
-      .session()
-      .run('match (n:Company {cid: $cid}) set n.capabilities = $capabilities;', {
-        cid,
-        capabilities: capabilities.map(({ id, name }) => `${id}:${name}`),
-      });
+    try {
+      return await this.neo4j
+        .session()
+        .run('match (n:Company {cid: $cid}) set n.capabilities = $capabilities;', {
+          cid,
+          capabilities: capabilities.map(({ id, name }) => `${id}:${name}`),
+        });
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 

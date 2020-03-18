@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions } from 'typeorm';
+import { Repository, FindManyOptions, In } from 'typeorm';
+import _ from 'lodash';
+
+import { Neo4jService } from '@modules/neo4j/services';
 
 import { BaseService } from '@modules/common/services';
-import { Startup } from '../entities';
+import { Startup, Capability } from '../entities';
 import { StartupCreationInput, StartupInput, StartupsArgs } from '../dto';
 
 //import { ProcessService } from './process.service';
@@ -12,7 +15,11 @@ import { StartupCreationInput, StartupInput, StartupsArgs } from '../dto';
 
 @Injectable()
 export class StartupService extends BaseService {
-  constructor(@InjectRepository(Startup) private readonly startupRepository: Repository<Startup>) {
+  constructor(
+    private readonly neo4jService: Neo4jService,
+    @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
+    @InjectRepository(Startup) private readonly startupRepository: Repository<Startup>
+  ) {
     super();
   }
 
@@ -35,7 +42,26 @@ export class StartupService extends BaseService {
   }
 
   async save(id: string, data: StartupInput): Promise<Startup> {
-    return this.startupRepository.save(data);
+    const result = await this.startupRepository.save(data);
+    const startup = await this.findOneById(result.cid);
+    const startups = await this.startupRepository.find({
+      where: { industry_id: startup.industry_id },
+    });
+    const ids = _.uniqBy(_.union(...startups.map(sup => sup.capabilities)), 'id').map(
+      ({ id }) => id
+    );
+    let capabilities = [];
+    if (ids && ids.length) {
+      capabilities = await this.capabilityRepository.find({
+        where: {
+          id: In(ids),
+        },
+      });
+    }
+    await this.neo4jService.saveIndustryCapabilitiesById(startup.industry_id, {
+      capabilities,
+    });
+    return startup;
   }
 
   async saveMany(data: StartupInput[]) {
