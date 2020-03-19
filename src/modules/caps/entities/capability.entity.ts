@@ -52,6 +52,13 @@ export class Capability {
   })
   readonly salaryCosts?: number;
 
+  @Field(() => String, { nullable: true })
+  @Column({
+    type: 'jsonb',
+    nullable: true,
+  })
+  readonly tags?: { [key: string]: any };
+
   @Field({ nullable: true })
   @Column({
     nullable: true,

@@ -6,3 +6,4 @@ export { ChallengeService } from './challenge.service';
 export { StartupService } from './startup.service';
 export { LenseService } from './lense.service';
 export { KpiLibService } from './kpi-lib.service';
+export { GroupTagService } from './grouptag.service';

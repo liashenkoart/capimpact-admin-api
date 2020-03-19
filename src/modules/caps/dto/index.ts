@@ -27,3 +27,7 @@ export { LensesArgs } from './lenses.args';
 export { KpiLibCreationInput } from './kpi-lib-creation.dto';
 export { KpiLibInput } from './kpi-lib.dto';
 export { KpiLibsArgs } from './kpi-libs.args';
+
+export { GroupTagCreationInput } from './grouptag-creation.dto';
+export { GroupTagInput } from './grouptag.dto';
+export { GroupTagsArgs } from './grouptags.args';

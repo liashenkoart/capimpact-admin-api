@@ -28,6 +28,9 @@ export class CapabilityInput {
   @IsOptional()
   readonly salaryCosts?: number;
 
+  @IsOptional()
+  readonly tags?: any;
+
   @Field({ nullable: true })
   @IsOptional()
   readonly hierarchy_id?: string;

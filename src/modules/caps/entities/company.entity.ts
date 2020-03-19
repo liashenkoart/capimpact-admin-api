@@ -6,6 +6,7 @@ import { Industry } from './industry.entity';
 import { Capability } from './capability.entity';
 import { Process } from './process.entity';
 import { Challenge } from './challenge.entity';
+import { GroupTag } from './group-tags.entity';
 
 @ObjectType()
 @Entity('companies')
@@ -73,6 +74,13 @@ export class Company {
     challenge => challenge.company
   )
   challenges?: Challenge[];
+
+  @Field(() => [GroupTag], { nullable: true })
+  @OneToMany(
+    type => GroupTag,
+    grouptag => grouptag.company
+  )
+  grouptags?: GroupTag[];
 
   constructor(partial: Partial<Company>) {
     Object.assign(this, partial);

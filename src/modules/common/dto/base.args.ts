@@ -6,7 +6,7 @@ import { Type } from 'class-transformer';
 export class BaseArgs {
   @Field(() => Int, { nullable: true })
   @IsOptional()
-  @Min(1)
+  @Min(0)
   @Type(() => Number)
   page?: number = 1;
 
@@ -18,7 +18,7 @@ export class BaseArgs {
 
   @Field(() => Int, { nullable: true })
   @IsOptional()
-  @Min(1)
+  @Min(0)
   @Max(1000)
   @Type(() => Number)
   limit?: number = 25;

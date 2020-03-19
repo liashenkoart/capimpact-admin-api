@@ -8,3 +8,4 @@ export { Lense } from './lense.entity';
 export { Classification } from './classification.entity';
 export { KpiLib, BenefitType } from './kpi-lib.entity';
 export { Benchmark } from './benchmark.entity';
+export { GroupTag } from './group-tags.entity';
