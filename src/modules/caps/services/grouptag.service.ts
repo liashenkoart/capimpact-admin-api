@@ -4,12 +4,13 @@ import { Repository } from 'typeorm';
 
 import { BaseService } from 'modules/common/services';
 
-import { GroupTag } from '../entities';
+import { GroupTag, Capability } from '../entities';
 import { GroupTagCreationInput, GroupTagInput, GroupTagsArgs } from '../dto';
 
 @Injectable()
 export class GroupTagService extends BaseService {
   constructor(
+    @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(GroupTag) private readonly groupTagRepository: Repository<GroupTag>
   ) {
     super();
@@ -46,6 +47,16 @@ export class GroupTagService extends BaseService {
   }
 
   async remove(id: number) {
+    const group = await this.findOneById(id);
+    if (group) {
+      const caps = await this.capabilityRepository.find({ where: { company_id: group.companyId } });
+      for (let cap of caps) {
+        if (cap.tags && cap.tags[`${group.id}_${group.name}`]) {
+          delete cap.tags[`${group.id}_${group.name}`];
+          await this.capabilityRepository.save(cap);
+        }
+      }
+    }
     await this.groupTagRepository.delete(id);
     return { id };
   }
