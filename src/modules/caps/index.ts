@@ -16,6 +16,7 @@ import {
   Lense,
   Classification,
   GroupTag,
+  GroupFilter,
   KpiLib,
   Benchmark,
 } from '@modules/caps/entities';
@@ -31,6 +32,7 @@ import {
   LenseService,
   KpiLibService,
   GroupTagService,
+  GroupFilterService,
 } from '@modules/caps/services';
 
 // Controllers
@@ -44,6 +46,7 @@ import {
   LenseController,
   KpiLibController,
   GroupTagController,
+  GroupFilterController,
 } from '@modules/caps/controllers';
 
 // Resolvers
@@ -61,6 +64,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
       Lense,
       Classification,
       GroupTag,
+      GroupFilter,
       KpiLib,
       Benchmark,
     ]),
@@ -78,6 +82,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     LenseController,
     KpiLibController,
     GroupTagController,
+    GroupFilterController,
   ],
   providers: [
     ProcessService,
@@ -92,6 +97,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     LenseService,
     KpiLibService,
     GroupTagService,
+    GroupFilterService,
   ],
   exports: [
     IndustryService,
@@ -103,6 +109,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     LenseService,
     KpiLibService,
     GroupTagService,
+    GroupFilterService,
   ],
 })
 export class CapsModule {}

@@ -31,3 +31,7 @@ export { KpiLibsArgs } from './kpi-libs.args';
 export { GroupTagCreationInput } from './grouptag-creation.dto';
 export { GroupTagInput } from './grouptag.dto';
 export { GroupTagsArgs } from './grouptags.args';
+
+export { GroupFilterCreationInput } from './groupfilter-creation.dto';
+export { GroupFilterInput } from './groupfilter.dto';
+export { GroupFiltersArgs } from './groupfilters.args';

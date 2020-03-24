@@ -59,6 +59,13 @@ export class Capability {
   })
   readonly tags?: { [key: string]: any };
 
+  @Field(() => String, { nullable: true })
+  @Column({
+    type: 'jsonb',
+    nullable: true,
+  })
+  readonly filters?: { [key: string]: any };
+
   @Field({ nullable: true })
   @Column({
     nullable: true,

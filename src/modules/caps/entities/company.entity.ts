@@ -7,6 +7,7 @@ import { Capability } from './capability.entity';
 import { Process } from './process.entity';
 import { Challenge } from './challenge.entity';
 import { GroupTag } from './group-tags.entity';
+import { GroupFilter } from './group-filters.entity';
 
 @ObjectType()
 @Entity('companies')
@@ -81,6 +82,13 @@ export class Company {
     grouptag => grouptag.company
   )
   grouptags?: GroupTag[];
+
+  @Field(() => [GroupFilter], { nullable: true })
+  @OneToMany(
+    type => GroupFilter,
+    groupfilter => groupfilter.company
+  )
+  groupfilters?: GroupFilter[];
 
   constructor(partial: Partial<Company>) {
     Object.assign(this, partial);

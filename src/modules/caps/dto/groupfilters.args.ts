@@ -5,7 +5,7 @@ import { Type } from 'class-transformer';
 import { BaseArgs } from '@modules/common/dto/base.args';
 
 @ArgsType()
-export class GroupTagsArgs extends BaseArgs {
+export class GroupFiltersArgs extends BaseArgs {
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @Type(() => Number)
