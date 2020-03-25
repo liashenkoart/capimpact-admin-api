@@ -49,6 +49,7 @@ export class GroupFilterService extends BaseService {
   async remove(id: number) {
     const group = await this.findOneById(id);
     if (group) {
+      await this.groupFilterRepository.delete({ parentId: group.id });
       const caps = await this.capabilityRepository.find({ where: { company_id: group.companyId } });
       for (let cap of caps) {
         if (cap.filters && cap.filters[`${group.id}_${group.name}`]) {

@@ -14,6 +14,11 @@ export class GroupFilterCreationInput {
   @Type(() => Number)
   readonly companyId: number;
 
+  @Field(() => ID)
+  @IsOptional()
+  @Type(() => Number)
+  readonly parentId?: number;
+
   @Field(() => [String], { nullable: true })
   @IsOptional()
   readonly filters?: string[];

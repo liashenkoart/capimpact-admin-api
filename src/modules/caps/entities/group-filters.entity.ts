@@ -24,6 +24,13 @@ export class GroupFilter {
   })
   companyId: number;
 
+  @Field(() => ID, { nullable: true })
+  @Column({
+    name: 'parent_id',
+    nullable: true,
+  })
+  parentId?: number;
+
   @Field(() => Company, { nullable: true })
   @ManyToOne(
     type => Company,
