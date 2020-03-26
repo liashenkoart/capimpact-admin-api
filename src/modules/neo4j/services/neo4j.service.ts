@@ -77,7 +77,7 @@ export class Neo4jService {
         .session()
         .run('match (n:Company {cid: $cid}) set n.capabilities = $capabilities;', {
           cid,
-          capabilities: capabilities.map(({ id, name }) => `${id}:${name}`),
+          capabilities: _.uniqBy(capabilities, 'id').map(({ id, name }) => `${id}:${name}`),
         });
     } catch (err) {
       console.error(err);
