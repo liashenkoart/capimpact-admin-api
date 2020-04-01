@@ -48,6 +48,7 @@ export class ValueDriverService extends BaseService {
   }
 
   async create(data: ValueDriverCreationInput): Promise<ValueDriver> {
+    data.parent = await this.findOneById(data.parentId);
     return await this.valueDriverRepository.save(this.valueDriverRepository.create(data));
   }
 
