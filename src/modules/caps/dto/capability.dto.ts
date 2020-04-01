@@ -31,6 +31,9 @@ export class CapabilityInput {
   @IsOptional()
   readonly tags?: any;
 
+  @IsOptional()
+  readonly kpis?: any;
+
   @Field({ nullable: true })
   @IsOptional()
   readonly hierarchy_id?: string;
