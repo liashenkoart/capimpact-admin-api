@@ -10,3 +10,4 @@ export { KpiLib, BenefitType } from './kpi-lib.entity';
 export { Benchmark } from './benchmark.entity';
 export { GroupTag } from './group-tags.entity';
 export { GroupFilter } from './group-filters.entity';
+export { ValueDriver } from './value-driver.entity';

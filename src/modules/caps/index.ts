@@ -19,6 +19,7 @@ import {
   GroupFilter,
   KpiLib,
   Benchmark,
+  ValueDriver,
 } from '@modules/caps/entities';
 
 // Services
@@ -33,6 +34,7 @@ import {
   KpiLibService,
   GroupTagService,
   GroupFilterService,
+  ValueDriverService,
 } from '@modules/caps/services';
 
 // Controllers
@@ -47,6 +49,7 @@ import {
   KpiLibController,
   GroupTagController,
   GroupFilterController,
+  ValueDriverController,
 } from '@modules/caps/controllers';
 
 // Resolvers
@@ -67,6 +70,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
       GroupFilter,
       KpiLib,
       Benchmark,
+      ValueDriver,
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     HttpModule,
@@ -83,6 +87,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     KpiLibController,
     GroupTagController,
     GroupFilterController,
+    ValueDriverController,
   ],
   providers: [
     ProcessService,
@@ -98,6 +103,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     KpiLibService,
     GroupTagService,
     GroupFilterService,
+    ValueDriverService,
   ],
   exports: [
     IndustryService,
@@ -110,6 +116,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     KpiLibService,
     GroupTagService,
     GroupFilterService,
+    ValueDriverService,
   ],
 })
 export class CapsModule {}

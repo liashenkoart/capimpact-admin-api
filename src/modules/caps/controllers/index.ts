@@ -8,3 +8,4 @@ export { LenseController } from './lense.controller';
 export { KpiLibController } from './kpi-lib.controller';
 export { GroupTagController } from './grouptag.controller';
 export { GroupFilterController } from './groupfilter.controller';
+export { ValueDriverController } from './value-driver.controller';

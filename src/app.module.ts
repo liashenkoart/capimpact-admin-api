@@ -19,6 +19,7 @@ import {
   Lense,
   KpiLib,
   Benchmark,
+  ValueDriver,
 } from '@modules/caps/entities';
 
 import { UsersModule } from '@modules/users';
@@ -56,6 +57,7 @@ import { AppController } from './app.controller';
           GroupFilter,
           KpiLib,
           Benchmark,
+          ValueDriver,
         ],
       }),
       inject: [ConfigService],

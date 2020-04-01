@@ -35,3 +35,7 @@ export { GroupTagsArgs } from './grouptags.args';
 export { GroupFilterCreationInput } from './groupfilter-creation.dto';
 export { GroupFilterInput } from './groupfilter.dto';
 export { GroupFiltersArgs } from './groupfilters.args';
+
+export { ValueDriverCreationInput } from './value-driver-creation.dto';
+export { ValueDriverInput } from './value-driver.dto';
+export { ValueDriversArgs } from './value-drivers.args';
