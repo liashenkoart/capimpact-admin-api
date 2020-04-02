@@ -4,14 +4,15 @@ import { Repository, TreeRepository } from 'typeorm';
 
 import { BaseService } from 'modules/common/services';
 
-import { ValueDriver } from '../entities';
+import { Industry, ValueDriver } from '../entities';
 import { ValueDriverCreationInput, ValueDriverInput, ValueDriversArgs } from '../dto';
 
 @Injectable()
 export class ValueDriverService extends BaseService {
   constructor(
     @InjectRepository(ValueDriver) private readonly valueDriverRepository: Repository<ValueDriver>,
-    @InjectRepository(ValueDriver) private readonly treeRepository: TreeRepository<ValueDriver>
+    @InjectRepository(ValueDriver) private readonly treeRepository: TreeRepository<ValueDriver>,
+    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {
     super();
   }
@@ -23,6 +24,16 @@ export class ValueDriverService extends BaseService {
       root = await this.valueDriverRepository.findOne({ industryId, parentId: null });
     } else if (companyId) {
       root = await this.valueDriverRepository.findOne({ companyId, parentId: null });
+    }
+    if (!root) {
+      const industry = await this.industryRepository.findOne(industryId);
+      if (industry) {
+        root = await this.create({
+          name: industry.name,
+          industryId: industry.id,
+          parentId: null,
+        });
+      }
     }
     if (!root) {
       throw new NotFoundException();

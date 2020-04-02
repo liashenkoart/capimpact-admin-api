@@ -26,6 +26,10 @@ export class ValueDriver {
   @Column()
   name: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ type: 'jsonb', nullable: true })
+  readonly kpis?: string[];
+
   @Field(() => ID, { nullable: true })
   @Column({
     name: 'user_id',

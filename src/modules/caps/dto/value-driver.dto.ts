@@ -31,4 +31,7 @@ export class ValueDriverInput {
   @IsNumber()
   @Type(() => Number)
   readonly parentId?: number;
+
+  @IsOptional()
+  readonly kpis?: any;
 }

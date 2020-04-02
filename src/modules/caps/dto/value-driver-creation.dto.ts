@@ -30,4 +30,7 @@ export class ValueDriverCreationInput {
 
   @IsOptional()
   public parent?: ValueDriver;
+
+  @IsOptional()
+  readonly kpis?: any;
 }
