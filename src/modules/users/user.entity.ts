@@ -1,7 +1,7 @@
+import 'reflect-metadata';
 import { Field, Int, ObjectType } from 'type-graphql';
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
-
 import passwordCrypt from '@lib/passwordCrypt';
 
 import { Process, Capability, Company } from '@modules/caps/entities';
@@ -19,7 +19,7 @@ export class User {
 
   @Exclude()
   @Column()
-  password: string;
+  password?: string;
 
   @Field({
     nullable: true,
@@ -27,7 +27,7 @@ export class User {
   @Column({
     nullable: true,
   })
-  firstName: string;
+  firstName?: string;
 
   @Field({
     nullable: true,
@@ -35,7 +35,7 @@ export class User {
   @Column({
     nullable: true,
   })
-  lastName: string;
+  lastName?: string;
 
   @OneToMany(
     type => Process,
@@ -44,7 +44,7 @@ export class User {
       cascade: true,
     }
   )
-  processes: Process[];
+  processes?: Process[];
 
   @OneToMany(
     type => Capability,
@@ -53,7 +53,7 @@ export class User {
       cascade: true,
     }
   )
-  capabilities: Capability[];
+  capabilities?: Capability[];
 
   @OneToMany(
     type => Company,
@@ -62,10 +62,10 @@ export class User {
       cascade: true,
     }
   )
-  companies: Company[];
+  companies?: Company[];
 
   @BeforeInsert()
-  hashPassword() {
+  hashPassword?() {
     this.password = passwordCrypt.encrypt(this.password);
   }
 

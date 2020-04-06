@@ -22,7 +22,10 @@ ormconfig.js
 
 # code testing coverage
 coverage
+junit.xml
 
 # build
 dist
+
 .env
+

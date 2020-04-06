@@ -152,7 +152,7 @@ export class Capability {
     cascade: true,
   })
   @JoinTable()
-  classifications: Classification[];
+  classifications?: Classification[];
 
   @BeforeUpdate()
   updateDates() {

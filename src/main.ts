@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
+console.log('---------------------', Reflect);
 import { ApplicationModule } from './app.module';
 import { setupSwaggerModule } from './setupSwaggerModule';
 import { setupFixtures } from './fixtures';

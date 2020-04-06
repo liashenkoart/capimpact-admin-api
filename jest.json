@@ -1,14 +1,35 @@
 {
-  "moduleFileExtensions": [
-    "ts",
-    "tsx",
-    "js",
-    "json"
-  ],
-  "transform": {
-    "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+  "moduleNameMapper": {
+    "@app/(.*)$": "<rootDir>/$1",
+    "@modules/(.*)$": "<rootDir>/modules/$1",
+    "@lib/(.*)$": "<rootDir>/lib/$1"
   },
-  "testRegex": "/src/.*\\.(test|spec).(ts|tsx|js)$",
-  "collectCoverageFrom" : ["src/**/*.{js,jsx,tsx,ts}", "!**/node_modules/**", "!**/vendor/**"],
-  "coverageReporters": ["json", "lcov"]
+  "setupFiles": [
+    "../test/setup/index"
+  ],
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ],
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": "src",
+  "testRegex": ".spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "coverageDirectory": "../coverage",
+  "coverageReporters": [
+    "json",
+    "text",
+    "clover",
+    "cobertura"
+  ],
+  "reporters": [
+    "default",
+    "jest-junit"
+  ]
 }
