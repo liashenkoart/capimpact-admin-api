@@ -10,6 +10,7 @@ import {
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { Benchmark } from './benchmark.entity';
+import { KpiBenchmark } from './kpi-benchmark.entity';
 
 export enum BenefitType {
   Revenue = 'Revenue',
@@ -59,6 +60,13 @@ export class KpiLib {
     benchmark => benchmark.kpilib
   )
   benchmarks?: Benchmark[];
+
+  @Field(() => [KpiBenchmark], { nullable: true })
+  @OneToMany(
+    type => KpiBenchmark,
+    kpiBenchmark => kpiBenchmark.kpilib
+  )
+  kpiBenchmarks?: KpiBenchmark[];
 
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);

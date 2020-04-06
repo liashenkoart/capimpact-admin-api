@@ -39,3 +39,7 @@ export { GroupFiltersArgs } from './groupfilters.args';
 export { ValueDriverCreationInput } from './value-driver-creation.dto';
 export { ValueDriverInput } from './value-driver.dto';
 export { ValueDriversArgs } from './value-drivers.args';
+
+export { KpiBenchmarkCreationInput } from './kpi-benchmark-creation.dto';
+export { KpiBenchmarkInput } from './kpi-benchmark.dto';
+export { KpiBenchmarksArgs } from './kpi-benchmarks.args';

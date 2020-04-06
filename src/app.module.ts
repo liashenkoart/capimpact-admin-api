@@ -20,6 +20,7 @@ import {
   KpiLib,
   Benchmark,
   ValueDriver,
+  KpiBenchmark,
 } from '@modules/caps/entities';
 
 import { UsersModule } from '@modules/users';
@@ -58,6 +59,7 @@ import { AppController } from './app.controller';
           KpiLib,
           Benchmark,
           ValueDriver,
+          KpiBenchmark,
         ],
       }),
       inject: [ConfigService],
