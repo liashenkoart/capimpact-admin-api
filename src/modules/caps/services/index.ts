@@ -9,3 +9,4 @@ export { KpiLibService } from './kpi-lib.service';
 export { GroupTagService } from './grouptag.service';
 export { GroupFilterService } from './groupfilter.service';
 export { ValueDriverService } from './value-driver.service';
+export { KpiBenchmarkService } from './kpi-benchmark.service';
