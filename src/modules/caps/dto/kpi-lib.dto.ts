@@ -15,6 +15,14 @@ export class KpiLibInput {
 
   @Field({ nullable: true })
   @IsOptional()
+  min?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  max?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
   readonly description?: string;
 
   @Field({ nullable: true })
@@ -24,6 +32,10 @@ export class KpiLibInput {
   @Field(() => [String], { nullable: true })
   @IsOptional()
   readonly tags?: string[];
+
+  @Field(() => [String], { nullable: true })
+  @IsOptional()
+  readonly types?: string[];
 
   @Field({ nullable: true })
   @IsOptional()

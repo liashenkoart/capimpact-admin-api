@@ -3,6 +3,16 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Benchmark {
+  id: ID!
+  name: String
+  benchmark: Float
+  industry_id: ID
+  kpilib_id: ID
+  industry: Industry
+  kpilib: KpiLib
+}
+
 type Capability {
   id: ID!
   name: String!
@@ -10,6 +20,9 @@ type Capability {
   capitalCosts: Float
   fte: Float
   salaryCosts: Float
+  tags: String
+  filters: String
+  kpis: [String!]
   hierarchy_id: String
   user_id: ID
   industry_id: ID
@@ -47,6 +60,26 @@ input CapabilityInput {
   parentId: ID
 }
 
+type Challenge {
+  id: ID!
+  name: String!
+  userId: ID
+  companyId: ID
+  user: User!
+  company: Company!
+}
+
+input ChallengeCreationInput {
+  name: String!
+  companyId: ID!
+}
+
+input ChallengeInput {
+  id: ID!
+  name: String
+  companyId: ID
+}
+
 type Classification {
   id: ID!
   name: String!
@@ -63,6 +96,9 @@ type Company {
   industry: Industry!
   capabilities: [Capability!]
   processes: [Process!]
+  challenges: [Challenge!]
+  grouptags: [GroupTag!]
+  groupfilters: [GroupFilter!]
 }
 
 input CompanyCreationInput {
@@ -81,6 +117,51 @@ input CompanyInput {
 """Date custom scalar type"""
 scalar Date
 
+type GroupFilter {
+  id: ID!
+  name: String!
+  filters: [String!]
+  companyId: ID!
+  parentId: ID
+  company: Company
+}
+
+input GroupFilterCreationInput {
+  name: String!
+  companyId: ID!
+  parentId: ID!
+  filters: [String!]
+}
+
+input GroupFilterInput {
+  id: ID!
+  name: String
+  filters: [String!]
+  companyId: ID
+  parentId: ID!
+}
+
+type GroupTag {
+  id: ID!
+  name: String!
+  tags: [String!]
+  companyId: ID!
+  company: Company
+}
+
+input GroupTagCreationInput {
+  name: String!
+  companyId: ID!
+  tags: [String!]
+}
+
+input GroupTagInput {
+  id: ID!
+  name: String
+  tags: [String!]
+  companyId: ID
+}
+
 type Industry {
   id: ID!
   name: String!
@@ -91,6 +172,7 @@ type Industry {
   capabilities: [Capability!]
   companies: [Company!]
   startups: [Startup!]
+  benchmarks: [Benchmark!]
 }
 
 input IndustryCreationInput {
@@ -101,6 +183,39 @@ input IndustryCreationInput {
 input IndustryInput {
   id: ID!
   name: String!
+}
+
+type KpiLib {
+  id: ID!
+  label: String
+  description: String
+  kpi: String
+  tags: [String!]
+  source: String
+  benefitType: String
+  isActive: Boolean
+  benchmarks: [Benchmark!]
+}
+
+input KpiLibCreationInput {
+  label: String
+  description: String
+  kpi: String
+  tags: [String!]
+  source: String
+  benefitType: String
+  is_active: Boolean
+}
+
+input KpiLibInput {
+  id: ID!
+  label: String
+  description: String
+  kpi: String
+  tags: [String!]
+  source: String
+  benefitType: String
+  is_active: Boolean
 }
 
 type Lense {
@@ -194,7 +309,7 @@ type Startup {
   primary_industry_group: String
   primary_industry_code: String
   verticals: String
-  capabilities: String
+  capabilities: [Capability!]
   description: String
   industry_id: ID
   company_id: ID
@@ -208,7 +323,6 @@ input StartupCreationInput {
 input StartupInput {
   cid: ID!
   name: String!
-  capabilities: String!
 }
 
 type User {
@@ -227,4 +341,34 @@ input UserInput {
   email: String!
   firstName: String!
   lastName: String!
+}
+
+type ValueDriver {
+  id: ID!
+  name: String!
+  kpis: [String!]
+  userId: ID
+  industryId: ID
+  companyId: ID
+  parentId: ID
+  user: User
+  industry: Industry
+  company: Company
+  children: [ValueDriver!]
+  parent: ValueDriver
+}
+
+input ValueDriverCreationInput {
+  name: String!
+  industryId: ID
+  companyId: ID
+  parentId: ID
+}
+
+input ValueDriverInput {
+  id: ID!
+  name: String
+  industryId: ID
+  companyId: ID
+  parentId: ID
 }

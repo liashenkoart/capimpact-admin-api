@@ -31,6 +31,14 @@ export class KpiLib {
   label?: string;
 
   @Field({ nullable: true })
+  @Column({ type: 'real', nullable: true })
+  min?: number;
+
+  @Field({ nullable: true })
+  @Column({ type: 'real', nullable: true })
+  max?: number;
+
+  @Field({ nullable: true })
   @Column({ type: 'text', nullable: true })
   description?: string;
 
@@ -41,6 +49,10 @@ export class KpiLib {
   @Field(() => [String], { nullable: true })
   @Column({ array: true, type: 'varchar', nullable: true })
   tags?: string[];
+
+  @Field(() => [String], { nullable: true })
+  @Column({ array: true, type: 'varchar', nullable: true })
+  types?: string[];
 
   @Field({ nullable: true })
   @Column({ type: 'text', nullable: true })
