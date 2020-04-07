@@ -38,7 +38,7 @@ export class Challenge {
     user => user.companies
   )
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user?: User;
 
   @Field(() => Company)
   @ManyToOne(
@@ -46,7 +46,7 @@ export class Challenge {
     company => company.challenges
   )
   @JoinColumn({ name: 'company_id' })
-  company: Company;
+  company?: Company;
 
   constructor(partial: Partial<Challenge>) {
     Object.assign(this, partial);

@@ -15,8 +15,7 @@ export class IndustryService {
     private readonly processService: ProcessService,
     private readonly capabilityService: CapabilityService,
     private readonly companyService: CompanyService,
-    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
-    private readonly httpService: HttpService
+    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 
   async findAll(args: IndustriesArgs): Promise<Industry[]> {

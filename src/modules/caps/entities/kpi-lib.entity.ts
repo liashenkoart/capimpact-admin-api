@@ -35,7 +35,7 @@ export class KpiLib {
   description?: string;
 
   @Field({ nullable: true })
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
   kpi?: string;
 
   @Field(() => [String], { nullable: true })
@@ -47,7 +47,12 @@ export class KpiLib {
   source?: string;
 
   @Field({ nullable: true })
-  @Column({ type: 'enum', enum: BenefitType, default: BenefitType.Revenue, nullable: true })
+  @Column({
+    type: process.env.NODE_ENV === 'test' ? 'text' : 'enum',
+    enum: BenefitType,
+    default: BenefitType.Revenue,
+    nullable: true
+  })
   benefitType?: BenefitType;
 
   @Field({ nullable: true })

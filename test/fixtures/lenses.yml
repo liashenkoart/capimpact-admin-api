@@ -1,0 +1,5 @@
+entity: Lense
+items:
+  lense1:
+    id: 1
+    name: 'Lense 1'

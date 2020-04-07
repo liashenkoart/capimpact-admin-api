@@ -44,7 +44,7 @@ export class Company {
     user => user.companies
   )
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user?: User;
 
   @Field(() => Industry)
   @ManyToOne(
@@ -53,7 +53,7 @@ export class Company {
     { eager: true }
   )
   @JoinColumn({ name: 'industry_id' })
-  industry: Industry;
+  industry?: Industry;
 
   @Field(() => [Capability], { nullable: true })
   @OneToMany(

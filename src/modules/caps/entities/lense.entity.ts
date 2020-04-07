@@ -19,7 +19,7 @@ export class Lense {
     type => Classification,
     classification => classification.lense
   )
-  classifications: Classification[];
+  classifications?: Classification[];
 
   constructor(partial: Partial<Lense>) {
     Object.assign(this, partial);
