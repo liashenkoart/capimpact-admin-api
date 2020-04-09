@@ -12,11 +12,13 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 import { KpiLibService } from '../services';
 import { KpiLibInput, KpiLibCreationInput, KpiLibsArgs } from '../dto';
 
 //@UseGuards(AuthGuard())
+@ApiTags('kpilibs')
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('kpilibs')
 export class KpiLibController {
@@ -47,6 +49,7 @@ export class KpiLibController {
     return this.kpilibService.save(id, data);
   }
 
+  @ApiBody({ type: [KpiLibInput] })
   @Post('/bulk')
   async saveMany(@Body() data: KpiLibInput[]) {
     return this.kpilibService.saveMany(data);

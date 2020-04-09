@@ -12,11 +12,13 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 import { KpiBenchmarkService } from '../services';
 import { KpiBenchmarkInput, KpiBenchmarkCreationInput, KpiBenchmarksArgs } from '../dto';
 
 //@UseGuards(AuthGuard())
+@ApiTags('kpi-benchmarks')
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('kpi-benchmarks')
 export class KpiBenchmarkController {
@@ -47,6 +49,7 @@ export class KpiBenchmarkController {
     return this.kpiBenchmarkService.save(id, data);
   }
 
+  @ApiBody({ type: [KpiBenchmarkInput] })
   @Post('/bulk')
   async saveMany(@Body() data: KpiBenchmarkInput[]) {
     return this.kpiBenchmarkService.saveMany(data);

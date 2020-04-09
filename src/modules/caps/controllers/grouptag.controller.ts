@@ -12,10 +12,13 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 import { GroupTagService } from '../services';
 import { GroupTagInput, GroupTagCreationInput, GroupTagsArgs } from '../dto';
 
+@ApiBearerAuth()
+@ApiTags('grouptags')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('grouptags')
@@ -47,6 +50,7 @@ export class GroupTagController {
     return this.grouptagService.save({ ...data, id });
   }
 
+  @ApiBody({ type: [GroupTagInput] })
   @Post('/save-many')
   async saveMany(@Body() data: GroupTagInput[]) {
     return this.grouptagService.saveMany(data);

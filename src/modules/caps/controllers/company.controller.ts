@@ -12,11 +12,14 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 import { CompanyService } from '../services';
 import { CompanyInput, CompanyCreationInput, CompaniesArgs } from '../dto';
 import { Neo4jService } from '@modules/neo4j/services';
 
+@ApiBearerAuth()
+@ApiTags('companies')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('companies')
@@ -56,6 +59,7 @@ export class CompanyController {
     return this.companyService.create(data, { user: req.user });
   }
 
+  @ApiBody({ type: [CompanyInput] })
   @Post('/bulk')
   async saveMany(@Body() data: CompanyInput[], @Req() req: any) {
     return this.companyService.saveMany(data, { user: req.user });

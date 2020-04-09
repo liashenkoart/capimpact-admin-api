@@ -11,11 +11,14 @@ import {
   Query,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 import { LensesArgs } from '../dto';
 import { LenseService } from '../services'
 
+@ApiBearerAuth()
 @UseGuards(AuthGuard())
+@ApiTags('lenses')
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('lenses')
 export class LenseController {

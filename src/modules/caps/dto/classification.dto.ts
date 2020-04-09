@@ -2,6 +2,7 @@ import { InputType, Field, ID } from 'type-graphql';
 import { IsOptional, IsNotEmpty, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Classification } from '../entities';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 @InputType()
 export class ClassificationInput extends Classification {

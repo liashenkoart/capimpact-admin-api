@@ -12,11 +12,13 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 import { ValueDriverService } from '../services';
 import { ValueDriverInput, ValueDriverCreationInput, ValueDriversArgs } from '../dto';
 
 //@UseGuards(AuthGuard())
+@ApiTags('valuedrivers')
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('valuedrivers')
 export class ValueDriverController {
@@ -52,6 +54,7 @@ export class ValueDriverController {
     return this.valuedriverService.save(id, data);
   }
 
+  @ApiBody({ type: [ValueDriverInput] })
   @Post('/bulk')
   async saveMany(@Body() data: ValueDriverInput[]) {
     return this.valuedriverService.saveMany(data);

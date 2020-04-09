@@ -12,10 +12,13 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 import { GroupFilterService } from '../services';
 import { GroupFilterInput, GroupFilterCreationInput, GroupFiltersArgs } from '../dto';
 
+@ApiBearerAuth()
+@ApiTags('groupfilters')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('groupfilters')
@@ -47,6 +50,7 @@ export class GroupFilterController {
     return this.groupFilterService.save({ ...data, id });
   }
 
+  @ApiBody({ type: [GroupFilterInput] })
   @Post('/save-many')
   async saveMany(@Body() data: GroupFilterInput[]) {
     return this.groupFilterService.saveMany(data);

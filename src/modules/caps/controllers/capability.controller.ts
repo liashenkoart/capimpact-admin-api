@@ -14,10 +14,14 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import _ from 'lodash';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody, ApiResponse } from '@nestjs/swagger';
 
 import { CapabilityService } from '../services';
 import { CapabilitiesArgs, CapabilityInput, CapabilityCreationInput } from '../dto';
+import { Capability } from '../entities';
 
+@ApiBearerAuth()
+@ApiTags('capabilities')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('capabilities')
@@ -44,6 +48,7 @@ export class CapabilityController {
     return this.capabilityService.create(data, { user: req.user });
   }
 
+  @ApiBody({ type: [CapabilityInput] })
   @Post('/bulk')
   async saveMany(@Body() data: CapabilityInput[], @Req() req: any) {
     return this.capabilityService.saveMany(data, { user: req.user });
