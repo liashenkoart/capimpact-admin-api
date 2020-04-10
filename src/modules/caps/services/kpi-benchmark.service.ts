@@ -14,7 +14,8 @@ export class KpiBenchmarkService extends BaseService {
   }
 
   async findAll(args: KpiBenchmarksArgs): Promise<KpiBenchmark[]> {
-    return await this.kpiBenchmarkRepository.find(this.getFindAllQuery(args));
+    const options = this.getFindAllQuery(args);
+    return await this.kpiBenchmarkRepository.find(options);
   }
 
   async findAllPagination(args: KpiBenchmarksArgs): Promise<[KpiBenchmark[], number]> {
