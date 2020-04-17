@@ -5,7 +5,8 @@ pipeline {
     BUILD_DIR           = 'dist'
     DOCKER_IMAGE        = ''
     COMMIT_SHA          = ''
-    BUILD_BRANCH        = 'develop'
+    DEVELOP_BRANCH      = 'develop'
+    STAGING_BRANCH      = 'staging'
     CREDENTIAL_ID       = '29b3215d-b3de-4962-bed9-4d5b60acbbcc'
     DATABASE_USERNAME   = credentials('capimpact-admin-db-username')
     DATABASE_PASSWORD   = credentials('capimpact-admin-db-password')
@@ -16,20 +17,13 @@ pipeline {
 
   stages {
     stage('setting up env') {
-      when {
-        branch BUILD_BRANCH
-      }
       steps {
-
         bitbucketStatusNotify ( buildState: 'INPROGRESS' )
         sh 'mkdir -p $WORKSPACE/.yarn-cache'
       }
     }
 
     stage('build using node:10-alpine') {
-      when {
-        branch BUILD_BRANCH
-      }
       agent {
         docker {
           image 'node:10-alpine'
@@ -60,17 +54,17 @@ pipeline {
       }
     }
 
-    stage('creating capimpact-admin-api docker image') {
+    stage('creating capimpact-admin-api docker image and deploy develop') {
       when {
-        branch BUILD_BRANCH
+        branch DEVELOP_BRANCH
       }
       stages {
-        stage('build docker image') {
+        stage('develop: build docker image') {
           steps {
             copyArtifacts filter: "${BUILD_DIR}/**/*", fingerprintArtifacts: true, projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}')
             script {
               docker.build(
-                "visavis/capimpact-admin-api:latest",
+                "visavis/capimpact-admin-api-dev:latest",
                 "--build-arg DATABASE_PASSWORD='$DATABASE_PASSWORD' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME' ."
               )
             }
@@ -78,7 +72,7 @@ pipeline {
         }
 
         // Since host shared docker.socks with jenkins, doing compose is fine in this case
-        stage('docker-compose to remote server') {
+        stage('develop: docker-compose to remote server') {
           steps {
             sh 'mkdir -p __docker'
             dir('__docker') {
@@ -93,7 +87,45 @@ pipeline {
         }
       }
     }
+
+    stage('creating capimpact-admin-api docker image and deploy staging') {
+      when {
+        branch STAGING_BRANCH
+      }
+      stages {
+        stage('staging: build docker image') {
+          steps {
+            copyArtifacts filter: "${BUILD_DIR}/**/*", fingerprintArtifacts: true, projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}')
+            script {
+              docker.withServer("ssh://ec2-user@52.90.155.127") {
+                docker.build(
+                  "visavis/capimpact-admin-api-staging:latest",
+                  "--build-arg DATABASE_PASSWORD='$DATABASE_PASSWORD' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME' ."
+                )
+              }
+            }
+          }
+        }
+
+        stage('staging: docker-compose to remote server') {
+          steps {
+            withEnv(["DOCKER_HOST=ssh://ec2-user@52.90.155.127"]) {
+              sh 'mkdir -p __docker'
+              dir('__docker') {
+                git(
+                  url: 'https://igez@bitbucket.org/hpnairviz/capadmin-docker.git',
+                  credentialsId: CREDENTIAL_ID,
+                  branch: 'staging'
+                )
+                sh('docker-compose -p capimpact-admin up -d')
+              }
+            }
+          }
+        }
+      }
+    }
   }
+
 
   post {
     failure {
