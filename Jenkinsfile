@@ -7,7 +7,7 @@ pipeline {
     COMMIT_SHA          = ''
     DEVELOP_BRANCH      = 'develop'
     STAGING_BRANCH      = 'staging'
-    CREDENTIAL_ID       = '29b3215d-b3de-4962-bed9-4d5b60acbbcc'
+    CREDENTIAL_ID       = 'vavbot-bitbucket-set'
     DATABASE_USERNAME   = credentials('capimpact-admin-db-username')
     DATABASE_PASSWORD   = credentials('capimpact-admin-db-password')
     GIT_COMMIT_AUTHOR   = ""
@@ -77,7 +77,7 @@ pipeline {
             sh 'mkdir -p __docker'
             dir('__docker') {
               git(
-                url: 'https://igez@bitbucket.org/hpnairviz/capadmin-docker.git',
+                url: 'https://vavbot@bitbucket.org/hpnairviz/capadmin-docker.git',
                 credentialsId: CREDENTIAL_ID,
                 branch: 'develop'
               )
@@ -113,7 +113,7 @@ pipeline {
               sh 'mkdir -p __docker'
               dir('__docker') {
                 git(
-                  url: 'https://igez@bitbucket.org/hpnairviz/capadmin-docker.git',
+                  url: 'https://vavbot@bitbucket.org/hpnairviz/capadmin-docker.git',
                   credentialsId: CREDENTIAL_ID,
                   branch: 'staging'
                 )
