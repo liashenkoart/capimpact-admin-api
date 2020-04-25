@@ -8,6 +8,7 @@ import { IndustryCreationInput, IndustryInput, IndustriesArgs } from '../dto';
 import { ProcessService } from './process.service';
 import { CapabilityService } from './capability.service';
 import { CompanyService } from './company.service';
+import { ValueDriverService } from './value-driver.service';
 
 @Injectable()
 export class IndustryService {
@@ -15,6 +16,7 @@ export class IndustryService {
     private readonly processService: ProcessService,
     private readonly capabilityService: CapabilityService,
     private readonly companyService: CompanyService,
+    private readonly valueDriverService: ValueDriverService,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
     private readonly httpService: HttpService
   ) {}
@@ -60,18 +62,18 @@ export class IndustryService {
   }
 
   async create(data: IndustryCreationInput, context?: any): Promise<Industry> {
-    let industry = new Industry(data);
-    industry = await this.industryRepository.save(industry);
+    const industry = await this.industryRepository.save(new Industry(data));
     await this.processService.createTreeFromIndustry(industry, context);
     await this.capabilityService.createTreeFromIndustry(industry, context);
+    await this.valueDriverService.createTreeFromIndustry(industry, context);
     return industry;
   }
 
   async clone(id: number, data: IndustryCreationInput, context?: any): Promise<Industry> {
-    let industry = new Industry(data);
-    industry = await this.industryRepository.save(industry);
+    const industry = await this.industryRepository.save(new Industry(data));
     await this.processService.cloneTreeFromIndustry(id, industry, context);
     await this.capabilityService.cloneTreeFromIndustry(id, industry, context);
+    await this.valueDriverService.cloneTreeFromIndustry(id, industry, context);
     return industry;
   }
 
@@ -82,10 +84,7 @@ export class IndustryService {
   }
 
   async saveMany(input: IndustryInput[], context?: any) {
-    const data = input.map(candidate => {
-      let industry = new Industry({ ...candidate });
-      return industry;
-    });
+    const data = input.map(candidate => new Industry({ ...candidate }));
     await this.industryRepository.save(data);
     return await this.industryRepository.findByIds(data.map(p => p.id));
   }
@@ -93,6 +92,7 @@ export class IndustryService {
   async remove(id: number) {
     await this.processService.removeByIndustry(id);
     await this.capabilityService.removeByIndustry(id);
+    await this.valueDriverService.removeByIndustry(id);
     await this.industryRepository.delete(id);
     return { id };
   }

@@ -31,7 +31,7 @@ export class Industry {
   @Field(() => [Process], { nullable: true })
   @OneToMany(
     type => Process,
-    proces => proces.industry
+    process => process.industry
   )
   processes?: Process[];
 

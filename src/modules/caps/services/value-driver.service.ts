@@ -63,6 +63,19 @@ export class ValueDriverService extends BaseService {
     return await this.valueDriverRepository.save(this.valueDriverRepository.create(data));
   }
 
+  async createTreeFromIndustry(industry: Industry, context?: any): Promise<ValueDriver> {
+    const { user } = context;
+    // save root industry node
+    await this.valueDriverRepository.save({
+      name: industry.name,
+      default: true,
+      industry,
+      parent: null,
+      user,
+    });
+    return this.tree({ industryId: industry.id });
+  }
+
   async save(id: number, data: ValueDriverInput): Promise<ValueDriver> {
     return this.valueDriverRepository.save(data);
   }
@@ -72,8 +85,44 @@ export class ValueDriverService extends BaseService {
     return await this.valueDriverRepository.findByIds(data.map(kl => kl.id));
   }
 
+  async cloneTreeFromIndustry(id: any, industry: Industry, context?: any): Promise<ValueDriver> {
+    const { user } = context;
+    const industryId = parseInt(id, 10); // cloned industry id
+    let node = null;
+    // save root industry node
+    let root = await this.valueDriverRepository.save({
+      name: industry.name,
+      default: true,
+      industry,
+      parent: null,
+      user,
+    });
+    let clonedRoot = await this.valueDriverRepository.findOne({ industryId, parentId: null });
+    let descendants = await this.treeRepository.findDescendants(clonedRoot);
+    let groupByName = {};
+    for (let descendant of descendants) {
+      if (descendant.parentId) {
+        const parentNode = descendants.find(it => it.id === descendant.parentId);
+        const parent = (parentNode && groupByName[parentNode.id]) || root;
+        node = await this.valueDriverRepository.save({
+          name: descendant.name,
+          default: true,
+          industryId: industry.id,
+          parent,
+          user,
+        });
+        groupByName[descendant.id] = node;
+      }
+    }
+    return this.tree({ industryId: industry.id });
+  }
+
   async remove(id: number) {
     await this.valueDriverRepository.delete(id);
     return { id };
+  }
+
+  async removeByIndustry(industryId: any) {
+    return this.valueDriverRepository.delete({ industryId: +industryId });
   }
 }
