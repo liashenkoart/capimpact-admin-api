@@ -11,10 +11,13 @@ import {
   Query,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 import { StartupService } from '../services';
 import { StartupInput, StartupCreationInput, StartupsArgs } from '../dto';
 
+@ApiBearerAuth()
+@ApiTags('startups')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('startups')
@@ -46,6 +49,7 @@ export class StartupController {
     return this.startupService.save(id, data);
   }
 
+  @ApiBody({ type: [StartupInput] })
   @Post('/bulk')
   async saveMany(@Body() data: StartupInput[]) {
     return this.startupService.saveMany(data);

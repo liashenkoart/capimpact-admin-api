@@ -12,6 +12,7 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 //import { CurrentUser } from 'modules/common/decorators';
 
@@ -19,6 +20,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { ChallengeService } from '../services';
 import { ChallengeInput, ChallengeCreationInput, ChallengesArgs } from '../dto';
 
+@ApiBearerAuth()
+@ApiTags('challenges')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('challenges')
@@ -50,6 +53,7 @@ export class ChallengeController {
     return this.challengeService.save({ ...data, id });
   }
 
+  @ApiBody({ type: [ChallengeInput] })
   @Post('/save-many')
   async saveMany(@Body() data: ChallengeInput[]) {
     return this.challengeService.saveMany(data);

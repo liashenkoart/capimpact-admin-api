@@ -12,10 +12,13 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
 
 import { IndustryService } from '../services';
 import { IndustryInput, IndustryCreationInput, IndustriesArgs } from '../dto';
 
+@ApiBearerAuth()
+@ApiTags('industries')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('industries')
