@@ -1,11 +1,12 @@
 {
   "moduleNameMapper": {
-    "@app/(.*)$": "<rootDir>/$1",
-    "@modules/(.*)$": "<rootDir>/modules/$1",
-    "@lib/(.*)$": "<rootDir>/lib/$1"
+    "@/(.*)$": "<rootDir>/$1",
+    "@app/(.*)$": "<rootDir>/src/$1",
+    "@modules/(.*)$": "<rootDir>/src/modules/$1",
+    "@lib/(.*)$": "<rootDir>/src/lib/$1"
   },
   "setupFiles": [
-    "../test/setup/index"
+    "./test/setup/index"
   ],
   "moduleDirectories": [
     "node_modules",
@@ -16,12 +17,12 @@
     "json",
     "ts"
   ],
-  "rootDir": "src",
+  "rootDir": "./",
   "testRegex": ".spec.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "coverageDirectory": "../coverage",
+  "coverageDirectory": "./coverage",
   "coverageReporters": [
     "json",
     "text",

@@ -30,7 +30,7 @@ import { CapsModule } from '@modules/caps';
 
 import { AppController } from './app.controller';
 
-@Module({
+export const MODULE = {
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
@@ -43,7 +43,7 @@ import { AppController } from './app.controller';
     */
     TypeOrmModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
-        ...configService.get('database'),
+        ...configService.get('database').default,
         entities: [
           User,
           Industry,
@@ -93,5 +93,6 @@ import { AppController } from './app.controller';
     },
     */
   ],
-})
+};
+@Module(MODULE)
 export class ApplicationModule {}

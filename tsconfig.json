@@ -15,6 +15,9 @@
     "removeComments": true,
     "allowJs": true,
     "paths": {
+      "@/*": [
+        "../*"
+      ],
       "@app/*": [
         "./*"
       ],

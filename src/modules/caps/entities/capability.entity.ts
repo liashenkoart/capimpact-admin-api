@@ -54,20 +54,20 @@ export class Capability {
 
   @Field(() => String, { nullable: true })
   @Column({
-    type: 'jsonb',
+    type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',
     nullable: true,
   })
   readonly tags?: { [key: string]: any };
 
   @Field(() => String, { nullable: true })
   @Column({
-    type: 'jsonb',
+    type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',
     nullable: true,
   })
   readonly filters?: { [key: string]: any };
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
   readonly kpis?: string[];
 
   @Field({ nullable: true })
@@ -105,10 +105,10 @@ export class Capability {
 
   @Field(() => Date, { nullable: true })
   @Column({
-    type: 'timestamp',
+    type: process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamp',
     nullable: true,
   })
-  last_update: Date;
+  last_update?: Date;
 
   @Field(() => User, { nullable: true })
   @ManyToOne(
@@ -155,7 +155,7 @@ export class Capability {
   classifications?: Classification[];
 
   @BeforeUpdate()
-  updateDates() {
+  updateDates?() {
     this.last_update = new Date();
   }
 

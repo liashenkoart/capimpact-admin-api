@@ -86,7 +86,7 @@ export class Process {
 
   @Field(() => Date, { nullable: true })
   @Column({
-    type: 'timestamp',
+    type: process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamp',
     nullable: true,
   })
   last_update?: Date;
@@ -128,7 +128,7 @@ export class Process {
   parent?: Process;
 
   @BeforeUpdate()
-  updateDates() {
+  updateDates?() {
     this.last_update = new Date();
   }
 

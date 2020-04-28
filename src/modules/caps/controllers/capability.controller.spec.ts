@@ -1,5 +1,3 @@
-
-
 import { Repository, TreeRepository } from 'typeorm';
 
 import { User } from '@modules/users/user.entity';
@@ -54,7 +52,7 @@ const user: User = {
 };
 
 describe('CapabilityController', () => {
-  let capabilitysController: CapabilityController;
+  let capabilityController: CapabilityController;
   let capabilityService: CapabilityService;
   const capabilityRepository: Repository<Capability> = null;
   const capabilityTreeRepository: TreeRepository<Capability> = null;
@@ -68,82 +66,96 @@ describe('CapabilityController', () => {
       capabilityTreeRepository,
       industryRepository
     );
-    capabilitysController = new CapabilityController(capabilityService);
+    capabilityController = new CapabilityController(capabilityService);
   });
 
   describe('findAll', () => {
-    it('should return an array of capabilitys', async () => {
+    it('should return an array of capability', async () => {
       jest.spyOn(capabilityService, 'findAll').mockImplementation(() => Promise.resolve(data));
 
-      expect(await capabilitysController.findAll({})).toBe(data);
+      expect(await capabilityController.findAll({})).toBe(data);
     });
   });
 
-  // describe('findAllPagination', () => {
-  //   it('should return a pagination of capabilitys', async () => {
-  //     const count = data.length;
-  //     const result: [Capability[], number] = [data, count];
-  //     jest
-  //       .spyOn(capabilityService, 'findAllPagination')
-  //       .mockImplementation(() => Promise.resolve(result));
+  describe('tree', () => {
+    it('should return a tree of capability', async () => {
+      const query = { company_id: 1 };
+      const result = {
+        ...data[0],
+        children: [],
+      };
+      jest
+        .spyOn(capabilityService, 'tree')
+        .mockImplementation(() => Promise.resolve(result));
 
-  //     expect(await capabilitysController.findAllPagination()).toBe(result);
-  //   });
-  // });
+      expect(await capabilityController.tree(query)).toBe(result);
+    });
+  });
 
-  // describe('findOne', () => {
-  //   it('should return a capability by id', async () => {
-  //     const id = 1;
-  //     const result = data.find(bct => bct.id === id);
-  //     jest
-  //       .spyOn(capabilityService, 'findOneById')
-  //       .mockImplementation(() => Promise.resolve(result));
+  describe('findOne', () => {
+    it('should return a capability by id', async () => {
+      const id = 1;
+      const result = data.find(item => item.id === id);
+      jest
+        .spyOn(capabilityService, 'findOneById')
+        .mockImplementation(() => Promise.resolve(result));
 
-  //     expect(await capabilitysController.findOne(1)).toBe(result);
-  //   });
-  // });
+      expect(await capabilityController.findOne(1)).toBe(result);
+    });
+  });
 
-  // describe('create', () => {
-  //   it('should create a capability', async () => {
-  //     const inputData = {
-  //       name: 'Capability created',
-  //       description: 'description',
-  //     };
-  //     const result = { ...inputData, id: 100 };
-  //     jest.spyOn(capabilityService, 'create').mockImplementation(() => Promise.resolve(result));
+  describe('create', () => {
+    it('should create a capability', async () => {
+      const inputData = {
+        name: 'Capability new',
+        default: false,
+        capitalCosts: 1.0,
+        fte: 1.0,
+        salaryCosts: 1.0,
+        tags: { tag: true },
+        filters: {},
+        kpis: ['a', 'b', 'c'],
+        hierarchy_id: 'hierarchy_id',
+        user_id: 1,
+        industry_id: 1,
+        company_id: 1,
+        parentId: null,
+      };
+      const result = { ...inputData, id: 10 };
+      jest.spyOn(capabilityService, 'create').mockImplementation(() => Promise.resolve(result));
 
-  //     expect(await capabilitysController.create(inputData, user)).toBe(result);
-  //   });
-  // });
+      expect(await capabilityController.create(inputData, user)).toBe(result);
+    });
+  });
 
-  // describe('save', () => {
-  //   it('should save a capability', async () => {
-  //     const id = 1;
-  //     const inputData = data.find(bct => bct.id === id);
-  //     const result = { ...inputData };
-  //     jest.spyOn(capabilityService, 'save').mockImplementation(() => Promise.resolve(result));
+  describe('save', () => {
+    it('should save a capability', async () => {
+      const id = 1;
+      const inputData = data.find(item => item.id === id);
+      const result = { ...inputData };
+      jest.spyOn(capabilityService, 'save').mockImplementation(() => Promise.resolve(result));
 
-  //     expect(await capabilitysController.save(id, inputData)).toBe(result);
-  //   });
-  // });
+      expect(await capabilityController.save(id, inputData, { user })).toBe(result);
+    });
+  });
 
-  // describe('saveMany', () => {
-  //   it('should save many capabilitys', async () => {
-  //     const inputData = data.slice(0, 2);
-  //     const result = { ...data };
-  //     jest.spyOn(capabilityService, 'saveMany').mockImplementation(() => Promise.resolve(result));
+  describe('saveMany', () => {
+    it('should save many capability', async () => {
+      const inputData = data.slice(0, 2);
+      const result = { ...data };
+      jest.spyOn(capabilityService, 'saveMany').mockImplementation(() => Promise.resolve(result));
 
-  //     expect(await capabilitysController.saveMany(inputData)).toBe(result);
-  //   });
-  // });
+      expect(await capabilityController.saveMany(inputData, { user })).toBe(result);
+    });
+  });
 
-  // describe('remove', () => {
-  //   it('should remove a capability', async () => {
-  //     const id = 1;
-  //     const result = { id };
-  //     jest.spyOn(capabilityService, 'remove').mockImplementation(() => Promise.resolve(result));
+  describe('remove', () => {
+    it('should remove a capability', async () => {
+      const id = 1;
+      const result = { id };
+      jest.spyOn(capabilityService, 'remove').mockImplementation(() => Promise.resolve(result));
 
-  //     expect(await capabilitysController.remove(id)).toBe(result);
-  //   });
-  // });
+      expect(await capabilityController.remove(id)).toBe(result);
+    });
+  });
 });

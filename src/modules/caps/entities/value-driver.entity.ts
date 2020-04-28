@@ -27,7 +27,7 @@ export class ValueDriver {
   name: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
   readonly kpis?: string[];
 
   @Field(() => ID, { nullable: true })
