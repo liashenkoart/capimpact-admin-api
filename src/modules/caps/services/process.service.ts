@@ -59,29 +59,19 @@ export class ProcessService {
     return await this.findOneById(process.id);
   }
 
-  async createTreeFromIndustry(industry: Industry, context?: any): Promise<void> {
+  createRootNode(industry: Industry, context?: any): Promise<Process> {
     const { user } = context;
     // save root industry node
-    let root = await this.processRepository.save({
+    return this.processRepository.save({
       name: industry.name,
       industry,
       parent: null,
       user,
     });
+  }
 
-    const ignoreDefault = true;
-
-    if (ignoreDefault) {
-      return null;
-    }
-
-
-    console.log('====> process root => ', root);
-
-    console.time('processDefaultStuff');
-
-    console.time('processesParseCsv')
-
+  async createDefaultTreeFromIndustry(industry: Industry, root: Process, context?: any): Promise<void> {
+    const { user } = context;
     let data: any = await parseCsv(
       `processes/default.csv`,
       rows =>
@@ -112,18 +102,10 @@ export class ProcessService {
       }
     );
 
-    console.timeEnd('processesParseCsv');
-    console.log('data => ', data);
-
-    console.time('processesLoop')
     // Contain saved data by hierarchy_id key
     let groupByHierarchyId = {};
     // Convert to array
     let processes: any = Object.values(data);
-
-    console.log('processes => ', processes);
-    console.log('processes.length => ', processes.length);
-
     // Save process one by one
     for (let proc of processes) {
       // 1.2.3.4.5 -> 1.2.3.4
@@ -131,21 +113,11 @@ export class ProcessService {
         .split('.')
         .slice(0, -1)
         .join('.');
-
-      console.log('proc => ', proc);
-      console.log('parent => ', parent);
-
       groupByHierarchyId[proc.hierarchy_id] = await this.processRepository.save({
         ...proc,
         parent: groupByHierarchyId[parent] || root,
       });
     }
-
-    console.timeEnd('processesLoop')
-
-    console.timeEnd('processDefaultStuff');
-
-    // return this.tree({ industry_id: industry.id });
   }
 
   async save(id: any, data: ProcessInput, context?: any): Promise<Process> {
