@@ -14,7 +14,8 @@ import { User } from '@modules/users/user.entity';
 export class AppController {
   @Get('/')
   health() {
-    return 'OK';
+    const connectedDB = `DB: ${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`;
+    return 'OK\n' + connectedDB;
   }
 
   @UseGuards(AuthGuard())

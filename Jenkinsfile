@@ -8,11 +8,15 @@ pipeline {
     DEVELOP_BRANCH      = 'develop'
     STAGING_BRANCH      = 'staging'
     CREDENTIAL_ID       = 'vavbot-bitbucket-set'
-    DATABASE_USERNAME   = credentials('capimpact-admin-db-username')
-    DATABASE_PASSWORD   = credentials('capimpact-admin-db-password')
+
     GIT_COMMIT_AUTHOR   = ""
     GIT_COMMIT_SHA      = ""
     GIT_DESC            = ""
+
+    DATABASE_USERNAME_DEV       = 'postgres'
+    DATABASE_PASSWORD_DEV       = credentials('capimpact-admin-api-db-password-dev')
+    DATABASE_USERNAME_STAGING   = 'postgres'
+    DATABASE_PASSWORD_STAGING   = credentials('capimpact-admin-api-db-password-staging')
   }
 
   stages {
@@ -65,7 +69,7 @@ pipeline {
             script {
               docker.build(
                 "visavis/capimpact-admin-api-dev:latest",
-                "--build-arg DATABASE_PASSWORD='$DATABASE_PASSWORD' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME' ."
+                "--build-arg DATABASE_HOST='3.222.200.206' --build-arg DATABASE_PORT='5432' --build-arg DATABASE_NAME='capdata' --build-arg DATABASE_PASSWORD='$DATABASE_PASSWORD_DEV' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME_DEV' ."
               )
             }
           }
@@ -100,7 +104,7 @@ pipeline {
               docker.withServer("ssh://ec2-user@52.90.155.127") {
                 docker.build(
                   "visavis/capimpact-admin-api-staging:latest",
-                  "--build-arg DATABASE_PASSWORD='$DATABASE_PASSWORD' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME' ."
+                  "--build-arg DATABASE_HOST='3.222.200.206' --build-arg DATABASE_PORT='5432' --build-arg DATABASE_NAME='capdata' --build-arg  DATABASE_PASSWORD='$DATABASE_PASSWORD_STAGING' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME_STAGING' ."
                 )
               }
             }
