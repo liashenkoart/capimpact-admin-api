@@ -4,6 +4,7 @@ import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
+import { sortTreeByField } from '@lib/sorting';
 
 import { Neo4jService } from '@modules/neo4j/services';
 
@@ -30,7 +31,8 @@ export class CapabilityService {
     if (!root) {
       throw new NotFoundException();
     }
-    return this.treeRepository.findDescendantsTree(root);
+    const tree = await this.treeRepository.findDescendantsTree(root);
+    return sortTreeByField('name', tree);
   }
 
   async findAll(query: CapabilitiesArgs): Promise<Capability[] | void> {

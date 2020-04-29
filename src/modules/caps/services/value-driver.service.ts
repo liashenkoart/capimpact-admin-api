@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository } from 'typeorm';
 
+import { sortTreeByField } from '@lib/sorting';
 import { BaseService } from 'modules/common/services';
 
 import { Industry, ValueDriver } from '../entities';
@@ -38,7 +39,8 @@ export class ValueDriverService extends BaseService {
     if (!root) {
       throw new NotFoundException();
     }
-    return this.treeRepository.findDescendantsTree(root);
+    const tree = await this.treeRepository.findDescendantsTree(root);
+    return sortTreeByField('name', tree);
   }
 
   async findAll(args: ValueDriversArgs): Promise<ValueDriver[]> {
