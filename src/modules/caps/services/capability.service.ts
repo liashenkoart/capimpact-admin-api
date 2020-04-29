@@ -59,7 +59,7 @@ export class CapabilityService {
     return await this.findOneById(capability.id);
   }
 
-  async createTreeFromIndustry(industry: Industry, context?: any): Promise<Capability> {
+  async createTreeFromIndustry(industry: Industry, context?: any): Promise<void> {
     const { user } = context;
     // save root industry node
     let root = await this.capabilityRepository.save({
@@ -69,6 +69,17 @@ export class CapabilityService {
       parent: null,
       user,
     });
+
+    console.log('====> capability root => ', root);
+
+    const ignoreDefault = true;
+
+    if (ignoreDefault) {
+      return null;
+    }
+
+    console.time('capabilityDefaultStuff');
+
     let data: any = await parseCsv(
       `capabilities/default.csv`,
       rows =>
@@ -107,7 +118,8 @@ export class CapabilityService {
         parent: groupByHierarchyId[parent] || root,
       });
     }
-    return this.tree({ industry_id: industry.id });
+    console.timeEnd('capabilityDefaultStuff');
+    //return this.tree({ industry_id: industry.id });
   }
 
   async save(id: any, data: CapabilityInput, context?: any): Promise<Capability> {

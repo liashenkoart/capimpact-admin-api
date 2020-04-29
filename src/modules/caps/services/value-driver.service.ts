@@ -65,7 +65,7 @@ export class ValueDriverService extends BaseService {
     return await this.valueDriverRepository.save(this.valueDriverRepository.create(data));
   }
 
-  async createTreeFromIndustry(industry: Industry, context?: any): Promise<ValueDriver> {
+  async createTreeFromIndustry(industry: Industry, context?: any): Promise<void> {
     const { user } = context;
     // save root industry node
     await this.valueDriverRepository.save({
@@ -75,7 +75,10 @@ export class ValueDriverService extends BaseService {
       parent: null,
       user,
     });
-    return this.tree({ industryId: industry.id });
+
+    console.log('====> valueDriver root was created! ');
+
+    //return this.tree({ industryId: industry.id });
   }
 
   async save(id: number, data: ValueDriverInput): Promise<ValueDriver> {

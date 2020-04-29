@@ -62,15 +62,18 @@ export class IndustryService {
   }
 
   async create(data: IndustryCreationInput, context?: any): Promise<Industry> {
-    const industry = await this.industryRepository.save(new Industry(data));
+    let industry = new Industry(data);
+    industry = await this.industryRepository.save(industry);
     await this.processService.createTreeFromIndustry(industry, context);
     await this.capabilityService.createTreeFromIndustry(industry, context);
     await this.valueDriverService.createTreeFromIndustry(industry, context);
+    console.timeEnd('creating');
     return industry;
   }
 
   async clone(id: number, data: IndustryCreationInput, context?: any): Promise<Industry> {
-    const industry = await this.industryRepository.save(new Industry(data));
+    let industry = new Industry(data);
+    industry = await this.industryRepository.save(industry);
     await this.processService.cloneTreeFromIndustry(id, industry, context);
     await this.capabilityService.cloneTreeFromIndustry(id, industry, context);
     await this.valueDriverService.cloneTreeFromIndustry(id, industry, context);
