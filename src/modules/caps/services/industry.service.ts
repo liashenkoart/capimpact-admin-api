@@ -65,7 +65,6 @@ export class IndustryService {
     const industry = await this.industryRepository.save(new Industry(data));
     const rootProcess = await this.processService.createRootNode(industry, context);
     const rootCapability = await this.capabilityService.createRootNode(industry, context);
-    await this.valueDriverService.createRootNode(industry, context);
 
     Promise.all([
       this.processService.createDefaultTreeFromIndustry(industry, rootProcess, context),

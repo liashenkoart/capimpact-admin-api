@@ -43,7 +43,7 @@ export class ProcessService {
   }
 
   async findOneById(id: number): Promise<Process> {
-    return this.processRepository.findOne(id);
+    return this.processRepository.findOne({ id });
   }
 
   async countDocuments(query: ProcessesArgs): Promise<number> {
@@ -60,14 +60,12 @@ export class ProcessService {
   }
 
   createRootNode(industry: Industry, context?: any): Promise<Process> {
-    const { user } = context;
     // save root industry node
-    return this.processRepository.save({
+    return this.create({
       name: industry.name,
-      industry,
-      parent: null,
-      user,
-    });
+      industry_id: industry.id,
+      parentId: null,
+    }, context);
   }
 
   async createDefaultTreeFromIndustry(industry: Industry, root: Process, context?: any): Promise<void> {

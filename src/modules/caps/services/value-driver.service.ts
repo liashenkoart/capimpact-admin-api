@@ -52,7 +52,7 @@ export class ValueDriverService extends BaseService {
   }
 
   async findOneById(id: number): Promise<ValueDriver> {
-    return this.valueDriverRepository.findOne(id);
+    return this.valueDriverRepository.findOne({ id });
   }
 
   async count(args: ValueDriversArgs) {
@@ -63,18 +63,6 @@ export class ValueDriverService extends BaseService {
   async create(data: ValueDriverCreationInput): Promise<ValueDriver> {
     data.parent = await this.findOneById(data.parentId);
     return await this.valueDriverRepository.save(this.valueDriverRepository.create(data));
-  }
-
-  createRootNode(industry: Industry, context?: any): Promise<ValueDriver> {
-    const { user } = context;
-    // save root industry node
-    return this.valueDriverRepository.save({
-      name: industry.name,
-      default: true,
-      industry,
-      parent: null,
-      user,
-    });
   }
 
   async save(id: number, data: ValueDriverInput): Promise<ValueDriver> {

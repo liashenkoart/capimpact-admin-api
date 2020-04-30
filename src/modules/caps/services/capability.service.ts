@@ -42,7 +42,7 @@ export class CapabilityService {
   }
 
   async findOneById(id: number): Promise<Capability> {
-    return this.capabilityRepository.findOne(id);
+    return this.capabilityRepository.findOne({ id });
   }
 
   async countDocuments(query: CapabilitiesArgs): Promise<number> {
@@ -60,15 +60,12 @@ export class CapabilityService {
   }
 
   createRootNode(industry: Industry, context?: any): Promise<Capability> {
-    const { user } = context;
     // save root industry node
-    return this.capabilityRepository.save({
+    return this.create({
       name: industry.name,
-      default: true,
-      industry,
-      parent: null,
-      user,
-    });
+      industry_id: industry.id,
+      parentId: null,
+    }, context);
   }
 
   async createDefaultTreeFromIndustry(industry: Industry, root: Capability,  context?: any): Promise<void> {
