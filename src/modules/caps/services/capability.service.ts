@@ -68,7 +68,7 @@ export class CapabilityService {
     }, context);
   }
 
-  async createDefaultTreeFromIndustry(industry: Industry, root: Capability,  context?: any): Promise<void> {
+  async createDefaultTreeFromIndustry(industry: Industry, root: Capability, context?: any): Promise<void> {
     const { user } = context;
     let data: any = await parseCsv(
       `capabilities/default.csv`,

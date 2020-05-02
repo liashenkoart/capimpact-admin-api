@@ -112,12 +112,20 @@ export class Startup {
 
   @Field(() => Industry, { nullable: true })
   @ManyToOne(
-    type => Industry,
+    () => Industry,
     industry => industry.processes,
     { cascade: true }
   )
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;
+
+  @Field(() => String, { nullable: true })
+  @Column({ type: 'text', nullable: true })
+  hq_location?: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ type: 'text', nullable: true })
+  website?: string;
 
   constructor(partial: Partial<Startup>) {
     Object.assign(this, partial);

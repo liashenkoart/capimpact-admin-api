@@ -58,7 +58,7 @@ export class IndustryService {
   }
 
   async findOneById(id: number): Promise<Industry> {
-    return this.industryRepository.findOne(id);
+    return this.industryRepository.findOne({ id });
   }
 
   async create(data: IndustryCreationInput, context?: any): Promise<Industry> {
