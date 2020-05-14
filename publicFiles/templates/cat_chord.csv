@@ -1,0 +1,83 @@
+﻿title,description,what,categories,items,LX,LN,M3 ,IBP
+Systems to Solutions Interdependencies,"Depicts interdepencies between solutions, technologies and data stores",System,System,Acom Store Labels,,,,
+,,System,System,ADP,,,,x
+,,System,System,AMI phone audit,,,,
+,,System,System,AS400,x,x,x,x
+,,System,System,ASRS,,,,
+,,System,System,Benefit Express,,,,
+,,System,System,C3 inbound shipments,,,,
+,,System,System,Cast Iron salesforce interface,,,,
+,,System,System,Comm Data v-card,,,,
+,,System,System,Data Warehouse,,,,
+,,System,System,Decartes transpo mgt,,,,
+,,System,System,Ebanking,,,,
+,,System,System,EC Utopia    edi,,,,
+,,System,System,Elite Rewards,,,,
+,,System,System,FedEX Small Parcels,,,,
+,,System,System,Financial Budgeting,,,,x
+,,System,System,FinFit employee loans,,,, 
+,,System,System,First Data Bank Card Returns,,,,x
+,,System,System,Franchise AR,,,,x
+,,System,System,Franchises Delivery,,,,x
+,,System,System,GERS,,,,x
+,,System,System,Google Live Ramp Sales Data,,,,
+,,System,System,Health Advocate health benefits,,,,
+,,System,System,In Contact,,,,
+,,System,System,Kount Fraud Check,,,,
+,,System,System,Mass Mutual 401k,,,,
+,,System,System,NCOA change of address,,,,
+,,System,System,Oracle EBS,,,,x
+,,System,System,PerZip4 Address Verif,,,,
+,,System,System,PNC,,,,
+,,System,System,Product creation,,,,
+,,System,System,Progressive lease to own,,,,
+,,System,System,Red Carpet onboarding,,,,
+,,System,System,Red Prairie. WMS,,,,
+,,System,System,Reuters Thomspon Tax ,,,,
+,,System,System,ROIG planning,,,,
+,,System,System,Sage FAS fixed assets,,,,x
+,,System,System,Salesforce Commerce Cloud,x,,,
+,,System,System,Salesforce Marketing Cloud,x,,,
+,,System,System,Salesforce Service Cloud,x,,,
+,,System,System,SenSource Store Traffic, ,,,
+,,System,System,Serveco Field Srvce Mgt, ,,,
+,,System,System,Silk Road applicants,,,,x
+,,System,System,Synchrony consumer credit,,,,
+,,System,System,Televox autocalls for delivery,,,,
+,,System,System,Tempurpedic Sales Data,,,,
+,,System,System,Tempus CC Payment Gateway,,,,
+,,System,System,Tidewater consumer credit,,,,
+,,System,System,Time and Expenses,,,,x
+,,System,System,TL Ashford Warehouse Labels,,,,
+,,System,System,Unibar,,,,
+,,System,System,Versatile,,,,
+,,System,System,Wells Fargo Expenses,,,,
+,,System,System,Wolverine Warranty,,,,
+,,Data Store,Activities,Commissions,,,,x
+,,Data Store,Activities,Deliver,x,,,
+,,Data Store,Activities,Finance Credit,x,,,x
+,,Data Store,Activities,Marketing,x,,,
+,,Data Store,BUY,Payments,x,,,x
+,,Data Store,BUY,Promotion,x,,,
+,,Data Store,BUY,Return,x,,x,x
+,,Data Store,BUY,Sell,x,,,x
+,,Data Store,BUY,Service,x,,,
+,,Data Store,BUY,Store Warehouse Inventory,x,,x,x
+,,Data Store,BUY,Transfer,,,x,
+,,Data Store,Financials,AP,,,,x
+,,Data Store,Financials,AR,,,,x
+,,Data Store,Financials,Financing Program,,,,x
+,,Data Store,Financials,GL,,,,x
+,,Data Store,Locations,Customer Location,x,,,
+,,Data Store,Locations,DC Warehouses,,x,x,x
+,,Data Store,Locations,Stores,x,x,x,
+,,Data Store,Locations,Vendor Location,,x,x,x
+,,Data Store,Parties,Customer,x,,x,
+,,Data Store,Parties,Employees,,,,x
+,,Data Store,Parties,Supplier Vendor,,,x,x
+,,Data Store,Product,Components,x,x,x,
+,,Data Store,Product,Inventory,x,x,x,
+,,Data Store,Product,Items,x,x,x,
+,,Data Store,Product,Pricing,x,x,x,
+,,Data Store,Product,Service,x,x,,
+,,Data Store,Product,Warranties,x,x,,

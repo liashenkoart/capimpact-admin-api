@@ -1,0 +1,60 @@
+﻿title,description,root,parent,g0_child,g1_child,g2_child,g3_child,Infor ERP,CRM,EAM,Field Service,PLM,Supply Chain,Sales and Ops,High Impact Reqs - SM
+Requirements to Capability,Shows hierarchy of business requirements ,Requirements,Acquire,Data Consistency,Marketing , ,,x,,,x,,,,x
+,,Requirements,Acquire,Data Consistency,eCommerce,,,x,,,x,x,x,,
+,,Requirements,Buy,Accounts Payable,PO Payments,,,,x,,,,,,x
+,,Requirements,Manage,Product Mgt,"Product Mgt Groups, Catalogues, Codes, etc.", ,,,,,x,,,,x
+,,Requirements,Manage,Product Mgt,"Product Dimensions Color, Size, etc.",,,,,,x,,,, 
+,,Requirements,Manage,Product Mgt,"Seasons Mgt Codes, Groups, etc", ,,,,,x,,,,x
+,,Requirements,Manage,Product Mgt,Configuration Mgt, ,,,,,x,x,,,x
+,,Requirements,Manage,Price Mgt,Retail,,,,,,x,x,,,
+,,Requirements,Manage,Price Mgt,Promotional,,,,,,,x,,,
+,,Requirements,Manage,Price Mgt,Clearance,,,,,,,,,x,
+,,Requirements,Move,Outbound Logistics,Sales Order Pick Pack Ship,,,,,x,,,,x,
+,,Requirements,Move,Outbound Logistics,Warehouse Outbound Pick Pack Ship,,,,,x,,,, ,
+,,Requirements,Move,Reverse Logistics,"Vendor Return Mgt Orders, Reasons, Processing",,,,, ,,,,x,
+,,Requirements,Move,Reverse Logistics,Customer Return Mgt,,,,,x,,,,x,x
+,,Requirements,Plan,Demand Planning,Forecast Generation,Horizon and Types,,,,x,x,,,x,x
+,,Requirements,Plan,Demand Planning,Forecast Generation,Data Types and Measures,,,,x,x,,,x, 
+,,Requirements,Plan,Demand Planning,Forecast Generation,Techniques,,,,x,x,,,, 
+,,Requirements,Plan,Demand Planning,Forecast Generation,Planning,,,,,x,,,, 
+,,Requirements,Plan,Demand Planning,Forecast Netting,,,,,,x,,,x,x
+,,Requirements,Plan,Supply Planning,Inventory Planning,,,,,x,x,x,,x,x
+,,Requirements,Plan,Supply Planning,Master Planning,,,,,x,x,x,,, 
+,,Requirements,Plan,Supply Planning,Soft Allocation,,,,,,x,,,,
+,,Requirements,Sell,Sales Mgt,Credit and Fraud Mgt,,,,,,,,,, 
+,,Requirements,Sell,Sales Mgt,Sales Price & Discount Mgt,Discount Price Mgt,Align Around,,,,x,,,,
+,,Requirements,Sell,Sales Mgt,Sales Price & Discount Mgt,Discount Price Mgt,Quality Discounts,,,,,,,,
+,,Requirements,Sell,Sales Mgt,Sales Price & Discount Mgt,Discount Price Mgt,Match competitor discounts,,,,,,,,
+,,Requirements,Sell,Sales Mgt,Sales Price & Discount Mgt,Discount Price Mgt,Manage data on agreements,,,,,,,x,
+,,Requirements,Sell,Acounts Receivable,Invoicing and Payment,Customer Allowances and Deductions,,,,x,,,x,,
+,,Requirements,Sell,Acounts Receivable,Invoicing and Payment,Payments,,,x,,,,x,,
+,,Requirements,Sell,Acounts Receivable,Invoicing and Payment,Collection and Interest,,,x,,,x,,,
+,,Requirements,Sell,Acounts Receivable,Invoicing and Payment,Sales Commissions,,,,,,,,,x
+,,Requirements,Sell,eCommerce,Marketing Mgt,Segmentation,,,,,x,x,,,x
+,,Requirements,Sell,eCommerce,Marketing Mgt,Prospect  Development,,,,,x,,,,
+,,Requirements,Sell,eCommerce,Credit and Fraud Mgt,,,,,,,,,,
+,,Requirements,Sell,eCommerce,Sales Order Creation Mgt,,,,,,,x,,,
+,,Requirements,Service,Service Mgt,Customer Service Mgt,Activity Mgt,,x,,,,x,,,
+,,Requirements,Service,Service Mgt,Customer Service Mgt,Case Mgt,Cases,x,,,,x,,,
+,,Requirements,Service,Service Mgt,Customer Service Mgt,Case Mgt,Queues,x,,,,,,,
+,,Requirements,Service,Service Mgt,Customer Service Mgt,Case Mgt,Interactive Service Hub,x,,,,,,,
+,,Requirements,Service,Service Mgt,Customer Service Mgt,Case Mgt,Uniified Service Hub,x,,,,,,,
+,,Requirements,Service,Service Mgt,Customer Service Mgt,Case Mgt,Unifed Service Desk,x,,,,,,,x
+,,Requirements,Service,Service Mgt,Customer Service Mgt,Knowledge Base,,x,,,x,,,,x
+,,Requirements,Service,Service Mgt,Customer Service Mgt,Survey and Portal Mgt,,x,,,x,,,,x
+,,Requirements,Service,Service Mgt,Service Order Mgt,Service Orders,,,,,x,,,,x
+,,Requirements,Service,Service Mgt,Service Order Mgt,Service Order Creation & Release,,,,,x,,,,x
+,,Requirements,Service,Service Mgt,Service Order Mgt,Service Order Execution,,,,,x,,,,x
+,,Requirements,Service,Service Mgt,Service Order Mgt,Service Order Invoicing & Payment,,,,,x,,,,x
+,,Requirements,Service,Service Mgt,Service Order Mgt,Service Returns,,,,,x,,,x,
+,,Requirements,Service,Service Mgt,Delivery Services,Delivery Services,,,,x,,,,x,
+,,Requirements,Service,Service Mgt,Delivery Services,Service Orders,,,,x,,,,,
+,,Requirements,Service,Digital eCommerce,Customer Service Mgt,Activity Mgt,,x,,,,x,,,x
+,,Requirements,Service,Digital eCommerce,Customer Service Mgt,Case Mgt,Cases,x,,,x,x,,,
+,,Requirements,Service,Digital eCommerce,Customer Service Mgt,Case Mgt,Queues,x,,,,,,,x
+,,Requirements,Service,Digital eCommerce,Customer Service Mgt,Case Mgt,Interactive Service Hub,x,,,x,,,,
+,,Requirements,Service,Digital eCommerce,Customer Service Mgt,Case Mgt,Uniified Service Hub,x,,,,,,,
+,,Requirements,Service,Digital eCommerce,Customer Service Mgt,Case Mgt,Unifed Service Desk,x,,,,,,,x
+,,Requirements,Service,Digital eCommerce,Customer Service Mgt,Knowledge Base,,x,,,x,,,,
+,,Requirements,Service,Digital eCommerce,Customer Service Mgt,Survey and Portal Mgt,,x,,,,,,,
+,,Requirements,Service,Digital eCommerce,Customer Service Mgt,Workforce Mgt,,x,,,,,,,

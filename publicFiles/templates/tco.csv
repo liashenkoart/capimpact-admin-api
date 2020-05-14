@@ -1,0 +1,25 @@
+﻿Investment,Input,Y1,Y2,Y3,Y4,Y5
+Software License/Subscription Fees,No Input,200000,200000,200000,200000,200000
+Application Support Fees,No Input,200000,200000,200000,200000,200000
+Infrastructure,No Input,200000,200000,200000,200000,200000
+Implementation & Setup Costs,No Input,200000,200000,200000,200000,200000
+Ongoing Support,No Input,200000,200000,200000,200000,200000
+Upgrade Costs,No Input,200000,200000,200000,200000,200000
+Contingency,No Input,200000,200000,200000,200000,200000
+Cost Avoidance,No Input,200000,200000,200000,200000,200000
+Software License/Subscription Fees,LX,614327.56,512673.81,512673.81,512673.81,512673.81
+Application Support Fees,LX,34863.825,34863.825,34863.825,34863.825,34863.825
+Infrastructure,LX,3750000,0,0,0,0
+Implementation & Setup Costs,LX,7967307.38,864674.44,0,0,0
+Ongoing Support,LX,0,0,0,0,0
+Upgrade Costs,LX,0,0,0,0,0
+Contingency,LX,1118938.2,149147.958,27119.1753,28336.08345,29609.66548
+Cost Avoidance,LX,-92200,0,0,0,0
+Software License/Subscription Fees,LX+LN+IBP,2811000,2811000,2811000,2811000,2811000
+Application Support Fees,LX+LN+IBP,0,0,0,0,0
+Infrastructure,LX+LN+IBP,3750000,0,0,0,0
+Implementation & Setup Costs,LX+LN+IBP,11753544.04,10368102,1307844.5,0,0
+Ongoing Support,LX+LN+IBP,0,0,0,0,0
+Upgrade Costs,LX+LN+IBP,0,0,0,0,0
+Contingency,LX+LN+IBP,1393132.8,1241718,154090.9,89465.697,92149.66791
+Cost Avoidance,LX+LN+IBP,-200000,-200000,-100000,0,0
