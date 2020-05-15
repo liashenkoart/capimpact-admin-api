@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as express from 'express';
+import path from 'path';
 import { ApplicationModule } from './app.module';
 import { setupSwaggerModule } from './setupSwaggerModule';
 import { setupFixtures } from './fixtures';
@@ -11,7 +12,7 @@ async function bootstrap() {
     cors: true,
   });
   app.setGlobalPrefix('api');
-  app.use('/api/files', express.static('publicFiles'));
+  app.use('/api/files', express.static(path.join(__dirname, '../public')));
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   const configService = app.get(ConfigService);
