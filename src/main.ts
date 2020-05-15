@@ -12,7 +12,7 @@ async function bootstrap() {
     cors: true,
   });
   app.setGlobalPrefix('api');
-  app.use('/api/files', express.static(path.join(__dirname, '../public')));
+  app.use('/api/files', express.static(path.join(__dirname, 'public')));
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   const configService = app.get(ConfigService);
