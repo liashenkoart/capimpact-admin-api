@@ -41,6 +41,11 @@ export class CapabilityService {
     return this.capabilityRepository.find(options);
   }
 
+  async getAmount(query: CapabilitiesArgs): Promise<number | void> {
+    const { company_id } = query;
+    return this.capabilityRepository.count({ where: { company_id } });
+  }
+
   async findOneById(id: number): Promise<Capability> {
     return this.capabilityRepository.findOne({ id });
   }

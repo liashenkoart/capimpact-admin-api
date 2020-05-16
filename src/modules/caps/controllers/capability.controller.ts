@@ -14,11 +14,10 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import _ from 'lodash';
-import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 
 import { CapabilityService } from '../services';
 import { CapabilitiesArgs, CapabilityInput, CapabilityCreationInput } from '../dto';
-import { Capability } from '../entities';
 
 @ApiBearerAuth()
 @ApiTags('capabilities')
@@ -31,6 +30,11 @@ export class CapabilityController {
   @Get('')
   async findAll(@Query() query: CapabilitiesArgs) {
     return this.capabilityService.findAll(this.parseArgs(query));
+  }
+
+  @Get('amount')
+  async getAmount(@Query() query: CapabilitiesArgs) {
+    return this.capabilityService.getAmount(this.parseArgs(query));
   }
 
   @Get('tree')
