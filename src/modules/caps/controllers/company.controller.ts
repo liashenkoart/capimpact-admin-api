@@ -9,10 +9,10 @@ import {
   Param,
   Delete,
   Req,
-  ParseIntPipe,
+  ParseIntPipe, Query,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 
 import { CompanyService } from '../services';
 import { CompanyInput, CompanyCreationInput, CompaniesArgs } from '../dto';
@@ -30,7 +30,7 @@ export class CompanyController {
   ) {}
 
   @Get('')
-  async findAll(@Param() args: CompaniesArgs) {
+  async findAll(@Query() args: CompaniesArgs) {
     return this.companyService.findAll(args);
   }
 

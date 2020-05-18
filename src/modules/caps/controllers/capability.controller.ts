@@ -32,11 +32,6 @@ export class CapabilityController {
     return this.capabilityService.findAll(this.parseArgs(query));
   }
 
-  @Get('amount')
-  async getAmount(@Query() query: CapabilitiesArgs) {
-    return this.capabilityService.getAmount(this.parseArgs(query));
-  }
-
   @Get('tree')
   async tree(@Query() query: CapabilitiesArgs) {
     return this.capabilityService.tree(query);

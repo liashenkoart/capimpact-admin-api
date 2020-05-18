@@ -18,8 +18,7 @@ export class CompanyService {
 
   async findAll(query: CompaniesArgs): Promise<Company[]> {
     const options = this.getFindAllQuery(query);
-    let result = await this.companyRepository.find(options);
-    return result;
+    return this.companyRepository.find(options);
   }
 
   async findOneById(id: number): Promise<Company> {
@@ -73,15 +72,14 @@ export class CompanyService {
   }
 
   async clone(id: number, data: CompanyInput, context?: any): Promise<Company> {
-    let originalCompany = await this.companyRepository.findOne(id);
-    let company = await this.create(
+    const originalCompany = await this.companyRepository.findOne(id);
+    return await this.create(
       {
         name: data.name,
         industry_id: originalCompany.industry_id,
       },
       context
     );
-    return company;
   }
 
   async save(id: any, data: CompanyInput): Promise<Company> {
@@ -97,7 +95,7 @@ export class CompanyService {
       company.user = user;
       return company;
     });
-    let result = await this.companyRepository.save(data);
+    await this.companyRepository.save(data);
     return await this.companyRepository.findByIds(data.map(p => p.id));
   }
 
