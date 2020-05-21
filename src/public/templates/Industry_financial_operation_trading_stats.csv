@@ -1,0 +1,41 @@
+﻿Cohort,Company,Mkt Cap,TEV,TEV/Tot Rev,TEV/EBITDA,TEV/EBIT,P/Norm EPS,P/TangBV,TEV/Fwd Tot Rev,TEV/Fwd EBITDA,Fwd P/E
+Large Cap,Ron Santa Teresa,437265.27,,,,,,,,,
+Large Cap,Nestlé S.A.,301867.86,333417.05,3.62,17.22,20.41,32.28,42.79,3.45,16.06,22.6
+Large Cap,The Coca-Cola Company ,218083.8,253767.8,7.87,21.72,23.95,33.49,,7.23,21.6,23.97
+Large Cap,"PepsiCo, Inc.",186232.01,214163.01,3.3,16.43,19.76,31.85,,3.19,16.11,23.54
+Large Cap,Anheuser-Busch InBev SA/NV,171124.26,281732.19,5.21,13.1,15.95,27.82,,5.06,12.18,18.4
+Large Cap,"Kweichow Moutai Co., Ltd.",177459.92,162036.52,14.37,21.1,21.57,38.54,10.16,11.99,17.44,26.74
+Large Cap,Unilever PLC,162614.89,186912.94,3.23,11.64,12.97,20.47,,3.15,14.09,21.36
+Large Cap,Unilever N.V.,159826.59,183749.19,3.21,11.58,12.9,20.38,,3.11,13.9,20.94
+Large Cap,Diageo plc,101354.1,116950.01,7.38,19.66,21.05,34.05,,7.07,19.65,25.28
+Large Cap,"Mondelez International, Inc.",79310.39,98250.39,3.82,20.35,24.77,36.35,,3.77,18.77,21.76
+Mid Cap,Britannia Industries Limited,9775.71,9676.82,6.1,39.37,42.93,61.46,16.55,5.35,32.74,49.48
+Mid Cap,"Grupo Bimbo, S.A.B. de C.V.",9912.46,15664.3,1.03,8.45,11.79,19.34,,1,7.92,22.41
+Mid Cap,"Ajinomoto Co., Inc. ",9625.64,11954.97,1.15,12.26,24.37,42.9,2.3,1.12,8.86,20.37
+Mid Cap,"Yakult Honsha Co.,Ltd. ",9581.61,9604.54,2.56,14.73,21.07,34.12,2.95,2.51,14.69,27.97
+Mid Cap,Want Want China Holdings Limited ,9845.21,8720.59,2.82,10.75,12.86,22.26,4.31,2.8,10.52,18.6
+Mid Cap,"Arca Continental, S.A.B. de C.V. ",9506.75,13031.03,1.57,8.96,12.55,22.46,,1.49,8.1,17.54
+Mid Cap,Tingyi (Cayman Islands) Holding Corp. ,9344.6,9488.04,1.07,9.19,16.82,26.25,3.31,1.01,8.78,23.8
+Mid Cap,Vietnam Dairy Products Joint Stock Company ,9191.46,8854.75,3.86,15.62,18.01,27.92,7.81,3.58,14.74,21.59
+Mid Cap,Tsingtao Brewery Company Limited ,9008.43,6860.77,1.68,18.36,32.49,52.19,3.79,1.67,15.14,34.14
+Mid Cap,Nestlé (Malaysia) Berhad,8364.76,8418.38,6.34,33.01,37.91,62.97,42.66,6.09,31.16,48.37
+Small Cap,"Cal-Maine Foods, Inc.",1998.91,1663.15,1.09,7.23,9.48,16.48,2.12,1.23,14.41,69.58
+Small Cap,"Morinaga Milk Industry Co., Ltd. ",1964.92,2948.06,0.55,7.96,14.36,14.91,1.32,0.54,7.64,10.76
+Small Cap,Cosumar SA,1983.26,2099.96,1.82,11.01,13.87,,,2.41,10.72,18.27
+Small Cap,Nestlé Pakistan Limited ,1934.56,2135.14,2.77,15.13,18.02,31.82,48.38,,,
+Small Cap,Genting Plantations Berhad,2016.2,2398.12,5.01,23.23,46.01,88.22,2.01,4.82,17.36,35.44
+Small Cap,"Nippon Suisan Kaisha, Ltd.",1992.76,3876.48,0.59,9.78,17.19,14.5,1.59,0.59,9.78,12.1
+Small Cap,"Guangzhou Zhujiang Brewery Co., Ltd",1981.86,1798.37,3.05,35.89,152.02,72.36,1.77,,,34.33
+Small Cap,"New Hope Dairy Co., Ltd.",1875.2,2025.36,2.73,25.28,49,89.06,8.34,2.27,27.52,38.87
+Small Cap,Corbion N.V. ,1874.67,2102.6,2.09,15.02,22.16,35.51,4.05,1.91,11.93,26.79
+Small Cap,Cott Corporation ,1869.11,3250.77,1.36,11.82,39.46,,,1.34,9.74,31.15
+Micro Cap,Lion Brewery (Ceylon) PLC ,249.04,261.56,1.08,6.15,7.4,13.25,4.34,0.91,,11.63
+Micro Cap,ADM Hamburg Aktiengesellschaft ,248.62,250.29,0.89,9.78,19.28,,,,,
+Micro Cap,Clearwater Seafoods Incorporated ,247.9,579.82,1.31,7.96,13.7,,,1.25,6.97,49.9
+Micro Cap,Shree Renuka Sugars Limited,240.74,226.69,0.35,1.78,53.9,2.86,,,,
+Micro Cap,Tukas Gida Sanayi ve Ticaret A.S.,246.13,309.36,3.92,18.15,19.39,55.28,7.7,,,
+Micro Cap,Patum Rice Mill and Granary Public Company Limited ,245.88,276.55,3.84,,,44.84,0.87,,,
+Micro Cap,"Hunan Zhenghong Science and Technology Develop Co.,Ltd.",246.09,244.03,1.25,61.56,,,3.39,,,
+Micro Cap,Triveni Engineering & Industries Limited,238.43,484.43,1.07,10.32,12.4,9.92,1.46,,,
+Micro Cap,Anglo-Eastern Plantations Plc ,241.88,241.55,0.97,4.9,7.39,15.65,0.66,,,
+Micro Cap,"Cuisine Solutions, Inc.",241.87,,,,,,7.52,,,
