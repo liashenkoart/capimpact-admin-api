@@ -4,7 +4,7 @@ import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
-import { sortTreeByField } from '@lib/sorting';
+import { sortTreeByField, flattenTree } from '@lib/sorting';
 
 import { Neo4jService } from '@modules/neo4j/services';
 
@@ -161,27 +161,25 @@ export class CapabilityService {
       parent: null,
       user,
     });
-    let clonedRoot = await this.capabilityRepository.findOne({
-      industry_id: industryId,
-      parentId: null,
-    });
-    let descendants = (await this.treeRepository.findDescendants(clonedRoot))
-      .sort((a, b) => a['hierarchy_id'].localeCompare(b['hierarchy_id'], 'en', { numeric: true }));
-
-    let groupByName = {};
-    for (let descendant of descendants) {
-      if (descendant.parentId) {
-        const parentNode = descendants.find(it => it.id === descendant.parentId);
-        const parent = (parentNode && groupByName[parentNode.id]) || root;
-        node = await this.capabilityRepository.save({
-          name: descendant.name,
-          hierarchy_id: descendant.hierarchy_id,
-          default: true,
-          industry_id: industry.id,
-          parent,
-          user,
-        });
-        groupByName[descendant.id] = node;
+    let clonedRoot = await this.capabilityRepository.findOne({ industry_id: industryId, parentId: null });
+    if (clonedRoot) {
+      const descendantsTree = await this.treeRepository.findDescendantsTree(clonedRoot);
+      const descendants = descendantsTree ? flattenTree(descendantsTree, 'children') : [];
+      let groupByName = {};
+      for (let descendant of descendants) {
+        if (descendant.parentId) {
+          const parentNode = descendants.find(it => it.id === descendant.parentId);
+          const parent = (parentNode && groupByName[parentNode.id]) || root;
+          node = await this.capabilityRepository.save({
+            name: descendant.name,
+            hierarchy_id: descendant.hierarchy_id,
+            default: true,
+            industry_id: industry.id,
+            parent,
+            user,
+          });
+          groupByName[descendant.id] = node;
+        }
       }
     }
     return this.tree({ industry_id: industry.id });

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository } from 'typeorm';
 
-import { sortTreeByField } from '@lib/sorting';
+import { sortTreeByField, flattenTree } from '@lib/sorting';
 import { BaseService } from 'modules/common/services';
 
 import { Industry, ValueDriver } from '../entities';
@@ -87,20 +87,23 @@ export class ValueDriverService extends BaseService {
       user,
     });
     let clonedRoot = await this.valueDriverRepository.findOne({ industryId, parentId: null });
-    let descendants = await this.treeRepository.findDescendants(clonedRoot);
-    let groupByName = {};
-    for (let descendant of descendants) {
-      if (descendant.parentId) {
-        const parentNode = descendants.find(it => it.id === descendant.parentId);
-        const parent = (parentNode && groupByName[parentNode.id]) || root;
-        node = await this.valueDriverRepository.save({
-          name: descendant.name,
-          default: true,
-          industryId: industry.id,
-          parent,
-          user,
-        });
-        groupByName[descendant.id] = node;
+    if (clonedRoot) {
+      const descendantsTree = await this.treeRepository.findDescendantsTree(clonedRoot);
+      const descendants = descendantsTree ? flattenTree(descendantsTree, 'children') : [];
+      let groupByName = {};
+      for (let descendant of descendants) {
+        if (descendant.parentId) {
+          const parentNode = descendants.find(it => it.id === descendant.parentId);
+          const parent = (parentNode && groupByName[parentNode.id]) || root;
+          node = await this.valueDriverRepository.save({
+            name: descendant.name,
+            default: true,
+            industryId: industry.id,
+            parent,
+            user,
+          });
+          groupByName[descendant.id] = node;
+        }
       }
     }
     return this.tree({ industryId: industry.id });

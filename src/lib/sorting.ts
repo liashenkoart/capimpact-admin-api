@@ -11,3 +11,15 @@ export const sortTreeByField = (fieldName, node) => {
     };
   }
 };
+
+export const flattenTree = (root, key) => {
+  let flatten = [Object.assign({}, root)];
+  delete flatten[0][key];
+  if (root && root[key] && root[key].length > 0) {
+    return flatten.concat(root[key]
+      .map((child) => flattenTree(child, key))
+      .reduce((a, b) => a.concat(b), [])
+    );
+  }
+  return flatten;
+};

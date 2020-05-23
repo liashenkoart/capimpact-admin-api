@@ -4,6 +4,7 @@ import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
+import { flattenTree } from '@lib/sorting';
 
 import { Neo4jService } from '@modules/neo4j/services';
 
@@ -160,23 +161,24 @@ export class ProcessService {
       parent: null,
       user,
     });
-    let clonedRoot = await this.processRepository.findOne({
-      industry_id: industryId,
-      parentId: null,
-    });
-    let descendants = await this.treeRepository.findDescendants(clonedRoot);
-    let groupByName = {};
-    for (let descendant of descendants) {
-      if (descendant.parentId) {
-        const parentNode = descendants.find(it => it.id === descendant.parentId);
-        const parent = (parentNode && groupByName[parentNode.id]) || root;
-        node = await this.processRepository.save({
-          name: descendant.name,
-          industry_id: industry.id,
-          parent,
-          user,
-        });
-        groupByName[descendant.id] = node;
+    let clonedRoot = await this.processRepository.findOne({ industry_id: industryId, parentId: null });
+    if (clonedRoot) {
+      const descendantsTree = await this.treeRepository.findDescendantsTree(clonedRoot);
+      const descendants = descendantsTree ? flattenTree(descendantsTree, 'children') : [];
+      let groupByName = {};
+      for (let descendant of descendants) {
+        if (descendant.parentId) {
+          const parentNode = descendants.find(it => it.id === descendant.parentId);
+          const parent = (parentNode && groupByName[parentNode.id]) || root;
+          node = await this.processRepository.save({
+            name: descendant.name,
+            hierarchy_id: descendant.hierarchy_id,
+            industry_id: industry.id,
+            parent,
+            user,
+          });
+          groupByName[descendant.id] = node;
+        }
       }
     }
     return this.tree({ industry_id: industry.id });
