@@ -165,7 +165,9 @@ export class CapabilityService {
       industry_id: industryId,
       parentId: null,
     });
-    let descendants = await this.treeRepository.findDescendants(clonedRoot);
+    let descendants = (await this.treeRepository.findDescendants(clonedRoot))
+      .sort((a, b) => a['hierarchy_id'].localeCompare(b['hierarchy_id'], 'en', { numeric: true }));
+
     let groupByName = {};
     for (let descendant of descendants) {
       if (descendant.parentId) {
@@ -173,6 +175,7 @@ export class CapabilityService {
         const parent = (parentNode && groupByName[parentNode.id]) || root;
         node = await this.capabilityRepository.save({
           name: descendant.name,
+          hierarchy_id: descendant.hierarchy_id,
           default: true,
           industry_id: industry.id,
           parent,
