@@ -50,6 +50,7 @@ export class CompanyService {
     root = await this.capabilityRepository.save({
       name: company.name,
       company,
+      original_id: root.id,
       parent: null,
       user,
     });
@@ -62,6 +63,7 @@ export class CompanyService {
         node = await this.capabilityRepository.save({
           name: descendant.name,
           company,
+          original_id: descendant.id,
           parent,
           user,
         });

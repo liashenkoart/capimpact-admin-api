@@ -154,6 +154,13 @@ export class Capability {
   @JoinTable()
   classifications?: Classification[];
 
+  @Field(() => ID, { nullable: true })
+  @Column({
+    name: 'original_id',
+    nullable: true,
+  })
+  original_id?: number;
+
   @BeforeUpdate()
   updateDates?() {
     this.last_update = new Date();
