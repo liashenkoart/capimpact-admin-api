@@ -10,6 +10,10 @@ export { CapabilityCreationInput } from './capability-creation.dto';
 export { CapabilityInput } from './capability.dto';
 export { CapabilitiesArgs } from './capabilities.args';
 
+export { CapabilityLibCreationInput } from './capability-lib-creation.dto';
+export { CapabilityLibInput } from './capability-lib.dto';
+export { CapabilityLibsArgs } from './capability-libs.args';
+
 export { CompanyCreationInput } from './company-creation.dto';
 export { CompanyInput } from './company.dto';
 export { CompaniesArgs } from './companies.args';
