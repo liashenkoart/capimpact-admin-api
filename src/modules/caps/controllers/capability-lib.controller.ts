@@ -37,7 +37,10 @@ export class CapabilityLibController {
   }
 
   @Post('')
-  async create(@Body() data: CapabilityLibCreationInput, @Req() req: any) {
+  async create(
+    @Body() data: CapabilityLibCreationInput,
+    @Req() req: any
+  ) {
     return this.capabilityLibService.create(data);
   }
 

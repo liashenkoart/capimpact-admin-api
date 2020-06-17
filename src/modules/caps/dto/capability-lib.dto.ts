@@ -21,4 +21,9 @@ export class CapabilityLibInput {
   @Field({ nullable: true })
   @IsOptional()
   readonly description?: string;
+
+  @ApiProperty()
+  @Field(() => [ID])
+  @IsOptional()
+  kpiLibs?: any[];
 }
