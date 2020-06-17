@@ -1,6 +1,7 @@
 export { Industry } from './industry.entity';
 export { Process } from './process.entity';
 export { Capability } from './capability.entity';
+export { CapabilityLib } from './capability-lib.entity';
 export { Company } from './company.entity';
 export { Challenge } from './challenge.entity';
 export { Startup } from './startup.entity';
