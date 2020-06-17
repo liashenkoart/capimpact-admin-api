@@ -4,17 +4,22 @@ import { Repository } from 'typeorm';
 
 import { BaseService } from 'modules/common/services';
 
-import { KpiLib } from '../entities';
+import {CapabilityLib, KpiLib} from '../entities';
 import { KpiLibCreationInput, KpiLibInput, KpiLibsArgs } from '../dto';
 
 @Injectable()
 export class KpiLibService extends BaseService {
-  constructor(@InjectRepository(KpiLib) private readonly kpilibRepository: Repository<KpiLib>) {
+  constructor(
+    @InjectRepository(KpiLib) private readonly kpilibRepository: Repository<KpiLib>,
+    @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>
+  ) {
     super();
   }
 
   async findAll(args: KpiLibsArgs): Promise<KpiLib[]> {
-    return await this.kpilibRepository.find(this.getFindAllQuery(args));
+    const options = this.getFindAllQuery(args);
+    options.relations = ['capabilityLibs'];
+    return await this.kpilibRepository.find(options);
   }
 
   async findAllPagination(args: KpiLibsArgs): Promise<[KpiLib[], number]> {
@@ -22,7 +27,11 @@ export class KpiLibService extends BaseService {
   }
 
   async findOneById(id: number): Promise<KpiLib> {
-    return this.kpilibRepository.findOne(id);
+    return this.kpilibRepository
+      .createQueryBuilder('kpiLib')
+      .where('kpiLib.id = :id', { id })
+      .leftJoinAndSelect('kpiLib.capabilityLibs', 'capabilityLibs')
+      .getOne();
   }
 
   async count(args: KpiLibsArgs) {
@@ -31,10 +40,12 @@ export class KpiLibService extends BaseService {
   }
 
   async create(data: KpiLibCreationInput): Promise<KpiLib> {
+    data.capabilityLibs = data.capabilityLibs ? await this.capabilityLibRepository.findByIds(data.capabilityLibs) : [];
     return await this.kpilibRepository.save(this.kpilibRepository.create(data));
   }
 
   async save(id: number, data: KpiLibInput): Promise<KpiLib> {
+    data.capabilityLibs = data.capabilityLibs ? await this.capabilityLibRepository.findByIds(data.capabilityLibs) : [];
     return this.kpilibRepository.save(data);
   }
 
