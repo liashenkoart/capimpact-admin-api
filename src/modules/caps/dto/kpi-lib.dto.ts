@@ -64,5 +64,5 @@ export class KpiLibInput {
   @ApiProperty()
   @Field(() => [ID], { nullable: true })
   @IsOptional()
-  readonly capabilityLibs?: any[];
+  capabilityLibs?: any[];
 }
