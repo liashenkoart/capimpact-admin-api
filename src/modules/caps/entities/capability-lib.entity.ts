@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-import { KpiLib } from './kpi-lib.entity';
+import { KpiLib, CapabilityTree } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('capability_lib')
@@ -15,6 +15,13 @@ export class CapabilityLib {
 
   @Column('text', { nullable: true })
   description: string;
+
+  @Field(() => [CapabilityTree], { nullable: true })
+  @OneToMany(
+    type => CapabilityTree,
+    capabilityTree => capabilityTree.capabilityLib
+  )
+  capabilityTrees?: CapabilityTree[];
 
   @ManyToMany(type => KpiLib, kpiLib => kpiLib.capabilityLibs)
   kpiLibs: KpiLib[];
