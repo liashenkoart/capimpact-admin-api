@@ -1,0 +1,62 @@
+import {
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Body,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+  Param,
+  Delete,
+  Query,
+  Req,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+
+import { CapabilityTreeService } from '../services';
+import { CapabilityTreesArgs, CapabilityTreeInput, CapabilityTreeCreationInput } from '../dto';
+
+@ApiBearerAuth()
+@ApiTags('capability-tree')
+@UseGuards(AuthGuard())
+@UseInterceptors(ClassSerializerInterceptor)
+@Controller('capability-tree')
+export class CapabilityTreeController {
+  constructor(private readonly capabilityTreeService: CapabilityTreeService) {}
+
+  @Get('')
+  async findAll(@Query() query: CapabilityTreesArgs) {
+    return this.capabilityTreeService.findAll(query);
+  }
+
+  @Get('tree')
+  async tree(@Query() query: CapabilityTreesArgs) {
+    return this.capabilityTreeService.tree(query);
+  }
+
+  @Get('/:id')
+  async findOne(@Param('id', new ParseIntPipe()) id: number) {
+    return this.capabilityTreeService.findOneById(id);
+  }
+
+  @Post('')
+  async create(@Body() data: CapabilityTreeCreationInput, @Req() req: any) {
+    return this.capabilityTreeService.create(data);
+  }
+
+  @Post('/:id')
+  async save(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: CapabilityTreeInput,
+    @Req() req: any
+  ) {
+    return this.capabilityTreeService.save(id, data);
+  }
+
+  @Delete('/:id')
+  async remove(@Param('id', new ParseIntPipe()) id: number) {
+    return this.capabilityTreeService.remove(id);
+  }
+}

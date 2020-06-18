@@ -28,17 +28,12 @@ export class CapabilityLibService {
 
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
     data.kpiLibs = data.kpiLibs ? await this.kpiLibRepository.findByIds(data.kpiLibs) : [];
-    const capabilityLib = await this.capabilityLibRepository.save(new CapabilityLib(data));
-    return await this.findOneById(capabilityLib.id);
+    return await this.capabilityLibRepository.save(new CapabilityLib(data));
   }
 
-  async save(id: any, data: CapabilityLibInput): Promise<CapabilityLib> {
+  async save(id: number, data: CapabilityLibInput): Promise<CapabilityLib> {
     data.kpiLibs = data.kpiLibs ? await this.kpiLibRepository.findByIds(data.kpiLibs) : [];
-    let capabilityLib = new CapabilityLib(data);
-    capabilityLib.id = parseInt(id, 10);
-    capabilityLib = await this.capabilityLibRepository.save(capabilityLib);
-    capabilityLib = await this.capabilityLibRepository.findOne({ id: capabilityLib.id });
-    return await this.findOneById(capabilityLib.id);
+    return this.capabilityLibRepository.save(data);
   }
 
   async remove(id: any) {

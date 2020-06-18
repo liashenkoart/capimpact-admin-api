@@ -11,18 +11,18 @@ export class CapabilityTree {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => ID, { nullable: true })
-  @Column({ name: 'capability_lib_id', nullable: true })
-  capability_lib_id?: number;
+  @Field(() => ID)
+  @Column({ name: 'capability_lib_id' })
+  capability_lib_id: number;
 
-  @Field(() => CapabilityLib, { nullable: true })
+  @Field(() => CapabilityLib)
   @ManyToOne(
     type => CapabilityLib,
     capabilityLib => capabilityLib.capabilityTrees,
     { cascade: true }
   )
   @JoinColumn({ name: 'capability_lib_id' })
-  capabilityLib?: CapabilityLib;
+  capabilityLib: CapabilityLib;
 
   @Field(() => ID, { nullable: true })
   @Column({ name: 'industry_tree_id', nullable: true })
@@ -44,6 +44,10 @@ export class CapabilityTree {
   @Field(() => CapabilityTree, { nullable: true })
   @TreeParent()
   parent?: CapabilityTree;
+
+  @Field(() => ID, { nullable: true })
+  @Column({ nullable: true })
+  parentId?: number;
 
   constructor(partial: Partial<CapabilityTree>) {
     Object.assign(this, partial);

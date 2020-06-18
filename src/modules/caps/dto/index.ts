@@ -2,6 +2,10 @@ export { IndustryCreationInput } from './industry-creation.dto';
 export { IndustryInput } from './industry.dto';
 export { IndustriesArgs } from './industries.args';
 
+export { IndustryTreeCreationInput } from './industry-tree-creation.dto';
+export { IndustryTreeInput } from './industry-tree.dto';
+export { IndustryTreesArgs } from './industry-trees.args';
+
 export { ProcessCreationInput } from './process-creation.dto';
 export { ProcessInput } from './process.dto';
 export { ProcessesArgs } from './processes.args';
@@ -13,6 +17,10 @@ export { CapabilitiesArgs } from './capabilities.args';
 export { CapabilityLibCreationInput } from './capability-lib-creation.dto';
 export { CapabilityLibInput } from './capability-lib.dto';
 export { CapabilityLibsArgs } from './capability-libs.args';
+
+export { CapabilityTreeCreationInput } from './capability-tree-creation.dto';
+export { CapabilityTreeInput } from './capability-tree.dto';
+export { CapabilityTreesArgs } from './capability-trees.args';
 
 export { CompanyCreationInput } from './company-creation.dto';
 export { CompanyInput } from './company.dto';

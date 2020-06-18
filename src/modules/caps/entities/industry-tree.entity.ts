@@ -32,6 +32,10 @@ export class IndustryTree {
   @TreeParent()
   parent?: IndustryTree;
 
+  @Field(() => ID, { nullable: true })
+  @Column({ nullable: true })
+  parentId?: number;
+
   constructor(partial: Partial<IndustryTree>) {
     Object.assign(this, partial);
   }

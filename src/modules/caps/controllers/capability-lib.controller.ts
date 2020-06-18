@@ -19,7 +19,7 @@ import { CapabilityLibService } from '../services';
 import { CapabilityLibsArgs, CapabilityLibInput, CapabilityLibCreationInput } from '../dto';
 
 @ApiBearerAuth()
-@ApiTags('capabilities')
+@ApiTags('capability-lib')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('capability-lib')
@@ -37,10 +37,7 @@ export class CapabilityLibController {
   }
 
   @Post('')
-  async create(
-    @Body() data: CapabilityLibCreationInput,
-    @Req() req: any
-  ) {
+  async create(@Body() data: CapabilityLibCreationInput, @Req() req: any) {
     return this.capabilityLibService.create(data);
   }
 
