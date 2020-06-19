@@ -25,18 +25,12 @@ export class IndustryTreeService extends BaseService {
   }
 
   async create(data: IndustryTreeCreationInput): Promise<IndustryTree> {
-    let industryTree = new IndustryTree(data);
-    if (industryTree.parentId) {
-      industryTree.parent = await this.findOneById(industryTree.parentId);
-    }
+    const industryTree = await this.collectEntityFields(new IndustryTree(data));
     return this.industryTreeRepository.save(industryTree);
   }
 
   async save(id: number, data: IndustryTreeInput): Promise<IndustryTree> {
-    let industryTree = new IndustryTree(data);
-    if (industryTree.parentId) {
-      industryTree.parent = await this.findOneById(industryTree.parentId);
-    }
+    const industryTree = await this.collectEntityFields(new IndustryTree(data));
     return this.industryTreeRepository.save(industryTree);
   }
 
@@ -55,5 +49,12 @@ export class IndustryTreeService extends BaseService {
     }
     const tree = await this.treeRepository.findDescendantsTree(root);
     return sortTreeByField('name', tree);
+  }
+
+  async collectEntityFields(industryTree: IndustryTree): Promise<IndustryTree> {
+    if (industryTree.parentId) {
+      industryTree.parent = await this.findOneById(industryTree.parentId);
+    }
+    return industryTree;
   }
 }

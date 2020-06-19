@@ -3,13 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository } from 'typeorm';
 
 import { BaseService } from '@modules/common/services';
-import { CapabilityTree } from '../entities';
+import { CapabilityTree, CapabilityLib, IndustryTree } from '../entities';
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput } from '../dto';
 // import {sortTreeByField} from "@lib/sorting";
 
 @Injectable()
 export class CapabilityTreeService extends BaseService {
   constructor(
+    @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
+    @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(CapabilityTree) private readonly treeRepository: TreeRepository<CapabilityTree>
   ) {
@@ -25,18 +27,12 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
-    let capabilityTree = new CapabilityTree(data);
-    if (capabilityTree.parentId) {
-      capabilityTree.parent = await this.findOneById(capabilityTree.parentId);
-    }
+    const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return await this.capabilityTreeRepository.save(capabilityTree);
   }
 
   async save(id: number, data: CapabilityTreeInput): Promise<CapabilityTree> {
-    let capabilityTree = new CapabilityTree(data);
-    if (capabilityTree.parentId) {
-      capabilityTree.parent = await this.findOneById(capabilityTree.parentId);
-    }
+    const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return this.capabilityTreeRepository.save(capabilityTree);
   }
 
@@ -57,5 +53,22 @@ export class CapabilityTreeService extends BaseService {
     return this.treeRepository.findDescendantsTree(root);
     // const tree = await this.treeRepository.findDescendantsTree(root);
     // return sortTreeByField('name', tree);
+  }
+
+  async collectEntityFields(capabilityTree: CapabilityTree): Promise<CapabilityTree> {
+    if (capabilityTree.parentId) {
+      capabilityTree.parent = await this.findOneById(capabilityTree.parentId);
+    }
+    if (capabilityTree.capability_lib_id) {
+      capabilityTree.capabilityLib = await this.capabilityLibRepository.findOne({
+        id: capabilityTree.capability_lib_id
+      });
+    }
+    if (capabilityTree.industry_tree_id) {
+      capabilityTree.industryTree = await this.industryTreeRepository.findOne({
+        id: capabilityTree.industry_tree_id
+      });
+    }
+    return capabilityTree;
   }
 }
