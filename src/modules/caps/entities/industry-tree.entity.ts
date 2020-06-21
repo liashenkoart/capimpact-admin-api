@@ -36,6 +36,9 @@ export class IndustryTree {
   @Column({ nullable: true })
   parentId?: number;
 
+  @Column('text', { nullable: true })
+  examples?: string;
+
   constructor(partial: Partial<IndustryTree>) {
     Object.assign(this, partial);
   }

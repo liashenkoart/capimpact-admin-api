@@ -10,7 +10,7 @@ export class CapabilityTreeCreationInput {
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @Type(() => Number)
-  readonly parent_id?: number;
+  readonly parentId?: number;
 
   @ApiProperty({ type: Number})
   @Field(() => ID)
