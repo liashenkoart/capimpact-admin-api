@@ -28,7 +28,7 @@ export class IndustryTreeInput {
   readonly parentId?: number;
 
   @ApiProperty()
-  @Field({ nullable: true })
+  @Field(() => [String], { nullable: true })
   @IsOptional()
-  readonly examples?: string;
+  readonly examples?: string[];
 }

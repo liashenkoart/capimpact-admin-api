@@ -4,53 +4,56 @@ import { IndustryTree } from "@modules/caps/entities";
 
 let connection = null;
 
+const getExamples = input => {
+  input = input[0] === '[' && input[input.length-1] === ']' ? input.slice(1, input.length-2) : input;
+  input = input[0] === `'` && input[input.length-1] === `'` ? input.slice(1, input.length-2) : input;
+  return input.length ? input.split(`', '`) : null;
+}
+
 async function main() {
   connection = await createConnection();
   if (!connection.isConnected) {
     throw new Error('connection is not established');
   }
   console.time('buildingIndustryTree')
+  const industries: any = await parseCsv('NAICS_files/naics2017-hier.csv', rows => rows.map(row => ({
+    id: parseInt(row.code, 10),
+    naicsCode: parseInt(row.code, 10),
+    name: row.title,
+    parentId: row.parent_code ? parseInt(row.parent_code, 10) : null,
+  })));
+  const sortedIndustries = industries.sort((a, b) => (a.parentId || 0) - (b.parentId || 0));
+
+  const rawDescriptions: any = await parseCsv('NAICS_files/2017_NAICS_Descriptions.csv', rows => rows);
+  const description = {};
+  rawDescriptions.forEach(d => {
+    if (d.Description !== 'NULL')
+    description[d.Code] = d.Description;
+  });
+
+  const rawExamples: any = await parseCsv('NAICS_files/naics2017-examples.csv', rows => rows);
+  const examplesObj = {};
+  rawExamples.forEach(({ code, examples }) => {
+    const nodeExamples = getExamples(examples);
+    if (nodeExamples) {
+      examplesObj[code] = nodeExamples;
+    }
+  });
+
   await getManager().transaction(async transactionalEntityManager => {
-    const industries: any = await parseCsv('NAICS_files/naics2017-hier.csv', rows => rows.map(row => ({
-      id: parseInt(row.code, 10),
-      name: row.title,
-      parentId: row.parent_code ? parseInt(row.parent_code, 10) : null,
-    })));
-    const sortedIndustries = industries.sort((a, b) => (a.parentId || 0) - (b.parentId || 0));
-
-    const rawDescriptions: any = await parseCsv('NAICS_files/2017_NAICS_Descriptions.csv', rows => rows);
-    const description = {};
-    rawDescriptions.forEach(d => {
-      description[d.Code] = d.Description;
-    });
-
-    const rawExamples: any = await parseCsv('NAICS_files/naics2017-examples.csv', rows => rows);
-    const examples = {};
-    rawExamples.forEach(ex => {
-      const length = ex.examples.length;
-      const str = ex.examples[0] === '[' && ex.examples[length-1] === ']'
-        ? ex.examples.slice(1, length-2)
-        : ex.examples;
-      if (str.length) {
-        examples[ex.code] = str;
-      }
-    });
-
+    const nodes = [];
     for (let industry of sortedIndustries) {
-      if (industry.parentId) {
-        industry.parent = await transactionalEntityManager.findOne(IndustryTree, {
-          where: { id: industry.parentId },
-        });
-      }
       industry.description = description[industry.id] || '';
-      industry.examples = examples[industry.id] || '';
-
-      await transactionalEntityManager
-        .createQueryBuilder()
-        .insert()
-        .into('industry_tree', ['id', 'name', 'parentId', 'parent', 'description', 'examples'])
-        .values([industry])
-        .execute();
+      if (examplesObj[industry.id]){
+        industry.examples = examplesObj[industry.id];
+      }
+      if (industry.parentId) {
+        const parent = nodes.find(i => i.naicsCode === industry.parentId);
+        if (parent) {
+          industry.parent = parent;
+        }
+      }
+      nodes.push(await transactionalEntityManager.save(IndustryTree, new IndustryTree(industry)));
     }
   });
   console.timeEnd('buildingIndustryTree')

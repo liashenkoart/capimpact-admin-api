@@ -17,6 +17,10 @@ export class IndustryTree {
   @Column('text', { nullable: true })
   description: string;
 
+  @Field(() => ID, { nullable: true })
+  @Column({ nullable: true })
+  naicsCode?: number;
+
   @Field(() => [CapabilityTree], { nullable: true })
   @OneToMany(
     type => CapabilityTree,
@@ -36,8 +40,9 @@ export class IndustryTree {
   @Column({ nullable: true })
   parentId?: number;
 
-  @Column('text', { nullable: true })
-  examples?: string;
+  @Field(() => [String], { nullable: true })
+  @Column({ array: true, type: 'varchar', nullable: true })
+  examples?: string[];
 
   constructor(partial: Partial<IndustryTree>) {
     Object.assign(this, partial);
