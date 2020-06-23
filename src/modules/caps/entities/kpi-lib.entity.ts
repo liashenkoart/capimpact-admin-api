@@ -78,9 +78,9 @@ export class KpiLib {
   )
   kpiBenchmarks?: KpiBenchmark[];
 
-  @ManyToMany(type => CapabilityLib, capabilityLib => capabilityLib.kpiLibs)
+  @ManyToMany(type => CapabilityLib, capabilityLib => capabilityLib.kpi_libs)
   @JoinTable({ name: 'cap2kpi' })
-  capabilityLibs: CapabilityLib[];
+  capability_libs: CapabilityLib[];
 
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);

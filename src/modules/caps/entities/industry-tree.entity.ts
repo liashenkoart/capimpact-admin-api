@@ -17,16 +17,16 @@ export class IndustryTree {
   @Column('text', { nullable: true })
   description: string;
 
-  @Field(() => ID, { nullable: true })
+  @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  naicsCode?: number;
+  code?: string;
 
   @Field(() => [CapabilityTree], { nullable: true })
   @OneToMany(
     type => CapabilityTree,
-    capabilityTree => capabilityTree.industryTree
+    capabilityTree => capabilityTree.industry_tree
   )
-  capabilityTrees?: CapabilityTree[];
+  capability_trees?: CapabilityTree[];
 
   @Field(() => [IndustryTree], { nullable: true })
   @TreeChildren({ cascade: true })
@@ -38,7 +38,7 @@ export class IndustryTree {
 
   @Field(() => ID, { nullable: true })
   @Column({ nullable: true })
-  parentId?: number;
+  parent_id?: number;
 
   @Field(() => [String], { nullable: true })
   @Column({ array: true, type: 'varchar', nullable: true })

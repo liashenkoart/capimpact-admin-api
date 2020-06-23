@@ -17,12 +17,11 @@ async function main() {
   }
   console.time('buildingIndustryTree')
   const industries: any = await parseCsv('NAICS_files/naics2017-hier.csv', rows => rows.map(row => ({
-    id: parseInt(row.code, 10),
-    naicsCode: parseInt(row.code, 10),
+    code: row.code,
     name: row.title,
-    parentId: row.parent_code ? parseInt(row.parent_code, 10) : null,
+    parent_id: row.parent_code,
   })));
-  const sortedIndustries = industries.sort((a, b) => (a.parentId || 0) - (b.parentId || 0));
+  const sortedIndustries = industries.sort((a, b) => a.parent_id.localeCompare(b.parent_id, 'en', { numeric: true }));
 
   const rawDescriptions: any = await parseCsv('NAICS_files/2017_NAICS_Descriptions.csv', rows => rows);
   const description = {};
@@ -47,11 +46,14 @@ async function main() {
       if (examplesObj[industry.id]){
         industry.examples = examplesObj[industry.id];
       }
-      if (industry.parentId) {
-        const parent = nodes.find(i => i.naicsCode === industry.parentId);
+      if (industry.parent_id) {
+        const parent = nodes.find(i => i.code === industry.parent_id);
         if (parent) {
           industry.parent = parent;
+          industry.parent_id = parent.id;
         }
+      } else {
+        industry.parent_id = null;
       }
       nodes.push(await transactionalEntityManager.save(IndustryTree, new IndustryTree(industry)));
     }

@@ -14,7 +14,7 @@ export class CapabilityLibService {
 
   async findAll(query: CapabilityLibsArgs): Promise<CapabilityLib[] | void> {
     const options = this.getFindAllQuery(query);
-    options.relations = ['kpiLibs'];
+    options.relations = ['kpi_libs'];
     return this.capabilityLibRepository.find(options);
   }
 
@@ -22,17 +22,17 @@ export class CapabilityLibService {
     return this.capabilityLibRepository
       .createQueryBuilder('capabilityLib')
       .where('capabilityLib.id = :id', { id })
-      .leftJoinAndSelect('capabilityLib.kpiLibs', 'kpiLibs')
+      .leftJoinAndSelect('capabilityLib.kpi_libs', 'kpi_libs')
       .getOne();
   }
 
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
-    data.kpiLibs = data.kpiLibs ? await this.kpiLibRepository.findByIds(data.kpiLibs) : [];
+    data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
     return await this.capabilityLibRepository.save(new CapabilityLib(data));
   }
 
   async save(id: number, data: CapabilityLibInput): Promise<CapabilityLib> {
-    data.kpiLibs = data.kpiLibs ? await this.kpiLibRepository.findByIds(data.kpiLibs) : [];
+    data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
     return this.capabilityLibRepository.save(data);
   }
 

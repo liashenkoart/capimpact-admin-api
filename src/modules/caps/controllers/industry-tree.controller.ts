@@ -36,6 +36,11 @@ export class IndustryTreeController {
     return this.industryTreeService.tree(query);
   }
 
+  @Get('tree/:code')
+  async treeByCode(@Param('code') code: string) {
+    return this.industryTreeService.treeByCode(code);
+  }
+
   @Get('/:id')
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.industryTreeService.findOneById(id);

@@ -42,19 +42,28 @@ export class IndustryTreeService extends BaseService {
     return { id };
   }
 
-  async tree(query: IndustryTreesArgs): Promise<IndustryTree> {
-    const root = await this.industryTreeRepository.findOne({ parentId: null });
-    if (!root) {
-      throw new NotFoundException();
-    }
-    const tree = await this.treeRepository.findDescendantsTree(root);
-    return sortTreeByField('name', tree);
+  async tree(query: IndustryTreesArgs): Promise<IndustryTree[] | void> {
+    const roots = await this.industryTreeRepository.find({ where: { parent_id: null } });
+    return Promise.all(roots.map(root => this.getTreeForNode(root)));
+  }
+
+  async treeByCode(code: string) {
+    const node = await this.industryTreeRepository.findOne({ code });
+    return this.getTreeForNode(node);
   }
 
   async collectEntityFields(industryTree: IndustryTree): Promise<IndustryTree> {
-    if (industryTree.parentId) {
-      industryTree.parent = await this.findOneById(industryTree.parentId);
+    if (industryTree.parent_id) {
+      industryTree.parent = await this.findOneById(industryTree.parent_id);
     }
     return industryTree;
+  }
+
+  async getTreeForNode(node: IndustryTree): Promise<IndustryTree> {
+    if (!node) {
+      throw new NotFoundException();
+    }
+    const tree = await this.treeRepository.findDescendantsTree(node);
+    return sortTreeByField('name', tree);
   }
 }

@@ -12,7 +12,7 @@ export class CapabilityTreesArgs extends BaseArgs {
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @Type(() => Number)
-  readonly parentId?: number;
+  readonly parent_id?: number;
 
   @ApiPropertyOptional({ type: Number})
   @Field(() => ID, { nullable: true })

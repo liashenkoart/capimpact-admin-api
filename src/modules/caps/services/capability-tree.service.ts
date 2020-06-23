@@ -45,7 +45,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async tree(query: CapabilityTreesArgs): Promise<CapabilityTree> {
-    const root = await this.capabilityTreeRepository.findOne({ parentId: null });
+    const root = await this.capabilityTreeRepository.findOne({ parent_id: null });
     if (!root) {
       throw new NotFoundException();
     }
@@ -56,16 +56,16 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async collectEntityFields(capabilityTree: CapabilityTree): Promise<CapabilityTree> {
-    if (capabilityTree.parentId) {
-      capabilityTree.parent = await this.findOneById(capabilityTree.parentId);
+    if (capabilityTree.parent_id) {
+      capabilityTree.parent = await this.findOneById(capabilityTree.parent_id);
     }
     if (capabilityTree.capability_lib_id) {
-      capabilityTree.capabilityLib = await this.capabilityLibRepository.findOne({
+      capabilityTree.capability_lib = await this.capabilityLibRepository.findOne({
         id: capabilityTree.capability_lib_id
       });
     }
     if (capabilityTree.industry_tree_id) {
-      capabilityTree.industryTree = await this.industryTreeRepository.findOne({
+      capabilityTree.industry_tree = await this.industryTreeRepository.findOne({
         id: capabilityTree.industry_tree_id
       });
     }

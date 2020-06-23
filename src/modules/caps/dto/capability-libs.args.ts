@@ -9,5 +9,5 @@ export class CapabilityLibsArgs extends BaseArgs {
   @ApiPropertyOptional({ type: Number, isArray: true })
   @Field(() => [ID], { nullable: true })
   @IsOptional()
-  kpiLibs?: number[];
+  kpi_libs?: number[];
 }
