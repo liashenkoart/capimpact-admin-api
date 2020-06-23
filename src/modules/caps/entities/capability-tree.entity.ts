@@ -47,7 +47,7 @@ export class CapabilityTree {
 
   @Field(() => ID, { nullable: true })
   @Column({ nullable: true })
-  parent_id?: number;
+  parentId?: number;
 
   constructor(partial: Partial<CapabilityTree>) {
     Object.assign(this, partial);

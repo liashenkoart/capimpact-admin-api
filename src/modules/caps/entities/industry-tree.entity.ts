@@ -11,15 +11,23 @@ export class IndustryTree {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  code?: string;
+
   @Column('text')
   name: string;
 
   @Column('text', { nullable: true })
   description: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => [String], { nullable: true })
+  @Column({ array: true, type: 'varchar', nullable: true })
+  examples?: string[];
+
+  @Field(() => ID, { nullable: true })
   @Column({ nullable: true })
-  code?: string;
+  parentId?: number;
 
   @Field(() => [CapabilityTree], { nullable: true })
   @OneToMany(
@@ -35,14 +43,6 @@ export class IndustryTree {
   @Field(() => IndustryTree, { nullable: true })
   @TreeParent()
   parent?: IndustryTree;
-
-  @Field(() => ID, { nullable: true })
-  @Column({ nullable: true })
-  parent_id?: number;
-
-  @Field(() => [String], { nullable: true })
-  @Column({ array: true, type: 'varchar', nullable: true })
-  examples?: string[];
 
   constructor(partial: Partial<IndustryTree>) {
     Object.assign(this, partial);

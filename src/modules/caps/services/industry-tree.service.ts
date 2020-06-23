@@ -30,6 +30,7 @@ export class IndustryTreeService extends BaseService {
   }
 
   async save(id: number, data: IndustryTreeInput): Promise<IndustryTree> {
+    data.id = id;
     const industryTree = await this.collectEntityFields(new IndustryTree(data));
     return this.industryTreeRepository.save(industryTree);
   }
@@ -43,7 +44,7 @@ export class IndustryTreeService extends BaseService {
   }
 
   async tree(query: IndustryTreesArgs): Promise<IndustryTree[] | void> {
-    const roots = await this.industryTreeRepository.find({ where: { parent_id: null } });
+    const roots = await this.industryTreeRepository.find({ where: { parentId: null } });
     return Promise.all(roots.map(root => this.getTreeForNode(root)));
   }
 
@@ -53,8 +54,8 @@ export class IndustryTreeService extends BaseService {
   }
 
   async collectEntityFields(industryTree: IndustryTree): Promise<IndustryTree> {
-    if (industryTree.parent_id) {
-      industryTree.parent = await this.findOneById(industryTree.parent_id);
+    if (industryTree.parentId) {
+      industryTree.parent = await this.findOneById(industryTree.parentId);
     }
     return industryTree;
   }

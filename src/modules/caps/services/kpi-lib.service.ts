@@ -18,7 +18,7 @@ export class KpiLibService extends BaseService {
 
   async findAll(args: KpiLibsArgs): Promise<KpiLib[]> {
     const options = this.getFindAllQuery(args);
-    options.relations = ['capabilityLibs'];
+    options.relations = ['capability_libs'];
     return await this.kpilibRepository.find(options);
   }
 
@@ -30,7 +30,7 @@ export class KpiLibService extends BaseService {
     return this.kpilibRepository
       .createQueryBuilder('kpiLib')
       .where('kpiLib.id = :id', { id })
-      .leftJoinAndSelect('kpiLib.capabilityLibs', 'capabilityLibs')
+      .leftJoinAndSelect('kpiLib.capability_libs', 'capability_libs')
       .getOne();
   }
 
@@ -40,13 +40,16 @@ export class KpiLibService extends BaseService {
   }
 
   async create(data: KpiLibCreationInput): Promise<KpiLib> {
-    data.capabilityLibs = data.capabilityLibs ? await this.capabilityLibRepository.findByIds(data.capabilityLibs) : [];
+    data.capability_libs = data.capability_libs
+      ? await this.capabilityLibRepository.findByIds(data.capability_libs) : [];
     return await this.kpilibRepository.save(this.kpilibRepository.create(data));
   }
 
   async save(id: number, data: KpiLibInput): Promise<KpiLib> {
-    data.capabilityLibs = data.capabilityLibs ? await this.capabilityLibRepository.findByIds(data.capabilityLibs) : [];
-    return this.kpilibRepository.save(data);
+    data.id = id;
+    data.capability_libs = data.capability_libs
+      ? await this.capabilityLibRepository.findByIds(data.capability_libs) : [];
+    return this.kpilibRepository.save(new KpiLib(data));
   }
 
   async saveMany(data: KpiLibInput[]) {
