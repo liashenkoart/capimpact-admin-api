@@ -50,6 +50,14 @@ export class CapabilityLibController {
     return this.capabilityLibService.save(id, data);
   }
 
+  @Delete('/:id/kpi-lib/:kpi_lib_id')
+  async removeKpiLibs(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Param('kpi_lib_id', new ParseIntPipe()) kpi_lib_id: number
+    ) {
+    return this.capabilityLibService.removeKpiLib(id, kpi_lib_id);
+  }
+
   @Delete('/:id')
   async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityLibService.remove(id);

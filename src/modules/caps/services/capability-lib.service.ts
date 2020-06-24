@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
 
@@ -19,11 +19,7 @@ export class CapabilityLibService {
   }
 
   async findOneById(id: number): Promise<CapabilityLib> {
-    return this.capabilityLibRepository
-      .createQueryBuilder('capabilityLib')
-      .where('capabilityLib.id = :id', { id })
-      .leftJoinAndSelect('capabilityLib.kpi_libs', 'kpi_libs')
-      .getOne();
+    return this.getOneByIdWithKpiLibs(id);
   }
 
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
@@ -32,18 +28,28 @@ export class CapabilityLibService {
   }
 
   async save(id: number, data: CapabilityLibInput): Promise<CapabilityLib> {
+    const { kpi_libs } = await this.getOneByIdWithKpiLibs(id);
+    const kpi_lib_ids = kpi_libs.map(({ id }) => id);
+    let newKpiLibs = [];
+    if (data.kpi_libs) {
+      newKpiLibs = (await this.kpiLibRepository.findByIds(data.kpi_libs))
+        .filter(({ id }) => !kpi_lib_ids.includes(id));
+    }
     data.id = id;
-    data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
+    data.kpi_libs = [...kpi_libs, ...newKpiLibs];
     return this.capabilityLibRepository.save(new CapabilityLib(data));
   }
 
-  async remove(id: any) {
-    id = parseInt(id, 10);
-    const node = await this.capabilityLibRepository.findOne(id);
-    if (node) {
-      await this.capabilityLibRepository.remove(node);
-    }
+  async remove(id: number) {
+    const capabilityLib = await this.getOneById(id);
+    await this.capabilityLibRepository.remove(capabilityLib);
     return { id };
+  }
+
+  async removeKpiLib(id: number, kpi_lib_id: number) {
+    const capabilityLib = await this.getOneByIdWithKpiLibs(id);
+    capabilityLib.kpi_libs = capabilityLib.kpi_libs.filter(item => item.id !== kpi_lib_id);
+    return this.capabilityLibRepository.save(capabilityLib);
   }
 
   getFindAllQuery(query: CapabilityLibsArgs): FindManyOptions {
@@ -53,5 +59,24 @@ export class CapabilityLibService {
       take: limit,
       where,
     };
+  }
+
+  async getOneById(id: number): Promise<CapabilityLib> {
+    const capabilityLib = await this.capabilityLibRepository.findOne({ id });
+    if (!capabilityLib) {
+      throw new NotFoundException();
+    }
+    return capabilityLib
+  }
+  async getOneByIdWithKpiLibs(id: number): Promise<CapabilityLib> {
+    const capabilityLib = await this.capabilityLibRepository
+      .createQueryBuilder('capabilityLib')
+      .where('capabilityLib.id = :id', { id })
+      .leftJoinAndSelect('capabilityLib.kpi_libs', 'kpi_libs')
+      .getOne();
+    if (!capabilityLib) {
+      throw new NotFoundException();
+    }
+    return capabilityLib;
   }
 }

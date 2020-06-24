@@ -12,15 +12,16 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 
 import { KpiLibService } from '../services';
 import { KpiLibInput, KpiLibCreationInput, KpiLibsArgs } from '../dto';
 
-//@UseGuards(AuthGuard())
-@ApiTags('kpilibs')
+@ApiBearerAuth()
+@ApiTags('kpi-libs')
+@UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('kpilibs')
+@Controller('kpi-libs')
 export class KpiLibController {
   constructor(private readonly kpilibService: KpiLibService) {}
 
@@ -53,6 +54,14 @@ export class KpiLibController {
   @Post('/bulk')
   async saveMany(@Body() data: KpiLibInput[]) {
     return this.kpilibService.saveMany(data);
+  }
+
+  @Delete('/:id/capability-lib/:capability_lib_id')
+  async removeKpiLibs(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Param('capability_lib_id', new ParseIntPipe()) capability_lib_id: number
+  ) {
+    return this.kpilibService.removeCapabilityLib(id, capability_lib_id);
   }
 
   @Delete('/:id')

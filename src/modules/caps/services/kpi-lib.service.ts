@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -27,11 +27,7 @@ export class KpiLibService extends BaseService {
   }
 
   async findOneById(id: number): Promise<KpiLib> {
-    return this.kpilibRepository
-      .createQueryBuilder('kpiLib')
-      .where('kpiLib.id = :id', { id })
-      .leftJoinAndSelect('kpiLib.capability_libs', 'capability_libs')
-      .getOne();
+    return this.getOneByIdWithCapabilityLibs(id);
   }
 
   async count(args: KpiLibsArgs) {
@@ -46,9 +42,15 @@ export class KpiLibService extends BaseService {
   }
 
   async save(id: number, data: KpiLibInput): Promise<KpiLib> {
+    const { capability_libs } = await this.getOneByIdWithCapabilityLibs(id);
+    const capability_lib_ids = capability_libs.map(({ id }) => id);
+    let newCapabilityLibs = [];
+    if (data.capability_libs) {
+      newCapabilityLibs = (await this.capabilityLibRepository.findByIds(data.capability_libs))
+        .filter(({ id }) => !capability_lib_ids.includes(id));
+    }
     data.id = id;
-    data.capability_libs = data.capability_libs
-      ? await this.capabilityLibRepository.findByIds(data.capability_libs) : [];
+    data.capability_libs = [...capability_libs, ...newCapabilityLibs];
     return this.kpilibRepository.save(new KpiLib(data));
   }
 
@@ -57,8 +59,26 @@ export class KpiLibService extends BaseService {
     return await this.kpilibRepository.findByIds(data.map(kl => kl.id));
   }
 
+  async removeCapabilityLib(id: number, capability_lib_id: number) {
+    const kpiLib = await this.getOneByIdWithCapabilityLibs(id);
+    kpiLib.capability_libs = kpiLib.capability_libs.filter(item => item.id !== capability_lib_id);
+    return this.kpilibRepository.save(kpiLib);
+  }
+
   async remove(id: number) {
     await this.kpilibRepository.delete(id);
     return { id };
+  }
+
+  async getOneByIdWithCapabilityLibs(id: number): Promise<KpiLib> {
+    const kpiLib = await this.kpilibRepository
+      .createQueryBuilder('kpiLib')
+      .where('kpiLib.id = :id', { id })
+      .leftJoinAndSelect('kpiLib.capability_libs', 'capability_libs')
+      .getOne();
+    if (!kpiLib) {
+      throw new NotFoundException();
+    }
+    return kpiLib;
   }
 }
