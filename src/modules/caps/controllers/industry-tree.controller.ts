@@ -60,6 +60,14 @@ export class IndustryTreeController {
     return this.industryTreeService.save(id, data);
   }
 
+  @Delete('/:id/company/:company_id')
+  async removeKpiLibs(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Param('company_id', new ParseIntPipe()) company_id: number
+  ) {
+    return this.industryTreeService.removeCompany(id, company_id);
+  }
+
   @Delete('/:id')
   async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.industryTreeService.remove(id);

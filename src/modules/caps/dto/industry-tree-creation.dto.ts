@@ -31,4 +31,9 @@ export class IndustryTreeCreationInput {
   @Field({ nullable: true })
   @IsOptional()
   readonly code?: string;
+
+  @ApiProperty()
+  @Field(() => [ID])
+  @IsOptional()
+  companies?: any[];
 }

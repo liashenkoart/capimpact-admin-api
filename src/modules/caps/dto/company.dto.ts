@@ -1,7 +1,7 @@
 import { InputType, Field, ID } from 'type-graphql';
-import { IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
+import { IsOptional, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 @InputType()
 export class CompanyInput {
@@ -32,4 +32,9 @@ export class CompanyInput {
   @ApiProperty()
   @IsOptional()
   readonly capabilities?: any[];
+
+  @ApiProperty()
+  @Field(() => [ID])
+  @IsOptional()
+  industry_trees?: any[];
 }

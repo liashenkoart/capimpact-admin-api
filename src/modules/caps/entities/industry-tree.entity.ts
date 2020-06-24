@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, Tree, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, Tree, OneToMany, ManyToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-import { CapabilityTree } from '@modules/caps/entities';
+import { CapabilityTree, Company } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('industry_tree')
@@ -43,6 +43,9 @@ export class IndustryTree {
   @Field(() => IndustryTree, { nullable: true })
   @TreeParent()
   parent?: IndustryTree;
+
+  @ManyToMany(type => Company, company => company.industry_trees)
+  companies: Company[];
 
   constructor(partial: Partial<IndustryTree>) {
     Object.assign(this, partial);

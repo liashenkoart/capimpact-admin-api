@@ -13,4 +13,9 @@ export class IndustryTreesArgs extends BaseArgs {
   @IsOptional()
   @Type(() => Number)
   readonly parentId?: number;
+
+  @ApiPropertyOptional({ type: Number, isArray: true })
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  companies?: number[];
 }

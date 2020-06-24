@@ -3,13 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository } from 'typeorm';
 
 import { BaseService } from '@modules/common/services';
-import { IndustryTree } from '../entities';
+import { IndustryTree, Company } from '../entities';
 import { IndustryTreesArgs, IndustryTreeCreationInput, IndustryTreeInput } from '../dto';
 import { sortTreeByField } from "@lib/sorting";
 
 @Injectable()
 export class IndustryTreeService extends BaseService {
   constructor(
+    @InjectRepository(Company) private readonly companyRepository: Repository<Company>,
     @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(IndustryTree) private readonly treeRepository: TreeRepository<IndustryTree>
   ) {
@@ -17,11 +18,13 @@ export class IndustryTreeService extends BaseService {
   }
 
   async findAll(query: IndustryTreesArgs): Promise<IndustryTree[] | void> {
-    return this.industryTreeRepository.find(this.getFindAllQuery(query));
+    const options = this.getFindAllQuery(query);
+    options.relations = ['companies'];
+    return this.industryTreeRepository.find(options);
   }
 
-  async findOneById(id: number): Promise<IndustryTree> {
-    return this.industryTreeRepository.findOne({ id });
+  findOneById(id: number): Promise<IndustryTree> {
+    return this.getOneByIdWithCompanies(id);
   }
 
   async create(data: IndustryTreeCreationInput): Promise<IndustryTree> {
@@ -32,7 +35,16 @@ export class IndustryTreeService extends BaseService {
   async save(id: number, data: IndustryTreeInput): Promise<IndustryTree> {
     data.id = id;
     const industryTree = await this.collectEntityFields(new IndustryTree(data));
-    return this.industryTreeRepository.save(industryTree);
+    const { companies } = await this.getOneByIdWithCompanies(id);
+    const companies_ids = companies.map(({ id }) => id);
+    let newCompanies = [];
+    if (data.companies) {
+      newCompanies = (await this.companyRepository.findByIds(data.companies))
+        .filter(({ id }) => !companies_ids.includes(id));
+    }
+    industryTree.companies = [...companies, ...newCompanies];
+    await this.industryTreeRepository.save(industryTree);
+    return this.getOneByIdWithCompanies(id);
   }
 
   async remove(id: number) {
@@ -41,6 +53,12 @@ export class IndustryTreeService extends BaseService {
       await this.industryTreeRepository.remove(node);
     }
     return { id };
+  }
+
+  async removeCompany(id: number, company_id: number) {
+    const industryTree = await this.getOneByIdWithCompanies(id);
+    industryTree.companies = industryTree.companies.filter(item => item.id !== company_id);
+    return this.industryTreeRepository.save(industryTree);
   }
 
   async tree(query: IndustryTreesArgs): Promise<IndustryTree[] | void> {
@@ -54,8 +72,12 @@ export class IndustryTreeService extends BaseService {
   }
 
   async collectEntityFields(industryTree: IndustryTree): Promise<IndustryTree> {
-    if (industryTree.parentId) {
-      industryTree.parent = await this.findOneById(industryTree.parentId);
+    const { parentId, companies } = industryTree;
+    if (parentId) {
+      industryTree.parent = await this.findOneById(parentId);
+    }
+    if (companies) {
+      industryTree.companies = await this.companyRepository.findByIds(companies);
     }
     return industryTree;
   }
@@ -66,5 +88,17 @@ export class IndustryTreeService extends BaseService {
     }
     const tree = await this.treeRepository.findDescendantsTree(node);
     return sortTreeByField('name', tree);
+  }
+
+  async getOneByIdWithCompanies(id: number): Promise<IndustryTree> {
+    const industryTree = await this.industryTreeRepository
+      .createQueryBuilder('industryTree')
+      .where('industryTree.id = :id', { id })
+      .leftJoinAndSelect('industryTree.companies', 'companies')
+      .getOne();
+    if (!industryTree) {
+      throw new NotFoundException();
+    }
+    return industryTree;
   }
 }

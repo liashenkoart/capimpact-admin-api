@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import { BaseService } from 'modules/common/services';
 
-import {CapabilityLib, KpiLib} from '../entities';
+import { CapabilityLib, KpiLib } from '../entities';
 import { KpiLibCreationInput, KpiLibInput, KpiLibsArgs } from '../dto';
 
 @Injectable()
