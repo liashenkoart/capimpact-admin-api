@@ -19,10 +19,10 @@ import { IndustryTreeService } from '../services';
 import { IndustryTreesArgs, IndustryTreeInput, IndustryTreeCreationInput } from '../dto';
 
 @ApiBearerAuth()
-@ApiTags('industry-tree')
+@ApiTags('industry-trees')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('industry-tree')
+@Controller('industry-trees')
 export class IndustryTreeController {
   constructor(private readonly industryTreeService: IndustryTreeService) {}
 

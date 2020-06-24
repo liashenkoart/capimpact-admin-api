@@ -19,10 +19,10 @@ import { CapabilityLibService } from '../services';
 import { CapabilityLibsArgs, CapabilityLibInput, CapabilityLibCreationInput } from '../dto';
 
 @ApiBearerAuth()
-@ApiTags('capability-lib')
+@ApiTags('capability-libs')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('capability-lib')
+@Controller('capability-libs')
 export class CapabilityLibController {
   constructor(private readonly capabilityLibService: CapabilityLibService) {}
 

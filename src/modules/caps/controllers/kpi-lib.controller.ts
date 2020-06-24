@@ -2,7 +2,7 @@ import {
   Controller,
   Get,
   Post,
-  UseGuards,
+//  UseGuards,
   Body,
   UseInterceptors,
   ClassSerializerInterceptor,
@@ -11,17 +11,21 @@ import {
   Query,
   ParseIntPipe,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+//import { AuthGuard } from '@nestjs/passport';
+import {
+  ApiTags,
+//  ApiBearerAuth,
+  ApiBody
+} from '@nestjs/swagger';
 
 import { KpiLibService } from '../services';
 import { KpiLibInput, KpiLibCreationInput, KpiLibsArgs } from '../dto';
 
-@ApiBearerAuth()
-@ApiTags('kpi-libs')
-@UseGuards(AuthGuard())
+//@ApiBearerAuth()
+@ApiTags('kpilibs')
+//@UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('kpi-libs')
+@Controller('kpilibs')
 export class KpiLibController {
   constructor(private readonly kpilibService: KpiLibService) {}
 
