@@ -1,5 +1,8 @@
 // import { APP_INTERCEPTOR } from '@nestjs/core';
-import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
+import {
+  Module,
+  // CacheModule, CacheInterceptor
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,10 +11,13 @@ import { PassportModule } from '@nestjs/passport';
 import { User } from '@modules/users/user.entity';
 import {
   Industry,
+  IndustryTree,
   Company,
   Challenge,
   Process,
   Capability,
+  CapabilityLib,
+  CapabilityTree,
   Startup,
   Classification,
   GroupTag,
@@ -47,10 +53,13 @@ export const MODULE = {
         entities: [
           User,
           Industry,
+          IndustryTree,
           Company,
           Challenge,
           Process,
           Capability,
+          CapabilityLib,
+          CapabilityTree,
           Startup,
           Classification,
           Lense,

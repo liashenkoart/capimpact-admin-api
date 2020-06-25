@@ -63,9 +63,15 @@ export class KpiLibInput {
   readonly is_active?: boolean;
 
   @ApiProperty()
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  capabilityLibs?: any[];
+
+  @ApiProperty()
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
   process_id?: number;
+
 }

@@ -8,8 +8,11 @@ import { Neo4jModule } from '@modules/neo4j';
 // Entities
 import {
   Industry,
+  IndustryTree,
   Process,
   Capability,
+  CapabilityLib,
+  CapabilityTree,
   Company,
   Challenge,
   Startup,
@@ -26,8 +29,11 @@ import {
 // Services
 import {
   IndustryService,
+  IndustryTreeService,
   ProcessService,
   CapabilityService,
+  CapabilityLibService,
+  CapabilityTreeService,
   CompanyService,
   ChallengeService,
   StartupService,
@@ -42,8 +48,11 @@ import {
 // Controllers
 import {
   IndustryController,
+  IndustryTreeController,
   ProcessController,
   CapabilityController,
+  CapabilityLibController,
+  CapabilityTreeController,
   CompanyController,
   ChallengeController,
   StartupController,
@@ -62,8 +71,11 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
   imports: [
     TypeOrmModule.forFeature([
       Industry,
+      IndustryTree,
       Process,
       Capability,
+      CapabilityLib,
+      CapabilityTree,
       Company,
       Challenge,
       Startup,
@@ -82,8 +94,11 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
   ],
   controllers: [
     IndustryController,
+    IndustryTreeController,
     ProcessController,
     CapabilityController,
+    CapabilityLibController,
+    CapabilityTreeController,
     CompanyController,
     ChallengeController,
     StartupController,
@@ -97,7 +112,10 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
   providers: [
     ProcessService,
     IndustryService,
+    IndustryTreeService,
     CapabilityService,
+    CapabilityLibService,
+    CapabilityTreeService,
     CompanyService,
     ChallengeService,
     IndustryResolver,
@@ -113,8 +131,11 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
   ],
   exports: [
     IndustryService,
+    IndustryTreeService,
     ProcessService,
     CapabilityService,
+    CapabilityLibService,
+    CapabilityTreeService,
     CompanyService,
     ChallengeService,
     StartupService,

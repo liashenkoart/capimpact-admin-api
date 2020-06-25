@@ -2,14 +2,16 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
   OneToMany,
-  JoinColumn,
   Unique,
+  ManyToOne,
+  JoinColumn,
+  ManyToMany,
+  JoinTable
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-import { Benchmark, KpiBenchmark, Process } from '@modules/caps/entities';
+import { Benchmark, KpiBenchmark, Process, CapabilityLib } from '@modules/caps/entities';
 
 export enum BenefitType {
   Revenue = 'Revenue',
@@ -92,6 +94,10 @@ export class KpiLib {
   )
   @JoinColumn({ name: 'process_id' })
   process?: Process;
+
+  @ManyToMany(type => CapabilityLib, capabilityLib => capabilityLib.kpiLibs)
+  @JoinTable({ name: 'cap2kpi' })
+  capabilityLibs: CapabilityLib[];
 
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);

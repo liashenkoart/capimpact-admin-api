@@ -1,6 +1,9 @@
 export { IndustryService } from './industry.service';
+export { IndustryTreeService } from './industry-tree.service';
 export { ProcessService } from './process.service';
 export { CapabilityService } from './capability.service';
+export { CapabilityLibService } from './capability-lib.service';
+export { CapabilityTreeService } from './capability-tree.service';
 export { CompanyService } from './company.service';
 export { ChallengeService } from './challenge.service';
 export { StartupService } from './startup.service';

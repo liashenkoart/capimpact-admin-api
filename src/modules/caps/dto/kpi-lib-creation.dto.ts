@@ -57,6 +57,11 @@ export class KpiLibCreationInput {
   readonly is_active?: boolean;
 
   @ApiProperty()
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  capabilityLibs?: any[];
+
+  @ApiProperty()
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @IsNumber()
