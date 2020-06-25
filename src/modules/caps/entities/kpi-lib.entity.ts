@@ -9,8 +9,7 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-import { Benchmark } from './benchmark.entity';
-import { KpiBenchmark } from './kpi-benchmark.entity';
+import { Benchmark, KpiBenchmark, Process } from '@modules/caps/entities';
 
 export enum BenefitType {
   Revenue = 'Revenue',
@@ -83,7 +82,16 @@ export class KpiLib {
     type => KpiBenchmark,
     kpiBenchmark => kpiBenchmark.kpilib
   )
-  kpiBenchmarks?: KpiBenchmark[];
+  kpiBenchmarks?: KpiBenchmark[]
+
+  @Field(() => Process, { nullable: true })
+  @ManyToOne(
+    type => Process,
+    process => process.kpi_libs,
+    { cascade: true }
+  )
+  @JoinColumn({ name: 'process_id' })
+  process?: Process;
 
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);

@@ -8,13 +8,14 @@ import { flattenTree } from '@lib/sorting';
 
 import { Neo4jService } from '@modules/neo4j/services';
 
-import { Industry, Process } from '../entities';
+import { Industry, KpiLib, Process } from '../entities';
 import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '../dto';
 
 @Injectable()
 export class ProcessService {
   constructor(
     private readonly neo4jService: Neo4jService,
+    @InjectRepository(KpiLib) private readonly kpiLibRepository: Repository<KpiLib>,
     @InjectRepository(Process) private readonly processRepository: Repository<Process>,
     @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
@@ -55,6 +56,10 @@ export class ProcessService {
     const { user } = context;
     const process = new Process(data);
     process.parent = await this.findOneById(process.parentId);
+    if (data.kpi_libs) {
+      const ids = data.kpi_libs.map(id => parseInt(id, 10))
+      data.kpi_libs = await this.kpiLibRepository.findByIds(ids);
+    }
     process.user = user;
     await this.processRepository.save(process);
     return await this.findOneById(process.id);
@@ -126,6 +131,10 @@ export class ProcessService {
     process.user = user;
     if (process.parentId) {
       process.parent = await this.findOneById(process.parentId);
+    }
+    if (data.kpi_libs) {
+      const ids = data.kpi_libs.map(id => parseInt(id, 10))
+      data.kpi_libs = await this.kpiLibRepository.findByIds(ids);
     }
     process = await this.processRepository.save(process);
     process = await this.processRepository.findOne({ id: process.id });
