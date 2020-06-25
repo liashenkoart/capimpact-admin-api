@@ -41,11 +41,16 @@ export class ProcessService {
 
   async findAll(query: ProcessesArgs): Promise<Process[]> {
     const options = this.getFindAllQuery(query);
+    options.relations = ['kpi_libs'];
     return this.processRepository.find(options);
   }
 
-  async findOneById(id: number): Promise<Process> {
-    return this.processRepository.findOne({ id });
+  findOneById(id: number): Promise<Process> {
+    return this.processRepository
+      .createQueryBuilder('process')
+      .where('process.id = :id', { id })
+      .leftJoinAndSelect('process.kpi_libs', 'kpi_libs')
+      .getOne();
   }
 
   async countDocuments(query: ProcessesArgs): Promise<number> {
@@ -58,7 +63,7 @@ export class ProcessService {
     process.parent = await this.findOneById(process.parentId);
     if (data.kpi_libs) {
       const ids = data.kpi_libs.map(id => parseInt(id, 10))
-      data.kpi_libs = await this.kpiLibRepository.findByIds(ids);
+      process.kpi_libs = await this.kpiLibRepository.findByIds(ids);
     }
     process.user = user;
     await this.processRepository.save(process);
@@ -134,7 +139,7 @@ export class ProcessService {
     }
     if (data.kpi_libs) {
       const ids = data.kpi_libs.map(id => parseInt(id, 10))
-      data.kpi_libs = await this.kpiLibRepository.findByIds(ids);
+      process.kpi_libs = await this.kpiLibRepository.findByIds(ids);
     }
     process = await this.processRepository.save(process);
     process = await this.processRepository.findOne({ id: process.id });
