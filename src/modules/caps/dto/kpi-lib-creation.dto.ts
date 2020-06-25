@@ -1,7 +1,8 @@
-import {InputType, Field, ID} from 'type-graphql';
-import { IsOptional } from 'class-validator';
+import { InputType, Field, ID } from 'type-graphql';
+import { IsNumber, IsOptional } from 'class-validator';
 import { BenefitType } from '../entities';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 @InputType()
 export class KpiLibCreationInput {
@@ -59,4 +60,11 @@ export class KpiLibCreationInput {
   @Field(() => [ID], { nullable: true })
   @IsOptional()
   capability_libs?: any[];
+
+  @ApiProperty()
+  @Field(() => ID, { nullable: true })
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  process_id?: number;
 }

@@ -1,6 +1,7 @@
 import { InputType, Field, ID } from 'type-graphql';
 import { IsOptional, IsNumber } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 @InputType()
 export class ProcessInput {
@@ -19,6 +20,7 @@ export class ProcessInput {
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @IsNumber()
+  @Type(() => Number)
   readonly industry_id?: number;
 
   @ApiProperty()
@@ -50,4 +52,9 @@ export class ProcessInput {
   @IsOptional()
   @IsNumber()
   readonly parentId?: number;
+
+  @ApiProperty()
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  kpi_libs?: any[];
 }

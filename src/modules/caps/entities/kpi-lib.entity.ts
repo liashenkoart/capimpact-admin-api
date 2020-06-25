@@ -1,9 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Unique, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+  ManyToMany,
+  JoinTable,
+  Unique,
+} from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-import { Benchmark } from './benchmark.entity';
-import { KpiBenchmark } from './kpi-benchmark.entity';
-import { CapabilityLib } from './capability-lib.entity';
+import { Benchmark, KpiBenchmark, Process, CapabilityLib } from '@modules/caps/entities';
 
 export enum BenefitType {
   Revenue = 'Revenue',
@@ -85,6 +93,15 @@ export class KpiLib {
     inverseJoinColumn: { name: 'capability_lib_id' }
   })
   capability_libs: CapabilityLib[];
+
+  @Field(() => Process, { nullable: true })
+  @ManyToOne(
+    type => Process,
+    process => process.kpi_libs,
+    { cascade: true }
+  )
+  @JoinColumn({ name: 'process_id' })
+  process?: Process;
 
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);

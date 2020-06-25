@@ -2,6 +2,7 @@ import { InputType, Field, ID } from 'type-graphql';
 import { IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import {Type} from "class-transformer";
 
 @InputType()
 export class ProcessCreationInput {
@@ -14,6 +15,7 @@ export class ProcessCreationInput {
   @Field(() => ID)
   @IsNotEmpty()
   @IsNumber()
+  @Type(() => Number)
   readonly industry_id: number;
 
   @ApiProperty()
@@ -46,4 +48,9 @@ export class ProcessCreationInput {
   @Field(() => Boolean, { nullable: true })
   @IsOptional()
   readonly metrics_avail?: boolean;
+
+  @ApiProperty()
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  kpi_libs?: any[];
 }

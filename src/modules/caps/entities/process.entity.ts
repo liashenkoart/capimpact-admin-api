@@ -7,13 +7,13 @@ import {
   Tree,
   TreeChildren,
   TreeParent,
+  OneToMany,
   BeforeUpdate,
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
-import { Industry } from './industry.entity';
-import { Company } from './company.entity';
+import { Industry, Company, KpiLib } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('processes')
@@ -125,7 +125,14 @@ export class Process {
 
   @Field(() => Process, { nullable: true })
   @TreeParent()
-  parent?: Process;
+  parent?: Process
+
+  @Field(() => [KpiLib], { nullable: true })
+  @OneToMany(
+    type => KpiLib,
+    kpiLib => kpiLib.process
+  )
+  kpi_libs?: KpiLib[];
 
   @BeforeUpdate()
   updateDates?() {
