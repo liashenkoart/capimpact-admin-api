@@ -3,7 +3,7 @@ import { Repository, TreeRepository } from 'typeorm';
 import { User } from '@modules/users/user.entity';
 import { Neo4jService } from '@modules/neo4j/services';
 
-import { Process, Industry } from '../entities';
+import { Process, Industry, KpiLib } from '../entities';
 import { ProcessService } from '../services';
 import { ProcessController } from '.';
 
@@ -44,6 +44,7 @@ const user: User = {
 describe('ProcessController', () => {
   let processController: ProcessController;
   let processService: ProcessService;
+  const kpiLibRepository: Repository<KpiLib> = null;
   const processRepository: Repository<Process> = null;
   const processTreeRepository: TreeRepository<Process> = null;
   const industryRepository: Repository<Industry> = null;
@@ -52,6 +53,7 @@ describe('ProcessController', () => {
   beforeEach(async () => {
     processService = new ProcessService(
       neo4jService,
+      kpiLibRepository,
       processRepository,
       processTreeRepository,
       industryRepository
