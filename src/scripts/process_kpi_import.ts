@@ -49,9 +49,7 @@ async function main() {
       newIds.push(newProcess.id);
     }
   });
-  console.log('new process ids => ', newIds);
   console.timeEnd('import_processes_and_kpi_libs')
-  console.log('import is finished');
 }
 
 main();
