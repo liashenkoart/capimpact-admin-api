@@ -28,7 +28,7 @@ async function main() {
     kpiData[i.process].push({ label: i.kpi, description: i.kpiDescription });
   });
 
-  const newIds = [];
+  const newProcessIds = [];
   await getManager().transaction(async transactionalEntityManager => {
     let foundIndustry = await transactionalEntityManager.findOne(Industry, { where: { name: 'BizCase' } });
 
@@ -39,17 +39,22 @@ async function main() {
     for (const processName of processesData) {
       const kpiLibs = [];
       for (const { label, description } of kpiData[processName]) {
-        kpiLibs.push(await transactionalEntityManager.save(KpiLib, new KpiLib({ label, description })));
+        let kpiLib = await transactionalEntityManager.findOne(KpiLib, { where: { label } });
+        if (!kpiLib) {
+          kpiLib = await transactionalEntityManager.save(KpiLib, new KpiLib({ label, description }));
+        }
+        kpiLibs.push(kpiLib);
       }
       const newProcess = await transactionalEntityManager.save(Process, new Process({
         name: processName,
         kpi_libs: kpiLibs,
         industry: foundIndustry,
       }))
-      newIds.push(newProcess.id);
+      newProcessIds.push(newProcess.id);
     }
   });
   console.timeEnd('import_processes_and_kpi_libs')
+  console.log('newProcessIds => ', newProcessIds);
 }
 
 main();
