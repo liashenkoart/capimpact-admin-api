@@ -33,7 +33,12 @@ async function main() {
     let foundIndustry = await transactionalEntityManager.findOne(Industry, { where: { name: 'BizCase' } });
 
     if (!foundIndustry) {
-      foundIndustry = await transactionalEntityManager.save(Industry, new Industry({ name: 'BizCase' }))
+      foundIndustry = await transactionalEntityManager.save(Industry, new Industry({ name: 'BizCase' }));
+    }
+
+    let rootProcess = await transactionalEntityManager.findOne(Process, { where: { name: 'BizCase' } });
+    if (!rootProcess) {
+      rootProcess = await transactionalEntityManager.save(Process, new Process({ name: 'BizCase' }));
     }
 
     for (const processName of processesData) {
@@ -49,6 +54,7 @@ async function main() {
         name: processName,
         kpi_libs: kpiLibs,
         industry: foundIndustry,
+        parent: rootProcess,
       }))
       newProcessIds.push(newProcess.id);
     }
