@@ -10,7 +10,7 @@ export class KpiLibInput {
   @Field(() => ID)
   @IsOptional()
   @IsNumber()
-  readonly id?: number;
+  id?: number;
 
   @ApiProperty()
   @Field({ nullable: true })
@@ -65,7 +65,7 @@ export class KpiLibInput {
   @ApiProperty()
   @Field(() => [ID], { nullable: true })
   @IsOptional()
-  capabilityLibs?: any[];
+  capability_libs?: any[];
 
   @ApiProperty()
   @Field(() => ID, { nullable: true })
@@ -73,5 +73,4 @@ export class KpiLibInput {
   @IsNumber()
   @Type(() => Number)
   process_id?: number;
-
 }

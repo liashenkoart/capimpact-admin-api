@@ -32,6 +32,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async save(id: number, data: CapabilityTreeInput): Promise<CapabilityTree> {
+    data.id = id;
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return this.capabilityTreeRepository.save(capabilityTree);
   }
@@ -60,12 +61,12 @@ export class CapabilityTreeService extends BaseService {
       capabilityTree.parent = await this.findOneById(capabilityTree.parentId);
     }
     if (capabilityTree.capability_lib_id) {
-      capabilityTree.capabilityLib = await this.capabilityLibRepository.findOne({
+      capabilityTree.capability_lib = await this.capabilityLibRepository.findOne({
         id: capabilityTree.capability_lib_id
       });
     }
     if (capabilityTree.industry_tree_id) {
-      capabilityTree.industryTree = await this.industryTreeRepository.findOne({
+      capabilityTree.industry_tree = await this.industryTreeRepository.findOne({
         id: capabilityTree.industry_tree_id
       });
     }

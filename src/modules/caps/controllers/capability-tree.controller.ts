@@ -19,10 +19,10 @@ import { CapabilityTreeService } from '../services';
 import { CapabilityTreesArgs, CapabilityTreeInput, CapabilityTreeCreationInput } from '../dto';
 
 @ApiBearerAuth()
-@ApiTags('capability-tree')
+@ApiTags('capability-trees')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('capability-tree')
+@Controller('capability-trees')
 export class CapabilityTreeController {
   constructor(private readonly capabilityTreeService: CapabilityTreeService) {}
 

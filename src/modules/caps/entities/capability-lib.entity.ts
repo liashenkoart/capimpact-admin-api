@@ -19,12 +19,12 @@ export class CapabilityLib {
   @Field(() => [CapabilityTree], { nullable: true })
   @OneToMany(
     type => CapabilityTree,
-    capabilityTree => capabilityTree.capabilityLib
+    capabilityTree => capabilityTree.capability_lib
   )
-  capabilityTrees?: CapabilityTree[];
+  capability_trees?: CapabilityTree[];
 
-  @ManyToMany(type => KpiLib, kpiLib => kpiLib.capabilityLibs)
-  kpiLibs: KpiLib[];
+  @ManyToMany(type => KpiLib, kpiLib => kpiLib.capability_libs)
+  kpi_libs: KpiLib[];
 
   constructor(partial: Partial<CapabilityLib>) {
     Object.assign(this, partial);

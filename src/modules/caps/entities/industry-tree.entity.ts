@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, Tree, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, Tree, OneToMany, ManyToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-import { CapabilityTree } from '@modules/caps/entities';
+import { CapabilityTree, Company } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('industry_tree')
@@ -11,18 +11,30 @@ export class IndustryTree {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  code?: string;
+
   @Column('text')
   name: string;
 
   @Column('text', { nullable: true })
   description: string;
 
+  @Field(() => [String], { nullable: true })
+  @Column({ array: true, type: 'varchar', nullable: true })
+  examples?: string[];
+
+  @Field(() => ID, { nullable: true })
+  @Column({ nullable: true })
+  parentId?: number;
+
   @Field(() => [CapabilityTree], { nullable: true })
   @OneToMany(
     type => CapabilityTree,
-    capabilityTree => capabilityTree.industryTree
+    capabilityTree => capabilityTree.industry_tree
   )
-  capabilityTrees?: CapabilityTree[];
+  capability_trees?: CapabilityTree[];
 
   @Field(() => [IndustryTree], { nullable: true })
   @TreeChildren({ cascade: true })
@@ -32,9 +44,8 @@ export class IndustryTree {
   @TreeParent()
   parent?: IndustryTree;
 
-  @Field(() => ID, { nullable: true })
-  @Column({ nullable: true })
-  parentId?: number;
+  @ManyToMany(type => Company, company => company.industry_trees)
+  companies: Company[];
 
   constructor(partial: Partial<IndustryTree>) {
     Object.assign(this, partial);

@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
-import { Company, Capability } from '../entities';
+import { Company, Capability, IndustryTree } from '../entities';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
 import { Neo4jService } from '@modules/neo4j/services';
 
@@ -10,6 +10,7 @@ import { Neo4jService } from '@modules/neo4j/services';
 export class CompanyService {
   constructor(
     @InjectRepository(Company) private readonly companyRepository: Repository<Company>,
+    @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(Capability)
     private readonly capabilityTreeRepository: TreeRepository<Capability>,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
@@ -18,11 +19,12 @@ export class CompanyService {
 
   async findAll(query: CompaniesArgs): Promise<Company[]> {
     const options = this.getFindAllQuery(query);
+    options.relations = ['industry_trees'];
     return this.companyRepository.find(options);
   }
 
-  async findOneById(id: number): Promise<Company> {
-    return this.companyRepository.findOne(id);
+  findOneById(id: number): Promise<Company> {
+    return this.getOneByIdWithIndustryTrees(id)
   }
 
   async countDocuments(query: CompaniesArgs): Promise<number> {
@@ -33,6 +35,9 @@ export class CompanyService {
     const { user } = context;
     let company = new Company(data);
     company.user = user;
+    if (data.industry_trees) {
+      company.industry_trees = await this.industryTreeRepository.findByIds(data.industry_trees);
+    }
     company = await this.companyRepository.save(company);
 
     // Copy caps from industry tree
@@ -84,10 +89,19 @@ export class CompanyService {
     );
   }
 
-  async save(id: any, data: CompanyInput): Promise<Company> {
-    const company = new Company({ ...data });
-    company.id = parseInt(id, 10);
-    return this.companyRepository.save(company);
+  async save(id: number, data: CompanyInput): Promise<Company> {
+    const company = new Company(data);
+    company.id = id;
+    const { industry_trees } = await this.getOneByIdWithIndustryTrees(id);
+    const industry_trees_ids = industry_trees.map(({ id }) => id);
+    let newIndustryTrees = [];
+    if (data.industry_trees) {
+      newIndustryTrees = (await this.industryTreeRepository.findByIds(data.industry_trees))
+        .filter(({ id }) => !industry_trees_ids.includes(id));
+    }
+    company.industry_trees = [...industry_trees, ...newIndustryTrees];
+    await this.companyRepository.save(company);
+    return this.getOneByIdWithIndustryTrees(id);
   }
 
   async saveMany(input: CompanyInput[], context?: any) {
@@ -107,6 +121,12 @@ export class CompanyService {
     return { id };
   }
 
+  async removeIndustryTree(id: number, industry_tree_id: number) {
+    const company = await this.getOneByIdWithIndustryTrees(id);
+    company.industry_trees = company.industry_trees.filter(item => item.id !== industry_tree_id);
+    return this.companyRepository.save(company);
+  }
+
   getFindAllQuery(query: CompaniesArgs): FindManyOptions {
     const { page, skip, limit, ...where } = query;
     return {
@@ -114,5 +134,17 @@ export class CompanyService {
       take: limit,
       where,
     };
+  }
+
+  async getOneByIdWithIndustryTrees(id: number): Promise<Company> {
+    const company = await this.companyRepository
+      .createQueryBuilder('company')
+      .where('company.id = :id', { id })
+      .leftJoinAndSelect('company.industry_trees', 'industry_trees')
+      .getOne();
+    if (!company) {
+      throw new NotFoundException();
+    }
+    return company;
   }
 }

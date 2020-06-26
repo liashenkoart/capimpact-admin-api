@@ -19,10 +19,10 @@ import { IndustryTreeService } from '../services';
 import { IndustryTreesArgs, IndustryTreeInput, IndustryTreeCreationInput } from '../dto';
 
 @ApiBearerAuth()
-@ApiTags('industry-tree')
+@ApiTags('industry-trees')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('industry-tree')
+@Controller('industry-trees')
 export class IndustryTreeController {
   constructor(private readonly industryTreeService: IndustryTreeService) {}
 
@@ -34,6 +34,11 @@ export class IndustryTreeController {
   @Get('tree')
   async tree(@Query() query: IndustryTreesArgs) {
     return this.industryTreeService.tree(query);
+  }
+
+  @Get('tree/:code')
+  async treeByCode(@Param('code') code: string) {
+    return this.industryTreeService.treeByCode(code);
   }
 
   @Get('/:id')
@@ -53,6 +58,14 @@ export class IndustryTreeController {
     @Req() req: any
   ) {
     return this.industryTreeService.save(id, data);
+  }
+
+  @Delete('/:id/company/:company_id')
+  async removeKpiLibs(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Param('company_id', new ParseIntPipe()) company_id: number
+  ) {
+    return this.industryTreeService.removeCompany(id, company_id);
   }
 
   @Delete('/:id')

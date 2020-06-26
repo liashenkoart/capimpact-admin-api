@@ -84,7 +84,15 @@ export class KpiLib {
     type => KpiBenchmark,
     kpiBenchmark => kpiBenchmark.kpilib
   )
-  kpiBenchmarks?: KpiBenchmark[]
+  kpiBenchmarks?: KpiBenchmark[];
+
+  @ManyToMany(type => CapabilityLib, capabilityLib => capabilityLib.kpi_libs)
+  @JoinTable({
+    name: 'cap2kpi',
+    joinColumn: { name: 'kpi_lib_id' },
+    inverseJoinColumn: { name: 'capability_lib_id' }
+  })
+  capability_libs: CapabilityLib[];
 
   @Field(() => Process, { nullable: true })
   @ManyToOne(
@@ -94,10 +102,6 @@ export class KpiLib {
   )
   @JoinColumn({ name: 'process_id' })
   process?: Process;
-
-  @ManyToMany(type => CapabilityLib, capabilityLib => capabilityLib.kpiLibs)
-  @JoinTable({ name: 'cap2kpi' })
-  capabilityLibs: CapabilityLib[];
 
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);

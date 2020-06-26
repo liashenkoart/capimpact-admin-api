@@ -9,7 +9,7 @@ export class IndustryTreeInput {
   @Field(() => ID)
   @IsOptional()
   @Type(() => Number)
-  readonly id?: number;
+  id?: number;
 
   @ApiProperty()
   @Field()
@@ -26,4 +26,19 @@ export class IndustryTreeInput {
   @IsOptional()
   @Type(() => Number)
   readonly parentId?: number;
+
+  @ApiProperty()
+  @Field(() => [String], { nullable: true })
+  @IsOptional()
+  readonly examples?: string[];
+
+  @ApiPropertyOptional()
+  @Field({ nullable: true })
+  @IsOptional()
+  readonly code?: string;
+
+  @ApiProperty()
+  @Field(() => [ID])
+  @IsOptional()
+  companies?: any[];
 }

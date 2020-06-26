@@ -19,10 +19,10 @@ import { CapabilityLibService } from '../services';
 import { CapabilityLibsArgs, CapabilityLibInput, CapabilityLibCreationInput } from '../dto';
 
 @ApiBearerAuth()
-@ApiTags('capability-lib')
+@ApiTags('capability-libs')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('capability-lib')
+@Controller('capability-libs')
 export class CapabilityLibController {
   constructor(private readonly capabilityLibService: CapabilityLibService) {}
 
@@ -48,6 +48,14 @@ export class CapabilityLibController {
     @Req() req: any
   ) {
     return this.capabilityLibService.save(id, data);
+  }
+
+  @Delete('/:id/kpi-lib/:kpi_lib_id')
+  async removeKpiLibs(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Param('kpi_lib_id', new ParseIntPipe()) kpi_lib_id: number
+    ) {
+    return this.capabilityLibService.removeKpiLib(id, kpi_lib_id);
   }
 
   @Delete('/:id')

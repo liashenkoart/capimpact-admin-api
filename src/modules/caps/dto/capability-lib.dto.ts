@@ -9,7 +9,7 @@ export class CapabilityLibInput {
   @Field(() => ID)
   @IsOptional()
   @Type(() => Number)
-  readonly id?: number;
+  id?: number;
 
   @ApiProperty()
   @Field()
@@ -24,5 +24,5 @@ export class CapabilityLibInput {
   @ApiProperty()
   @Field(() => [ID])
   @IsOptional()
-  kpiLibs?: any[];
+  kpi_libs?: any[];
 }

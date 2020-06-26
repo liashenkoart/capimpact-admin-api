@@ -12,4 +12,9 @@ export class CompaniesArgs extends BaseArgs {
   @IsOptional()
   @Type(() => Number)
   industry_id?: number;
+
+  @ApiPropertyOptional({ type: Number, isArray: true })
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  industry_trees?: number[];
 }

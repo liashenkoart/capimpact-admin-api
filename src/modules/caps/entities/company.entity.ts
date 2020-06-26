@@ -1,13 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, ManyToMany, JoinTable,
+} from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
-import { Industry } from './industry.entity';
-import { Capability } from './capability.entity';
-import { Process } from './process.entity';
-import { Challenge } from './challenge.entity';
-import { GroupTag } from './group-tags.entity';
-import { GroupFilter } from './group-filters.entity';
+import { Industry, Capability, Process, Challenge, GroupTag, GroupFilter, IndustryTree } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('companies')
@@ -89,6 +86,14 @@ export class Company {
     groupfilter => groupfilter.company
   )
   groupfilters?: GroupFilter[];
+
+  @ManyToMany(type => IndustryTree, industryTree => industryTree.companies)
+  @JoinTable({
+    name: 'company2industry',
+    joinColumn: { name: 'company_id' },
+    inverseJoinColumn: { name: 'industry_tree_id' }
+  })
+  industry_trees: IndustryTree[];
 
   constructor(partial: Partial<Company>) {
     Object.assign(this, partial);

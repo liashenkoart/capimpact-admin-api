@@ -23,6 +23,7 @@
     "processes": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/processes.ts",
     "capabilities": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities.ts",
     "capabilities_fill_original_id": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities_fill_original_id.ts",
+    "industry_tree_import": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industry-tree_import_NAICS.ts",
     "lenses": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/lenses.ts"
   },
   "license": "ISC",

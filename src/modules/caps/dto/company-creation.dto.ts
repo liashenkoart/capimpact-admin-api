@@ -21,4 +21,9 @@ export class CompanyCreationInput {
   @Field({ nullable: true })
   @IsOptional()
   cid?: string;
+
+  @ApiProperty()
+  @Field(() => [ID])
+  @IsOptional()
+  industry_trees?: any[];
 }
