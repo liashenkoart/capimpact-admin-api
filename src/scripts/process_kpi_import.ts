@@ -4,12 +4,6 @@ import { Industry, Process, KpiLib } from '@modules/caps/entities';
 
 let connection = null;
 
-const getExamples = input => {
-  input = input[0] === '[' && input[input.length-1] === ']' ? input.slice(1, input.length-2) : input;
-  input = input[0] === `'` && input[input.length-1] === `'` ? input.slice(1, input.length-2) : input;
-  return input.length ? input.split(`', '`) : null;
-}
-
 async function main() {
   connection = await createConnection();
   if (!connection.isConnected) {
@@ -22,36 +16,40 @@ async function main() {
     kpiDescription: row['KPI Description'],
   })));
 
-  console.log('fileData => ', fileData);
-
-  //const sortedIndustries = industries.sort((a, b) => a.parentId.localeCompare(b.parentId, 'en', { numeric: true }));
-
-  await getManager().transaction(async transactionalEntityManager => {
-
-    const foundIndustry = await transactionalEntityManager.findOne(Industry, {
-      where: { name: 'BizCase' },
-    });
-
-    console.log('foundIndustry => ', foundIndustry);
-
-    // const nodes = [];
-    // for (let industry of sortedIndustries) {
-    //   industry.description = description[industry.id] || '';
-    //   if (examplesObj[industry.id]){
-    //     industry.examples = examplesObj[industry.id];
-    //   }
-    //   if (industry.parentId) {
-    //     const parent = nodes.find(i => i.code === industry.parentId);
-    //     if (parent) {
-    //       industry.parent = parent;
-    //       industry.parentId = parent.id;
-    //     }
-    //   } else {
-    //     industry.parentId = null;
-    //   }
-    //   nodes.push(await transactionalEntityManager.save(IndustryTree, new IndustryTree(industry)));
-    // }
+  const processesData = [];
+  const kpiData = {};
+  fileData.forEach(i => {
+    if (!processesData.includes(i.process)) {
+      processesData.push(i.process);
+    }
+    if (!kpiData[i.process]) {
+      kpiData[i.process] = [];
+    }
+    kpiData[i.process].push({ label: i.kpi, description: i.kpiDescription });
   });
+
+  const newIds = [];
+  await getManager().transaction(async transactionalEntityManager => {
+    let foundIndustry = await transactionalEntityManager.findOne(Industry, { where: { name: 'BizCase' } });
+
+    if (!foundIndustry) {
+      foundIndustry = await transactionalEntityManager.save(Industry, new Industry({ name: 'BizCase' }))
+    }
+
+    for (const processName of processesData) {
+      const kpiLibs = [];
+      for (const { label, description } of kpiData[processName]) {
+        kpiLibs.push(await transactionalEntityManager.save(KpiLib, new KpiLib({ label, description })));
+      }
+      const newProcess = await transactionalEntityManager.save(Process, new Process({
+        name: processName,
+        kpi_libs: kpiLibs,
+        industry: foundIndustry,
+      }))
+      newIds.push(newProcess.id);
+    }
+  });
+  console.log('new process ids => ', newIds);
   console.timeEnd('import_processes_and_kpi_libs')
   console.log('import is finished');
 }
