@@ -103,10 +103,6 @@ export class KpiLib {
   @JoinColumn({ name: 'process_id' })
   process?: Process;
 
-  @ManyToMany(type => CapabilityLib, capabilityLib => capabilityLib.kpiLibs)
-  @JoinTable({ name: 'cap2kpi' })
-  capabilityLibs: CapabilityLib[];
-
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);
   }
