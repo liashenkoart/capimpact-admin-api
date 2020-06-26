@@ -2,12 +2,12 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
   OneToMany,
+  Unique,
+  ManyToOne,
   JoinColumn,
   ManyToMany,
-  JoinTable,
-  Unique,
+  JoinTable
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
@@ -102,6 +102,10 @@ export class KpiLib {
   )
   @JoinColumn({ name: 'process_id' })
   process?: Process;
+
+  @ManyToMany(type => CapabilityLib, capabilityLib => capabilityLib.kpiLibs)
+  @JoinTable({ name: 'cap2kpi' })
+  capabilityLibs: CapabilityLib[];
 
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);
