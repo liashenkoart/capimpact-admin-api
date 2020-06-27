@@ -212,6 +212,12 @@ export class ProcessService {
 
   async removeByIndustry(industryId: any) {
     industryId = parseInt(industryId, 10);
+    const options = { where: { industry_id: industryId }, relations: ['kpi_libs'] };
+    const processes = await this.processRepository.find(options);
+    for (const { kpi_libs } of processes) {
+      const updatedKpiLibs = kpi_libs.map(kpi => ({ ...kpi, process: null }));
+      await this.kpiLibRepository.save(updatedKpiLibs);
+    }
     return this.processRepository.delete({ industry_id: industryId });
   }
 
