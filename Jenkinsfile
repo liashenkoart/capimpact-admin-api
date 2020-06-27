@@ -13,7 +13,7 @@ pipeline {
     GIT_COMMIT_SHA      = ""
     GIT_DESC            = ""
 
-    DATABASE_USERNAME_DEV       = 'postgres'
+    DATABASE_USERNAME_DEV       = 'agens'
     DATABASE_PASSWORD_DEV       = credentials('capimpact-admin-api-db-password-dev')
     DATABASE_USERNAME_STAGING   = 'postgres'
     DATABASE_PASSWORD_STAGING   = credentials('capimpact-admin-api-db-password-staging')
@@ -69,7 +69,7 @@ pipeline {
             script {
               docker.build(
                 "visavis/capimpact-admin-api-dev:latest",
-                "--build-arg DATABASE_HOST='3.222.200.206' --build-arg DATABASE_PORT='5432' --build-arg DATABASE_NAME='capdata' --build-arg DATABASE_PASSWORD='$DATABASE_PASSWORD_DEV' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME_DEV' ."
+                "--build-arg DATABASE_HOST='172.26.0.4' --build-arg DATABASE_PORT='5432' --build-arg DATABASE_NAME='capdata' --build-arg DATABASE_PASSWORD='$DATABASE_PASSWORD_DEV' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME_DEV' ."
               )
             }
           }
