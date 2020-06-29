@@ -4,8 +4,9 @@ import { User } from '@modules/users/user.entity';
 import { Neo4jService } from '@modules/neo4j/services';
 
 import { Industry, Capability } from '../entities';
-import { IndustryService, ProcessService, CapabilityService, CompanyService } from '../services';
+import { IndustryService, ProcessService, CapabilityService, CompanyService, ValueDriverService } from '../services';
 import { IndustryController } from '.';
+import { HttpService } from '@nestjs/common';
 
 const data: Industry[] = [
   new Industry({
@@ -38,13 +39,17 @@ describe('IndustryController', () => {
   const processService: ProcessService = null;
   const capabilityService: CapabilityService = null;
   const companyService: CompanyService = null;
+  const valueDriverService: ValueDriverService = null;
+  const httpService: HttpService = null;
 
   beforeEach(async () => {
     industryService = new IndustryService(
       processService,
       capabilityService,
       companyService,
+      valueDriverService,
       industryRepository,
+      httpService,
     );
     industryController = new IndustryController(industryService);
   });

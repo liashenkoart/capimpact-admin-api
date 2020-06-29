@@ -3,7 +3,7 @@ import { Repository, TreeRepository } from 'typeorm';
 import { User } from '@modules/users/user.entity';
 import { Neo4jService } from '@modules/neo4j/services';
 
-import { KpiLib, Industry, BenefitType } from '../entities';
+import { KpiLib, Industry, BenefitType, CapabilityLib } from '../entities';
 import { KpiLibService } from '../services';
 import { KpiLibController } from '.';
 
@@ -41,10 +41,12 @@ describe('KpiLibController', () => {
   let kpiLibController: KpiLibController;
   let kpiLibService: KpiLibService;
   const kpiLibRepository: Repository<KpiLib> = null;
+  const capabilityLibRepository: Repository<CapabilityLib> = null;
 
   beforeEach(async () => {
     kpiLibService = new KpiLibService(
       kpiLibRepository,
+      capabilityLibRepository
     );
     kpiLibController = new KpiLibController(kpiLibService);
   });
@@ -79,6 +81,7 @@ describe('KpiLibController', () => {
         source: '',
         benefitType: BenefitType.Revenue,
         isActive: true,
+        capabilityLibs: [],
       };
       const result = { ...inputData, id: 10 };
       jest.spyOn(kpiLibService, 'create').mockImplementation(() => Promise.resolve(result));
