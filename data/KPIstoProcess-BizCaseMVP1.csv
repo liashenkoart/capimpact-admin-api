@@ -1,0 +1,39 @@
+Process,KPI,KPI Description
+Collaboration,Improved Organizational Functions: Product Development, Operating profit * Product Development impact on margin * Improvement factor 
+Collaboration,Improved Organizational Functions: Operations and Distribution, Operating profit * Operations & Distribution  impact on margin * Improvement factor 
+Collaboration,Improved Organizational Functions: Marketing & Sales, Operating profit * Marketing & Sales  impact on margin * Improvement factor 
+Collaboration,Improved Organizational Functions: Customer Service, Operating profit * Customer Service  impact on margin * Improvement factor 
+Collaboration,Improved Organizational Functions: Business Support Function, Operating profit * Business Support Function  impact on margin * Improvement factor 
+EPM,"Improvement in productivity of FTEs who perform  the process ""Budget Administration""", Number of budget administration FTEs * Average FTE cost * Improvement factor 
+EPM,"Improvement in productivity of FTEs who perform the process group ""Department Budget Preparation and Analysis""", Number of Department Managers * Average hours spent on the budget process * Average cost per hour * Improvement factor 
+EPM,Improvement in accurate target budget revenue, Revenue * Improvement factor 
+EPM,Improvement in accurate target budget cost, Discretionary Costs * Improvement factor 
+Finance,Reduction in Days Sales Outstanding (Annual), Days Sales Outstanding * Revenue/365 * Cost of Capital * Improvement factor 
+Finance,Reduction in Receivables (One-time), Revenue/365 * Days Sales Outstanding * Improvement Factor  
+Finance,"Improvement in productivity of FTEs who perform  the process ""Cost accounting and control and perform cost management""", Number of cost accounting FTEs * Average FTE cost * Improvement factor 
+Finance,"Improvement in productivity of FTEs who perform the process group ""Perform general accounting and reporting""", Number of accounting FTEs * Average FTE cost * Improvement factor 
+Finance," Improvement in productivity of FTEs who perform the process ""Process accounts payable"" ", Number of FTEs who process accounts payables * Average FTE cost * Improvement factor 
+Procurement, Improvement in Developing Sourcing Strategy Productivity , Number of FTEs who develop sourcing strategy * Average FTE cost * Improvement factor 
+Procurement, Reduction in Maverick Spend , Total estimated additional price paid due to maverick spend * % of out of contract spend that can be moved under contracts * Improvement factor 
+Procurement, Improvement in Selecting Suppliers and Maintaining Contracts Productivity , Number of FTEs who select suppliers and maintain contracts * Average FTE cost * Improvement factor 
+Procurement, Reduction in Ordering Material and Services Cost , Total ordering material costs * Improvement factor 
+Procurement, Improvement in Supplier Management Productivity , Number of supplier management FTEs * Average FTE cost * Improvement factor 
+Customer Management, Increased Service Back Office Team Productivity , Number of service managers and call management FTEs * Average FTE Cost  * Improvement factor 
+Customer Management, Increased Billing Accuracy , Manual Revenue Accounting Inaccuracy  * Estimated cost of Inaccuracy attributable to Manual Processes * Improvement factor 
+Customer Management, Reduction in Billing Write-offs , Annual Write-offs  * Improvement factor 
+Customer Management, Increased Customer Conversion , Number of Customer Opportunities * Conversion Rate * Average Purchase Price*Contribution Margin 
+PLM/NPI, Margin earned through Faster Time to Market , Revenue * percentage of revenue attributable to new products launched in the past year * Improvement factor 
+PLM/NPI, Reduction of Product Development Cost , Total product development costs * Improvement factor 
+PLM/NPI, Improvement In New Product Profitability / Reduction in Non-Value Products , Revenue * percentage of revenue attributable to new products launched in the past year * Improvement factor 
+PLM/NPI, Reduction in Cost of Compliance , Total cost of compliance * Improvement factor 
+Supply Chain Planning, Sales & Operations Planning Process Productivity , Number of FTEs for the supply chain planning function * FTE cost * Improvement factor 
+Supply Chain Planning, One Time Reduction in Inventory , Total cost of goods sold * Days in inventory 
+Supply Chain Planning, On-Going Reduction in Inventory Costs  , Total cost of goods sold * Days in inventory/365 * Improvement factor * Inventory holding costs 
+Supply Chain Execution, Reduction in Cost to Plan and Manage Inbound Material Flow , Total cost to plan and manage inbound material flow * Improvement factor 
+Supply Chain Execution, Reduction in Cost Warehousing Operations , Total cost to perform the process operate warehousing * Improvement factor 
+Supply Chain Execution, Reduction in Cost of Outbound Transportation , Total cost of outbound transportation * Improvement factor 
+Manufacturing, Reduction in Direct Labor Costs , Total direct labor costs * Improvement factor 
+Manufacturing, Reduction in Scrap and Re-work Cost , Total scrap & rework costs * Improvement factor 
+Manufacturing, Improvement in Asset Utilization ," Net property, plant & equipment * depreciation rate * Improvement factor "
+Sales Visibility, Improved visibility into customer profitability , Key Customer Revenues * Average Margin * Improvement factor 
+Sales Visibility, Improved visibility into Item Group/SKU profitability , Key Item/Group Revenues * Average Margin * Improvement Factor 
