@@ -64,8 +64,7 @@ export class IndustryTreeService extends BaseService {
   async tree(query: IndustryTreesArgs): Promise<IndustryTree[] | void> {
     const roots = await this.industryTreeRepository.find({ where: { parentId: null } });
     const treeArray = await Promise.all(roots.map(root => this.getTreeForNode(root)));
-    return treeArray.sort((a, b) => a.code.localeCompare(b.code, 'en', { numeric: true }))
-      .map(tree => sortTreeByField('code', tree));
+    return treeArray.sort((a, b) => a.code.localeCompare(b.code, 'en', { numeric: true }));
   }
 
   async treeByCode(code: string) {
@@ -89,7 +88,7 @@ export class IndustryTreeService extends BaseService {
       throw new NotFoundException();
     }
     const tree = await this.treeRepository.findDescendantsTree(node);
-    return sortTreeByField('name', tree);
+    return sortTreeByField('code', tree);
   }
 
   async getOneByIdWithCompanies(id: number): Promise<IndustryTree> {
