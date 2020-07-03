@@ -14,7 +14,7 @@ async function main() {
 
     if (!foundRoot) {
       foundRoot = await transactionalEntityManager.save(IndustryTree, new IndustryTree({
-        name: 'Misc, put existing industries without a NAICS code under this Misc sector',
+        name: 'Misc',
         code: '99',
       }));
     }
