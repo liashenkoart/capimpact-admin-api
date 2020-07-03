@@ -1,13 +1,24 @@
-export const sortTreeByField = (fieldName, node) => {
+export const compareObjectsByStringFields = (a, b, fieldNames) => {
+  for(const name of fieldNames) {
+    const res = (a[name] || '').localeCompare(b[name] || '', 'en', { numeric: true });
+    if (res) {
+      return res;
+    }
+  }
+  return 0;
+};
+
+export const sortTreeByField = (fieldNames, node) => {
   const { children } = node;
+  fieldNames = Array.isArray(fieldNames) ? fieldNames : [fieldNames];
   if (!children) {
     return node;
   } else {
     return {
       ...node,
       children: children
-        .sort((a, b) => a[fieldName].localeCompare(b[fieldName], 'en', { numeric: true }))
-        .map(child => sortTreeByField(fieldName, child)),
+        .sort((a, b) => compareObjectsByStringFields(a, b, fieldNames))
+        .map(child => sortTreeByField(fieldNames, child)),
     };
   }
 };
