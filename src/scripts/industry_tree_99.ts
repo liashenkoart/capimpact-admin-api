@@ -25,7 +25,6 @@ async function main() {
       const industryTree = new IndustryTree({ id: node?.id, name: industry.name, parent: foundRoot });
 
       const capTreesForIndustryTree = [];
-      const companyIds = new Set();
       const rootCap = await transactionalEntityManager.findOne(Capability, {
         where: { industry_id: industry.id, parentId: null },
       });
@@ -38,9 +37,6 @@ async function main() {
             capability: cap,
             parent,
           }));
-          if (cap.company_id) {
-            companyIds.add(cap.company_id);
-          }
           await transactionalEntityManager.save(Capability, new Capability({
             id: cap.id,
             capability_tree: capTreeNode,
