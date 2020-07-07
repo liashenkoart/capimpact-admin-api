@@ -1,5 +1,5 @@
 import { createConnection, getManager } from 'typeorm';
-import { Industry, IndustryTree } from '@modules/caps/entities';
+import { Industry, IndustryTree, Capability, CapabilityTree } from '@modules/caps/entities';
 
 let connection = null;
 
@@ -8,7 +8,6 @@ async function main() {
   if (!connection.isConnected) {
     throw new Error('connection is not established');
   }
-  console.time('moving all industry to industry-tree with code 99')
   await getManager().transaction(async transactionalEntityManager => {
     let foundRoot = await transactionalEntityManager.findOne(IndustryTree, { where: { code: '99' } });
 
@@ -22,17 +21,42 @@ async function main() {
     const allIndustries = await transactionalEntityManager.find(Industry);
     const newIndustryTreeNodes = [];
     for (const industry of allIndustries) {
-      const foundNode = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name } });
-      if (!foundNode) {
-        newIndustryTreeNodes.push(new IndustryTree({
-          name: industry.name,
-          parent: foundRoot,
-        }));
+      const node = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name } });
+      const industryTree = new IndustryTree({ id: node?.id, name: industry.name, parent: foundRoot });
+
+      const capTreesForIndustryTree = [];
+      const companyIds = new Set();
+      const rootCap = await transactionalEntityManager.findOne(Capability, {
+        where: { industry_id: industry.id, parentId: null },
+      });
+
+      if (rootCap) {
+        const treeOfCap = await transactionalEntityManager.getTreeRepository(Capability).findDescendantsTree(rootCap);
+        const createCapTreeNode = async (cap, parent) => {
+          const capTreeNode = await transactionalEntityManager.save(CapabilityTree, new CapabilityTree({
+            name: cap.name,
+            capability: cap,
+            parent,
+          }));
+          if (cap.company_id) {
+            companyIds.add(cap.company_id);
+          }
+          await transactionalEntityManager.save(Capability, new Capability({
+            id: cap.id,
+            capability_tree: capTreeNode,
+          }));
+          capTreesForIndustryTree.push(capTreeNode);
+          for (const child of cap.children) {
+            await createCapTreeNode(child, capTreeNode);
+          }
+        };
+        await createCapTreeNode(treeOfCap, null);
+        industryTree.capability_trees = capTreesForIndustryTree;
+        newIndustryTreeNodes.push(industryTree);
       }
     }
     await transactionalEntityManager.save(IndustryTree, newIndustryTreeNodes);
   });
-  console.timeEnd('moving all industry to industry-tree with code 99')
 }
 
 main();

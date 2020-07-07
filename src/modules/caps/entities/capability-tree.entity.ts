@@ -1,7 +1,18 @@
-import { Entity, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, Tree, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  TreeChildren,
+  TreeParent,
+  Tree,
+  ManyToOne,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
-
-import { CapabilityLib, IndustryTree } from '@modules/caps/entities';
+import { IndustryTree } from '@modules/caps/entities/industry-tree.entity';
+import { CapabilityLib } from '@modules/caps/entities/capability-lib.entity';
+import { Capability } from '@modules/caps/entities/capability.entity';
 
 @ObjectType()
 @Entity('capability_tree')
@@ -11,11 +22,19 @@ export class CapabilityTree {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => ID)
-  @Column({ name: 'capability_lib_id' })
-  capability_lib_id: number;
+  @Field()
+  @Column()
+  name: string;
 
-  @Field(() => CapabilityLib)
+  @Field(() => Capability)
+  @OneToOne(type => Capability, capability => capability.capability_tree)
+  capability: Capability;
+
+  @Field(() => ID, { nullable: true })
+  @Column({ name: 'capability_lib_id', nullable: true })
+  capability_lib_id?: number;
+
+  @Field(() => CapabilityLib, { nullable: true })
   @ManyToOne(
     type => CapabilityLib,
     capabilityLib => capabilityLib.capability_trees,
