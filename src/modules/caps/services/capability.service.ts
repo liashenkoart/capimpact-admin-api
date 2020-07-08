@@ -8,7 +8,7 @@ import { sortTreeByField, flattenTree } from '@lib/sorting';
 
 import { Neo4jService } from '@modules/neo4j/services';
 
-import { Industry, Capability } from '../entities';
+import { Industry, Capability, CapabilityTree } from '../entities';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
 @Injectable()
@@ -17,6 +17,7 @@ export class CapabilityService {
     private readonly neo4jService: Neo4jService,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
+    @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 
@@ -30,6 +31,26 @@ export class CapabilityService {
     }
     if (!root) {
       throw new NotFoundException();
+    }
+    const tree = await this.treeRepository.findDescendantsTree(root);
+    return sortTreeByField('name', tree);
+  }
+
+  async treeByIndustryTree(query: CapabilitiesArgs): Promise<Capability> {
+    const { industry_id } = query;
+    const rootCapTree = await this.capabilityTreeRepository.findOne({
+      industry_tree_id: industry_id,
+      parentId: null,
+    });
+    if (!rootCapTree) {
+      throw new NotFoundException(`capability-tree with industry_tree_id: ${industry_id} was not found`);
+    }
+    const root = await this.capabilityRepository.findOne({
+      capability_tree: rootCapTree,
+      parentId: null,
+    });
+    if (!root) {
+      throw new NotFoundException(`capability with capability_tree: ${rootCapTree.id} was not found`);
     }
     const tree = await this.treeRepository.findDescendantsTree(root);
     return sortTreeByField('name', tree);

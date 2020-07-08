@@ -37,6 +37,11 @@ export class CapabilityController {
     return this.capabilityService.tree(query);
   }
 
+  @Get('treeByIndustryTree')
+  async treeByIndustryTree(@Query() query: CapabilitiesArgs) {
+    return this.capabilityService.treeByIndustryTree(query);
+  }
+
   @Get('/:id')
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityService.findOneById(id);
