@@ -25,6 +25,7 @@
     "capabilities_fill_original_id": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities_fill_original_id.ts",
     "industry_tree_import": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industry-tree_import_NAICS.ts",
     "process_kpi_import": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/process_kpi_import.ts",
+    "industry_tree_99": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industry_tree_99.ts",
     "lenses": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/lenses.ts"
   },
   "license": "ISC",
@@ -57,7 +58,8 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "pg": "8.2.1",
+    "pg": "^7.18.1",
+    "rxjs": "^6.5.4",
     "slug": "^2.1.1",
     "sqlite3": "^4.1.1",
     "swagger-ui-express": "^4.1.3",

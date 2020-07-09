@@ -5,7 +5,7 @@ import { Repository, TreeRepository } from 'typeorm';
 import { BaseService } from '@modules/common/services';
 import { IndustryTree, Company } from '../entities';
 import { IndustryTreesArgs, IndustryTreeCreationInput, IndustryTreeInput } from '../dto';
-import { sortTreeByField } from "@lib/sorting";
+import { sortTreeByField, compareObjectsByStringFields } from '@lib/sorting';
 
 @Injectable()
 export class IndustryTreeService extends BaseService {
@@ -63,7 +63,8 @@ export class IndustryTreeService extends BaseService {
 
   async tree(query: IndustryTreesArgs): Promise<IndustryTree[] | void> {
     const roots = await this.industryTreeRepository.find({ where: { parentId: null } });
-    return Promise.all(roots.map(root => this.getTreeForNode(root)));
+    const treeArray = await Promise.all(roots.map(root => this.getTreeForNode(root)));
+    return treeArray.sort((a, b) => compareObjectsByStringFields(a, b, ['code', 'name']));
   }
 
   async treeByCode(code: string) {
@@ -87,7 +88,7 @@ export class IndustryTreeService extends BaseService {
       throw new NotFoundException();
     }
     const tree = await this.treeRepository.findDescendantsTree(node);
-    return sortTreeByField('name', tree);
+    return sortTreeByField(['code', 'name'], tree);
   }
 
   async getOneByIdWithCompanies(id: number): Promise<IndustryTree> {

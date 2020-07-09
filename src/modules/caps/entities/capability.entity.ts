@@ -9,14 +9,15 @@ import {
   TreeParent,
   BeforeUpdate,
   ManyToMany,
+  OneToOne,
   JoinTable,
 } from 'typeorm';
 import { ObjectType, Field, Float, ID } from 'type-graphql';
-
 import { User } from '@modules/users/user.entity';
-import { Industry } from './industry.entity';
-import { Company } from './company.entity';
-import { Classification } from './classification.entity';
+import { Industry } from '@modules/caps/entities/industry.entity';
+import { Company } from '@modules/caps/entities/company.entity';
+import { Classification } from '@modules/caps/entities/classification.entity';
+import { CapabilityTree } from '@modules/caps/entities/capability-tree.entity';
 
 @ObjectType()
 @Entity('capabilities')
@@ -33,6 +34,11 @@ export class Capability {
   @Field(() => Boolean, { defaultValue: false })
   @Column('boolean', { default: false })
   default?: boolean;
+
+  @Field(() => CapabilityTree)
+  @OneToOne(type => CapabilityTree, capabilityTree => capabilityTree.capability, { cascade: true })
+  @JoinColumn({ name: 'capability_tree_id' })
+  capability_tree: CapabilityTree;
 
   @Field(() => Float, { nullable: true })
   @Column('decimal', {

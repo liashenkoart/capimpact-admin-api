@@ -1,7 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, Tree, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  TreeChildren,
+  TreeParent,
+  Tree,
+  ManyToOne,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
-
-import { CapabilityLib, IndustryTree } from '@modules/caps/entities';
+import { IndustryTree } from '@modules/caps/entities/industry-tree.entity';
+import { CapabilityLib } from '@modules/caps/entities/capability-lib.entity';
+import { Capability } from '@modules/caps/entities/capability.entity';
+import { Company } from '@modules/caps/entities/company.entity';
 
 @ObjectType()
 @Entity('capability_tree')
@@ -11,17 +23,29 @@ export class CapabilityTree {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => ID)
-  @Column({ name: 'capability_lib_id' })
-  capability_lib_id: number;
+  @Field()
+  @Column()
+  cap_name: string;
 
-  @Field(() => CapabilityLib)
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  type: string;
+
+  @Field(() => Capability)
+  @OneToOne(type => Capability, capability => capability.capability_tree)
+  capability: Capability;
+
+  @Field(() => ID, { nullable: true })
+  @Column({ name: 'capability_id', nullable: true })
+  capability_lib_id?: number;
+
+  @Field(() => CapabilityLib, { nullable: true })
   @ManyToOne(
     type => CapabilityLib,
     capabilityLib => capabilityLib.capability_trees,
     { cascade: true }
   )
-  @JoinColumn({ name: 'capability_lib_id' })
+  @JoinColumn({ name: 'capability_id' })
   capability_lib: CapabilityLib;
 
   @Field(() => ID, { nullable: true })
@@ -36,6 +60,15 @@ export class CapabilityTree {
   )
   @JoinColumn({ name: 'industry_tree_id' })
   industry_tree?: IndustryTree;
+
+  @Field(() => ID, { nullable: true })
+  @Column({ name: 'company_id', nullable: true })
+  company_id?: number;
+
+  @Field(() => Company, { nullable: true })
+  @ManyToOne(type => Company, company => company.capability_trees, { cascade: true })
+  @JoinColumn({ name: 'company_id' })
+  company?: Company;
 
   @Field(() => [CapabilityTree], { nullable: true })
   @TreeChildren({ cascade: true })

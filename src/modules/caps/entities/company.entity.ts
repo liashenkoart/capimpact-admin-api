@@ -4,7 +4,15 @@ import {
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
-import { Industry, Capability, Process, Challenge, GroupTag, GroupFilter, IndustryTree } from '@modules/caps/entities';
+import { Industry } from '@modules/caps/entities/industry.entity';
+import { Capability } from '@modules/caps/entities/capability.entity';
+import { Process } from '@modules/caps/entities/process.entity';
+import { Challenge } from '@modules/caps/entities/challenge.entity';
+import { GroupTag } from '@modules/caps/entities/group-tags.entity';
+import { GroupFilter } from '@modules/caps/entities/group-filters.entity';
+import { IndustryTree } from '@modules/caps/entities/industry-tree.entity';
+import { CapabilityTree } from '@modules/caps/entities/capability-tree.entity';
+
 
 @ObjectType()
 @Entity('companies')
@@ -52,6 +60,10 @@ export class Company {
   @JoinColumn({ name: 'industry_id' })
   industry?: Industry;
 
+  @Field(() => [CapabilityTree], { nullable: true })
+  @OneToMany(type => CapabilityTree, capabilityTree => capabilityTree.company)
+  capability_trees?: CapabilityTree[];
+
   @Field(() => [Capability], { nullable: true })
   @OneToMany(
     type => Capability,
@@ -62,7 +74,7 @@ export class Company {
   @Field(() => [Process], { nullable: true })
   @OneToMany(
     type => Process,
-    proces => proces.industry
+    process => process.industry
   )
   processes?: Process[];
 
