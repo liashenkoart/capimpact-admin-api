@@ -2,9 +2,6 @@ import { Module, HttpModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
-// Modules
-import { Neo4jModule } from '@modules/neo4j';
-
 // Entities
 import {
   Industry,
@@ -43,7 +40,12 @@ import {
   GroupFilterService,
   ValueDriverService,
   KpiBenchmarkService,
+  CapabilityGraphService,
+  CompanyGraphService,
+  IndustryGraphService,
+  ProcessGraphService,
 } from '@modules/caps/services';
+import { GraphDrivineModule } from '@app/graph-drivine.module';
 
 // Controllers
 import {
@@ -90,7 +92,7 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     HttpModule,
-    Neo4jModule,
+    GraphDrivineModule,
   ],
   controllers: [
     IndustryController,
@@ -128,6 +130,10 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     GroupFilterService,
     ValueDriverService,
     KpiBenchmarkService,
+    CapabilityGraphService,
+    CompanyGraphService,
+    IndustryGraphService,
+    ProcessGraphService,
   ],
   exports: [
     IndustryService,
@@ -145,6 +151,10 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     GroupFilterService,
     ValueDriverService,
     KpiBenchmarkService,
+    CapabilityGraphService,
+    CompanyGraphService,
+    IndustryGraphService,
+    ProcessGraphService,
   ],
 })
 export class CapsModule {}

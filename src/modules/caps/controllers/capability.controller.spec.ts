@@ -1,10 +1,9 @@
 import { Repository, TreeRepository } from 'typeorm';
 
 import { User } from '@modules/users/user.entity';
-import { Neo4jService } from '@modules/neo4j/services';
 
-import { Capability, Industry } from '../entities';
-import { CapabilityService } from '../services';
+import {Capability, CapabilityTree, Industry} from '../entities';
+import { CapabilityGraphService, CapabilityService } from '../services';
 import { CapabilityController } from '.';
 
 const data: Capability[] = [
@@ -57,13 +56,15 @@ describe('CapabilityController', () => {
   const capabilityRepository: Repository<Capability> = null;
   const capabilityTreeRepository: TreeRepository<Capability> = null;
   const industryRepository: Repository<Industry> = null;
-  const neo4jService: Neo4jService = null;
+  const capabilityTreeRepository2: Repository<CapabilityTree> = null;
+  const capabilityGraphService: CapabilityGraphService = null;
 
   beforeEach(async () => {
     capabilityService = new CapabilityService(
-      neo4jService,
+      capabilityGraphService,
       capabilityRepository,
       capabilityTreeRepository,
+      capabilityTreeRepository2,
       industryRepository
     );
     capabilityController = new CapabilityController(capabilityService);

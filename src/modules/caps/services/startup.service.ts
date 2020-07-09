@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions, In } from 'typeorm';
 import _ from 'lodash';
 
-import { Neo4jService } from '@modules/neo4j/services';
+import { IndustryGraphService } from '@modules/caps/services/industry.graph.service';
 
 import { BaseService } from '@modules/common/services';
 import { Startup, Capability } from '../entities';
@@ -16,7 +16,7 @@ import { StartupCreationInput, StartupInput, StartupsArgs } from '../dto';
 @Injectable()
 export class StartupService extends BaseService {
   constructor(
-    private readonly neo4jService: Neo4jService,
+    private readonly industryGraphService: IndustryGraphService,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Startup) private readonly startupRepository: Repository<Startup>
   ) {
@@ -58,7 +58,7 @@ export class StartupService extends BaseService {
         },
       });
     }
-    await this.neo4jService.saveIndustryCapabilitiesById(startup.industry_id, {
+    await this.industryGraphService.saveIndustryCapabilitiesById(startup.industry_id, {
       capabilities,
     });
     return startup;

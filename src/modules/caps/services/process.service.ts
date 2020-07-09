@@ -6,7 +6,7 @@ import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 import { flattenTree } from '@lib/sorting';
 
-import { Neo4jService } from '@modules/neo4j/services';
+import { ProcessGraphService } from '@modules/caps/services/process.graph.service';
 
 import { Industry, KpiLib, Process } from '../entities';
 import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '../dto';
@@ -14,7 +14,7 @@ import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '../dto';
 @Injectable()
 export class ProcessService {
   constructor(
-    private readonly neo4jService: Neo4jService,
+    private readonly processGraphService: ProcessGraphService,
     @InjectRepository(KpiLib) private readonly kpiLibRepository: Repository<KpiLib>,
     @InjectRepository(Process) private readonly processRepository: Repository<Process>,
     @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>,
@@ -146,7 +146,7 @@ export class ProcessService {
     if (process.parentId === null) {
       await this.industryRepository.save({ id: +process.industry_id, name: process.name });
     }
-    await this.neo4jService.saveProcess(process.id, { name: process.name });
+    await this.processGraphService.save(process.id, process.name);
     return await this.findOneById(process.id);
   }
 
@@ -159,7 +159,7 @@ export class ProcessService {
     });
     const result = await this.processRepository.save(data);
     for (let node of result) {
-      await this.neo4jService.saveProcess(node.id, { name: node.name });
+      await this.processGraphService.save(node.id, node.name);
     }
     return await this.processRepository.findByIds(data.map(p => p.id));
   }

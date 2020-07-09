@@ -6,7 +6,7 @@ import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
 import { sortTreeByField, flattenTree } from '@lib/sorting';
 
-import { Neo4jService } from '@modules/neo4j/services';
+import {CapabilityGraphService} from '@modules/caps/services/capability.graph.service';
 
 import { Industry, Capability, CapabilityTree } from '../entities';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
@@ -14,7 +14,7 @@ import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../d
 @Injectable()
 export class CapabilityService {
   constructor(
-    private readonly neo4jService: Neo4jService,
+    private readonly capabilityGraphService: CapabilityGraphService,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
     @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
@@ -145,7 +145,7 @@ export class CapabilityService {
       await this.industryRepository.save({ id: +capability.industry_id, name: capability.name });
     }
     await this.updateHierarchyIdNode(capability);
-    await this.neo4jService.saveCapability(capability.id, { name: capability.name });
+    await this.capabilityGraphService.save(capability.id, capability.name);
     return await this.findOneById(capability.id);
   }
 
@@ -160,7 +160,7 @@ export class CapabilityService {
 
     let result = await this.capabilityRepository.save(data);
     for (let node of result) {
-      await this.neo4jService.saveCapability(node.id, { name: node.name });
+      await this.capabilityGraphService.save(node.id, node.name);
     }
     /*
     for (let node of result) {

@@ -14,9 +14,10 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 
+import {CompanyGraphService} from "@modules/caps/services/company.graph.service";
+
 import { CompanyService } from '../services';
 import { CompanyInput, CompanyCreationInput, CompaniesArgs } from '../dto';
-import { Neo4jService } from '@modules/neo4j/services';
 
 @ApiBearerAuth()
 @ApiTags('companies')
@@ -26,7 +27,7 @@ import { Neo4jService } from '@modules/neo4j/services';
 export class CompanyController {
   constructor(
     private readonly companyService: CompanyService,
-    private readonly neo4jService: Neo4jService
+    private readonly companyGraphService: CompanyGraphService,
   ) {}
 
   @Get('')
@@ -41,17 +42,17 @@ export class CompanyController {
 
   @Get('/:cid/partner-networks')
   async findPartnerNetworksByCid(@Param('cid') cid: string) {
-    return this.neo4jService.findPartnerNetworksByCid(cid);
+    return this.companyGraphService.findPartnerNetworksByCid(cid);
   }
 
   @Get('/partner-networks/:cid')
   async findOnePartnerNetworkByCid(@Param('cid') cid: string) {
-    return this.neo4jService.findOnePartnerNetworkByCid(cid);
+    return this.companyGraphService.findOnePartnerNetworkByCid(cid);
   }
 
   @Post('/:cid/capabilities')
   async saveCompanyCapabilitiesByCid(@Param('cid') cid: string, @Body() data: CompanyInput) {
-    return this.neo4jService.saveCompanyCapabilitiesByCid(cid, data);
+    return this.companyGraphService.saveCompanyCapabilitiesByCid(cid, data);
   }
 
   @Post('')

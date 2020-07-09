@@ -13,3 +13,7 @@ export { GroupTagService } from './grouptag.service';
 export { GroupFilterService } from './groupfilter.service';
 export { ValueDriverService } from './value-driver.service';
 export { KpiBenchmarkService } from './kpi-benchmark.service';
+export { CapabilityGraphService } from './capability.graph.service';
+export { CompanyGraphService } from './company.graph.service';
+export { IndustryGraphService } from './industry.graph.service';
+export { ProcessGraphService } from './process.graph.service';

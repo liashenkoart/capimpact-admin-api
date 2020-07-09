@@ -4,12 +4,8 @@ import {
   // CacheModule, CacheInterceptor
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
-
-import { DrivineModule, DrivineModuleOptions } from '@liberation-data/drivine/DrivineModule';
-import { DatabaseRegistry } from '@liberation-data/drivine/connection/DatabaseRegistry';
 
 import { User } from '@modules/users/user.entity';
 import {
@@ -34,10 +30,10 @@ import {
 
 import { UsersModule } from '@modules/users';
 import { AuthModule } from '@modules/auth';
-import { Neo4jModule, createNeo4jGraphQL } from '@modules/neo4j';
 import { CapsModule } from '@modules/caps';
 
 import { AppController } from './app.controller';
+import { GraphDrivineModule } from './graph-drivine.module';
 
 export const MODULE = {
   imports: [
@@ -76,26 +72,10 @@ export const MODULE = {
       }),
       inject: [ConfigService],
     }),
-    GraphQLModule.forRootAsync({
-      useFactory: async (configService: ConfigService) => {
-        const { schema, driver } = createNeo4jGraphQL({ configService });
-        return {
-          //include: [UsersModule],
-          schema,
-          //autoSchemaFile: 'schema.gql',
-          //installSubscriptionHandlers: true,
-          context: ({ req }) => ({ req, driver }),
-        };
-      },
-      inject: [ConfigService],
-    }),
 
-    DrivineModule.withOptions(<DrivineModuleOptions>{
-      connectionProviders: [DatabaseRegistry.buildOrResolveFromEnv('GRAPH')]
-    }),
+    GraphDrivineModule,
 
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    Neo4jModule,
 
     AuthModule,
     UsersModule,
