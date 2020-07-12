@@ -4,12 +4,12 @@ import {
   PersistenceManager,
   QuerySpecification,
   Transactional
-} from "@liberation-data/drivine";
+} from '@liberation-data/drivine';
 
 @Injectable()
 export class CapabilityGraphService {
 
-  constructor(@InjectPersistenceManager() private readonly persistenceManager: PersistenceManager) {
+  constructor(@InjectPersistenceManager('GRAPH') readonly persistenceManager: PersistenceManager) {
   }
 
   @Transactional()

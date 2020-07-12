@@ -11,7 +11,7 @@ import _ from 'lodash';
 @Injectable()
 export class CompanyGraphService {
 
-  constructor(@InjectPersistenceManager() private readonly persistenceManager: PersistenceManager) {
+  constructor(@InjectPersistenceManager('GRAPH') private readonly persistenceManager: PersistenceManager) {
   }
 
   @Transactional()

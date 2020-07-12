@@ -45,7 +45,6 @@ import {
   IndustryGraphService,
   ProcessGraphService,
 } from '@modules/caps/services';
-import { GraphDrivineModule } from '@app/graph-drivine.module';
 
 // Controllers
 import {
@@ -92,7 +91,6 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     HttpModule,
-    GraphDrivineModule,
   ],
   controllers: [
     IndustryController,
@@ -151,10 +149,6 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     GroupFilterService,
     ValueDriverService,
     KpiBenchmarkService,
-    CapabilityGraphService,
-    CompanyGraphService,
-    IndustryGraphService,
-    ProcessGraphService,
   ],
 })
 export class CapsModule {}

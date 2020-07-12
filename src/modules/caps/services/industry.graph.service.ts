@@ -9,7 +9,7 @@ import {
 @Injectable()
 export class IndustryGraphService {
 
-  constructor(@InjectPersistenceManager() private readonly persistenceManager: PersistenceManager) {
+  constructor(@InjectPersistenceManager('GRAPH') private readonly persistenceManager: PersistenceManager) {
   }
 
   @Transactional()

@@ -7,6 +7,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 
+import { DrivineModule, DrivineModuleOptions } from '@liberation-data/drivine/DrivineModule';
+import { DatabaseRegistry } from '@liberation-data/drivine/connection/DatabaseRegistry';
+
 import { User } from '@modules/users/user.entity';
 import {
   Industry,
@@ -33,7 +36,6 @@ import { AuthModule } from '@modules/auth';
 import { CapsModule } from '@modules/caps';
 
 import { AppController } from './app.controller';
-import { GraphDrivineModule } from './graph-drivine.module';
 
 export const MODULE = {
   imports: [
@@ -73,7 +75,9 @@ export const MODULE = {
       inject: [ConfigService],
     }),
 
-    GraphDrivineModule,
+    DrivineModule.withOptions(<DrivineModuleOptions>{
+      connectionProviders: [DatabaseRegistry.buildOrResolveFromEnv('GRAPH')]
+    }),
 
     PassportModule.register({ defaultStrategy: 'jwt' }),
 
