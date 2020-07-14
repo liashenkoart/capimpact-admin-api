@@ -14,6 +14,8 @@ Installation:
 8. Create database cap
 9. Execute commands in cap database:
    ALTER ROLE agens IN DATABASE cap SET search_path TO cap;
-   ALTER ROLE agens IN DATABASE cap SET graph_path TO 'capgraph';
+
 10. Restore cap databases from backup
 11. Create graph and fill it - run SQL script /.doc/graph.ddl.sql
+12. Execute commands in cap database:
+    ALTER ROLE agens IN DATABASE cap SET graph_path TO 'capgraph';
