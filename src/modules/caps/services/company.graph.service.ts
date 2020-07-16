@@ -37,9 +37,12 @@ export class CompanyGraphService {
             cid
           })
       ).then(records =>
-        records.map(
-          record => _.omit(record.p.end.properties, 'ts_upd')
-        )
+       /* records.map(
+          record => _.omit(record.properties, 'ts_upd')
+        )*/ {
+          console.info(records);
+          return records
+        }
       );
   }
 
@@ -53,7 +56,7 @@ export class CompanyGraphService {
           })
       ).then(records =>
         records.map(
-          record => _.omit(record.p.properties, 'ts_upd')
+          record => _.omit(record.properties, 'ts_upd')
         )
       );
   }
