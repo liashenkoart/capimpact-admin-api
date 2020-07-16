@@ -28,6 +28,39 @@ WITH (
     OIDS = TRUE
 );
 
+create or replace function _tmp_create_graph_velement(i_json json) returns character varying as
+$$
+declare
+  v_label character varying(50);
+  v_props json;
+  v_props_txt text;
+  v_cid character varying(100);
+  v_company_type character varying(100);
+  v_existing_labels integer;
+begin
+  v_label := json_extract_path_text(i_json, 'labels', '0');
+  if v_label not in ('Company', 'CompanyType') then
+    raise 'Invalid vlabel name %', v_label;
+  end if;
+
+  v_props := json_extract_path(i_json, 'properties');
+  v_props_txt := v_props::text;
+
+  if v_label = 'Company' then
+    v_cid := json_extract_path_text(v_props, 'cid');
+	match (:company {cid: v_cid}) return count(*) into v_existing_labels;
+	if v_existing_labels = 0 then
+	  create
+	end if;
+  else
+    v_company_type := json_extract_path_text(v_props, 'type');
+	match (:company_type {type: v_company_type}) return count(*) into v_existing_labels;
+	if v_existing_labels = 0 then
+	end if;
+  end if;
+end;
+$$ language 'plpgsql';
+
 ALTER TABLE cap._tmp_import_company_graph
     OWNER to agens;
 
