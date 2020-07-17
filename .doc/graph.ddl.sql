@@ -1,6 +1,5 @@
-drop graph if exists capgraph cascade;
-
-create graph capgraph;
+-- drop graph if exists capgraph cascade;
+-- create graph capgraph;
 
 set graph_path=capgraph;
 
