@@ -29,19 +29,33 @@ export class CompanyGraphService {
   }
 
   @Transactional()
-  async findPartnerNetworksByCid(cid: string): Promise<any[]> {
-    return this.persistenceManager
+  async findPartnerNetworksByCid(cid: string): Promise<any> {
+    const edges = this.persistenceManager
       .query<any>(
-        new QuerySpecification<any>('match p=(n:Company {cid: $cid})-[*..2]->() RETURN p;')
+        new QuerySpecification<any>('match p=(n:company {cid: $cid})-[*..2]->() with edges(p) as e return distinct e;')
           .bind({
             cid
           })
-      ).then(records =>
-       /* records.map(
-          record => _.omit(record.properties, 'ts_upd')
-        )*/ {
-          console.info(records);
-          return records
+      )
+    const nodes = this.persistenceManager
+      .query<any>(
+        new QuerySpecification<any>('match p=(n:company {cid: $cid})-[*..2]->() with nodes(p) as nd return distinct nd;')
+          .bind({
+            cid
+          })
+      )
+
+    return Promise.all([nodes, edges])
+      .then(records =>
+      //  records.map(record => record.map(
+      //     record => _.omit(record, 'ts_upd')
+      //   ))
+        {
+          let nodeFinally=[];
+          let edgeFinally=[];
+          records[0].forEach((nodeItem)=> nodeItem.forEach((nodeObj)=> nodeFinally.push(nodeObj)))
+          records[1].forEach((edgeItem)=> edgeItem.forEach((edgeObj)=> edgeFinally.push(edgeObj)))
+          return {nodes: nodeFinally, edges: edgeFinally}
         }
       );
   }
