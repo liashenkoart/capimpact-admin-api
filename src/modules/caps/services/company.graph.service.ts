@@ -29,17 +29,18 @@ export class CompanyGraphService {
   }
 
   @Transactional()
-  async findPartnerNetworksByCid(cid: string): Promise<any> {
+  async findPartnerNetworksByCid(cid: string, hps: any): Promise<any> {
+    const nhops=+hps.query.nhops;
     const edges = this.persistenceManager
       .query<any>(
-        new QuerySpecification<any>('match p=(n:company {cid: $cid})-[*..2]->() with edges(p) as e return distinct e;')
+        new QuerySpecification<any>(`match p=(n:company {cid: $cid})-[*..${nhops}]->() with edges(p) as e return distinct e;`)
           .bind({
             cid
           })
       )
     const nodes = this.persistenceManager
       .query<any>(
-        new QuerySpecification<any>('match p=(n:company {cid: $cid})-[*..2]->() with nodes(p) as nd return distinct nd;')
+        new QuerySpecification<any>(`match p=(n:company {cid: $cid})-[*..${nhops}]->() with nodes(p) as nd return distinct nd;`)
           .bind({
             cid
           })

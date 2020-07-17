@@ -40,9 +40,13 @@ export class CompanyController {
     return this.companyService.findOneById(id);
   }
 
-  @Get('/:cid/partner-networks')
-  async findPartnerNetworksByCid(@Param('cid') cid: string) {
-    return this.companyGraphService.findPartnerNetworksByCid(cid);
+  @Get(`/:cid/partner-networks`)
+  async findPartnerNetworksByCid(
+    @Req() hps: any,
+    @Param('cid') cid: string,
+    )
+  {
+    return this.companyGraphService.findPartnerNetworksByCid(cid, hps);
   }
 
   @Get('/partner-networks/:cid')
