@@ -8,6 +8,30 @@ import {
 
 import _ from 'lodash';
 
+const ChangeDataFromApi = (data, type) => {
+  if (type === "nodes") return data.map(item => {
+    const comp_type = _.map(data, node => {
+      if (node.label === 'company_type' && node.props._id === item.props._id)
+        return node.props.name
+    });
+    return ({
+      ...item,
+      id: `${item.id.oid}.${item.id.id}`,
+      cid: item.props.cid,
+      industry: item.props.industry,
+      _id: item.props._id,
+      label: item.props.name,
+      type: comp_type,
+    })
+  })
+  if (type === "edges") return data.map(item => ({
+    rel: item.label,
+    id: `${item.id.oid}.${item.id.id}`,
+    from: `${item.start.oid}.${item.start.id}`,
+    to: `${item.end.oid}.${item.end.id}`,
+  }))
+};
+
 @Injectable()
 export class CompanyGraphService {
 
@@ -35,7 +59,7 @@ export class CompanyGraphService {
       cidsArr = cid.split('&');
     }
     const cids = cidsArr.join(', ').replace(/^(\w+), (\w+)$/i, `['$1', '$2']`);
-    const nhops=+hps.query.nhops;
+    const nhops = +hps.query.nhops;
 
     const edges = this.persistenceManager
       .query<any>(
@@ -62,18 +86,16 @@ export class CompanyGraphService {
       );
 
     return Promise.all([nodes, edges])
-      .then(records =>
-      //  records.map(record => record.map(
-      //     record => _.omit(record, 'ts_upd')
-      //   ))
-        {
-          let nodeFinally=[];
-          let edgeFinally=[];
-          records[0].forEach((nodeItem)=> nodeItem.forEach((nodeObj)=> nodeFinally.push(nodeObj)))
-          records[1].forEach((edgeItem)=> edgeItem.forEach((edgeObj)=> edgeFinally.push(edgeObj)))
-          return {nodes: nodeFinally, edges: edgeFinally}
+      .then(records => {
+        let nodeFinally=[];
+        let edgeFinally=[];
+        records[0].forEach((nodeItem)=> nodeItem.forEach((nodeObj)=> nodeFinally.push(nodeObj)))
+        records[1].forEach((edgeItem)=> edgeItem.forEach((edgeObj)=> edgeFinally.push(edgeObj)))
+        return {
+          nodes: _.uniqWith(ChangeDataFromApi(nodeFinally, 'nodes'), _.isEqual),
+          edges: _.uniqWith(ChangeDataFromApi(edgeFinally, 'edges'), _.isEqual),
         }
-      );
+      });
   }
 
   @Transactional()
