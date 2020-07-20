@@ -119,4 +119,39 @@ export class CompanyGraphService {
         )
       );
   }
+
+  @Transactional()
+  async getSummaryStatsByIndustries(cid: string, needGroupByType: boolean): Promise<any> {
+    const cidArray = cid.split('&');
+    const types = await this.persistenceManager
+      .query<any>(
+        new QuerySpecification<any>(`
+          match (c:company)-[]->(t:company_type)
+          where c.cid IN ['${cidArray.join(`', '`)}']
+          return t;
+        `)
+      );
+    const stats = {};
+    await Promise.all(types.map(async type => {
+      const companies = await this.persistenceManager
+        .query<any>(
+          new QuerySpecification<any>(`
+            match (t:company_type {_id: $_id})-[]->(m:company)
+            return m;
+          `).bind({ _id: type._id })
+        );
+      const industries = {};
+      companies.forEach(company => {
+        industries[company.industry] = (industries[company.industry] || 0) + 1;
+      })
+      if (needGroupByType) {
+        stats[type.name] = industries;
+      } else {
+        Object.keys(industries).forEach(key => {
+          stats[key] = (stats[key] || 0) + industries[key];
+        });
+      }
+    }));
+    return stats;
+  }
 }

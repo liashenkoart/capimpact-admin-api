@@ -96,4 +96,15 @@ export class CompanyController {
   async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.companyService.remove(+id);
   }
+
+  @Get(`/:cid/summary-stats-by-industries`)
+  async getSummaryStatsByIndustries(@Param('cid') cid: string) {
+    return this.companyGraphService.getSummaryStatsByIndustries(cid, true);
+  }
+
+  @Get(`/:cid/summary-stats-by-industries/all`)
+  async getSummaryStatsByIndustriesAll(@Param('cid') cid: string) {
+    return this.companyGraphService.getSummaryStatsByIndustries(cid, false);
+  }
+
 }
