@@ -107,4 +107,13 @@ export class CompanyController {
     return this.companyGraphService.getSummaryStatsByIndustries(cid, false);
   }
 
+  @Get(`/:cid/summary-stats-by-capability`)
+  async getSummaryStatsByCapabilities(@Param('cid') cid: string) {
+    return this.companyGraphService.getSummaryStatsByCapabilities(cid, true);
+  }
+
+  @Get(`/:cid/summary-stats-by-capability/all`)
+  async getSummaryStatsByCapabilitiesAll(@Param('cid') cid: string) {
+    return this.companyGraphService.getSummaryStatsByCapabilities(cid, false);
+  }
 }
