@@ -14,14 +14,21 @@ const ChangeDataFromApi = (data, type) => {
       if (node.label === 'company_type' && node.props._id === item.props._id)
         return node.props.name
     });
-    return ({
+    let newType = [];
+    comp_type.forEach((item) => {
+      if (item && item === 'Direct Investment') newType.push('direct_invest')
+      else if (item && item === 'Strategic Alliance') newType.push('strateg_alliance')
+      else if (item) newType.push(item.toLowerCase())
+    })
+
+   return ({
       ...item,
       id: `${item.id.oid}.${item.id.id}`,
       cid: item.props.cid,
       industry: item.props.industry,
       _id: item.props._id,
       label: item.props.name,
-      type: comp_type,
+      type: newType[0] || 'company',
     })
   })
   if (type === "edges") return data.map(item => ({
