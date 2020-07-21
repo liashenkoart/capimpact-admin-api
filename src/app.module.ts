@@ -27,6 +27,7 @@ import {
   Benchmark,
   ValueDriver,
   KpiBenchmark,
+  Sic,
 } from '@modules/caps/entities';
 
 import { UsersModule } from '@modules/users';
@@ -69,6 +70,7 @@ export const MODULE = {
           Benchmark,
           ValueDriver,
           KpiBenchmark,
+          Sic,
         ],
       }),
       inject: [ConfigService],

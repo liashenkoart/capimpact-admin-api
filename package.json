@@ -26,6 +26,7 @@
     "industry_tree_import": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industry-tree_import_NAICS.ts",
     "process_kpi_import": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/process_kpi_import.ts",
     "industry_tree_99": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industry_tree_99.ts",
+    "naics2sic": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/naics2sic.ts",
     "lenses": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/lenses.ts"
   },
   "license": "ISC",
