@@ -22,18 +22,20 @@ const ChangeDataFromApi = (data, type) => {
       else if (item) newType.push(item.toLowerCase())
     })
 
-   return ({
+    return ({
       id: `${item.id.oid}.${item.id.id}`,
       cid: item.props.cid,
       industry: item.props.industry,
       _id: item.props._id,
       label: item.props.name,
-      type: newType[0] || 'company',
+      type: item.props.type || newType[0],
+      capabilities: item.props.capabilities,
+      kpis: item.props.kpis,
     })
   })
 
   if (type === "edges") return data.map(item => ({
-    rel: item.label,
+    rel: item.label === "has_company_type" ? item.props.name : item.label,
     id: `${item.id.oid}.${item.id.id}`,
     from: `${item.start.oid}.${item.start.id}`,
     to: `${item.end.oid}.${item.end.id}`,
