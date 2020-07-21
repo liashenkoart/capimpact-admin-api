@@ -14,6 +14,7 @@ const ChangeDataFromApi = (data, type) => {
       if (node.label === 'company_type' && node.props._id === item.props._id)
         return node.props.name
     });
+
     let newType = [];
     comp_type.forEach((item) => {
       if (item && item === 'Direct Investment') newType.push('direct_invest')
@@ -22,7 +23,6 @@ const ChangeDataFromApi = (data, type) => {
     })
 
    return ({
-      ...item,
       id: `${item.id.oid}.${item.id.id}`,
       cid: item.props.cid,
       industry: item.props.industry,
@@ -31,6 +31,7 @@ const ChangeDataFromApi = (data, type) => {
       type: newType[0] || 'company',
     })
   })
+
   if (type === "edges") return data.map(item => ({
     rel: item.label,
     id: `${item.id.oid}.${item.id.id}`,
@@ -65,7 +66,7 @@ export class CompanyGraphService {
     if (cid.includes('&')) {
       cidsArr = cid.split('&');
     }
-    const cids = cidsArr.join(', ').replace(/^(\w+), (\w+)$/i, `['$1', '$2']`);
+    const cids = cidsArr.map(item => `'${item}'`);
     const nhops = +hps.query.nhops;
 
     const edges = this.persistenceManager
@@ -73,7 +74,7 @@ export class CompanyGraphService {
         new QuerySpecification<any>(
           cidsArr.length === 0
             ? `match p=(n:company {cid: $cid})-[*..${nhops}]->() with edges(p) as e return distinct e;`
-            : `match p=(n:company)-[*..${nhops}]->() where n.cid in ${cids} with edges(p) as e return distinct e;`
+            : `match p=(n:company)-[*..${nhops}]->() where n.cid in [${cids}] with edges(p) as e return distinct e;`
       )
           .bind(cidsArr.length === 0 ? {
              cid
@@ -85,7 +86,7 @@ export class CompanyGraphService {
         new QuerySpecification<any>(
           cidsArr.length === 0
           ? `match p=(n:company {cid: $cid})-[*..${nhops}]->() with nodes(p) as nd return distinct nd;`
-          : `match p=(n:company)-[*..${nhops}]->() where n.cid in ${cids} with nodes(p) as nd return distinct nd;`
+          : `match p=(n:company)-[*..${nhops}]->() where n.cid in [${cids}] with nodes(p) as nd return distinct nd;`
         )
           .bind(cidsArr.length === 0 ? {
             cid
