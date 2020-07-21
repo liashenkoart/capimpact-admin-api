@@ -126,35 +126,28 @@ export class CompanyGraphService {
   @Transactional()
   async getSummaryStatsByIndustries(cid: string, needGroupByType: boolean): Promise<any> {
     const cidArray = cid.split('&');
-    const types = await this.persistenceManager
+    const industries = await this.persistenceManager
       .query<any>(
         new QuerySpecification<any>(`
-          match (c:company)-[]->(t:company_type)
-          where c.cid IN ['${cidArray.join(`', '`)}']
-          return t;
+          match (n:company)-[]->(t:company_type)-[]->(m:company)
+          where n.cid IN ['${cidArray.join(`', '`)}']
+          RETURN [t.name, m.industry];
         `)
       );
     const stats = {};
-    await Promise.all(types.map(async type => {
-      const companies = await this.persistenceManager
-        .query<any>(
-          new QuerySpecification<any>(`
-            match (t:company_type {_id: $_id})-[]->(m:company)
-            return m;
-          `).bind({ _id: type._id })
-        );
-      const industries = {};
-      companies.forEach(company => {
-        industries[company.industry] = (industries[company.industry] || 0) + 1;
+    if (needGroupByType) {
+      industries.map(item => {
+        stats[item[0]] = {
+          ...stats[item[0]],
+          [item[1]]: industries.flat().filter(ii => ii == item[1]).length
+        }
       })
-      if (needGroupByType) {
-        stats[type.name] = industries;
-      } else {
-        Object.keys(industries).forEach(key => {
-          stats[key] = (stats[key] || 0) + industries[key];
-        });
-      }
-    }));
+    } else {
+      industries.map(item => {
+        stats[item[1]] = industries.flat().filter(ii => ii == item[1]).length
+        }
+      )
+    }
     return stats;
   }
 
