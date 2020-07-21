@@ -154,35 +154,28 @@ export class CompanyGraphService {
   @Transactional()
   async getSummaryStatsByCapabilities(cid: string, needGroupByType: boolean): Promise<any> {
     const cidArray = cid.split('&');
-    const types = await this.persistenceManager
+    const capabilities = await this.persistenceManager
       .query<any>(
         new QuerySpecification<any>(`
-          match (c:company)-[]->(t:company_type)
-          where c.cid IN ['${cidArray.join(`', '`)}']
-          return t;
+          match (n:company)-[]->(t:company_type)-[]->(m:company)
+          where n.cid IN ['${cidArray.join(`', '`)}']
+          RETURN [t.name, m.capability];
         `)
       );
     const stats = {};
-    await Promise.all(types.map(async type => {
-      const companies = await this.persistenceManager
-        .query<any>(
-          new QuerySpecification<any>(`
-            match (t:company_type {_id: $_id})-[]->(m:company)
-            return m;
-          `).bind({ _id: type._id })
-        );
-      const capabilities = {};
-      companies.forEach(company => {
-        capabilities[company.capability] = (capabilities[company.capability] || 0) + 1;
+    if (needGroupByType) {
+      capabilities.map(item => {
+        stats[item[0]] = {
+          ...stats[item[0]],
+          [item[1]]: capabilities.flat().filter((it, ind) =>
+            it === item[1] && capabilities.flat()[ind-1] === item[0]).length
+        }
       })
-      if (needGroupByType) {
-        stats[type.name] = capabilities;
-      } else {
-        Object.keys(capabilities).forEach(key => {
-          stats[key] = (stats[key] || 0) + capabilities[key];
-        });
-      }
-    }));
+    } else {
+      capabilities.map(item => {
+        stats[item[1]] = capabilities.flat().filter(it => it == item[1]).length
+      })
+    }
     return stats;
   }
 }
