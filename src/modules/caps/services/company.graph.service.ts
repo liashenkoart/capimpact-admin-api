@@ -139,14 +139,14 @@ export class CompanyGraphService {
       industries.map(item => {
         stats[item[0]] = {
           ...stats[item[0]],
-          [item[1]]: industries.flat().filter(ii => ii == item[1]).length
+          [item[1]]: industries.flat().filter((it, ind) =>
+            it === item[1] && industries.flat()[ind-1] === item[0]).length
         }
       })
     } else {
       industries.map(item => {
-        stats[item[1]] = industries.flat().filter(ii => ii == item[1]).length
-        }
-      )
+        stats[item[1]] = industries.flat().filter(it => it == item[1]).length
+      })
     }
     return stats;
   }
