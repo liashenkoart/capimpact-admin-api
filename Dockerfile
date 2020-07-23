@@ -1,6 +1,7 @@
 FROM node:10-alpine
 
 RUN yarn global add pm2
+RUN yarn global add pegjs
 
 RUN mkdir /root/app
 
