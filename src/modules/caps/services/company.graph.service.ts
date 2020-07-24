@@ -9,6 +9,8 @@ import {
 import _ from 'lodash';
 
 const ChangeDataFromApi = (data, type) => {
+  data = data.flat(1);
+
   if (type === "nodes") return data.map(item => {
     const comp_type = _.map(data, node => {
       if (node.label === 'company_type' && node.props._id === item.props._id)
@@ -31,6 +33,7 @@ const ChangeDataFromApi = (data, type) => {
       type: item.props.type || newType[0],
       capabilities: item.props.capabilities,
       kpis: item.props.kpis,
+      parent: item.props.parent,
     })
   })
 
@@ -71,7 +74,7 @@ export class CompanyGraphService {
     const cids = cidsArr.map(item => `'${item}'`);
     const nhops = +hps.query.nhops;
 
-    const edges = this.persistenceManager
+    const edges = await this.persistenceManager
       .query<any>(
         new QuerySpecification<any>(
           cidsArr.length === 0
@@ -83,7 +86,7 @@ export class CompanyGraphService {
           } : null)
       );
 
-    const nodes = this.persistenceManager
+    const nodes = await this.persistenceManager
       .query<any>(
         new QuerySpecification<any>(
           cidsArr.length === 0
@@ -95,17 +98,10 @@ export class CompanyGraphService {
           } : null)
       );
 
-    return Promise.all([nodes, edges])
-      .then(records => {
-        let nodeFinally=[];
-        let edgeFinally=[];
-        records[0].forEach((nodeItem)=> nodeItem.forEach((nodeObj)=> nodeFinally.push(nodeObj)))
-        records[1].forEach((edgeItem)=> edgeItem.forEach((edgeObj)=> edgeFinally.push(edgeObj)))
-        return {
-          nodes: _.uniqWith(ChangeDataFromApi(nodeFinally, 'nodes'), _.isEqual),
-          edges: _.uniqWith(ChangeDataFromApi(edgeFinally, 'edges'), _.isEqual),
-        }
-      });
+    return {
+      nodes: _.uniqWith(ChangeDataFromApi(nodes, 'nodes'), _.isEqual),
+      edges: _.uniqWith(ChangeDataFromApi(edges, 'edges'), _.isEqual),
+    }
   }
 
   @Transactional()
@@ -177,5 +173,37 @@ export class CompanyGraphService {
       })
     }
     return stats;
+  }
+
+  @Transactional()
+  async getSharedCompanies(cid: string): Promise<any> {
+    const cidArray = cid.split('&');
+
+    const nodes = await this.persistenceManager
+      .query<any>(
+        new QuerySpecification<any>(`
+          match p=(n:company)-[r1]->(:company_type)-[]->(s:company)<-[]-(:company_type)<-[r2]-(m:company)
+            where n.cid in ['${cidArray.join(`', '`)}']
+              and m.cid in ['${cidArray.join(`', '`)}']
+              and id(n) < id(m)
+          with nodes(p) as nd return distinct nd;
+        `)
+      );
+
+    const edges = await this.persistenceManager
+      .query<any>(
+        new QuerySpecification<any>(`
+          match p=(n:company)-[r1]->(:company_type)-[]->(s:company)<-[]-(:company_type)<-[r2]-(m:company)
+            where n.cid in ['${cidArray.join(`', '`)}']
+              and m.cid in ['${cidArray.join(`', '`)}']
+              and id(n) < id(m)
+          with edges(p) as e return distinct e;
+        `)
+      );
+
+    return {
+      nodes: _.uniqWith(ChangeDataFromApi(nodes, 'nodes'), _.isEqual),
+      edges: _.uniqWith(ChangeDataFromApi(edges, 'edges'), _.isEqual),
+    }
   }
 }

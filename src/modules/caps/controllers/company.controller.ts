@@ -116,4 +116,9 @@ export class CompanyController {
   async getSummaryStatsByCapabilitiesAll(@Param('cid') cid: string) {
     return this.companyGraphService.getSummaryStatsByCapabilities(cid, false);
   }
+
+  @Get(`/:cid/shared-companies`)
+  async getSharedCompanies(@Param('cid') cid: string) {
+    return this.companyGraphService.getSharedCompanies(cid);
+  }
 }
