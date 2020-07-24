@@ -18,6 +18,11 @@ export class CapabilityLibService {
     return this.capabilityLibRepository.find(options);
   }
 
+  async count(query: CapabilityLibsArgs): Promise<Object> {
+    const count = await this.capabilityLibRepository.count({ where: query });
+    return { total: count };
+  }
+
   async findOneById(id: number): Promise<CapabilityLib> {
     return this.getOneByIdWithKpiLibs(id);
   }

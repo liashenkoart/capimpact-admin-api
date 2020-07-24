@@ -30,6 +30,10 @@ export class CapabilityLibController {
   async findAll(@Query() query: CapabilityLibsArgs) {
     return this.capabilityLibService.findAll(query);
   }
+  @Get('/count')
+  async count(@Query() query: CapabilityLibsArgs) {
+    return this.capabilityLibService.count(query);
+  }
 
   @Get('/:id')
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
