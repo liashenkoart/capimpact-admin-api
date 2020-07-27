@@ -20,6 +20,7 @@ export default registerAs('database', () => {
         username: process.env.DATABASE_USERNAME,
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME,
+        defaultGraphPath: process.env.DEFAULT_GRAPH,
         synchronize: true,
         logging: true,
         migrationsRun: false,
