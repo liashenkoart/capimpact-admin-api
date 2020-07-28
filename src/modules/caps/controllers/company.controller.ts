@@ -103,22 +103,22 @@ export class CompanyController {
     return this.companyService.remove(+id);
   }
 
-  @Get(`/:cid/summary-stats-by-industries`)
+  @Get(`/graph/:cid/summary-stats-by-industries`)
   async getSummaryStatsByIndustries(@Param('cid') cid: string) {
     return this.companyGraphService.getSummaryStatsByIndustries(cid, true);
   }
 
-  @Get(`/:cid/summary-stats-by-industries/all`)
+  @Get(`/graph/:cid/summary-stats-by-industries/all`)
   async getSummaryStatsByIndustriesAll(@Param('cid') cid: string) {
     return this.companyGraphService.getSummaryStatsByIndustries(cid, false);
   }
 
-  @Get(`/:cid/summary-stats-by-capability`)
+  @Get(`/graph/:cid/summary-stats-by-capability`)
   async getSummaryStatsByCapabilities(@Param('cid') cid: string) {
     return this.companyGraphService.getSummaryStatsByCapabilities(cid, true);
   }
 
-  @Get(`/:cid/summary-stats-by-capability/all`)
+  @Get(`/graph/:cid/summary-stats-by-capability/all`)
   async getSummaryStatsByCapabilitiesAll(@Param('cid') cid: string) {
     return this.companyGraphService.getSummaryStatsByCapabilities(cid, false);
   }
