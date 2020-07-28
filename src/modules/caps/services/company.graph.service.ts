@@ -126,11 +126,7 @@ export class CompanyGraphService {
           .bind({
             cid
           })
-      ).then(records =>
-        records.map(
-          record => _.omit(record.properties, 'ts_upd')
-        )
-      );
+      )
   }
 
   @Transactional()
