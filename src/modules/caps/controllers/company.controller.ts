@@ -42,11 +42,17 @@ export class CompanyController {
 
   @Get(`/:cid/partner-networks`)
   async findPartnerNetworksByCid(
+    @Param('cid') cid: string,
+  ) {
+    return this.companyGraphService.findPartnerNetworksByCid(cid);
+  }
+
+  @Get(`/graph/:cid/partner-networks`)
+  async findPartnerNetworksForGraphByCid(
     @Req() hps: any,
     @Param('cid') cid: string,
-    )
-  {
-    return this.companyGraphService.findPartnerNetworksByCid(cid, hps);
+  ) {
+    return this.companyGraphService.findPartnerNetworksForGraphByCid(cid, hps);
   }
 
   @Get('/partner-networks/:cid')
@@ -117,7 +123,7 @@ export class CompanyController {
     return this.companyGraphService.getSummaryStatsByCapabilities(cid, false);
   }
 
-  @Get(`/:cid/shared-companies`)
+  @Get(`/graph/:cid/shared-companies`)
   async getSharedCompanies(@Param('cid') cid: string) {
     return this.companyGraphService.getSharedCompanies(cid);
   }

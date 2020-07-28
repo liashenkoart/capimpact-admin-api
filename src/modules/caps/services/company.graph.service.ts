@@ -66,7 +66,21 @@ export class CompanyGraphService {
   }
 
   @Transactional()
-  async findPartnerNetworksByCid(cid: string, hps: any): Promise<any> {
+  async findPartnerNetworksByCid(cid: string): Promise<any> {
+    const records = await this.persistenceManager
+    .query<any>(
+      new QuerySpecification<any>(`match p=(n:Company {cid: $cid})-[*..2]->() RETURN p;`)
+        .bind({ cid })
+    );
+
+    return records.map(record => {
+      let node: any = record.toObject();
+      return _.omit(node.p.end.properties, 'ts_upd');
+    });
+  }
+
+  @Transactional()
+  async findPartnerNetworksForGraphByCid(cid: string, hps: any): Promise<any> {
     let cidsArr = [];
     if (cid.includes('&')) {
       cidsArr = cid.split('&');
