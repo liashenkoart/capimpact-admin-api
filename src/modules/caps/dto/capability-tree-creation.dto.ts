@@ -14,7 +14,6 @@ export class CapabilityTreeCreationInput {
 
   @ApiProperty({ type: Number})
   @Field(() => ID)
-  @IsNotEmpty()
   @Type(() => Number)
   readonly capability_lib_id: number;
 
