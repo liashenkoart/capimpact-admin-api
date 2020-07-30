@@ -26,6 +26,11 @@ export class CapabilityTreeService extends BaseService {
     return this.capabilityTreeRepository.findOne({ id });
   }
 
+  async findMasterCapTree(): Promise<CapabilityTree> {
+    const cap_name = "Master CapTree";
+    return this.capabilityTreeRepository.findOne({ cap_name });
+  }
+
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return await this.capabilityTreeRepository.save(capabilityTree);
