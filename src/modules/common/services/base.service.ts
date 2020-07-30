@@ -1,4 +1,4 @@
-import { FindManyOptions, Like } from 'typeorm';
+import { FindManyOptions, Raw } from 'typeorm';
 import { fromPairs } from 'lodash';
 
 export abstract class BaseService {
@@ -7,7 +7,7 @@ export abstract class BaseService {
     const transformedWhere = {};
     Object.entries(where).map(([key, value]) => {
       const isTemplate = typeof value == 'string' && (value.startsWith('%') || value.endsWith('%'));
-      transformedWhere[key] = isTemplate ? Like(value) : value;
+      transformedWhere[key] = isTemplate ? Raw(alias => `${alias} ILIKE '${value}'`) : value;
     });
     return {
       skip: skip > 0 ? skip : (page - 1) * limit,
