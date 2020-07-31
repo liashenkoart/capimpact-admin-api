@@ -44,6 +44,11 @@ export class CapabilityTreeService extends BaseService {
     }
   }
 
+  async createMasterCapTree(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
+    const masterCapabilityTree = await this.collectEntityFields(new CapabilityTree(data));
+    return await this.capabilityTreeRepository.save(masterCapabilityTree);
+  }
+
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return await this.capabilityTreeRepository.save(capabilityTree);

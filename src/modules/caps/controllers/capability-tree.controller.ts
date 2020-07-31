@@ -41,6 +41,11 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.findMasterCapTree();
   }
 
+  @Post('master')
+  async createMasterCapTree(@Body() data: CapabilityTreeCreationInput, @Req() req: any) {
+    return this.capabilityTreeService.createMasterCapTree(data);
+  }
+
   @Get('/:id')
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityTreeService.findOneById(id);
