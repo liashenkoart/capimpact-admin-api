@@ -28,7 +28,10 @@ export class CapabilityTreeService extends BaseService {
 
   async findMasterCapTree(): Promise<Object> {
     const cap_name = "Master CapTree";
-    const root = await this.capabilityTreeRepository.findOne({ cap_name });
+    const root = await this.capabilityTreeRepository.findOne({
+      cap_name,
+      parentId: null,
+    });
     const rootTree = await this.treeRepository.findDescendantsTree(root);
     const children = await this.capabilityTreeRepository.find({ parentId: root.id });
     let childrenTree = [];
@@ -36,9 +39,9 @@ export class CapabilityTreeService extends BaseService {
       childrenTree.push(await this.treeRepository.findDescendantsTree(item));
     }
     return {
-      rootTree,
-      childrenTree,
-    };
+      ...rootTree,
+      children: childrenTree,
+    }
   }
 
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
