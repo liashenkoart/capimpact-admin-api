@@ -5,7 +5,8 @@ import { Repository, TreeRepository } from 'typeorm';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree } from '../entities';
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput } from '../dto';
-// import {sortTreeByField} from "@lib/sorting";
+
+const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
 @Injectable()
 export class CapabilityTreeService extends BaseService {
@@ -26,15 +27,33 @@ export class CapabilityTreeService extends BaseService {
     return this.capabilityTreeRepository.findOne({ id });
   }
 
-  async findMasterCapTree(): Promise<Object> {
-    const cap_name = "Master CapTree";
-    const root = await this.capabilityTreeRepository.findOne({ cap_name, parentId: null });
-    return await this.treeRepository.findDescendantsTree(root);
+  async fillTree(node): Promise<Object> {
+    node.capability_lib = await this.capabilityLibRepository.findOne({ id: node.capability_lib_id });
+    node.children = await Promise.all(node.children.map(child => this.fillTree(child)));
+    return node;
   }
 
-  async createMasterCapTree(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
-    const masterCapabilityTree = await this.collectEntityFields(new CapabilityTree(data));
-    return await this.capabilityTreeRepository.save(masterCapabilityTree);
+  async findMasterCapTree(): Promise<Object> {
+    let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
+    if (!root) {
+      root = await this.createMasterCapTree();
+    }
+    const tree = await this.treeRepository.findDescendantsTree(root);
+    return await this.fillTree(tree);
+  }
+
+  async createMasterCapTree(): Promise<CapabilityTree> {
+    const capLibs = await this.capabilityLibRepository.find({ capability_trees: null});
+    const masterTree = await this.capabilityTreeRepository.save(new CapabilityTree(masterTreeTemplate));
+    await Promise.all(capLibs.map(async capability_lib => {
+      const firstLevelChild = await this.capabilityTreeRepository.save(new CapabilityTree({
+        parent: masterTree,
+        type: masterTree.type,
+        cap_name: capability_lib.name,
+        capability_lib,
+      }));
+    }));
+    return masterTree;
   }
 
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
@@ -61,10 +80,7 @@ export class CapabilityTreeService extends BaseService {
     if (!root) {
       throw new NotFoundException();
     }
-    // todo: handle sorting somehow without name
     return this.treeRepository.findDescendantsTree(root);
-    // const tree = await this.treeRepository.findDescendantsTree(root);
-    // return sortTreeByField('name', tree);
   }
 
   async collectEntityFields(capabilityTree: CapabilityTree): Promise<CapabilityTree> {
