@@ -1,14 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
-
-import { CapabilityLib, KpiLib } from '../entities';
+import { CapabilityTreeService } from './capability-tree.service';
+import { CapabilityLib, KpiLib, CapabilityTree } from '../entities';
 import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput } from '../dto';
 
 @Injectable()
 export class CapabilityLibService {
   constructor(
+    private readonly capabilityTreeService: CapabilityTreeService,
     @InjectRepository(KpiLib) private readonly kpiLibRepository: Repository<KpiLib>,
+    @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
   ) {}
 
@@ -46,7 +48,15 @@ export class CapabilityLibService {
   }
 
   async remove(id: number) {
-    const capabilityLib = await this.getOneById(id);
+    const options = { where: { id }, relations: ['capability_trees'] };
+    const capabilityLib = await this.capabilityLibRepository.findOne(options);
+    if (!capabilityLib) {
+        throw new NotFoundException();
+    }
+    const capTrees = [...capabilityLib.capability_trees];
+    capabilityLib.capability_trees = [];
+    await this.capabilityLibRepository.save(capabilityLib);
+    await Promise.all(capTrees.map(capTree => this.capabilityTreeService.remove(capTree.id)));
     await this.capabilityLibRepository.remove(capabilityLib);
     return { id };
   }

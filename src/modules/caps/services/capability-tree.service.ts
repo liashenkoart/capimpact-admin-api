@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository } from 'typeorm';
-
+import { flattenTree } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree } from '../entities';
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput } from '../dto';
@@ -69,10 +69,14 @@ export class CapabilityTreeService extends BaseService {
 
   async remove(id: number) {
     const node = await this.capabilityTreeRepository.findOne({ id });
+    let allRelatedIds = [];
     if (node) {
-      await this.capabilityTreeRepository.remove(node);
+      const tree = await this.treeRepository.findDescendantsTree(node);
+      allRelatedIds = (tree ? flattenTree(tree, 'children') : []).map(({ id }) => id);
+      const children = await this.capabilityTreeRepository.findByIds(allRelatedIds);
+      await this.capabilityTreeRepository.remove(children);
     }
-    return { id };
+    return { ids: allRelatedIds };
   }
 
   async tree(query: CapabilityTreesArgs): Promise<CapabilityTree> {
