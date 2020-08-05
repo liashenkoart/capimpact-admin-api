@@ -55,9 +55,9 @@ export class CapabilityLibService {
     }
     const capTrees = [...capabilityLib.capability_trees];
     capabilityLib.capability_trees = [];
-    await this.capabilityLibRepository.save(capabilityLib);
+    const capLibWithoutTrees = await this.capabilityLibRepository.save(capabilityLib);
     await Promise.all(capTrees.map(capTree => this.capabilityTreeService.remove(capTree.id)));
-    await this.capabilityLibRepository.remove(capabilityLib);
+    await this.capabilityLibRepository.remove(capLibWithoutTrees);
     return { id };
   }
 
