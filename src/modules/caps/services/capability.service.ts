@@ -220,6 +220,7 @@ export class CapabilityService {
 
   async updateHierarchyIdNode(node: Capability): Promise<Capability> {
     if (node.hierarchy_id) return node;
+    if (node.company_id) return node; // If capability is created from company we don't give it hierarchy_id
     let hierarchyId = '';
     let maxValue = 0;
     let parent = await this.capabilityRepository.findOne(+node.parentId);
