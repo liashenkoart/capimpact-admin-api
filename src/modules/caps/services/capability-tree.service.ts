@@ -73,8 +73,20 @@ export class CapabilityTreeService extends BaseService {
     if (node) {
       const tree = await this.treeRepository.findDescendantsTree(node);
       allRelatedIds = (tree ? flattenTree(tree, 'children') : []).map(({ id }) => id);
-      const children = await this.capabilityTreeRepository.findByIds(allRelatedIds);
-      await this.capabilityTreeRepository.remove(children);
+      const foundChildren = await this.capabilityTreeRepository.findByIds(allRelatedIds);
+      await Promise.all(foundChildren.map(async capTreeNode => {
+        const options = { where: { id: capTreeNode.capability_lib_id }, relations: ['capability_trees'] };
+        const capLib = await this.capabilityLibRepository.findOne(options);
+        if (!capLib) {
+          return;
+        }
+        capLib.capability_trees = capLib.capability_trees.filter(item => item.id !== capTreeNode.id);
+        const filteredCapLib = await this.capabilityLibRepository.save(capLib);
+        if (!filteredCapLib.capability_trees.length) {
+          await this.capabilityLibRepository.remove(filteredCapLib);
+        }
+      }));
+      await this.capabilityTreeRepository.remove(foundChildren);
     }
     return { ids: allRelatedIds };
   }
