@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
 
-import { CapabilityLib, KpiLib } from '../entities';
+import { CapabilityLib, CapabilityTree, KpiLib } from '../entities';
 import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput } from '../dto';
 
 @Injectable()
@@ -10,6 +10,8 @@ export class CapabilityLibService {
   constructor(
     @InjectRepository(KpiLib) private readonly kpiLibRepository: Repository<KpiLib>,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
+    @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
+
   ) {}
 
   async findAll(query: CapabilityLibsArgs): Promise<CapabilityLib[] | void> {
@@ -29,7 +31,16 @@ export class CapabilityLibService {
 
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
     data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
-    return await this.capabilityLibRepository.save(new CapabilityLib(data));
+    const cap_lib = await this.capabilityLibRepository.save(new CapabilityLib(data));
+
+    //Creating Captree
+    await this.capabilityTreeRepository.save(new CapabilityTree({
+      ...data,
+      cap_name: cap_lib.name,
+      type: 'master',
+      capability_lib_id: cap_lib.id
+    }));
+    return cap_lib
   }
 
   async save(id: number, data: CapabilityLibInput): Promise<CapabilityLib> {
