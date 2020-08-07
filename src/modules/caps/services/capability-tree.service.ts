@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository } from 'typeorm';
-
+import { flattenTree } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree } from '../entities';
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput } from '../dto';
-// import {sortTreeByField} from "@lib/sorting";
+
+const masterTreeTemplate = { type: 'master'};
 
 @Injectable()
 export class CapabilityTreeService extends BaseService {
@@ -26,29 +27,36 @@ export class CapabilityTreeService extends BaseService {
     return this.capabilityTreeRepository.findOne({ id });
   }
 
-  async findMasterCapTree(): Promise<Object> {
-    return this.capabilityTreeRepository.find({ where: {type: 'master'} });
-    
-    const cap_name = "Master CapTree";
-    const root = await this.capabilityTreeRepository.findOne({
-      cap_name,
-      parentId: null,
-    });
-    const rootTree = await this.treeRepository.findDescendantsTree(root);
-    const children = await this.capabilityTreeRepository.find({ parentId: root.id });
-    let childrenTree = [];
-    for (let item of children) {
-      childrenTree.push(await this.treeRepository.findDescendantsTree(item));
-    }
-    return {
-      ...rootTree,
-      children: childrenTree,
-    }
+  async fillTree(node): Promise<Object> {
+    node.capability_lib = await this.capabilityLibRepository.findOne({ id: node.capability_lib_id });
+    node.children = await Promise.all(node.children.map(child => this.fillTree(child)));
+    return node;
   }
 
-  async createMasterCapTree(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
-    const masterCapabilityTree = await this.collectEntityFields(new CapabilityTree(data));
-    return await this.capabilityTreeRepository.save(masterCapabilityTree);
+  async findMasterCapTree(): Promise<Object> {
+    const MasterCapTree = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
+    console.log("CapabilityTreeService -> MasterCapTree", MasterCapTree)
+    return MasterCapTree
+    // let root = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
+    // if (!root) {
+    //   root = await this.createMasterCapTree();
+    // }
+    // const tree = await this.treeRepository.findDescendantsTree(root);
+    // return await this.fillTree(tree);
+  }
+
+  async createMasterCapTree(): Promise<CapabilityTree> {
+    const capLibs = await this.capabilityLibRepository.find({ capability_trees: null});
+    const masterTree = await this.capabilityTreeRepository.save(new CapabilityTree(masterTreeTemplate));
+    await Promise.all(capLibs.map(async capability_lib => {
+      const firstLevelChild = await this.capabilityTreeRepository.save(new CapabilityTree({
+        parent: masterTree,
+        type: masterTree.type,
+        cap_name: capability_lib.name,
+        capability_lib,
+      }));
+    }));
+    return masterTree;
   }
 
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
@@ -64,10 +72,26 @@ export class CapabilityTreeService extends BaseService {
 
   async remove(id: number) {
     const node = await this.capabilityTreeRepository.findOne({ id });
+    let allRelatedIds = [];
     if (node) {
-      await this.capabilityTreeRepository.remove(node);
+      const tree = await this.treeRepository.findDescendantsTree(node);
+      allRelatedIds = (tree ? flattenTree(tree, 'children') : []).map(({ id }) => id);
+      const foundChildren = await this.capabilityTreeRepository.findByIds(allRelatedIds);
+      await Promise.all(foundChildren.map(async capTreeNode => {
+        const options = { where: { id: capTreeNode.capability_lib_id }, relations: ['capability_trees'] };
+        const capLib = await this.capabilityLibRepository.findOne(options);
+        if (!capLib) {
+          return;
+        }
+        capLib.capability_trees = capLib.capability_trees.filter(item => item.id !== capTreeNode.id);
+        const filteredCapLib = await this.capabilityLibRepository.save(capLib);
+        if (!filteredCapLib.capability_trees.length) {
+          await this.capabilityLibRepository.remove(filteredCapLib);
+        }
+      }));
+      await this.capabilityTreeRepository.remove(foundChildren);
     }
-    return { id };
+    return { ids: allRelatedIds };
   }
 
   async tree(query: CapabilityTreesArgs): Promise<CapabilityTree> {
@@ -75,10 +99,7 @@ export class CapabilityTreeService extends BaseService {
     if (!root) {
       throw new NotFoundException();
     }
-    // todo: handle sorting somehow without name
     return this.treeRepository.findDescendantsTree(root);
-    // const tree = await this.treeRepository.findDescendantsTree(root);
-    // return sortTreeByField('name', tree);
   }
 
   async collectEntityFields(capabilityTree: CapabilityTree): Promise<CapabilityTree> {
