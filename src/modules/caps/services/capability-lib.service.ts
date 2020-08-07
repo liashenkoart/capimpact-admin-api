@@ -33,13 +33,6 @@ export class CapabilityLibService {
     data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
     const cap_lib = await this.capabilityLibRepository.save(new CapabilityLib(data));
 
-    //Creating Captree
-    await this.capabilityTreeRepository.save(new CapabilityTree({
-      ...data,
-      cap_name: cap_lib.name,
-      type: 'master',
-      capability_lib_id: cap_lib.id
-    }));
     return cap_lib
   }
 
