@@ -69,7 +69,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
-    if(data.type === 'master'){
+    if(data.type === 'master' && !data.parentId){
       const MasterCapLib = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
       data.parentId = MasterCapLib.id
     }
@@ -82,6 +82,14 @@ export class CapabilityTreeService extends BaseService {
     data.id = id;
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return this.capabilityTreeRepository.save(capabilityTree);
+  }
+
+  async delete_many(capIds: number[]) {
+    const node = await this.capabilityTreeRepository.findOne(capIds[0]) 
+    await this.capabilityTreeRepository.delete(capIds);
+    console.log("CapabilityTreeService -> delete_many -> capIds", capIds)
+    console.log("CapabilityTreeService -> delete_many -> node", node)
+    return node;
   }
 
   async remove(id: number) {
