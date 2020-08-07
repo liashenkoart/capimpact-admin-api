@@ -6,7 +6,8 @@ import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree } from '../entities';
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput } from '../dto';
 
-const masterTreeTemplate = { type: 'master'};
+// const masterTreeTemplate = { type: 'master'};
+const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
 @Injectable()
 export class CapabilityTreeService extends BaseService {
@@ -34,15 +35,23 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async findMasterCapTree(): Promise<Object> {
-    const MasterCapTree = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
-    console.log("CapabilityTreeService -> MasterCapTree", MasterCapTree)
-    return MasterCapTree
+    // const MasterCapTree = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
+    // console.log("CapabilityTreeService -> MasterCapTree", MasterCapTree)
+    // // return MasterCapTree
     // let root = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
     // if (!root) {
     //   root = await this.createMasterCapTree();
     // }
     // const tree = await this.treeRepository.findDescendantsTree(root);
     // return await this.fillTree(tree);
+
+    let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
+    if (!root) {
+      root = await this.createMasterCapTree();
+    }
+    const tree = await this.treeRepository.findDescendantsTree(root);
+    return await this.fillTree(tree);
+
   }
 
   async createMasterCapTree(): Promise<CapabilityTree> {
@@ -60,7 +69,12 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
+    if(data.type === 'master'){
+      const MasterCapLib = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
+      data.parentId = MasterCapLib.id
+    }
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
+
     return await this.capabilityTreeRepository.save(capabilityTree);
   }
 
