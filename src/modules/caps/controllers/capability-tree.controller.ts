@@ -70,6 +70,12 @@ export class CapabilityTreeController {
 
   @Delete('/:id')
   async remove(@Param('id', new ParseIntPipe()) id: number) {
+    console.log('CANT BELIEVE ')
     return this.capabilityTreeService.remove(id);
+  }
+
+  @Delete('delete/:id')
+  async remove_from_captree(@Param('id', new ParseIntPipe()) id: number) {
+    return this.capabilityTreeService.remove_from_captree(id);
   }
 }
