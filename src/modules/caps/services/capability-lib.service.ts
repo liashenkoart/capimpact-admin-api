@@ -58,7 +58,9 @@ export class CapabilityLibService {
 
   async remove(id: number) {
     const capabilityLib = await this.getOneById(id);
-    await this.capabilityLibRepository.remove(capabilityLib);
+    console.log("CapabilityLibService -> remove -> capabilityLib", capabilityLib)
+    const yle = await this.capabilityLibRepository.remove(capabilityLib);
+    console.log("CapabilityLibService -> remove -> yle", yle)
     return { id };
   }
 
