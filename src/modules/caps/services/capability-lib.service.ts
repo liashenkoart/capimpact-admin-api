@@ -31,7 +31,9 @@ export class CapabilityLibService {
 
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
     data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
-    return await this.capabilityLibRepository.save(new CapabilityLib(data));
+    const cap_lib = await this.capabilityLibRepository.save(new CapabilityLib(data));
+
+    return cap_lib
   }
 
   async save(id: number, data: CapabilityLibInput): Promise<CapabilityLib> {

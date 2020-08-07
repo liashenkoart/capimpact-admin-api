@@ -12,6 +12,9 @@ export class CapabilityLib {
 
   @Column('text')
   name: string;
+ 
+  @Column('text', {default: 'active'})
+  status: 'text';
 
   @Column('text', { nullable: true })
   description: string;
