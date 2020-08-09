@@ -39,7 +39,7 @@ export class CapabilityTreeService extends BaseService {
   // This is for getting caps that have status set to active
   async filterActiveTree(node): Promise<Object> {
     if(node.children.length !== 0){
-      node.children = node.children.filter(child => child.status === 'active')
+      node.children = node.children.filter(child => child.status === 'active' && child.show)
       node.children.map(child => this.filterActiveTree(child))
     }
     return node;

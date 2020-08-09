@@ -60,8 +60,6 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.save(id, data);
   }
 
-
-
   @Delete('/delete_many')
   // TODO: CREATE DELETION DTO
   async delete_many(@Body() data: any) {
