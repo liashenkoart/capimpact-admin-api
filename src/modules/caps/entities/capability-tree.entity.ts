@@ -33,7 +33,7 @@ export class CapabilityTree {
   
   @Field()
   @Column('text', {default: 'active'})
-  status: 'text';
+  status: string;
 
   @Field(() => Capability)
   @OneToOne(type => Capability, capability => capability.capability_tree,)

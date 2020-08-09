@@ -93,6 +93,17 @@ export class CapabilityTreeService extends BaseService {
 
   async save(id: number, data: CapabilityTreeInput): Promise<CapabilityTree> {
     data.id = id;
+
+    const cap = await this.capabilityTreeRepository.findOne(id);
+
+    if(data.status === 'inactive'){
+      const childrenOfcap = await this.capabilityTreeRepository.find({where: {parentId: id}});
+      childrenOfcap.forEach(async child => {
+        child.parentId = cap.parentId
+        await this.capabilityTreeRepository.save(child);
+      })
+    }
+
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return this.capabilityTreeRepository.save(capabilityTree);
   }

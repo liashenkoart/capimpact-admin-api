@@ -23,6 +23,10 @@ export class CapabilityTreeInput {
   @Type(() => Number)
   readonly capability_lib_id?: number;
 
+  @IsOptional()
+  @Type(() => String)
+  readonly status?: string;
+
   @ApiPropertyOptional({ type: Number })
   @Field(() => ID, { nullable: true })
   @IsOptional()
