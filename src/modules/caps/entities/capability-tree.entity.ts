@@ -30,6 +30,10 @@ export class CapabilityTree {
   @Field({ nullable: true })
   @Column({ nullable: true })
   type: string;
+  
+  @Field()
+  @Column('text', {default: 'active'})
+  status: 'text';
 
   @Field(() => Capability)
   @OneToOne(type => Capability, capability => capability.capability_tree,)

@@ -30,7 +30,18 @@ export class CapabilityTreeService extends BaseService {
 
   async fillTree(node): Promise<Object> {
     node.capability_lib = await this.capabilityLibRepository.findOne({ id: node.capability_lib_id });
+    console.log("CapabilityTreeService -> node", node)
+
     node.children = await Promise.all(node.children.map(child => this.fillTree(child)));
+    return node;
+  }
+
+  // This is for getting caps that have status set to active
+  async filterActiveTree(node): Promise<Object> {
+    if(node.children.length !== 0){
+      node.children = node.children.filter(child => child.status === 'active')
+      node.children.map(child => this.filterActiveTree(child))
+    }
     return node;
   }
 
@@ -50,7 +61,9 @@ export class CapabilityTreeService extends BaseService {
       root = await this.createMasterCapTree();
     }
     const tree = await this.treeRepository.findDescendantsTree(root);
-    return await this.fillTree(tree);
+
+    // return await this.fillTree(tree);
+    return await this.filterActiveTree(tree);
 
   }
 
