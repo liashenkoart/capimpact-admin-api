@@ -38,7 +38,7 @@ export class CapabilityTreeService extends BaseService {
 
   // This is for getting caps that have status set to active
   async filterActiveTree(node): Promise<Object> {
-    if(node.children.length !== 0){
+    if (node.children.length !== 0) {
       node.children = node.children.filter(child => child.status === 'active' && child.show)
       node.children.map(child => this.filterActiveTree(child))
     }
@@ -68,7 +68,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async createMasterCapTree(): Promise<CapabilityTree> {
-    const capLibs = await this.capabilityLibRepository.find({ capability_trees: null});
+    const capLibs = await this.capabilityLibRepository.find({ capability_trees: null });
     const masterTree = await this.capabilityTreeRepository.save(new CapabilityTree(masterTreeTemplate));
     await Promise.all(capLibs.map(async capability_lib => {
       const firstLevelChild = await this.capabilityTreeRepository.save(new CapabilityTree({
@@ -82,7 +82,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
-    if(data.type === 'master' && !data.parentId){
+    if (data.type === 'master' && !data.parentId) {
       const MasterCapLib = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
       data.parentId = MasterCapLib.id
     }
@@ -92,24 +92,29 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async save(id: number, data: CapabilityTreeInput): Promise<CapabilityTree> {
-    data.id = id;
 
     const cap = await this.capabilityTreeRepository.findOne(id);
 
-    if(data.status === 'inactive'){
-      const childrenOfcap = await this.capabilityTreeRepository.find({where: {parentId: id}});
+    const masterCap = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
+    if(data.status !== cap.status || data.show !== cap.show){
+      cap.parentId = masterCap.id
+    }
+
+    if (data.status === 'inactive') {
+      const childrenOfcap = await this.capabilityTreeRepository.find({ where: { parentId: id } });
+
       childrenOfcap.forEach(async child => {
         child.parentId = cap.parentId
         await this.capabilityTreeRepository.save(child);
       })
     }
 
-    const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
+    const capabilityTree = await this.collectEntityFields(new CapabilityTree(cap));
     return this.capabilityTreeRepository.save(capabilityTree);
   }
 
   async delete_many(capIds: number[]) {
-    const node = await this.capabilityTreeRepository.findOne(capIds[0]) 
+    const node = await this.capabilityTreeRepository.findOne(capIds[0])
     await this.capabilityTreeRepository.delete(capIds);
     console.log("CapabilityTreeService -> delete_many -> capIds", capIds)
     console.log("CapabilityTreeService -> delete_many -> node", node)
@@ -117,8 +122,8 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async remove_from_captree(id: number) {
-    const node = await this.capabilityTreeRepository.findOne(id) 
-    await this.capabilityTreeRepository.delete({capability_lib_id: id});
+    const node = await this.capabilityTreeRepository.findOne(id)
+    await this.capabilityTreeRepository.delete({ capability_lib_id: id });
     console.log("CapabilityTreeService -> delete_many -> id", id)
     console.log("CapabilityTreeService -> delete_many -> node", node)
     return node;
@@ -171,5 +176,22 @@ export class CapabilityTreeService extends BaseService {
       });
     }
     return capabilityTree;
+  }
+
+  async unselectCapTree(id: number) {
+    const cap = await this.capabilityTreeRepository.findOne(id);
+    console.log("CapabilityTreeService -> unselectCapTree -> cap", cap)
+    cap.show = false
+    const capChildren = await this.capabilityTreeRepository.find({ where: { parentId: cap.id } });
+    console.log("CapabilityTreeService -> unselectCapTree -> capChildren", capChildren)
+
+
+    capChildren.forEach(async child => {
+      child.parentId = cap.parentId
+      await this.capabilityTreeRepository.save(child);
+    })
+
+    const capabilityTree = await this.collectEntityFields(new CapabilityTree(cap));
+    return this.capabilityTreeRepository.save(capabilityTree);
   }
 }

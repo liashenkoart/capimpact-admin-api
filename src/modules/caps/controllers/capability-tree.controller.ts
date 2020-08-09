@@ -41,6 +41,11 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.findMasterCapTree();
   }
 
+  @Get('/unselect/:id')
+  async unselectCapTree(@Param('id', new ParseIntPipe()) id: number) {
+    return this.capabilityTreeService.unselectCapTree(id);
+  }
+
   @Get('/:id')
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityTreeService.findOneById(id);

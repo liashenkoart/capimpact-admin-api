@@ -32,4 +32,8 @@ export class CapabilityTreeInput {
   @IsOptional()
   @Type(() => Number)
   readonly industry_tree_id?: number;
+
+  @IsOptional()
+  @Type(() => Boolean)
+  readonly show?: boolean;
 }
