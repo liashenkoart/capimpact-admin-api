@@ -92,12 +92,12 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async save(id: number, data: CapabilityTreeInput): Promise<CapabilityTree> {
-
+    data.id = id
     const cap = await this.capabilityTreeRepository.findOne(id);
 
     const masterCap = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
-    if(data.status !== cap.status || data.show !== cap.show){
-      cap.parentId = masterCap.id
+    if(data.status !== cap.status){
+      data.parentId = masterCap.id
     }
 
     if (data.status === 'inactive') {
@@ -109,7 +109,7 @@ export class CapabilityTreeService extends BaseService {
       })
     }
 
-    const capabilityTree = await this.collectEntityFields(new CapabilityTree(cap));
+    const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return this.capabilityTreeRepository.save(capabilityTree);
   }
 
@@ -180,10 +180,10 @@ export class CapabilityTreeService extends BaseService {
 
   async unselectCapTree(id: number) {
     const cap = await this.capabilityTreeRepository.findOne(id);
-    console.log("CapabilityTreeService -> unselectCapTree -> cap", cap)
+    const masterCap = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
     cap.show = false
+    cap.parentId = masterCap.id
     const capChildren = await this.capabilityTreeRepository.find({ where: { parentId: cap.id } });
-    console.log("CapabilityTreeService -> unselectCapTree -> capChildren", capChildren)
 
 
     capChildren.forEach(async child => {
