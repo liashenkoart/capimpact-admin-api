@@ -59,7 +59,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async createMasterCapTree(): Promise<CapabilityTree> {
-    const capLibs = await this.capabilityLibRepository.find({ capability_trees: null });
+    const capLibs = await this.capabilityLibRepository.find({ capability_trees: null, status: 'active' });
     const masterTree = await this.capabilityTreeRepository.save(new CapabilityTree(masterTreeTemplate));
     await Promise.all(capLibs.map(async capability_lib => {
       const firstLevelChild = await this.capabilityTreeRepository.save(new CapabilityTree({
