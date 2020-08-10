@@ -41,6 +41,11 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.findMasterCapTree();
   }
 
+  @Get('/unselect/:id')
+  async unselectCapTree(@Param('id', new ParseIntPipe()) id: number) {
+    return this.capabilityTreeService.unselectCapTree(id);
+  }
+
   @Get('/:id')
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityTreeService.findOneById(id);
@@ -59,7 +64,14 @@ export class CapabilityTreeController {
   ) {
     return this.capabilityTreeService.save(id, data);
   }
-
+  
+  @Delete('/switch/:id')
+  async switch(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: any, 
+  ){
+    return this.capabilityTreeService.switch(id, data);
+  }
 
 
   @Delete('/delete_many')
@@ -68,11 +80,12 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.delete_many(data.capIds);
   }
 
-  @Delete('/:id')
+  @Delete(':id')
   async remove(@Param('id', new ParseIntPipe()) id: number) {
-    console.log('CANT BELIEVE ')
     return this.capabilityTreeService.remove(id);
   }
+
+
 
   @Delete('delete/:id')
   async remove_from_captree(@Param('id', new ParseIntPipe()) id: number) {

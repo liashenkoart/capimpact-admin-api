@@ -21,6 +21,9 @@ export class CapabilityLibInput {
   @IsOptional()
   readonly description?: string;
 
+  @IsOptional()
+  readonly status?: string;
+
   @ApiProperty()
   @Field(() => [ID])
   @IsOptional()
