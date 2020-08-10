@@ -103,7 +103,16 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async remove_from_captree(id: number) {
-    return await this.capabilityTreeRepository.delete(id);
+    const cap = await this.capabilityTreeRepository.findOne(id);
+
+    const capChildren = await this.capabilityTreeRepository.find({ where: { parentId: cap.id } });
+    capChildren.forEach(async child => {
+      child.parentId = cap.parentId
+      await this.capabilityTreeRepository.save(child);
+    })
+
+    return this.remove(id);
+
   }
 
   async remove(id: number) {
