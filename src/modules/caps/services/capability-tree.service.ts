@@ -36,14 +36,6 @@ export class CapabilityTreeService extends BaseService {
     return node;
   }
 
-  // This is for getting caps that have status set to active
-  async filterActiveTree(node): Promise<Object> {
-    if (node.children.length !== 0) {
-      node.children = node.children.filter(child => child.status === 'active' && child.show)
-      node.children.map(child => this.filterActiveTree(child))
-    }
-    return node;
-  }
 
   async findMasterCapTree(): Promise<Object> {
     // const MasterCapTree = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
@@ -60,10 +52,9 @@ export class CapabilityTreeService extends BaseService {
     if (!root) {
       root = await this.createMasterCapTree();
     }
-    const tree = await this.treeRepository.findDescendantsTree(root);
 
     // return await this.fillTree(tree);
-    return await this.filterActiveTree(tree);
+    return await this.treeRepository.findDescendantsTree(root);
 
   }
 
@@ -95,18 +86,8 @@ export class CapabilityTreeService extends BaseService {
     data.id = id
     const cap = await this.capabilityTreeRepository.findOne(id);
 
-    const masterCap = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
-    if(data.status !== cap.status){
-      data.parentId = masterCap.id
-    }
-
     if (data.status === 'inactive') {
-      const childrenOfcap = await this.capabilityTreeRepository.find({ where: { parentId: id } });
-
-      childrenOfcap.forEach(async child => {
-        child.parentId = cap.parentId
-        await this.capabilityTreeRepository.save(child);
-      })
+      this.unselectCapTree(id)
     }
 
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
@@ -122,11 +103,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async remove_from_captree(id: number) {
-    const node = await this.capabilityTreeRepository.findOne(id)
-    await this.capabilityTreeRepository.delete({ capability_lib_id: id });
-    console.log("CapabilityTreeService -> delete_many -> id", id)
-    console.log("CapabilityTreeService -> delete_many -> node", node)
-    return node;
+    return await this.capabilityTreeRepository.delete(id);
   }
 
   async remove(id: number) {
@@ -148,6 +125,7 @@ export class CapabilityTreeService extends BaseService {
           // await this.capabilityLibRepository.remove(filteredCapLib);
         }
       }));
+      console.log("CapabilityTreeService -> remove -> foundChildren", foundChildren)
       await this.capabilityTreeRepository.remove(foundChildren);
     }
     return { ids: allRelatedIds };
@@ -188,5 +166,13 @@ export class CapabilityTreeService extends BaseService {
     })
 
     return this.remove(id);
+  }
+
+  async switch(id: any, newCapLib: any): Promise<CapabilityTree> {
+    const oldCap = await this.capabilityTreeRepository.findOne(id);
+    oldCap.cap_name = newCapLib.name
+    oldCap.capability_lib_id = newCapLib.id
+    return await this.capabilityTreeRepository.save(oldCap);
+
   }
 }

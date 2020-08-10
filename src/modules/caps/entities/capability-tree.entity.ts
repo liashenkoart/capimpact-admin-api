@@ -31,16 +31,10 @@ export class CapabilityTree {
   @Column({ nullable: true })
   type: string;
   
-  @Field()
-  @Column('text', {default: 'active'})
-  status: string;  
-  
-  @Field()
-  @Column({default: true})
-  show: boolean;
-
   @Field(() => Capability)
-  @OneToOne(type => Capability, capability => capability.capability_tree,)
+  @OneToOne(type => Capability, capability => capability.capability_tree, 
+    { cascade: true, onDelete: "CASCADE" }
+  )
   capability: Capability;
 
   @Field(() => ID, { nullable: true })
@@ -52,7 +46,6 @@ export class CapabilityTree {
     type => CapabilityLib,
     capabilityLib => capabilityLib.capability_trees,
     { cascade: true, onDelete: "CASCADE" }
-
   )
   @JoinColumn({ name: 'capability_id' })
   capability_lib: CapabilityLib;
@@ -65,7 +58,8 @@ export class CapabilityTree {
   @ManyToOne(
     type => IndustryTree,
     industryTree => industryTree.capability_trees,
-    { cascade: true },
+    { cascade: true, onDelete: "CASCADE" }
+    ,
   )
   @JoinColumn({ name: 'industry_tree_id' })
   industry_tree?: IndustryTree;
@@ -75,7 +69,8 @@ export class CapabilityTree {
   company_id?: number;
 
   @Field(() => Company, { nullable: true })
-  @ManyToOne(type => Company, company => company.capability_trees, { cascade: true })
+  @ManyToOne(type => Company, company => company.capability_trees,     { cascade: true, onDelete: "CASCADE" }
+  )
   @JoinColumn({ name: 'company_id' })
   company?: Company;
 
