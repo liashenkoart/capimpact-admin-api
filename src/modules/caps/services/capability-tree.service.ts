@@ -145,7 +145,7 @@ export class CapabilityTreeService extends BaseService {
         capLib.capability_trees = capLib.capability_trees.filter(item => item.id !== capTreeNode.id);
         const filteredCapLib = await this.capabilityLibRepository.save(capLib);
         if (!filteredCapLib.capability_trees.length) {
-          await this.capabilityLibRepository.remove(filteredCapLib);
+          // await this.capabilityLibRepository.remove(filteredCapLib);
         }
       }));
       await this.capabilityTreeRepository.remove(foundChildren);
@@ -180,7 +180,6 @@ export class CapabilityTreeService extends BaseService {
 
   async unselectCapTree(id: number) {
     const cap = await this.capabilityTreeRepository.findOne(id);
-    const masterCap = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
 
     const capChildren = await this.capabilityTreeRepository.find({ where: { parentId: cap.id } });
     capChildren.forEach(async child => {
@@ -188,6 +187,6 @@ export class CapabilityTreeService extends BaseService {
       await this.capabilityTreeRepository.save(child);
     })
 
-    return this.capabilityTreeRepository.delete(id);
+    return this.remove(id);
   }
 }
