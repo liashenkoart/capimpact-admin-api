@@ -24,4 +24,8 @@ export class CapabilityTreesArgs extends BaseArgs {
   @IsOptional()
   @Type(() => Number)
   readonly industry_tree_id?: number;
+
+  @IsOptional()
+  @Type(() => String)
+  readonly onlyCapLibs?: String;
 }
