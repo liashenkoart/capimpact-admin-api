@@ -37,7 +37,7 @@ export class Capability {
   default?: boolean;
 
   @Field(() => CapabilityTree)
-  @OneToMany(type => CapabilityTree, capabilityTree => capabilityTree.capability)
+  @OneToOne(type => CapabilityTree, capabilityTree => capabilityTree.capability)
   @JoinColumn({ name: 'capability_tree_id' })
   capability_tree: CapabilityTree;
 
