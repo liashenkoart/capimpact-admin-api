@@ -32,8 +32,8 @@ export class CapabilityTree {
   type: string;
   
   @Field(() => Capability)
-  @OneToOne(type => Capability, capability => capability.capability_tree, 
-    { cascade: true, onDelete: "CASCADE" }
+  @ManyToOne(type => Capability, capability => capability.capability_tree, 
+    { cascade: true }
   )
   capability: Capability;
 
@@ -45,7 +45,8 @@ export class CapabilityTree {
   @ManyToOne(
     type => CapabilityLib,
     capabilityLib => capabilityLib.capability_trees,
-    { cascade: true, onDelete: "CASCADE" }
+    { cascade: true }
+
   )
   @JoinColumn({ name: 'capability_id' })
   capability_lib: CapabilityLib;
@@ -58,8 +59,7 @@ export class CapabilityTree {
   @ManyToOne(
     type => IndustryTree,
     industryTree => industryTree.capability_trees,
-    { cascade: true, onDelete: "CASCADE" }
-    ,
+    { cascade: true }
   )
   @JoinColumn({ name: 'industry_tree_id' })
   industry_tree?: IndustryTree;
@@ -69,7 +69,7 @@ export class CapabilityTree {
   company_id?: number;
 
   @Field(() => Company, { nullable: true })
-  @ManyToOne(type => Company, company => company.capability_trees,     { cascade: true, onDelete: "CASCADE" }
+  @ManyToOne(type => Company, company => company.capability_trees, { cascade: true}
   )
   @JoinColumn({ name: 'company_id' })
   company?: Company;

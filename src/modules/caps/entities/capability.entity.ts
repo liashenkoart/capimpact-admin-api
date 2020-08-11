@@ -11,6 +11,7 @@ import {
   ManyToMany,
   OneToOne,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, Float, ID } from 'type-graphql';
 import { User } from '@modules/users/user.entity';
@@ -36,7 +37,7 @@ export class Capability {
   default?: boolean;
 
   @Field(() => CapabilityTree)
-  @OneToOne(type => CapabilityTree, capabilityTree => capabilityTree.capability)
+  @OneToMany(type => CapabilityTree, capabilityTree => capabilityTree.capability)
   @JoinColumn({ name: 'capability_tree_id' })
   capability_tree: CapabilityTree;
 
