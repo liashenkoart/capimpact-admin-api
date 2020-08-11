@@ -32,10 +32,9 @@ export class CapabilityTree {
   type: string;
   
   @Field(() => Capability)
-  @ManyToOne(type => Capability, capability => capability.capability_tree, 
-    { cascade: true }
-  )
+  @OneToOne(type => Capability, capability => capability.capability_tree)
   capability: Capability;
+
 
   @Field(() => ID, { nullable: true })
   @Column({ name: 'capability_lib_id', nullable: true })
