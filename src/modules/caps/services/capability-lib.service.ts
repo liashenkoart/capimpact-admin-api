@@ -4,6 +4,7 @@ import { Repository, FindManyOptions } from 'typeorm';
 import { CapabilityTreeService } from './capability-tree.service';
 import { CapabilityLib, KpiLib, CapabilityTree } from '../entities';
 import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput } from '../dto';
+import { BaseService } from '@modules/common/services';
 
 @Injectable()
 export class CapabilityLibService {
@@ -15,9 +16,16 @@ export class CapabilityLibService {
   ) {}
 
   async findAll(query: CapabilityLibsArgs): Promise<CapabilityLib[] | void> {
-    const options = this.getFindAllQuery(query);
+    
+    const options: any = this.getFindAllQuery(query);
+
+    // FOR CAPABILITY TABLE /capability_libs
+    options.order = {[options.sort[0]]:options.sort[1]}
+
+    console.log("CapabilityLibService -> options", options)
     options.relations = ['kpi_libs'];
-    return this.capabilityLibRepository.find(options);
+    const sortedCaps = await this.capabilityLibRepository.find(options);
+    return sortedCaps
   }
 
   async count(query: CapabilityLibsArgs): Promise<Object> {
@@ -76,7 +84,7 @@ export class CapabilityLibService {
     return {
       skip: (page - 1) * limit,
       take: limit,
-      where,
+        ...where
     };
   }
 

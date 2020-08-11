@@ -10,4 +10,6 @@ export class CapabilityLibsArgs extends BaseArgs {
   @Field(() => [ID], { nullable: true })
   @IsOptional()
   kpi_libs?: number[];
+
+  
 }
