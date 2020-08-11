@@ -70,6 +70,7 @@ export class CapabilityTreeService extends BaseService {
       const firstLevelChild = await this.capabilityTreeRepository.save(new CapabilityTree({
         parent: masterTree,
         type: masterTree.type,
+        capability_lib_id: capability_lib.id,
         cap_name: capability_lib.name,
         capability_lib,
       }));
