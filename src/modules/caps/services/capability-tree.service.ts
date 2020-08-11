@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository } from 'typeorm';
+import { Repository, TreeRepository, Not, IsNull } from 'typeorm';
 import { flattenTree } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree } from '../entities';
@@ -21,6 +21,11 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async findAll(query: CapabilityTreesArgs): Promise<CapabilityTree[] | void> {
+    // For some reason true or false comes as string
+    if(query.onlyCapLibs === 'true'){
+      return this.capabilityTreeRepository.find({where: {capability_lib_id: Not(IsNull())}});
+    }
+
     return this.capabilityTreeRepository.find(this.getFindAllQuery(query));
   }
 
