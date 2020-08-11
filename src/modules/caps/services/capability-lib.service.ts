@@ -18,9 +18,10 @@ export class CapabilityLibService {
   async findAll(query: CapabilityLibsArgs): Promise<CapabilityLib[] | void> {
     
     const options: any = this.getFindAllQuery(query);
-
+    if(options.sort){
+      options.order = {[options.sort[0]]:options.sort[1]}
+    }
     // FOR CAPABILITY TABLE /capability_libs
-    options.order = {[options.sort[0]]:options.sort[1]}
 
     console.log("CapabilityLibService -> options", options)
     options.relations = ['kpi_libs'];
