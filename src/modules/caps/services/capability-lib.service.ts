@@ -51,15 +51,17 @@ export class CapabilityLibService {
 
   async remove(id: number) {
     const options = { where: { id }, relations: ['capability_trees'] };
+    
     const capabilityLib = await this.capabilityLibRepository.findOne(options);
     if (!capabilityLib) {
-        throw new NotFoundException();
+      throw new NotFoundException();
     }
-    const capTrees = [...capabilityLib.capability_trees];
+    const capTrees = capabilityLib.capability_trees
     capabilityLib.capability_trees = [];
-    const capLibWithoutTrees = await this.capabilityLibRepository.save(capabilityLib);
-    await Promise.all(capTrees.map(capTree => this.capabilityTreeService.remove(capTree.id)));
-    await this.capabilityLibRepository.remove(capLibWithoutTrees);
+    await Promise.all(capTrees.map(capTree => this.capabilityTreeService.unselectCapTree(capTree.id)));
+    await this.capabilityLibRepository.remove(capabilityLib)
+
+
     return { id };
   }
 
