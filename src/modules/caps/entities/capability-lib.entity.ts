@@ -26,6 +26,7 @@ export class CapabilityLib {
   )
   capability_trees?: CapabilityTree[];
 
+
   @ManyToMany(type => KpiLib, kpiLib => kpiLib.capability_libs)
   kpi_libs: KpiLib[];
 
