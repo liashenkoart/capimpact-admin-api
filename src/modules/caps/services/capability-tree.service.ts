@@ -76,6 +76,7 @@ export class CapabilityTreeService extends BaseService {
     }));
     return masterTree;
   }
+  
   async treeByIndustryTree(query: CapabilitiesArgs): Promise<CapabilityTree> {
     const { industry_id } = query;
     const rootCapTree = await this.capabilityTreeRepository.findOne({
