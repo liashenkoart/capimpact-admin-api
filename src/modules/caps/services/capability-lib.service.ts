@@ -22,8 +22,6 @@ export class CapabilityLibService {
       options.order = {[options.sort[0]]:options.sort[1]}
     }
     // FOR CAPABILITY TABLE /capability_libs
-
-    console.log("CapabilityLibService -> options", options)
     options.relations = ['kpi_libs'];
     const sortedCaps = await this.capabilityLibRepository.find(options);
     return sortedCaps
