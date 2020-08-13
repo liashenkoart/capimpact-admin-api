@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, Not, IsNull } from 'typeorm';
-import { flattenTree } from '@lib/sorting';
+import { sortTreeByField, flattenTree } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree } from '../entities';
-import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput } from '../dto';
+import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilitiesArgs } from '../dto';
 
 // const masterTreeTemplate = { type: 'master'};
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
@@ -22,8 +22,8 @@ export class CapabilityTreeService extends BaseService {
 
   async findAll(query: CapabilityTreesArgs): Promise<CapabilityTree[] | void> {
     // For some reason true or false comes as string
-    if(query.onlyCapLibs === 'true'){
-      return this.capabilityTreeRepository.find({where: {capability_lib_id: Not(IsNull())}});
+    if (query.onlyCapLibs === 'true') {
+      return this.capabilityTreeRepository.find({ where: { capability_lib_id: Not(IsNull()) } });
     }
 
     return this.capabilityTreeRepository.find(this.getFindAllQuery(query));
@@ -64,7 +64,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async createMasterCapTree(): Promise<CapabilityTree> {
-    const capLibs = await this.capabilityLibRepository.find({ status: 'active', capability_trees: null,  });
+    const capLibs = await this.capabilityLibRepository.find({ status: 'active', capability_trees: null, });
     const masterTree = await this.capabilityTreeRepository.save(new CapabilityTree(masterTreeTemplate));
     await Promise.all(capLibs.map(async capability_lib => {
       const firstLevelChild = await this.capabilityTreeRepository.save(new CapabilityTree({
@@ -76,6 +76,22 @@ export class CapabilityTreeService extends BaseService {
     }));
     return masterTree;
   }
+  async treeByIndustryTree(query: CapabilitiesArgs): Promise<CapabilityTree> {
+    const { industry_id } = query;
+    const rootCapTree = await this.capabilityTreeRepository.findOne({
+      industry_tree_id: industry_id,
+      parentId: null,
+    });
+    const tree = await this.treeRepository.findDescendantsTree(rootCapTree);
+
+    if (!rootCapTree) {
+      throw new NotFoundException(`capability-tree with industry_tree_id: ${industry_id} was not found`);
+    }
+
+    console.log(rootCapTree)
+    return sortTreeByField('cap_name', tree);
+  }
+
 
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
     if (data.type === 'master' && !data.parentId) {
@@ -83,8 +99,10 @@ export class CapabilityTreeService extends BaseService {
       data.parentId = MasterCapLib.id
     }
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
-
-    return await this.capabilityTreeRepository.save(capabilityTree);
+    // console.log("CapabilityTreeService -> capabilityTree", capabilityTree)
+    const capTreeRepositorySave = await this.capabilityTreeRepository.save(capabilityTree);
+    // console.log("CapabilityTreeService -> capTreeRepositorySave", capTreeRepositorySave)
+    return capTreeRepositorySave
   }
 
   async save(id: number, data: CapabilityTreeInput): Promise<CapabilityTree> {

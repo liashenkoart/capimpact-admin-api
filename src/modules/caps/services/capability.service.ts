@@ -17,6 +17,7 @@ export class CapabilityService {
     private readonly capabilityGraphService: CapabilityGraphService,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
+    @InjectRepository(CapabilityTree) private readonly capTreeRepository: TreeRepository<CapabilityTree>,
     @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
@@ -37,23 +38,28 @@ export class CapabilityService {
   }
 
   async treeByIndustryTree(query: CapabilitiesArgs): Promise<Capability> {
+    
+    console.log("CapabilityService -> industry_id", query.industry_id)
     const { industry_id } = query;
     const rootCapTree = await this.capabilityTreeRepository.findOne({
       industry_tree_id: industry_id,
       parentId: null,
     });
+    const tree = await this.capTreeRepository.findDescendantsTree(rootCapTree);
+
     if (!rootCapTree) {
       throw new NotFoundException(`capability-tree with industry_tree_id: ${industry_id} was not found`);
     }
-    const root = await this.capabilityRepository.findOne({
-      capability_tree: rootCapTree,
-      parentId: null,
-    });
-    if (!root) {
-      throw new NotFoundException(`capability with capability_tree: ${rootCapTree.id} was not found`);
-    }
-    const tree = await this.treeRepository.findDescendantsTree(root);
-    return sortTreeByField('name', tree);
+    // const root = await this.capabilityRepository.findOne({
+    //   capability_tree: rootCapTree,
+    //   parentId: null,
+    // });
+    // if (!root) {
+      // throw new NotFoundException(`capability with capability_tree: ${rootCapTree.id} was not found`);
+    // }
+    console.log(rootCapTree)
+    console.log("CapabilityService -> tree", tree)
+    return sortTreeByField('cap_name', tree);
   }
 
   async findAll(query: CapabilitiesArgs): Promise<Capability[] | void> {
