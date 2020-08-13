@@ -36,9 +36,20 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.tree(query);
   }
 
+  // Master
   @Get('master')
   async findMasterCapTree() {
     return this.capabilityTreeService.findMasterCapTree();
+  }
+
+  // Industry
+  @Get('industry')
+  async getIndustryTree(industryId: number) {
+    return this.capabilityTreeService.treeByIndustryTree(industryId);
+  }
+  @Post('industry')
+  async createIndustry(@Body() data: CapabilityTreeCreationInput) {
+    return this.capabilityTreeService.createIndustry(data);
   }
 
   @Get('/unselect/:id')
@@ -84,8 +95,6 @@ export class CapabilityTreeController {
   async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityTreeService.remove(id);
   }
-
-
 
   @Delete('delete/:id')
   async remove_from_captree(@Param('id', new ParseIntPipe()) id: number) {

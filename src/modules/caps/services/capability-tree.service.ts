@@ -5,6 +5,7 @@ import { sortTreeByField, flattenTree } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree } from '../entities';
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilitiesArgs } from '../dto';
+import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 
 // const masterTreeTemplate = { type: 'master'};
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
@@ -76,21 +77,28 @@ export class CapabilityTreeService extends BaseService {
     }));
     return masterTree;
   }
-  
-  async treeByIndustryTree(query: CapabilitiesArgs): Promise<CapabilityTree> {
-    const { industry_id } = query;
+
+  async treeByIndustryTree(industryId: number): Promise<CapabilityTree> {
     const rootCapTree = await this.capabilityTreeRepository.findOne({
-      industry_tree_id: industry_id,
+      industry_tree_id: industryId,
       parentId: null,
     });
     const tree = await this.treeRepository.findDescendantsTree(rootCapTree);
 
     if (!rootCapTree) {
-      throw new NotFoundException(`capability-tree with industry_tree_id: ${industry_id} was not found`);
+      throw new NotFoundException(`capability-tree with industry_tree_id: ${industryId} was not found`);
     }
-
-    console.log(rootCapTree)
     return sortTreeByField('cap_name', tree);
+  }
+
+  async createIndustry(data: CapabilityTreeIndustryCreationInput): Promise<void> {
+    const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
+    data.type='industry'
+    console.log("CapabilityTreeService -> data", data)
+    // console.log("CapabilityTreeService -> capabilityTree", capabilityTree)
+    // const capTreeRepositorySave = await this.capabilityTreeRepository.save(capabilityTree);
+    // console.log("CapabilityTreeService -> capTreeRepositorySave", capTreeRepositorySave)
+    // return capTreeRepositorySave
   }
 
 
