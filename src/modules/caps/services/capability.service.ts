@@ -39,7 +39,6 @@ export class CapabilityService {
 
   async treeByIndustryTree(query: CapabilitiesArgs): Promise<Capability> {
     
-    console.log("CapabilityService -> industry_id", query.industry_id)
     const { industry_id } = query;
     const rootCapTree = await this.capabilityTreeRepository.findOne({
       industry_tree_id: industry_id,
@@ -58,7 +57,6 @@ export class CapabilityService {
       // throw new NotFoundException(`capability with capability_tree: ${rootCapTree.id} was not found`);
     // }
     console.log(rootCapTree)
-    console.log("CapabilityService -> tree", tree)
     return sortTreeByField('cap_name', tree);
   }
 

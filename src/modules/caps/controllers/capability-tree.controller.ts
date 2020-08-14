@@ -17,6 +17,8 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 import { CapabilityTreeService } from '../services';
 import { CapabilityTreesArgs, CapabilityTreeInput, CapabilityTreeCreationInput } from '../dto';
+import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
+import { CapabilityTreeArgs } from '../dto/capability-tree.args';
 
 @ApiBearerAuth()
 @ApiTags('capability-trees')
@@ -36,9 +38,27 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.tree(query);
   }
 
+  // Master
   @Get('master')
   async findMasterCapTree() {
     return this.capabilityTreeService.findMasterCapTree();
+  }
+
+  // Industry
+  @Get('industry')
+  async getIndustryTree(@Query() query: CapabilityTreeArgs) {
+    return this.capabilityTreeService.treeByIndustryTree(query.industryId);
+  }
+  @Post('industry')
+  async createIndustry(@Body() data: CapabilityTreeIndustryCreationInput) {
+    return this.capabilityTreeService.createIndustry(data);
+  }
+  @Post('industry/:id')
+  async updateIndustry(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: CapabilityTreeIndustryCreationInput
+    ) {
+    return this.capabilityTreeService.updateIndustry(id, data);
   }
 
   @Get('/unselect/:id')
@@ -84,8 +104,6 @@ export class CapabilityTreeController {
   async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityTreeService.remove(id);
   }
-
-
 
   @Delete('delete/:id')
   async remove_from_captree(@Param('id', new ParseIntPipe()) id: number) {

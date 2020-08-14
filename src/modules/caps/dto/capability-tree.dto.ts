@@ -33,8 +33,9 @@ export class CapabilityTreeInput {
   @Type(() => Number)
   readonly industry_tree_id?: number;
 
+  @ApiPropertyOptional({ type: String })
+  @Field(() => ID, { nullable: true })
   @IsOptional()
-  @Type(() => Boolean)
-  readonly show?: boolean;
-
+  @Type(() => String)
+  readonly cap_name?: string;
 }

@@ -23,6 +23,11 @@ export const sortTreeByField = (fieldNames, node) => {
   }
 };
 
+export async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
 export const flattenTree = (root, key) => {
   let flatten = [Object.assign({}, root)];
   delete flatten[0][key];
