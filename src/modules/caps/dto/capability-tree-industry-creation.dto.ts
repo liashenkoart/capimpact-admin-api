@@ -6,11 +6,17 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 @InputType()
 export class CapabilityTreeIndustryCreationInput {
 
+
   @ApiPropertyOptional({ type: Number})
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @Type(() => Number)
-  parentId?: number;
+  readonly id: number;
+
+  @ApiProperty({ type: Number})
+  @Field(() => ID, { nullable: true })
+  @Type(() => Number)
+  readonly parentId: number;
 
   @ApiPropertyOptional({ type: Number})
   @Field(() => ID, { nullable: true })
@@ -18,7 +24,21 @@ export class CapabilityTreeIndustryCreationInput {
   @Type(() => Number)
   readonly industry_tree_id?: number;
 
+  @ApiPropertyOptional({ type: Number})
+  @Field(() => ID, { nullable: true })
   @IsOptional()
   @Type(() => String)
   type?: string;
+
+  @ApiPropertyOptional({ type: Number})
+  @Field(() => ID, { nullable: true })
+  @IsOptional()
+  @Type(() => Number)
+  capability_lib_id?: number = null;
+
+  @ApiPropertyOptional({ type: String})
+  @Field(() => ID, { nullable: true })
+  @IsOptional()
+  @Type(() => String)
+  readonly cap_name?: string;
 }

@@ -17,6 +17,8 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 import { CapabilityTreeService } from '../services';
 import { CapabilityTreesArgs, CapabilityTreeInput, CapabilityTreeCreationInput } from '../dto';
+import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
+import { CapabilityTreeArgs } from '../dto/capability-tree.args';
 
 @ApiBearerAuth()
 @ApiTags('capability-trees')
@@ -44,11 +46,11 @@ export class CapabilityTreeController {
 
   // Industry
   @Get('industry')
-  async getIndustryTree(industryId: number) {
-    return this.capabilityTreeService.treeByIndustryTree(industryId);
+  async getIndustryTree(@Query() query: CapabilityTreeArgs) {
+    return this.capabilityTreeService.treeByIndustryTree(query.industryId);
   }
   @Post('industry')
-  async createIndustry(@Body() data: CapabilityTreeCreationInput) {
+  async createIndustry(@Body() data: CapabilityTreeIndustryCreationInput) {
     return this.capabilityTreeService.createIndustry(data);
   }
 
