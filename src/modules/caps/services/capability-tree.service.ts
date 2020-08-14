@@ -77,16 +77,19 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async treeByIndustryTree(industryId: number): Promise<CapabilityTree> {
-    console.log(industryId)
-    const rootCapTree = await this.capabilityTreeRepository.findOne({
-      industry_tree_id: industryId,
-      parentId: null,
-    });
-    const tree = await this.treeRepository.findDescendantsTree(rootCapTree);
+    const industryParams = {industry_tree_id: industryId, parentId: null,}
+    let rootIndustryCapTree = await this.capabilityTreeRepository.findOne(industryParams);
+    
+    if (!rootIndustryCapTree) {
+      const industryCap = await this.industryTreeRepository.findOne({id: industryId})
+      rootIndustryCapTree = await this.capabilityTreeRepository.save({cap_name: industryCap.name, industry_tree_id: industryCap.id, parentId: null})
 
-    if (!rootCapTree) {
-      throw new NotFoundException(`capability-tree with industry_tree_id: ${industryId} was not found`);
+      if(!industryCap){
+        throw new NotFoundException(`capability-tree with industry_tree_id: ${industryId} was not found`);
+      }
     }
+
+    const tree = await this.treeRepository.findDescendantsTree(rootIndustryCapTree);
     return sortTreeByField('cap_name', tree);
   }
 
