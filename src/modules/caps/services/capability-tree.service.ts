@@ -92,7 +92,8 @@ export class CapabilityTreeService extends BaseService {
     const tree = await this.treeRepository.findDescendantsTree(rootIndustryCapTree);
     return sortTreeByField('cap_name', tree);
   }
-
+  
+  // INDUSTRY
   async createIndustry(data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
 
     // Meaning user has droped node from master captree into industry and we search if node has any children
@@ -129,8 +130,12 @@ export class CapabilityTreeService extends BaseService {
     // console.log("CapabilityTreeService -> capTreeRepositorySave", capTreeRepositorySave)
     // return capTreeRepositorySave
   }
+  async updateIndustry(id: number, data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree>{
+    const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
+    return this.capabilityTreeRepository.save(capabilityTree);
+  }
 
-
+  // MASTER CAPTREE
   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
     if (data.type === 'master' && !data.parentId) {
       const MasterCapLib = await this.capabilityTreeRepository.findOne(masterTreeTemplate);

@@ -53,6 +53,13 @@ export class CapabilityTreeController {
   async createIndustry(@Body() data: CapabilityTreeIndustryCreationInput) {
     return this.capabilityTreeService.createIndustry(data);
   }
+  @Post('industry/:id')
+  async updateIndustry(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: CapabilityTreeIndustryCreationInput
+    ) {
+    return this.capabilityTreeService.updateIndustry(id, data);
+  }
 
   @Get('/unselect/:id')
   async unselectCapTree(@Param('id', new ParseIntPipe()) id: number) {
