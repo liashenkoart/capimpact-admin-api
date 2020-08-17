@@ -108,11 +108,13 @@ export class CapabilityTreeService extends BaseService {
 
   // INDUSTRY
   async createIndustry(data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
+  console.log("CapabilityTreeService -> data", data)
 
     // Meaning user has droped node from master captree into industry
     if (data.type === 'master') {
 
-      const foundChildren = this.getAllChildren(data.id)
+      const foundChildren = await this.getAllChildren(data.id)
+      console.log("CapabilityTreeService -> foundChildren", foundChildren)
       const masterTreeIDtoIndustryId = {}
 
       await asyncForEach(foundChildren, async ({ id, cap_name, parentId }) => {
@@ -128,6 +130,8 @@ export class CapabilityTreeService extends BaseService {
       });
 
       const rootNodeOfMovedCap = await this.findOneById(masterTreeIDtoIndustryId[data.id])
+      console.log("CapabilityTreeService -> rootNodeOfMovedCap", rootNodeOfMovedCap)
+      
       return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
     } else {
       // this runs when we add sibling or child
@@ -141,6 +145,34 @@ export class CapabilityTreeService extends BaseService {
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return this.capabilityTreeRepository.save(capabilityTree);
   }
+
+  async updateIndustryTree(selectedNodeId: number, data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
+    const children = await this.getAllChildren(selectedNodeId)
+    const oldCapToNewCapIDs = {}
+
+    await asyncForEach(children, async ({ id, cap_name, parentId }) => {
+      const industryCap = new CapabilityTree({ cap_name, type: 'industry', industry_tree_id: data.industry_tree_id })
+      if (id === selectedNodeId) {
+        industryCap.parentId = data.parentId
+      } else {
+        industryCap.parentId = parseInt(oldCapToNewCapIDs[parentId], 10)
+      }
+      const capability = await this.collectEntityFields(industryCap)
+      const createdCapability = await this.capabilityTreeRepository.save(capability)
+      oldCapToNewCapIDs[id] = createdCapability.id
+    });
+
+    // Removing old captrees starting from children 
+    // This is neccesary beacuse if we start removing parent we will get foreign key error 
+    // because child has parentId and Parent so typeorm won't let us delete it 
+    await asyncForEach(children.reverse(), async ({ id }) => {
+      await this.capabilityTreeRepository.delete(id)
+    });
+    
+    const rootNodeOfMovedCap = await this.findOneById(oldCapToNewCapIDs[selectedNodeId])
+    return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
+  }
+
 
   // MASTER CAPTREE
   async createMaster(data: CapabilityTreeMasterCreationInput): Promise<CapabilityTree> {

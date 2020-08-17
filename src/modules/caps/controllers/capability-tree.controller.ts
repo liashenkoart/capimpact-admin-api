@@ -56,6 +56,13 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.updateIndustry(id, data);
   }
 
+  @Post('industry/tree/:id')
+  async updateIndustryTree(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: CapabilityTreeIndustryCreationInput
+    ) {
+    return this.capabilityTreeService.updateIndustryTree(id, data);
+  }
   // Master Captree
   @Get('master')
   async findMasterCapTree() {
