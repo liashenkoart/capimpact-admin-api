@@ -115,8 +115,8 @@ export class CapabilityTreeService extends BaseService {
       const foundChildren = await this.getAllChildren(data.id)
       const masterTreeIDtoIndustryId = {}
 
-      await asyncForEach(foundChildren, async ({ id, cap_name, parentId }) => {
-        const industry = new CapabilityTree({ cap_name, type: 'industry', industry_tree_id: data.industry_tree_id })
+      await asyncForEach(foundChildren, async ({ id, cap_name, parentId, capability_lib_id }) => {
+        const industry = new CapabilityTree({ cap_name, type: 'industry', capability_lib_id, industry_tree_id: data.industry_tree_id })
         // IparentId of industry equals parentId of moved node or newly created industry
         industry.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoIndustryId[parentId], 10)
 
@@ -148,7 +148,8 @@ export class CapabilityTreeService extends BaseService {
     const oldCapToNewCapIDs = {}
 
     // Creating new industry trees to update mpath
-    await asyncForEach(children, async ({ id, cap_name, parentId }) => {
+    await asyncForEach(children, async ({ id, cap_name, parentId, capability_lib }) => {
+
       const industryCap = new CapabilityTree({ cap_name, type: 'industry', industry_tree_id: data.industry_tree_id })
       industryCap.parentId = id === selectedNodeId ? data.parentId : parseInt(oldCapToNewCapIDs[parentId], 10)
       const capability = await this.collectEntityFields(industryCap)
