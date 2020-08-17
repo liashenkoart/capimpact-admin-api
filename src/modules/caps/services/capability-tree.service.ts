@@ -108,22 +108,18 @@ export class CapabilityTreeService extends BaseService {
 
   // INDUSTRY
   async createIndustry(data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
-  console.log("CapabilityTreeService -> data", data)
 
     // Meaning user has droped node from master captree into industry
     if (data.type === 'master') {
 
       const foundChildren = await this.getAllChildren(data.id)
-      console.log("CapabilityTreeService -> foundChildren", foundChildren)
       const masterTreeIDtoIndustryId = {}
 
       await asyncForEach(foundChildren, async ({ id, cap_name, parentId }) => {
         const industry = new CapabilityTree({ cap_name, type: 'industry', industry_tree_id: data.industry_tree_id })
-        if (id === data.id) {
-          industry.parentId = data.parentId
-        } else {
-          industry.parentId = parseInt(masterTreeIDtoIndustryId[parentId], 10)
-        }
+        // IparentId of industry equals parentId of moved node or newly created industry
+        industry.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoIndustryId[parentId], 10)
+
         const industryTree = await this.collectEntityFields(industry)
         const createdIndustry = await this.capabilityTreeRepository.save(industryTree)
         masterTreeIDtoIndustryId[id] = createdIndustry.id
@@ -150,26 +146,22 @@ export class CapabilityTreeService extends BaseService {
     const children = await this.getAllChildren(selectedNodeId)
     const oldCapToNewCapIDs = {}
 
+    // Creating new industry trees to update mpath
     await asyncForEach(children, async ({ id, cap_name, parentId }) => {
       const industryCap = new CapabilityTree({ cap_name, type: 'industry', industry_tree_id: data.industry_tree_id })
-      if (id === selectedNodeId) {
-        industryCap.parentId = data.parentId
-      } else {
-        industryCap.parentId = parseInt(oldCapToNewCapIDs[parentId], 10)
-      }
+      industryCap.parentId = id === selectedNodeId ? data.parentId : parseInt(oldCapToNewCapIDs[parentId], 10)
       const capability = await this.collectEntityFields(industryCap)
       const createdCapability = await this.capabilityTreeRepository.save(capability)
       oldCapToNewCapIDs[id] = createdCapability.id
     });
 
-    // Removing old captrees starting from children 
-    // This is neccesary beacuse if we start removing parent we will get foreign key error 
-    // because child has parentId and Parent so typeorm won't let us delete it 
+    // Removing old industry trees captrees
     await asyncForEach(children.reverse(), async ({ id }) => {
       await this.capabilityTreeRepository.delete(id)
     });
     
     const rootNodeOfMovedCap = await this.findOneById(oldCapToNewCapIDs[selectedNodeId])
+    // Returning tree so frontend can update it with new Ids and keys
     return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
   }
 
@@ -229,7 +221,7 @@ export class CapabilityTreeService extends BaseService {
     data.id = id
 
     if (data.status === 'inactive') {
-      this.unselectCapTree(id)
+      this.removeOneCapTree(id)
     }
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return this.capabilityTreeRepository.save(capabilityTree);
@@ -308,7 +300,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   // This assigns 
-  async unselectCapTree(capToRemoveID: number) {
+  async removeOneCapTree(capToRemoveID: number) {
     const capToRemove = await this.capabilityTreeRepository.findOne(capToRemoveID);
 
     const children = await this.getAllChildren(capToRemoveID)
@@ -345,29 +337,6 @@ export class CapabilityTreeService extends BaseService {
     oldCap.capability_lib_id = newCapLib.id
     return await this.capabilityTreeRepository.save(oldCap);
 
-  }
-
-  private getParentList(entity: CapabilityTree): number[] {
-    if (!entity.id) {
-      return []
-    }
-    let result: number[] = []
-    result.push(entity.id)
-    if (entity.parent) {
-      result = [...result, ...this.getParentList(entity.parent)]
-    }
-    return result
-  }
-
-  private getChildList(entities: CapabilityTree[]): number[] {
-    let result: number[] = []
-    for (const entity of entities) {
-      result.push(entity.id)
-      if (entity.children) {
-        result = [...result, ...this.getChildList(entity.children)]
-      }
-    }
-    return result
   }
 }
 

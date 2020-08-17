@@ -84,8 +84,8 @@ export class CapabilityTreeController {
   }
 
   @Get('/unselect/:id')
-  async unselectCapTree(@Param('id', new ParseIntPipe()) id: number) {
-    return this.capabilityTreeService.unselectCapTree(id);
+  async removeOneCapTree(@Param('id', new ParseIntPipe()) id: number) {
+    return this.capabilityTreeService.removeOneCapTree(id);
   }
 
   @Get('/:id')

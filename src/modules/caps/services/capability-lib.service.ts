@@ -70,7 +70,7 @@ export class CapabilityLibService {
     }
     const capTrees = capabilityLib.capability_trees
     capabilityLib.capability_trees = [];
-    await Promise.all(capTrees.map(capTree => this.capabilityTreeService.unselectCapTree(capTree.id)));
+    await Promise.all(capTrees.map(capTree => this.capabilityTreeService.removeOneCapTree(capTree.id)));
     await this.capabilityLibRepository.remove(capabilityLib)
 
 
