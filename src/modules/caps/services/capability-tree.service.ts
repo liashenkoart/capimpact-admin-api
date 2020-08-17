@@ -301,7 +301,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   // This assigns 
-  async removeOneCapTree(capToRemoveID: number) {
+  async removeOneCapTree(capToRemoveID: number): Promise<CapabilityTree> {
     const capToRemove = await this.capabilityTreeRepository.findOne(capToRemoveID);
 
     const children = await this.getAllChildren(capToRemoveID)
@@ -329,6 +329,13 @@ export class CapabilityTreeService extends BaseService {
     await asyncForEach(children.reverse(), async ({ id }) => {
       await this.capabilityTreeRepository.delete(id)
     });
+
+    const rootNode = await this.capabilityTreeRepository.findOne({
+      capability_lib_id: capToRemove.capability_lib_id, 
+      industry_tree_id: capToRemove.industry_tree_id, 
+      parentId: null
+    })
+    return this.treeRepository.findDescendantsTree(rootNode)
     
   }
 
