@@ -32,7 +32,9 @@ export class CapabilityTree {
   type: string;
   
   @Field(() => Capability)
-  @OneToOne(type => Capability, capability => capability.capability_tree)
+  @OneToOne(type => Capability, capability => capability.capability_tree, 
+     { onDelete: 'CASCADE' }
+  )
   capability: Capability;
 
   @Field(() => ID, { nullable: true })

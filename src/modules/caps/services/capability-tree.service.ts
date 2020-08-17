@@ -144,6 +144,7 @@ export class CapabilityTreeService extends BaseService {
 
   async updateIndustryTree(selectedNodeId: number, data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
     const children = await this.getAllChildren(selectedNodeId)
+    console.log("children", children)
     const oldCapToNewCapIDs = {}
 
     // Creating new industry trees to update mpath
@@ -154,9 +155,9 @@ export class CapabilityTreeService extends BaseService {
       const createdCapability = await this.capabilityTreeRepository.save(capability)
       oldCapToNewCapIDs[id] = createdCapability.id
     });
-
     // Removing old industry trees captrees
     await asyncForEach(children.reverse(), async ({ id }) => {
+      console.log(id)
       await this.capabilityTreeRepository.delete(id)
     });
     
@@ -306,8 +307,8 @@ export class CapabilityTreeService extends BaseService {
     const children = await this.getAllChildren(capToRemoveID)
     const oldCapToNewCapIDs = {}
 
-    await asyncForEach(children, async ({ id, cap_name, parentId, capability_lib_id }) => {
-      const capability = new CapabilityTree({ cap_name, type: 'master', capability_lib_id })
+    await asyncForEach(children, async ({ id, cap_name, type, parentId, industry_tree_id, capability_lib_id }) => {
+      const capability = new CapabilityTree({ cap_name, type, industry_tree_id, capability_lib_id })
       if (id !== capToRemoveID) {
         if(parentId === capToRemoveID){
           capability.parentId = capToRemove.parentId
