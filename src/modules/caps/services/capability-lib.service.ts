@@ -17,10 +17,15 @@ export class CapabilityLibService {
 
   async findAll(query: CapabilityLibsArgs): Promise<CapabilityLib[] | void> {
     
+    // TODO: Change to adapt to every query
     const options: any = this.getFindAllQuery(query);
     if(options.sort){
       options.order = {[options.sort[0]]:options.sort[1]}
     }
+    if(query.status){
+      options.where = {status: query.status}
+    }
+
     // FOR CAPABILITY TABLE /capability_libs
     options.relations = ['kpi_libs'];
     const sortedCaps = await this.capabilityLibRepository.find(options);
@@ -65,7 +70,7 @@ export class CapabilityLibService {
     }
     const capTrees = capabilityLib.capability_trees
     capabilityLib.capability_trees = [];
-    await Promise.all(capTrees.map(capTree => this.capabilityTreeService.unselectCapTree(capTree.id)));
+    await Promise.all(capTrees.map(capTree => this.capabilityTreeService.removeOneCapTree(capTree.id)));
     await this.capabilityLibRepository.remove(capabilityLib)
 
 
@@ -83,7 +88,7 @@ export class CapabilityLibService {
     return {
       skip: (page - 1) * limit,
       take: limit,
-        ...where
+      ...where
     };
   }
 

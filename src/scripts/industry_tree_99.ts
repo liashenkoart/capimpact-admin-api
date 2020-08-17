@@ -14,6 +14,7 @@ async function main() {
     const createCapTreeNode = async (cap, parent, capTreeArray = []) => {
       const capTreeNode = await transactionalEntityManager.save(CapabilityTree, new CapabilityTree({
         cap_name: cap.name,
+        type: 'industry',
         capability: cap,
         parent,
       }));
