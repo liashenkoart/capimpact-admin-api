@@ -31,11 +31,11 @@ export class CapabilityTree {
   @Column({ nullable: true })
   type: string;
   
-  @Field(() => Capability,  { nullable: true })
-  @OneToOne(type => Capability, capability => capability.capability_tree, 
-     { onDelete: 'CASCADE' }
-  )
-  capability: Capability;
+  // @Field(() => Capability,  { nullable: true })
+  // @OneToOne(type => Capability, capability => capability.capability_tree, 
+  //    { onDelete: 'CASCADE' }
+  // )
+  // capability: Capability;
 
   @Field(() => ID, { nullable: true })
   @Column({ name: 'capability_id', nullable: true })
