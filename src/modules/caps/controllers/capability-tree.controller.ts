@@ -38,12 +38,6 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.tree(query);
   }
 
-  // Master
-  @Get('master')
-  async findMasterCapTree() {
-    return this.capabilityTreeService.findMasterCapTree();
-  }
-
   // Industry
   @Get('industry')
   async getIndustryTree(@Query() query: CapabilityTreeArgs) {
@@ -53,12 +47,33 @@ export class CapabilityTreeController {
   async createIndustry(@Body() data: CapabilityTreeIndustryCreationInput) {
     return this.capabilityTreeService.createIndustry(data);
   }
+
   @Post('industry/:id')
   async updateIndustry(
     @Param('id', new ParseIntPipe()) id: number,
     @Body() data: CapabilityTreeIndustryCreationInput
     ) {
     return this.capabilityTreeService.updateIndustry(id, data);
+  }
+
+  // Master Captree
+  @Get('master')
+  async findMasterCapTree() {
+    return this.capabilityTreeService.findMasterCapTree();
+  }
+
+  @Post('master')
+  async createMaster(@Body() data: CapabilityTreeCreationInput, @Req() req: any) {
+    return this.capabilityTreeService.createMaster(data);
+  }
+
+  @Post('master/:id')
+  async updateMaster(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: CapabilityTreeInput,
+    @Req() req: any
+  ) {
+    return this.capabilityTreeService.updateMaster(id, data);
   }
 
   @Get('/unselect/:id')

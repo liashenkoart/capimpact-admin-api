@@ -11,5 +11,9 @@ export class CapabilityLibsArgs extends BaseArgs {
   @IsOptional()
   kpi_libs?: number[];
 
-  
+  @ApiPropertyOptional({ type: String})
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  status?: 'active' | 'inactive';
+
 }
