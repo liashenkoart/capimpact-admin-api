@@ -37,12 +37,11 @@ export class Capability {
   default?: boolean;
 
 
-  @Field(() => CapabilityTree)
+  @Field(() => CapabilityTree,  { nullable: true })
   @OneToOne(type => CapabilityTree, capabilityTree => capabilityTree.capability, 
     { onDelete: 'CASCADE' }
-    
-    )
-  @JoinColumn({ name: 'capability_tree_id' })
+  )
+  @JoinColumn({ name: 'capability_tree_id'})
   capability_tree: CapabilityTree;
 
   @Field(() => Float, { nullable: true })
