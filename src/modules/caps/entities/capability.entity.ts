@@ -36,13 +36,16 @@ export class Capability {
   @Column('boolean', { default: false })
   default?: boolean;
 
-
-  // @Field(() => CapabilityTree,  { nullable: true })
-  // @OneToOne(type => CapabilityTree, capabilityTree => capabilityTree.capability, 
-  //   { onDelete: 'CASCADE' }
-  // )
-  // @JoinColumn({ name: 'capability_tree_id'})
-  // capability_tree: CapabilityTree;
+  @Field(() => CapabilityTree,  { nullable: true })
+  @OneToOne(type => CapabilityTree, capabilityTree => capabilityTree.capability, 
+    { onDelete: 'CASCADE' }
+  )
+  @JoinColumn({ name: 'capability_tree'})
+  capability_tree?: CapabilityTree;
+  
+  @Field(() => ID, { nullable: true })
+  @Column({ name: 'capability_tree_id', nullable: true })
+  capability_tree_id?: number;
 
   @Field(() => Float, { nullable: true })
   @Column('decimal', {
