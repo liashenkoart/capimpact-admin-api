@@ -331,11 +331,17 @@ export class CapabilityTreeService extends BaseService {
       await this.capabilityTreeRepository.delete(id)
     });
 
-    const rootNode = await this.capabilityTreeRepository.findOne({
-      capability_lib_id: capToRemove.capability_lib_id, 
-      industry_tree_id: capToRemove.industry_tree_id, 
-      parentId: null
-    })
+    const rootNodeOptions: {parentId: number, industry_tree_id?: number, capability_lib_id?: number} = {
+      parentId: null,
+    }
+    if(capToRemove.type==='industry'){
+      rootNodeOptions.industry_tree_id = capToRemove.industry_tree_id
+      
+    }else if(capToRemove.type==='master'){
+      rootNodeOptions.capability_lib_id = capToRemove.capability_lib_id
+    }
+
+    const rootNode = await this.capabilityTreeRepository.findOne(rootNodeOptions)
     return this.treeRepository.findDescendantsTree(rootNode)
     
   }
