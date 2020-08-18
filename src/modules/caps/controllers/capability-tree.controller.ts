@@ -82,7 +82,13 @@ export class CapabilityTreeController {
   ) {
     return this.capabilityTreeService.updateMaster(id, data);
   }
-
+  @Post('kpi')
+  async createKpi(
+    @Body() data: CapabilityTreeInput,
+    @Req() req: any
+  ) {
+    return this.capabilityTreeService.createKpi(data);
+  }
   @Get('/unselect/:id')
   async removeOneCapTree(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityTreeService.removeOneCapTree(id);

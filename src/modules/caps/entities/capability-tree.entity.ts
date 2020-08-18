@@ -31,14 +31,18 @@ export class CapabilityTree {
   @Column({ nullable: true })
   type: string;
   
-  // @Field(() => Capability,  { nullable: true })
-  // @OneToOne(type => Capability, capability => capability.capability_tree, 
-  //    { onDelete: 'CASCADE' }
-  // )
-  // capability: Capability;
+  @Field(() => Capability,  { nullable: true })
+  @OneToOne(type => Capability, capability => capability.capability_tree, 
+     { onDelete: 'CASCADE' }
+  )
+  capability: Capability;
 
   @Field(() => ID, { nullable: true })
   @Column({ name: 'capability_id', nullable: true })
+  capability_id?: number;
+
+  @Field(() => ID, { nullable: true })
+  @Column({ name: 'capability_lib_id', nullable: true })
   capability_lib_id?: number;
 
   @Field(() => CapabilityLib, { nullable: true })
@@ -49,9 +53,6 @@ export class CapabilityTree {
   )
   @JoinColumn({ name: 'capability_id' })
   capability_lib: CapabilityLib;
-
-
-
 
   @Field(() => ID, { nullable: true })
   @Column({ name: 'industry_tree_id', nullable: true })

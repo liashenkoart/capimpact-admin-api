@@ -17,6 +17,7 @@ export class CapabilityTreeService extends BaseService {
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
     @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
+    @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(CapabilityTree) private readonly treeRepository: TreeRepository<CapabilityTree>
   ) {
     super();
@@ -32,7 +33,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async findOneById(id: number): Promise<CapabilityTree> {
-    return this.capabilityTreeRepository.findOne({ id });
+    return this.capabilityTreeRepository.findOne({where: { id}, relations:['capability'] });
   }
 
   async fillTree(node): Promise<Object> {
@@ -41,6 +42,29 @@ export class CapabilityTreeService extends BaseService {
     return node;
   }
 
+  async createKpi(data): Promise<Object>{
+    console.log(data)
+    const cp = await this.capabilityRepository.findOne({capability_tree_id: data.id})
+    const capability = new Capability({
+      capability_tree_id: data.id,
+      name: data.cap_name,
+      kpis: data.kpis
+    })
+    if(cp){
+      capability.id = cp.id
+
+      const createdCapability = await this.capabilityRepository.save(capability)
+      return await this.capabilityTreeRepository.findOne(data.id) 
+
+    }else{
+      const createdCapability = await this.capabilityRepository.save(capability)
+      const cap_tree = await this.capabilityTreeRepository.findOne(data.id)
+      cap_tree.capability_id = createdCapability.id
+      cap_tree.capability = createdCapability
+      return await this.capabilityTreeRepository.save(cap_tree) 
+      
+    }
+  }
 
   async findMasterCapTree(): Promise<Object> {
     // const MasterCapTree = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
