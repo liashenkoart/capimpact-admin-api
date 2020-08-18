@@ -54,13 +54,14 @@ export class CapabilityTreeService extends BaseService {
       capability.id = cp.id
 
       const createdCapability = await this.capabilityRepository.save(capability)
-      return await this.capabilityTreeRepository.findOne(data.id) 
+      return await this.capabilityTreeRepository.save({id: data.id, kpis: data.kpis}) 
 
     }else{
       const createdCapability = await this.capabilityRepository.save(capability)
       const cap_tree = await this.capabilityTreeRepository.findOne(data.id)
       cap_tree.capability_id = createdCapability.id
       cap_tree.capability = createdCapability
+      cap_tree.kpis = data.kpis
       return await this.capabilityTreeRepository.save(cap_tree) 
       
     }

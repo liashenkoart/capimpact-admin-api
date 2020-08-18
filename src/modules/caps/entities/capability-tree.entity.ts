@@ -84,6 +84,10 @@ export class CapabilityTree {
   @Field(() => CapabilityTree, { nullable: true })
   @TreeParent()
   parent?: CapabilityTree;
+  
+  @Field(() => String, { nullable: true })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
+  kpis?: string[];
 
   @Field(() => ID, { nullable: true })
   @Column({ nullable: true })
