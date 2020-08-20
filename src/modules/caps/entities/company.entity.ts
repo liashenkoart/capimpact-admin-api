@@ -15,7 +15,7 @@ import { CapabilityTree } from '@modules/caps/entities/capability-tree.entity';
 
 
 @ObjectType()
-@Entity('companies')
+@Entity('company')
 export class Company {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
