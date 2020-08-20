@@ -18,6 +18,11 @@ export class CapabilityTreeIndustryCreationInput {
   @Type(() => Number)
   readonly parentId: number;
 
+  @ApiProperty({ type: Number})
+  @Field(() => ID, { nullable: true })
+  @Type(() => Number)
+  readonly company_id?: number;
+
   @ApiPropertyOptional({ type: Number})
   @Field(() => ID, { nullable: true })
   @IsOptional()
