@@ -78,7 +78,7 @@ export class Capability {
 
   @Field(() => String, { nullable: true })
   @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
-  readonly kpis?: string[];
+  kpis?: string[];
 
   @Field({ nullable: true })
   @Column({
