@@ -20,10 +20,10 @@ import { CompanyService } from '../services';
 import { CompanyInput, CompanyCreationInput, CompaniesArgs } from '../dto';
 
 @ApiBearerAuth()
-@ApiTags('company')
+@ApiTags('companies')
 @UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('company')
+@Controller('companies')
 export class CompanyController {
   constructor(
     private readonly companyService: CompanyService,
