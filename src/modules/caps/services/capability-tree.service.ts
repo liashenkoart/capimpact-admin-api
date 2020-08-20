@@ -101,6 +101,7 @@ export class CapabilityTreeService extends BaseService {
         parentId: masterTree.id,
         type: masterTree.type,
         cap_name: capability_lib.name,
+        capability_lib_id: capability_lib.id,
         capability_lib,
       }));
     }));
