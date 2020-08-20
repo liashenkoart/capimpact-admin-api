@@ -17,4 +17,8 @@ export class CapabilityTreeMasterCreationInput {
   @Type(() => Number)
   readonly capability_lib_id: number;
 
+  @IsOptional()
+  @Type(() => String)
+  readonly type?: string;
+
 }
