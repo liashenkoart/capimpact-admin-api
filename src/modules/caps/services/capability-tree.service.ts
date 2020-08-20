@@ -43,25 +43,23 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async createKpi(data): Promise<Object>{
-    const cp = await this.capabilityRepository.findOne({capability_tree: data.id})
-    const capability = new Capability({
-      capability_tree: data.id,
-      name: data.cap_name,
-      kpis: data.kpis
-    })
-    const cap_tree = await this.capabilityTreeRepository.findOne(data.id)
 
+    const cap_tree = await this.capabilityTreeRepository.findOne({where:{id:data.id}, relations:['capability']})
 
-    if(cp){
-      capability.id = cp.id
-      const createdCapability = await this.capabilityRepository.save(capability)
-      return await this.capabilityTreeRepository.save({id: data.id, kpis: data.kpis}) 
+    if(cap_tree.capability){
+      const capability = await this.capabilityRepository.findOne(cap_tree.capability.id)
+      capability.kpis = data.kpis
+
+      return await this.capabilityRepository.save(capability)
 
     }else{
-
+      const capability = new Capability({
+        name: data.cap_name,
+        kpis: data.kpis
+      })
       const createdCapability = await this.capabilityRepository.save(capability)
 
-      cap_tree.kpis = data.kpis
+      cap_tree.capability = createdCapability
       return await this.capabilityTreeRepository.save(cap_tree) 
       
     }
@@ -109,7 +107,7 @@ export class CapabilityTreeService extends BaseService {
 
   async treeByIndustryTree(industryId: number): Promise<CapabilityTree> {
     const industryParams = { industry_tree_id: industryId, parentId: null, }
-    let rootIndustryCapTree = await this.capabilityTreeRepository.findOne(industryParams);
+    let rootIndustryCapTree = await this.capabilityTreeRepository.findOne({where: industryParams, relations: ['capability']});
 
     if (!rootIndustryCapTree) {
       const industryCap = await this.industryTreeRepository.findOne({ id: industryId })

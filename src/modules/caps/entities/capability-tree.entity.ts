@@ -36,6 +36,8 @@ export class CapabilityTree {
   @OneToOne(type => Capability, capability => capability.capability_tree, 
     { onDelete: 'CASCADE' }
   )
+  @JoinColumn({ name: 'capability' })
+
   capability: Capability;
 
 
@@ -86,10 +88,6 @@ export class CapabilityTree {
   @TreeParent()
   parent?: CapabilityTree;
   
-  @Field(() => String, { nullable: true })
-  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
-  kpis?: string[];
-
   @Field(() => ID, { nullable: true })
   @Column({ nullable: true })
   parentId?: number;
