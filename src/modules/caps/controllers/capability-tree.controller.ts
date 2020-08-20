@@ -63,6 +63,33 @@ export class CapabilityTreeController {
     ) {
     return this.capabilityTreeService.updateIndustryTree(id, data);
   }
+
+  // COMPANY
+  @Get('company')
+  async getCompanyTree(@Query() query: CapabilityTreeArgs) {
+    return this.capabilityTreeService.treeByCompanyTree(query.company_id);
+  }
+  @Post('company')
+  async createCompany(@Body() data: CapabilityTreeIndustryCreationInput) {
+    return this.capabilityTreeService.createCompany(data);
+  }
+
+  @Post('company/:id')
+  async updateCompany(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: CapabilityTreeIndustryCreationInput
+    ) {
+    return this.capabilityTreeService.updateCompany(id, data);
+  }
+
+  @Post('company/tree/:id')
+  async updateCompanyTree(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: CapabilityTreeIndustryCreationInput
+    ) {
+    return this.capabilityTreeService.updateCompanyTree(id, data);
+  }
+
   // Master Captree
   @Get('master')
   async findMasterCapTree() {

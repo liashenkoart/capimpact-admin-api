@@ -12,15 +12,17 @@ async function main() {
   await getManager().transaction(async transactionalEntityManager => {
     let newCapCount = 0;
     const createCapTreeNode = async (cap, parent, capTreeArray = []) => {
+      const type = cap.company_id ? 'company' : 'industry' 
       const capTreeNode = await transactionalEntityManager.save(CapabilityTree, new CapabilityTree({
         cap_name: cap.name,
-        type: 'industry',
-        // capability: cap,
+        capability: cap,
         parent,
+        type
       }));
+
       await transactionalEntityManager.save(Capability, new Capability({
         id: cap.id,
-        // capability_tree: capTreeNode,
+        capability_tree: capTreeNode,
       }));
       capTreeArray.push(capTreeNode);
       newCapCount++;
