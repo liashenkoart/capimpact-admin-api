@@ -65,45 +65,6 @@ export class CapabilityTreeService extends BaseService {
     }
   }
 
-  async findMasterCapTree(): Promise<Object> {
-    // const MasterCapTree = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
-    // console.log("CapabilityTreeService -> MasterCapTree", MasterCapTree)
-    // // return MasterCapTree
-    // let root = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
-    // if (!root) {
-    //   root = await this.createMasterCapTree();
-    // }
-    // const tree = await this.treeRepository.findDescendantsTree(root);
-    // return await this.fillTree(tree);
-
-    let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
-    if (!root) {
-      root = await this.createMasterCapTree();
-    }
-
-    // return await this.fillTree(tree);
-    return await this.treeRepository.findDescendantsTree(root);
-
-  }
-
-  async createMasterCapTree(): Promise<CapabilityTree> {
-    console.log('im here')
-    const capLibs = await this.capabilityLibRepository.find({ status: 'active'});
-    
-    const masterTree = await this.capabilityTreeRepository.save(new CapabilityTree(masterTreeTemplate));
-
-    await Promise.all(capLibs.map(async capability_lib => {
-      const firstLevelChild = await this.capabilityTreeRepository.save(new CapabilityTree({
-        parent: masterTree,
-        parentId: masterTree.id,
-        type: masterTree.type,
-        cap_name: capability_lib.name,
-        capability_lib_id: capability_lib.id,
-        capability_lib,
-      }));
-    }));
-    return masterTree;
-  }
 
   async treeByIndustryTree(industryId: number): Promise<CapabilityTree> {
     const industryParams = { industry_tree_id: industryId, parentId: null, }
@@ -119,6 +80,18 @@ export class CapabilityTreeService extends BaseService {
     }
 
     const tree = await this.treeRepository.findDescendantsTree(rootIndustryCapTree);
+    return sortTreeByField('cap_name', tree);
+  }
+
+  async treeByCompanyTree(company_id: number): Promise<CapabilityTree> {
+    const companyParams = { company_id, parentId: null, }
+    let rootCompanyTree = await this.capabilityTreeRepository.findOne(companyParams);
+
+    if (!rootCompanyTree) {
+        throw new NotFoundException(`capability-tree with company_id: ${company_id} was not found`);
+    }
+
+    const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
     return sortTreeByField('cap_name', tree);
   }
   // Return all children including node itself (foundChildren is sorted array [parent, child, granchild, ....])
@@ -193,6 +166,46 @@ export class CapabilityTreeService extends BaseService {
 
 
   // MASTER CAPTREE
+  async findMasterCapTree(): Promise<Object> {
+    // const MasterCapTree = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
+    // console.log("CapabilityTreeService -> MasterCapTree", MasterCapTree)
+    // // return MasterCapTree
+    // let root = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
+    // if (!root) {
+    //   root = await this.createMasterCapTree();
+    // }
+    // const tree = await this.treeRepository.findDescendantsTree(root);
+    // return await this.fillTree(tree);
+
+    let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
+    if (!root) {
+      root = await this.createMasterCapTree();
+    }
+
+    // return await this.fillTree(tree);
+    return await this.treeRepository.findDescendantsTree(root);
+
+  }
+
+  async createMasterCapTree(): Promise<CapabilityTree> {
+    console.log('im here')
+    const capLibs = await this.capabilityLibRepository.find({ status: 'active'});
+    
+    const masterTree = await this.capabilityTreeRepository.save(new CapabilityTree(masterTreeTemplate));
+
+    await Promise.all(capLibs.map(async capability_lib => {
+      const firstLevelChild = await this.capabilityTreeRepository.save(new CapabilityTree({
+        parent: masterTree,
+        parentId: masterTree.id,
+        type: masterTree.type,
+        cap_name: capability_lib.name,
+        capability_lib_id: capability_lib.id,
+        capability_lib,
+      }));
+    }));
+    return masterTree;
+  }
+
   async createMaster(data: CapabilityTreeMasterCreationInput): Promise<CapabilityTree> {
     if (data.parentId) {
       const MasterCapLib = await this.capabilityTreeRepository.findOne(masterTreeTemplate);

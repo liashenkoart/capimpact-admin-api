@@ -63,6 +63,13 @@ export class CapabilityTreeController {
     ) {
     return this.capabilityTreeService.updateIndustryTree(id, data);
   }
+
+  // COMPANY
+  @Get('company')
+  async getCompanyTree(@Query() query: CapabilityTreeArgs) {
+    console.log(query)
+    return this.capabilityTreeService.treeByCompanyTree(query.company_id);
+  }
   // Master Captree
   @Get('master')
   async findMasterCapTree() {
