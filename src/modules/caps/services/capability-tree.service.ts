@@ -43,10 +43,9 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async createKpi(data): Promise<Object>{
-    console.log(data)
-    const cp = await this.capabilityRepository.findOne({capability_tree_id: data.id})
+    const cp = await this.capabilityRepository.findOne({capability_tree: data.id})
     const capability = new Capability({
-      capability_tree_id: data.id,
+      capability_tree: data.id,
       name: data.cap_name,
       kpis: data.kpis
     })
