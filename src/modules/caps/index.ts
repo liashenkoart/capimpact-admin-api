@@ -11,6 +11,7 @@ import {
   CapabilityLib,
   CapabilityTree,
   Company,
+  NewCompany,
   Challenge,
   Startup,
   Lense,
@@ -78,6 +79,8 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
       CapabilityLib,
       CapabilityTree,
       Company,
+  NewCompany,
+
       Challenge,
       Startup,
       Lense,
