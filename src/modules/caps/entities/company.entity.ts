@@ -15,7 +15,7 @@ import { CapabilityTree } from '@modules/caps/entities/capability-tree.entity';
 
 
 @ObjectType()
-@Entity('companies')
+@Entity('company')
 export class Company {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
@@ -29,19 +29,19 @@ export class Company {
   @Column({ nullable: true })
   cid?: string;
 
-  @Field(() => ID, { nullable: true })
-  @Column({
-    name: 'user_id',
-    nullable: true,
-  })
-  user_id?: number;
+  // @Field(() => ID, { nullable: true })
+  // @Column({
+  //   name: 'user_id',
+  //   nullable: true,
+  // })
+  // user_id?: number;
 
-  @Field(() => ID, { nullable: true })
-  @Column({
-    name: 'industry_id',
-    nullable: true,
-  })
-  industry_id?: number;
+  // @Field(() => ID, { nullable: true })
+  // @Column({
+  //   name: 'industry_id',
+  //   nullable: true,
+  // })
+  // industry_id?: number;
 
   @Field(() => User)
   @ManyToOne(
@@ -101,7 +101,7 @@ export class Company {
 
   @ManyToMany(type => IndustryTree, industryTree => industryTree.companies)
   @JoinTable({
-    name: 'company2industry_old',
+    name: 'company2industry',
     joinColumn: { name: 'company_id' },
     inverseJoinColumn: { name: 'industry_tree_id' }
   })

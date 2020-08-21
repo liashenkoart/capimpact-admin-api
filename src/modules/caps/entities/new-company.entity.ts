@@ -5,7 +5,7 @@ import { IndustryTree } from './industry-tree.entity';
   
   
   @ObjectType()
-  @Entity('company')
+  @Entity('new-company')
   export class NewCompany {
     @Field(() => ID)
     @PrimaryGeneratedColumn()

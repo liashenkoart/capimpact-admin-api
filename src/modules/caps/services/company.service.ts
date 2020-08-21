@@ -30,6 +30,7 @@ export class CompanyService {
   }
 
   async create(data: CompanyCreationInput, context?: any): Promise<Company> {
+  console.log("CompanyService -> data", data)
     const { user } = context;
     let company = new Company(data);
     company.user = user;
@@ -40,9 +41,10 @@ export class CompanyService {
 
     // Copy caps from industry tree
     let root = await this.capabilityRepository.findOne({
-      industry_id: company.industry_id,
+      industry_id: company.industry.id,
       parentId: null,
     });
+
     const tree = await this.capabilityTreeRepository.findDescendantsTree(root);
     let descendants = tree.children.reduce((prev, cap) => {
       return prev.concat(
@@ -81,7 +83,7 @@ export class CompanyService {
     return await this.create(
       {
         name: data.name,
-        industry_id: originalCompany.industry_id,
+        industry_id: originalCompany.industry.id,
       },
       context
     );

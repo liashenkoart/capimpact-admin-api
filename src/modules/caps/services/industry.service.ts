@@ -23,7 +23,7 @@ export class IndustryService {
 
   async findAll(args: IndustriesArgs): Promise<Industry[]> {
     let industries = [];
-    let result = await this.industryRepository.find({ where: args, order: { name: 'ASC' } });
+    let result = await this.industryRepository.find({ ...args, order: { name: 'ASC' } });
     for (let industry of result) {
       const countProcesses = await this.processService.countDocuments({ industry_id: industry.id });
       const countCapabilities = await this.capabilityService.countDocuments({
