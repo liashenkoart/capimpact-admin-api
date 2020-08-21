@@ -101,7 +101,7 @@ export class Company {
 
   @ManyToMany(type => IndustryTree, industryTree => industryTree.companies)
   @JoinTable({
-    name: 'company2industry',
+    name: 'company2industry_old',
     joinColumn: { name: 'company_id' },
     inverseJoinColumn: { name: 'industry_tree_id' }
   })

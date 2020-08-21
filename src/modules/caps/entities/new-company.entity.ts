@@ -20,10 +20,10 @@ import { IndustryTree } from './industry-tree.entity';
     cid?: string;
 
 
-    @ManyToMany(type => IndustryTree, industryTree => industryTree.companies)
+    @ManyToMany(type => IndustryTree, industryTree => industryTree.new_company)
     @JoinTable({
       name: 'company2industry',
-      joinColumn: { name: 'new_company_id' },
+      joinColumn: { name: 'company_id' },
       inverseJoinColumn: { name: 'industry_tree_id' }
     })
     industry_trees: IndustryTree[];
