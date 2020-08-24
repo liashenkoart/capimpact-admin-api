@@ -103,12 +103,18 @@ export class CapabilityTreeService extends BaseService {
       const foundChildren = await this.getAllChildren(data.id)
       const masterTreeIDtoIndustryId = {}
 
-      await asyncForEach(foundChildren, async ({ id, cap_name, parentId, capability_lib_id }) => {
+      await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id }) => {
         const industry = new CapabilityTree({ cap_name, type: 'industry', capability_lib_id, industry_tree_id: data.industry_tree_id })
         // IparentId of industry equals parentId of moved node or newly created industry
         industry.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoIndustryId[parentId], 10)
 
         const industryTree = await this.collectEntityFields(industry)
+        if(capability){
+          industryTree.capability =  await this.capabilityRepository.save(new Capability({
+            name: industryTree.cap_name,
+            kpis: capability.kpis
+          }))
+        }
         const createdIndustry = await this.capabilityTreeRepository.save(industryTree)
         masterTreeIDtoIndustryId[id] = createdIndustry.id
       });
@@ -134,12 +140,18 @@ export class CapabilityTreeService extends BaseService {
     const children = await this.getAllChildren(selectedNodeId)
     const oldCapToNewCapIDs = {}
     // Creating new industry trees to update mpath
-    await asyncForEach(children, async ({ id, cap_name, parentId, capability_lib }) => {
+    await asyncForEach(children, async ({ id, cap_name, parentId, capability, capability_lib }) => {
  
       const industryCap = new CapabilityTree({ cap_name, type: 'industry', industry_tree_id: data.industry_tree_id })
       industryCap.parentId = id === selectedNodeId? data.parentId : parseInt(oldCapToNewCapIDs[parentId], 10)
-      const capability = await this.collectEntityFields(industryCap)
-      const createdCapability = await this.capabilityTreeRepository.save(capability)
+      const cap = await this.collectEntityFields(industryCap)
+      if(capability){
+        cap.capability = await this.capabilityRepository.save(new Capability({
+          name: cap.cap_name,
+          kpis: capability.kpis
+        }))
+      }
+      const createdCapability = await this.capabilityTreeRepository.save(cap)
       oldCapToNewCapIDs[id] = createdCapability.id
     });
     // Removing old industry trees captrees
@@ -168,14 +180,19 @@ export class CapabilityTreeService extends BaseService {
       const foundChildren = await this.getAllChildren(data.id)
       const masterTreeIDtoCompanyId = {}
 
-      await asyncForEach(foundChildren, async ({ id, cap_name, parentId, capability_lib_id }) => {
+      await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id }) => {
         const company = new CapabilityTree({ cap_name, type: 'company', capability_lib_id, company_id: data.company_id })
         // IparentId of company equals parentId of moved node or newly created company
         company.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoCompanyId[parentId], 10)
 
         const companyTree = await this.collectEntityFields(company)
+        if(capability){
+          companyTree.capability =  await this.capabilityRepository.save(new Capability({
+            name: companyTree.cap_name,
+            kpis: capability.kpis
+          }))
+        }
         const createdCompany = await this.capabilityTreeRepository.save(companyTree)
-        console.log("createdCompany", createdCompany)
         masterTreeIDtoCompanyId[id] = createdCompany.id
       });
 
@@ -194,12 +211,22 @@ export class CapabilityTreeService extends BaseService {
     const children = await this.getAllChildren(selectedNodeId)
     const oldCapToNewCapIDs = {}
     // Creating new industry trees to update mpath
-    await asyncForEach(children, async ({ id, cap_name, parentId, capability_lib_id }) => {
+    await asyncForEach(children, async ({ id, cap_name, parentId, capability, capability_lib_id }) => {
  
       const companyCap = new CapabilityTree({ cap_name, type: 'company', capability_lib_id, company_id: data.company_id })
       companyCap.parentId = id === selectedNodeId? data.parentId : parseInt(oldCapToNewCapIDs[parentId], 10)
-      const capability = await this.collectEntityFields(companyCap)
-      const createdCapability = await this.capabilityTreeRepository.save(capability)
+      
+      
+      const cap = await this.collectEntityFields(companyCap)  
+      if(capability){
+        cap.capability =  await this.capabilityRepository.save(new Capability({
+          name: cap.cap_name,
+          kpis: capability.kpis
+        }))
+      }
+      const createdCapability = await this.capabilityTreeRepository.save(cap)
+
+
       oldCapToNewCapIDs[id] = createdCapability.id
     });
     // Removing old company trees captrees
@@ -267,15 +294,25 @@ export class CapabilityTreeService extends BaseService {
     const children = await this.getAllChildren(selectedNodeId)
     const oldCapToNewCapIDs = {}
 
-    await asyncForEach(children, async ({ id, cap_name, parentId, capability_lib_id }) => {
+    await asyncForEach(children, async ({ id, cap_name, parentId, capability, capability_lib_id }) => {
+    console.log("capability", capability)
       const masterCapability = new CapabilityTree({ cap_name, type: 'master', capability_lib_id })
       if (id === selectedNodeId) {
         masterCapability.parentId = data.parentId
       } else {
         masterCapability.parentId = parseInt(oldCapToNewCapIDs[parentId], 10)
       }
-      const capability = await this.collectEntityFields(masterCapability)
-      const createdCapability = await this.capabilityTreeRepository.save(capability)
+
+        
+      const cap = await this.collectEntityFields(masterCapability)  
+      if(capability){
+        cap.capability =  await this.capabilityRepository.save(new Capability({
+          name: cap.cap_name,
+          kpis: capability.kpis
+        }))
+      }
+      const createdCapability = await this.capabilityTreeRepository.save(cap)
+
       oldCapToNewCapIDs[id] = createdCapability.id
     });
 
