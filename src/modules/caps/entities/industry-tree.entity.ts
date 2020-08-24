@@ -3,7 +3,6 @@ import { ObjectType, Field, ID } from 'type-graphql';
 import { Company } from '@modules/caps/entities/company.entity';
 import { CapabilityTree } from '@modules/caps/entities/capability-tree.entity';
 import { Sic } from '@modules/caps/entities/sic.entity';
-import { NewCompany } from './new-company.entity';
 
 @ObjectType()
 @Entity('industry_tree')
@@ -48,9 +47,6 @@ export class IndustryTree {
 
   @ManyToMany(type => Company, company => company.industry_trees)
   companies: Company[];
-
-  @ManyToMany(type => NewCompany, company => company.industry_trees)
-  new_company: NewCompany[];
 
   @ManyToMany(type => Sic, sic => sic.industry_trees)
   sics: Sic[];

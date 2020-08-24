@@ -22,7 +22,7 @@ export default registerAs('database', () => {
         database: process.env.DATABASE_NAME,
         defaultGraphPath: process.env.DEFAULT_GRAPH,
         synchronize: true,
-        logging: false,
+        logging: true,
         migrationsRun: false,
         migrations: ['src/migration/*.ts'],
         cli: {
