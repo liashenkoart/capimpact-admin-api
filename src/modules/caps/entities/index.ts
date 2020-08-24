@@ -5,7 +5,6 @@ export { Capability } from './capability.entity';
 export { CapabilityLib } from './capability-lib.entity';
 export { CapabilityTree } from './capability-tree.entity';
 export { Company } from './company.entity';
-export { NewCompany } from './new-company.entity';
 export { Challenge } from './challenge.entity';
 export { Startup } from './startup.entity';
 export { Lense } from './lense.entity';

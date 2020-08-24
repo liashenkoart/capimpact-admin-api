@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
-import { Company, Capability, IndustryTree, NewCompany } from '../entities';
+import { Company, Capability, IndustryTree } from '../entities';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
 
 @Injectable()
@@ -10,7 +10,6 @@ export class CompanyService {
   constructor(
     @InjectRepository(Company) private readonly companyRepository: Repository<Company>,
     @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
-    // @InjectRepository(NewCompany) private readonly newCompanyReposityr: Repository<NewCompany>,
     @InjectRepository(Capability) private readonly capabilityTreeRepository: TreeRepository<Capability>,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
   ) {}
