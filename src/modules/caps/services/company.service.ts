@@ -40,6 +40,7 @@ export class CompanyService {
 
     // Copy caps from industry tree
     let root = await this.capabilityRepository.findOne({
+      // industry_id: company.industry_id,
       industry_id: company.industry.id,
       parentId: null,
     });
@@ -82,6 +83,7 @@ export class CompanyService {
     return await this.create(
       {
         name: data.name,
+        // industry_id: originalCompany.industry_id,
         industry_id: originalCompany.industry.id,
       },
       context
