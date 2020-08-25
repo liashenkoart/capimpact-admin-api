@@ -2,6 +2,7 @@ export { IndustryCreationInput } from './industry-creation.dto';
 export { IndustryInput } from './industry.dto';
 export { IndustriesArgs } from './industries.args';
 
+export {CapabilityTreeIndustryCloneInput} from './CapabilityTreeIndustryCloneInput.dto'
 export { IndustryTreeCreationInput } from './industry-tree-creation.dto';
 export { IndustryTreeInput } from './industry-tree.dto';
 export { IndustryTreesArgs } from './industry-trees.args';

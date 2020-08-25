@@ -4,7 +4,7 @@ import { Repository, TreeRepository, Not, getManager, IsNull, EntityManager } fr
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree, Capability, KpiLib } from '../entities';
-import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilitiesArgs } from '../dto';
+import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilitiesArgs, CapabilityTreeIndustryCloneInput } from '../dto';
 import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 import { CapabilityTreeMasterCreationInput } from '../dto/capability-tree-master-creation.dto';
 
@@ -94,6 +94,47 @@ export class CapabilityTreeService extends BaseService {
     const tree = await this.treeRepository.findDescendantsTree(rootIndustryCapTree);
     return sortTreeByField('cap_name', tree);
   }
+
+  async cloneIndustry(data: CapabilityTreeIndustryCloneInput): Promise<CapabilityTree>{
+    const rootIndustry = await this.findOneById(data.id)
+    const rootChildren = await this.getAllChildren(data.id)
+    rootChildren.shift() // REMOVING ROOT INDUSTRY THAT IS ALREADY CREATED SO WE DON"T RECREATE IT
+
+    if(rootChildren.length > 0){
+      await asyncForEach(rootChildren.reverse(), async ({ id }) => {
+        await this.capabilityTreeRepository.delete(id)
+      });
+    }
+
+    const parentChildren = await this.getAllChildren(data.parentId)
+    parentChildren.shift() // REMOVING ROOT INDUSTRY THAT IS ALREADY CREATED SO WE DON"T RECREATE IT
+    const oldCapToNewCapIDs = {}
+
+    const industry_tree_id = rootIndustry.industry_tree_id
+    await asyncForEach(parentChildren, async ({ id, cap_name, parentId, capability }) => {
+
+      const newCap = new CapabilityTree({ cap_name, parentId, type: 'industry', industry_tree_id })
+      if (parentId === data.parentId) {
+        newCap.parentId = data.id
+      } else {
+        newCap.parentId = parseInt(oldCapToNewCapIDs[parentId], 10)
+      }
+        
+      const cap = await this.collectEntityFields(newCap)  
+      if(capability){
+        cap.capability =  await this.capabilityRepository.save(new Capability({
+          name: cap.cap_name,
+          kpis: capability.kpis
+        }))
+      }
+      const createdCapability = await this.capabilityTreeRepository.save(cap)
+
+      oldCapToNewCapIDs[id] = createdCapability.id
+    });
+
+    return this.treeRepository.findDescendantsTree(rootIndustry)
+  }
+
 
   async createIndustry(data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
 
