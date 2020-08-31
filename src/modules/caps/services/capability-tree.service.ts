@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository, Not, getManager, IsNull, EntityManager } from 'typeorm';
+import { Repository, TreeRepository, Not, getManager, IsNull, EntityManager, Raw } from 'typeorm';
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree, Capability, KpiLib } from '../entities';
@@ -15,8 +15,8 @@ const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentI
 export class CapabilityTreeService extends BaseService {
   constructor(
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
-    @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
-    @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
+    @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,
+    @InjectRepository(CapabilityTree) public readonly capabilityTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(CapabilityTree) private readonly treeRepository: TreeRepository<CapabilityTree>
   ) {
@@ -31,6 +31,9 @@ export class CapabilityTreeService extends BaseService {
 
     return this.capabilityTreeRepository.find(this.getFindAllQuery(query));
   }
+
+
+ 
 
   async findOneById(id: number): Promise<CapabilityTree> {
     return this.capabilityTreeRepository.findOne({where: { id}, relations:['capability'] });
@@ -65,8 +68,13 @@ export class CapabilityTreeService extends BaseService {
     }
   }
 
-
-
+  async getAllChildrenOfIndustry(id: number) {
+    const node = await this.treeRepository.findOne({where:{ industry_tree_id:id}})
+    const descendantsTree = await this.treeRepository.findDescendantsTree(node);
+    const allRelatedIds = (descendantsTree ? flattenTree(descendantsTree, 'children') : []).map(({ id }) => id);
+    const foundChildren = await Promise.all(allRelatedIds.map(id => this.findOneById(id)))
+    return foundChildren
+  }
 
   // Return all children including node itself (foundChildren is sorted array [parent, child, granchild, ....])
   async getAllChildren(id: number) {
@@ -110,7 +118,7 @@ export class CapabilityTreeService extends BaseService {
     parentChildren.shift() // REMOVING ROOT INDUSTRY THAT IS ALREADY CREATED SO WE DON"T RECREATE IT
     const oldCapToNewCapIDs = {}
 
-    const industry_tree_id = rootIndustry.industry_tree_id
+    const { industry_tree_id } = rootIndustry;
     await asyncForEach(parentChildren, async ({ id, cap_name, parentId, capability }) => {
 
       const newCap = new CapabilityTree({ cap_name, parentId, type: 'industry', industry_tree_id })

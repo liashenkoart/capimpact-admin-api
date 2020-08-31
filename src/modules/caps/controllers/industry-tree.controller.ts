@@ -31,6 +31,11 @@ export class IndustryTreeController {
     return this.industryTreeService.findAll(query);
   }
 
+  @Get('six-digits-industries')
+  async sixDigitsIndustries() {
+    return this.industryTreeService.findSixDigitsCodeIndustries();
+  }
+
   @Get('tree')
   async tree(@Query() query: IndustryTreesArgs) {
     return this.industryTreeService.tree(query);

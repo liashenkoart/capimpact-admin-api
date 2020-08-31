@@ -2,14 +2,20 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 
-import { Company, Capability, IndustryTree } from '../entities';
+import { Company, Capability, IndustryTree, CapabilityTree } from '../entities';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
+import { asyncForEach } from '@lib/sorting';
+import { CapabilityTreeService } from './capability-tree.service';
+import { each } from 'lodash';
+
 
 @Injectable()
 export class CompanyService {
   constructor(
+    private capabilitiesTreeSrv:  CapabilityTreeService,
     @InjectRepository(Company) private readonly companyRepository: Repository<Company>,
     @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
+    @InjectRepository(CapabilityTree) private readonly capabilityTreeRepositoryTest: Repository<CapabilityTree>,
     @InjectRepository(Capability) private readonly capabilityTreeRepository: TreeRepository<Capability>,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
   ) {}
@@ -28,54 +34,68 @@ export class CompanyService {
     return this.companyRepository.count(query);
   }
 
+ async recursiveFunction(collection){ 
+    each(collection, (model) => { 
+        console.log(model); 
+        // const cap =
+        if(model.pages.length > 0){ 
+            this.recursiveFunction(model.pages); 
+        }
+    }); 
+};
+
+  
+
   async create(data: CompanyCreationInput, context?: any): Promise<Company> {
-  console.log("CompanyService -> data", data)
-    const { user } = context;
-    let company = new Company(data);
-    company.user = user;
-    if (data.industry_trees) {
-      company.industry_trees = await this.industryTreeRepository.findByIds(data.industry_trees);
-    }
-    company = await this.companyRepository.save(company);
+  console.log("CompanyService -> data", data);
+  
+  const { user } = context;
+  const { industry_id } = data;
+  const industry = await this.industryTreeRepository.findOne(industry_id)
 
-    // Copy caps from industry tree
-    let root = await this.capabilityRepository.findOne({
-      // industry_id: company.industry_id,
-      industry_id: company.industry.id,
-      parentId: null,
-    });
+  if(!industry.capability_trees) {
 
-    const tree = await this.capabilityTreeRepository.findDescendantsTree(root);
-    let descendants = tree.children.reduce((prev, cap) => {
-      return prev.concat(
-        [{ id: cap.id, name: cap.name, parentId: cap.parentId }],
-        cap.children.map(child => ({ id: child.id, name: child.name, parentId: child.parentId }))
-      );
-    }, []);
-    root = await this.capabilityRepository.save({
-      name: company.name,
-      company,
-      original_id: root.id,
-      parent: null,
-      user,
-    });
-    let nodes = {};
-    let node = null;
-    for (let descendant of descendants) {
-      if (descendant.parentId) {
-        const parentNode = descendants.find(it => it.id === descendant.parentId);
-        const parent = (parentNode && nodes[parentNode.id]) || root;
-        node = await this.capabilityRepository.save({
-          name: descendant.name,
-          company,
-          original_id: descendant.id,
-          parent,
-          user,
-        });
-        nodes[descendant.id] = node;
-      }
+  }
+
+  let company = new Company(data);
+  company.user = user;
+  company.industry = industry;
+  company = await this.companyRepository.save(company);
+
+  await this.capabilitiesTreeSrv.capabilityTreeRepository.save
+  ({ cap_name: data.name, type: "company",company_id: company.id, parentId: null })
+
+  const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
+  rootChildren.shift()
+
+  console.log(rootChildren)
+  const oldCapToNewCapIDs = {};
+
+  await asyncForEach(rootChildren, async ({ id,cap_name, type ,parentId, capability }) => {
+    const newCap = new CapabilityTree({ cap_name, parentId, type, company_id: company.id})
+
+    
+    if(oldCapToNewCapIDs[parentId]) {
+      console.log(parentId,oldCapToNewCapIDs,oldCapToNewCapIDs[parentId],`first`)
+       newCap.parentId = oldCapToNewCapIDs[parentId]
     }
-    return company;
+
+    const cap = await this.capabilitiesTreeSrv.collectEntityFields(newCap)
+
+    if(capability){
+      cap.capability =  await this.capabilityRepository.save(new Capability({
+        name: cap.cap_name,
+        kpis: capability.kpis
+      }))
+    }
+
+    const createdCapability = await this.capabilitiesTreeSrv.capabilityTreeRepository.save(cap)
+    
+    oldCapToNewCapIDs[id] = createdCapability.id
+    console.log(oldCapToNewCapIDs,createdCapability.id,`second`)
+  //console.log(createdCapability, oldCapToNewCapIDs)
+  });
+    return this.companyRepository.findOne();
   }
 
   async clone(id: number, data: CompanyInput, context?: any): Promise<Company> {
@@ -93,14 +113,8 @@ export class CompanyService {
   async save(id: number, data: CompanyInput): Promise<Company> {
     const company = new Company(data);
     company.id = id;
-    const { industry_trees } = await this.getOneByIdWithIndustryTrees(id);
-    const industry_trees_ids = industry_trees.map(({ id }) => id);
-    let newIndustryTrees = [];
-    if (data.industry_trees) {
-      newIndustryTrees = (await this.industryTreeRepository.findByIds(data.industry_trees))
-        .filter(({ id }) => !industry_trees_ids.includes(id));
-    }
-    company.industry_trees = [...industry_trees, ...newIndustryTrees];
+    company
+  
     await this.companyRepository.save(company);
     return this.getOneByIdWithIndustryTrees(id);
   }
@@ -120,12 +134,6 @@ export class CompanyService {
     await this.capabilityRepository.delete({ company_id: id });
     await this.companyRepository.delete(id);
     return { id };
-  }
-
-  async removeIndustryTree(id: number, industry_tree_id: number) {
-    const company = await this.getOneByIdWithIndustryTrees(id);
-    company.industry_trees = company.industry_trees.filter(item => item.id !== industry_tree_id);
-    return this.companyRepository.save(company);
   }
 
   getFindAllQuery(query: CompaniesArgs): FindManyOptions {

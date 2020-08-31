@@ -14,6 +14,7 @@ import { IndustryTree } from '@modules/caps/entities/industry-tree.entity';
 import { CapabilityTree } from '@modules/caps/entities/capability-tree.entity';
 
 
+
 @ObjectType()
 @Entity('companies')
 export class Company {
@@ -50,15 +51,15 @@ export class Company {
   )
   @JoinColumn({ name: 'user_id' })
   user?: User;
-
+ƒ
   @Field(() => Industry)
   @ManyToOne(
-    type => Industry,
-    industry => industry.companies,
+    type => IndustryTree,
+    industryTree => industryTree.companies,
     { eager: true }
   )
   @JoinColumn({ name: 'industry_id' })
-  industry?: Industry;
+  industry: IndustryTree;
 
   @Field(() => [CapabilityTree], { nullable: true })
   @OneToMany(type => CapabilityTree, capabilityTree => capabilityTree.company)
@@ -98,15 +99,6 @@ export class Company {
     groupfilter => groupfilter.company
   )
   groupfilters?: GroupFilter[];
-
-  @ManyToMany(type => IndustryTree, industryTree => industryTree.companies)
-  @JoinTable({
-    name: 'company2industry',
-    joinColumn: { name: 'company_id' },
-    inverseJoinColumn: { name: 'industry_tree_id' }
-  })
-  industry_trees: IndustryTree[];
-
   constructor(partial: Partial<Company>) {
     Object.assign(this, partial);
   }

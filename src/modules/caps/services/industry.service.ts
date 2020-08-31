@@ -23,15 +23,16 @@ export class IndustryService {
 
   async findAll(args: IndustriesArgs): Promise<Industry[]> {
     let industries = [];
+    console.log(args)
     let result = await this.industryRepository.find({ ...args, order: { name: 'ASC' } });
     for (let industry of result) {
-      const countProcesses = await this.processService.countDocuments({ industry_id: industry.id });
-      const countCapabilities = await this.capabilityService.countDocuments({
-        industry_id: industry.id,
-      });
-      const countCompanies = await this.companyService.countDocuments({
-        industry_id: industry.id,
-      });
+      // const countProcesses = await this.processService.countDocuments({ industry_id: industry.id });
+      // const countCapabilities = await this.capabilityService.countDocuments({
+      //   industry_id: industry.id,
+      // });
+      // const countCompanies = await this.companyService.countDocuments({
+      //   industry_id: industry.id,
+      // });
       /*
       const { data } = await this.httpService
         .get(
@@ -48,9 +49,9 @@ export class IndustryService {
       const countStartups = 1; //data.total;
       industries.push({
         ...industry,
-        countProcesses,
-        countCapabilities,
-        countCompanies,
+        // countProcesses,
+        // countCapabilities,
+        // countCompanies,
         countStartups,
       });
     }

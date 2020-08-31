@@ -41,6 +41,7 @@ export class CapabilityTreeController {
   // Industry
   @Get('industry')
   async getIndustryTree(@Query() query: CapabilityTreeArgs) {
+    console.log(query)
     return this.capabilityTreeService.treeByIndustryTree(query.industryId);
   }
   @Post('industry')

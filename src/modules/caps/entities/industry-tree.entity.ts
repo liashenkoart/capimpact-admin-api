@@ -37,6 +37,13 @@ export class IndustryTree {
   )
   capability_trees?: CapabilityTree[];
 
+  @Field(() => [Company], { nullable: true })
+  @OneToMany(
+    type => Company,
+    company => company.industry
+  )
+  companies?: Company[];
+
   @Field(() => [IndustryTree], { nullable: true })
   @TreeChildren({ cascade: true })
   children?: IndustryTree[];
@@ -44,9 +51,6 @@ export class IndustryTree {
   @Field(() => IndustryTree, { nullable: true })
   @TreeParent()
   parent?: IndustryTree;
-
-  @ManyToMany(type => Company, company => company.industry_trees)
-  companies: Company[];
 
   @ManyToMany(type => Sic, sic => sic.industry_trees)
   sics: Sic[];

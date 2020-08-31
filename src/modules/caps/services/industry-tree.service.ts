@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository } from 'typeorm';
+import { Repository, TreeRepository, Raw } from 'typeorm';
 
 import { BaseService } from '@modules/common/services';
 import { IndustryTree, Company } from '../entities';
@@ -21,6 +21,13 @@ export class IndustryTreeService extends BaseService {
     const options = this.getFindAllQuery(query);
     options.relations = ['companies'];
     return this.industryTreeRepository.find(options);
+  }
+
+  async findSixDigitsCodeIndustries(){
+    return this.industryTreeRepository.find(
+      { select:['id','code','name'], 
+        where: { code: Raw(alias => `CHAR_LENGTH(${alias}) = 6`) },
+        order: { code : `ASC`}})
   }
 
   findOneById(id: number): Promise<IndustryTree> {

@@ -90,14 +90,6 @@ export class CompanyController {
     return this.companyService.clone(id, data, { user: req.user });
   }
 
-  @Delete('/:id/industry-tree/:industry_tree_id')
-  async removeKpiLibs(
-    @Param('id', new ParseIntPipe()) id: number,
-    @Param('industry_tree_id', new ParseIntPipe()) industry_tree_id: number
-  ) {
-    return this.companyService.removeIndustryTree(id, industry_tree_id);
-  }
-
   @Delete('/:id')
   async remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.companyService.remove(+id);
