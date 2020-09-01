@@ -11,7 +11,6 @@ import {
   ManyToMany,
   OneToOne,
   JoinTable,
-  OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, Float, ID } from 'type-graphql';
 import { User } from '@modules/users/user.entity';

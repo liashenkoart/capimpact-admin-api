@@ -11,6 +11,7 @@ import {CapabilityGraphService} from '@modules/caps/services/capability.graph.se
 import { Industry, Capability, CapabilityTree } from '../entities';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
+
 @Injectable()
 export class CapabilityService {
   constructor(
@@ -22,19 +23,57 @@ export class CapabilityService {
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
   ) {}
 
-  async tree(query: CapabilitiesArgs): Promise<Capability> {
+  private listToTree(data, options?) {
+    options = options || {};
+    var ID_KEY = options.idKey || 'id';
+    var PARENT_KEY = options.parentKey || 'parentId';
+    var CHILDREN_KEY = options.childrenKey || 'children';
+  
+    var tree = [],
+      childrenOf = {};
+    var item, id, parentId;
+  
+    for (var i = 0, length = data.length; i < length; i++) {
+      item = data[i];
+      id = item[ID_KEY];
+      parentId = item[PARENT_KEY] || 0;
+      // every item may have children
+      childrenOf[id] = childrenOf[id] || [];
+      // init its children
+      item[CHILDREN_KEY] = childrenOf[id];
+      if (parentId != 0) {
+        // init its parent's children object
+        childrenOf[parentId] = childrenOf[parentId] || [];
+
+        const { capability, ...rest} = item;
+        // push it into its parent's children object
+        childrenOf[parentId].push({ ...rest, ...capability  });
+      } else {
+        tree.push(item);
+      }
+    };
+  
+    return tree;
+  }
+
+  async tree(query: CapabilitiesArgs):Promise<any> {
+
     const { industry_id, company_id } = query;
     let root = null;
     if (industry_id) {
-      root = await this.capabilityRepository.findOne({ industry_id, parentId: null });
+      root = await this.capTreeRepository.find({ where: {       industry_tree_id:industry_id }, 
+      relations:["capability"] });
     } else if (company_id) {
-      root = await this.capabilityRepository.findOne({ company_id, parentId: null });
+      root = await this.capTreeRepository.find({ where: { company_id }, relations:["capability"] });
     }
+
     if (!root) {
       throw new NotFoundException();
     }
-    const tree = await this.treeRepository.findDescendantsTree(root);
-    return sortTreeByField('name', tree);
+
+    const test = this.listToTree(root);
+
+    return test[0];
   }
 
   async treeByIndustryTree(query: CapabilitiesArgs): Promise<Capability> {
