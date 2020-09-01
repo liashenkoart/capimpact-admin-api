@@ -51,7 +51,7 @@ export class Company {
   )
   @JoinColumn({ name: 'user_id' })
   user?: User;
-ƒ
+
   @Field(() => Industry)
   @ManyToOne(
     type => IndustryTree,
