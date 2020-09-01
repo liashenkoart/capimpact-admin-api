@@ -134,7 +134,7 @@ export class CompanyService {
     const company = await this.companyRepository
       .createQueryBuilder('company')
       .where('company.id = :id', { id })
-      .leftJoinAndSelect('company.industry_trees', 'industry_trees')
+      .leftJoinAndSelect('company.industry', 'industry')
       .getOne();
     if (!company) {
       throw new NotFoundException();
