@@ -49,40 +49,37 @@ export class CompanyService {
     const { user } = context;
     const { industry_id } = data;
     const industry = await this.industryTreeRepository.findOne(industry_id)
-
-    if(!industry.capability_trees) {
-
-    }
-
     let company = new Company(data);
     company.user = user;
     company.industry = industry;
     company = await this.companyRepository.save(company);
-
     const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name: data.name, type: "company",company_id: company.id, parentId: null })
 
-    const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
-    const rootindustryid = rootChildren[0].id
-    rootChildren.shift()
-    console.log (rootChildren)
-    const oldCapToNewCapIDs = {};
-    await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id, type ,parentId, capability }) => {
-      const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id})
-      if(parentId === rootindustryid) {
-        newCap.parentId = rootcompany.id
-      } else {
-        newCap.parentId = oldCapToNewCapIDs[parentId]
-      }
-      const cap = await this.capabilitiesTreeSrv.collectEntityFields(newCap)
-      if(capability){
-        cap.capability =  await this.capabilityRepository.save(new Capability({
-          name: cap.cap_name,
-          kpis: capability.kpis
-        }))
-      }
-      const createdCapability = await this.capabilitiesTreeSrv.capabilityTreeRepository.save(cap) 
-      oldCapToNewCapIDs[id] = createdCapability.id
-    });
+    // if(industry.capability_trees) {
+      const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
+      const rootindustryid = rootChildren[0].id
+      rootChildren.shift()
+      const oldCapToNewCapIDs = {};
+
+      await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id, type ,parentId, capability }) => {
+        const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id})
+        if(parentId === rootindustryid) {
+          newCap.parentId = rootcompany.id
+        } else {
+          newCap.parentId = oldCapToNewCapIDs[parentId]
+        }
+        const cap = await this.capabilitiesTreeSrv.collectEntityFields(newCap)
+        if(capability){
+          cap.capability =  await this.capabilityRepository.save(new Capability({
+            name: cap.cap_name,
+            kpis: capability.kpis
+          }))
+        }
+        const createdCapability = await this.capabilitiesTreeSrv.capabilityTreeRepository.save(cap) 
+        oldCapToNewCapIDs[id] = createdCapability.id
+      });
+    // }
+    
     return this.companyRepository.findOne();
   }
 
