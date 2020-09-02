@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
 import { CapabilityTreeService } from './capability-tree.service';
-import { CapabilityLib, KpiLib, CapabilityTree } from '../entities';
+import { CapabilityLib, KpiLib, CapabilityTree, IndustryTree } from '../entities';
 import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput } from '../dto';
 import { BaseService } from '@modules/common/services';
 
@@ -11,19 +11,20 @@ export class CapabilityLibService {
   constructor(
     private readonly capabilityTreeService: CapabilityTreeService,
     @InjectRepository(KpiLib) private readonly kpiLibRepository: Repository<KpiLib>,
+    @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
-  ) {}
+  ) { }
 
   async findAll(query: CapabilityLibsArgs): Promise<CapabilityLib[] | void> {
-    
+
     // TODO: Change to adapt to every query
     const options: any = this.getFindAllQuery(query);
-    if(options.sort){
-      options.order = {[options.sort[0]]:options.sort[1]}
+    if (options.sort) {
+      options.order = { [options.sort[0]]: options.sort[1] }
     }
-    if(query.status){
-      options.where = {status: query.status}
+    if (query.status) {
+      options.where = { status: query.status }
     }
 
     // FOR CAPABILITY TABLE /capability_libs
@@ -41,6 +42,28 @@ export class CapabilityLibService {
     return this.getOneByIdWithKpiLibs(id);
   }
 
+  async findAssociatedIndustries(id: number): Promise<IndustryTree | Array<any>> {
+    const industry_tree_ids = await this.capabilityTreeRepository.find({
+      select: ["industry_tree_id"],
+      where: {capability_lib_id: id, type: 'industry'}
+    })
+
+    if(industry_tree_ids.length === 0){
+      return []
+
+    }
+    const industry_ids = []
+    industry_tree_ids.forEach(({industry_tree_id: id}) => {
+      !industry_ids.includes(id) && industry_ids.push(id)  
+    })
+
+    const industry_names = await this.industryTreeRepository.find({
+      select: ["name", "code"],
+      where: industry_ids.map(id => {return {id: id}})
+    })
+    
+    return industry_names
+  }
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
     data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
     const cap_lib = await this.capabilityLibRepository.save(new CapabilityLib(data));
@@ -63,7 +86,7 @@ export class CapabilityLibService {
 
   async remove(id: number) {
     const options = { where: { id }, relations: ['capability_trees'] };
-    
+
     const capabilityLib = await this.capabilityLibRepository.findOne(options);
     if (!capabilityLib) {
       throw new NotFoundException();
