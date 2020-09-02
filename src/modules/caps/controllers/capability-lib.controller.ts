@@ -40,6 +40,11 @@ export class CapabilityLibController {
     return this.capabilityLibService.findOneById(id);
   }
 
+  @Get('industry/:id')
+  async findAssociatedIndustries(@Param('id', new ParseIntPipe()) id: number) {
+    return this.capabilityLibService.findAssociatedIndustries(id);
+  }
+
   @Post('')
   async create(@Body() data: CapabilityLibCreationInput, @Req() req: any) {
     return this.capabilityLibService.create(data);
