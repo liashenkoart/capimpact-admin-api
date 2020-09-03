@@ -84,6 +84,7 @@ export class CapabilityLibService {
     return industry_names
   }
 
+  //if new tag is added it is saved in database and then its ID is added to array capability tags
   async  addNewTagIfNew(tagsList:any[]):Promise<number[]> {
     let tags = tagsList;
     await asyncForEach(tags, async ({ id,  __isNew__, value },i) => {
@@ -98,7 +99,11 @@ export class CapabilityLibService {
     return tags;
   }
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
-    data.tags = await this.addNewTagIfNew(data.tags);
+
+    if(data.tags){
+       data.tags = await this.addNewTagIfNew(data.tags);
+    }
+
     data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
     const cap_lib = await this.capabilityLibRepository.save(new CapabilityLib(data));
     return cap_lib
