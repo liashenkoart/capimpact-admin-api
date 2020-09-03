@@ -2,21 +2,23 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
 import { CapabilityTreeService } from './capability-tree.service';
-import { CapabilityLib, KpiLib, CapabilityTree, IndustryTree } from '../entities';
-import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput } from '../dto';
+import { CapabilityLib, KpiLib, CapabilityTree, IndustryTree, Tag } from '../entities';
+import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput, CapabilityLibItemResponse } from '../dto';
 import { BaseService } from '@modules/common/services';
+import { asyncForEach } from '@lib/sorting';
 
 @Injectable()
 export class CapabilityLibService {
   constructor(
     private readonly capabilityTreeService: CapabilityTreeService,
+    @InjectRepository(Tag) private readonly tagsRepository: Repository<Tag>,
     @InjectRepository(KpiLib) private readonly kpiLibRepository: Repository<KpiLib>,
     @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
   ) { }
 
-  async findAll(query: CapabilityLibsArgs): Promise<CapabilityLib[] | void> {
+  async findAll(query: CapabilityLibsArgs): Promise<CapabilityLibItemResponse[]> {
 
     // TODO: Change to adapt to every query
     const options: any = this.getFindAllQuery(query);
@@ -30,7 +32,18 @@ export class CapabilityLibService {
     // FOR CAPABILITY TABLE /capability_libs
     options.relations = ['kpi_libs'];
     const sortedCaps = await this.capabilityLibRepository.find(options);
-    return sortedCaps
+
+    let caps = [];
+
+    await asyncForEach(sortedCaps, async ({tags},i) => {
+      let tagsEntities = [];
+      if(tags.length > 0) {
+        tagsEntities = await  this.tagsRepository.findByIds(tags);
+      }
+      caps.push({...sortedCaps[i], tags: tagsEntities})   
+    });
+
+    return caps;
   }
 
   async count(query: CapabilityLibsArgs): Promise<Object> {
@@ -38,8 +51,14 @@ export class CapabilityLibService {
     return { total: count };
   }
 
-  async findOneById(id: number): Promise<CapabilityLib> {
-    return this.getOneByIdWithKpiLibs(id);
+  async findOneById(id: number): Promise<CapabilityLibItemResponse>{
+    const capabilityLib = await this.getOneByIdWithKpiLibs(id);
+    let tags = [];
+
+    if(capabilityLib.tags.length > 0) {
+       tags = await  this.tagsRepository.findByIds(capabilityLib.tags)
+    }
+    return {...capabilityLib,tags};
   }
 
   async findAssociatedIndustries(id: number): Promise<IndustryTree | Array<any>> {
@@ -64,10 +83,24 @@ export class CapabilityLibService {
     
     return industry_names
   }
+
+  async  addNewTagIfNew(tagsList:any[]):Promise<number[]> {
+    let tags = tagsList;
+    await asyncForEach(tags, async ({ id,  __isNew__, value },i) => {
+        if(__isNew__) {
+            const tag = new Tag(); 
+            tag.value = value; 
+            const newTag = await this.tagsRepository.save(tag)
+            tags[i] = newTag;
+        }
+    });
+    tags = tags.map((i) => i.id);
+    return tags;
+  }
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
+    data.tags = await this.addNewTagIfNew(data.tags);
     data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
     const cap_lib = await this.capabilityLibRepository.save(new CapabilityLib(data));
-
     return cap_lib
   }
 
@@ -79,6 +112,8 @@ export class CapabilityLibService {
       newKpiLibs = (await this.kpiLibRepository.findByIds(data.kpi_libs))
         .filter(({ id }) => !kpi_lib_ids.includes(id));
     }
+
+    data.tags = await this.addNewTagIfNew(data.tags);
     data.id = id;
     data.kpi_libs = [...kpi_libs, ...newKpiLibs];
     return this.capabilityLibRepository.save(new CapabilityLib(data));
@@ -128,6 +163,7 @@ export class CapabilityLibService {
       .where('capabilityLib.id = :id', { id })
       .leftJoinAndSelect('capabilityLib.kpi_libs', 'kpi_libs')
       .getOne();
+
     if (!capabilityLib) {
       throw new NotFoundException();
     }

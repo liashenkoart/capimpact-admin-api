@@ -13,3 +13,4 @@ export { GroupTagController } from './grouptag.controller';
 export { GroupFilterController } from './groupfilter.controller';
 export { ValueDriverController } from './value-driver.controller';
 export { KpiBenchmarkController } from './kpi-benchmark.controller';
+export { TagsController } from './tag.controller';

@@ -30,6 +30,10 @@ export class CapabilityLib {
   @ManyToMany(type => KpiLib, kpiLib => kpiLib.capability_libs)
   kpi_libs: KpiLib[];
 
+  @Field(() => String, { nullable: true })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
+  tags: string[];
+
   constructor(partial: Partial<CapabilityLib>) {
     Object.assign(this, partial);
   }
