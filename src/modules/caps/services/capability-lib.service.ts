@@ -47,7 +47,13 @@ export class CapabilityLibService {
   }
 
   async count(query: CapabilityLibsArgs): Promise<Object> {
-    const count = await this.capabilityLibRepository.count({ where: query });
+    const { skip, limit, ...where } = query;
+
+    const count = await this.capabilityLibRepository.count({
+      skip,
+      take: limit,
+      ...where
+    });
     return { total: count };
   }
 
@@ -147,9 +153,10 @@ export class CapabilityLibService {
   }
 
   getFindAllQuery(query: CapabilityLibsArgs): FindManyOptions {
-    const { page, skip, limit, ...where } = query;
+    const { skip, limit, ...where } = query;
+
     return {
-      skip: (page - 1) * limit,
+      skip,
       take: limit,
       ...where
     };
