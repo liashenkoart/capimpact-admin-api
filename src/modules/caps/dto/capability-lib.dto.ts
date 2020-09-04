@@ -28,4 +28,9 @@ export class CapabilityLibInput {
   @Field(() => [ID])
   @IsOptional()
   kpi_libs?: any[];
+
+  @ApiProperty()
+  @Field(() => [ID])
+  @IsOptional()
+  tags: any[];
 }

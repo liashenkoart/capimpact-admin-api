@@ -1,9 +1,9 @@
 import {InputType, Field, ID} from 'type-graphql';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-
+import { Tag } from '../entities';
 @InputType()
-export class CapabilityLibCreationInput {
+export class CapabilityLibItemResponse {
   @ApiProperty()
   @Field()
   @IsNotEmpty()
@@ -20,7 +20,5 @@ export class CapabilityLibCreationInput {
   kpi_libs?: any[];
 
   @ApiProperty()
-  @Field(() => [ID])
-  @IsOptional()
-  tags: any[];
+  tags: Tag[];
 }

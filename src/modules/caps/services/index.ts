@@ -17,3 +17,5 @@ export { CapabilityGraphService } from './capability.graph.service';
 export { CompanyGraphService } from './company.graph.service';
 export { IndustryGraphService } from './industry.graph.service';
 export { ProcessGraphService } from './process.graph.service';
+export { TagService } from './tag.service';
+

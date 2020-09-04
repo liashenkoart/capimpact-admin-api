@@ -56,3 +56,5 @@ export { ValueDriversArgs } from './value-drivers.args';
 export { KpiBenchmarkCreationInput } from './kpi-benchmark-creation.dto';
 export { KpiBenchmarkInput } from './kpi-benchmark.dto';
 export { KpiBenchmarksArgs } from './kpi-benchmarks.args';
+
+export { CapabilityLibItemResponse } from "./capability-lib-item-response.dto";
