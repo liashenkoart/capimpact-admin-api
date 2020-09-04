@@ -47,9 +47,9 @@ export class KpiLib {
   @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
   kpi?: string;
 
-  @Field(() => [String], { nullable: true })
-  @Column({ array: true, type: 'varchar', nullable: true })
-  tags?: string[];
+  @Field(() => Number, { nullable: true, defaultValue:[] })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
+  tags: number[];
 
   @Field(() => [String], { nullable: true })
   @Column({ array: true, type: 'varchar', nullable: true })
@@ -102,6 +102,8 @@ export class KpiLib {
   )
   @JoinColumn({ name: 'process_id' })
   process?: Process;
+
+  
 
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);

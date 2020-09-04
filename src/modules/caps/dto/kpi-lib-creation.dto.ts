@@ -32,9 +32,9 @@ export class KpiLibCreationInput {
   readonly kpi?: string;
 
   @ApiProperty()
-  @Field(() => [String], { nullable: true })
+  @Field(() => [Number], { nullable: true })
   @IsOptional()
-  readonly tags?: string[];
+  tags?: number[];
 
   @ApiProperty()
   @Field(() => [String], { nullable: true })

@@ -3,13 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { BaseService } from 'modules/common/services';
-
-import { CapabilityLib, KpiLib } from '../entities';
+import { CapabilityLibService } from "./capability-lib.service"
+import { CapabilityLib, KpiLib, Tag } from '../entities';
 import { KpiLibCreationInput, KpiLibInput, KpiLibsArgs } from '../dto';
+import { asyncForEach } from '@lib/sorting';
 
 @Injectable()
 export class KpiLibService extends BaseService {
   constructor(
+    private capabiliLibSrc: CapabilityLibService,
+    @InjectRepository(Tag) private readonly tagsRepository: Repository<Tag>,
     @InjectRepository(KpiLib) private readonly kpilibRepository: Repository<KpiLib>,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>
   ) {
@@ -19,26 +22,54 @@ export class KpiLibService extends BaseService {
   async findAll(args: KpiLibsArgs): Promise<KpiLib[]> {
     const options = this.getFindAllQuery(args);
     options.relations = ['capability_libs'];
-    return await this.kpilibRepository.find(options);
+    const kpis = await this.kpilibRepository.find(options);
+    let kpiResponse = [];
+
+    await asyncForEach(kpis, async ({tags},i) => {
+      let tagsEntities = [];
+      if(tags.length > 0) {
+        tagsEntities = await  this.tagsRepository.findByIds(tags);
+      }
+      kpiResponse.push({...kpis[i], tags: tagsEntities})   
+    });
+
+    return kpiResponse;
   }
 
   async findAllPagination(args: KpiLibsArgs): Promise<[KpiLib[], number]> {
     return await this.kpilibRepository.findAndCount(this.getFindAllQuery(args));
   }
+  
 
   async findOneById(id: number): Promise<KpiLib> {
-    return this.getOneByIdWithCapabilityLibs(id);
+    const libs = await this.getOneByIdWithCapabilityLibs(id);
+    let tags = [];
+
+    if(libs.tags.length > 0) {
+       tags = await  this.tagsRepository.findByIds(libs.tags)
+    }
+    return {...libs,tags};
   }
 
   async count(args: KpiLibsArgs) {
-    const count = await this.kpilibRepository.count({ where: args });
+    const { skip, limit, ...where } = args;
+    const count = await this.kpilibRepository.count({
+      skip,
+      take: limit,
+      ...where
+    });
     return { total: count };
   }
 
-  async create(data: KpiLibCreationInput): Promise<KpiLib> {
+  async create(data: KpiLibCreationInput): Promise<any> {
     data.capability_libs = data.capability_libs
       ? await this.capabilityLibRepository.findByIds(data.capability_libs) : [];
-    return await this.kpilibRepository.save(this.kpilibRepository.create(data));
+   
+    if(data.tags){
+      data.tags = await this.capabiliLibSrc.addNewTagIfNew(data.tags)
+   }
+   
+      return await this.kpilibRepository.save(data);
   }
 
   async save(id: number, data: KpiLibInput): Promise<KpiLib> {
@@ -49,13 +80,15 @@ export class KpiLibService extends BaseService {
       newCapabilityLibs = (await this.capabilityLibRepository.findByIds(data.capability_libs))
         .filter(({ id }) => !capability_lib_ids.includes(id));
     }
+
+    data.tags = await this.capabiliLibSrc.addNewTagIfNew(data.tags);
     data.id = id;
     data.capability_libs = [...capability_libs, ...newCapabilityLibs];
     return this.kpilibRepository.save(new KpiLib(data));
   }
 
   async saveMany(data: KpiLibInput[]) {
-    await this.kpilibRepository.save(data);
+   // await this.kpilibRepository.save(data);
     return await this.kpilibRepository.findByIds(data.map(kl => kl.id));
   }
 
