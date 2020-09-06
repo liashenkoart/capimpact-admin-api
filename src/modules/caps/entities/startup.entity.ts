@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
-
+import { IndustryTree } from './industry-tree.entity';
 import { Industry } from './industry.entity';
 import { Capability } from './capability.entity';
 
@@ -98,10 +98,10 @@ export class Startup {
 
   @Field(() => ID, { nullable: true })
   @Column({
-    name: 'industry_id',
+    name: 'industry_tree_id',
     nullable: true,
   })
-  industry_id?: number;
+  industry_tree_id?: number;
 
   @Field(() => ID, { nullable: true })
   @Column({
@@ -110,14 +110,14 @@ export class Startup {
   })
   company_id?: number;
 
-  @Field(() => Industry, { nullable: true })
-  @ManyToOne(
-    () => Industry,
-    industry => industry.processes,
-    { cascade: true }
-  )
-  @JoinColumn({ name: 'industry_id' })
-  industry?: Industry;
+  // @Field(() => Industry, { nullable: true })
+  // @ManyToOne(
+  //   () => Industry,
+  //   industry => industry.processes,
+  //   { cascade: true }
+  // )
+  // @JoinColumn({ name: 'industry_tree_id' })
+  // industry?: IndustryTree;
 
   @Field(() => String, { nullable: true })
   @Column({ type: 'text', nullable: true })
@@ -126,6 +126,10 @@ export class Startup {
   @Field(() => String, { nullable: true })
   @Column({ type: 'text', nullable: true })
   website?: string;
+
+  @Field(() => Number, { nullable: true, defaultValue:[] })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
+  tags: number[];
 
   constructor(partial: Partial<Startup>) {
     Object.assign(this, partial);

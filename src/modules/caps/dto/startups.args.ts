@@ -11,5 +11,5 @@ export class StartupsArgs extends BaseArgs {
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @Type(() => Number)
-  industry_id?: number;
+  industry_tree_id?: number;
 }

@@ -42,12 +42,12 @@ export class Industry {
   )
   capabilities?: Capability[];
 
-  @Field(() => [Startup], { nullable: true })
-  @OneToMany(
-    type => Startup,
-    startup => startup.industry
-  )
-  startups?: Startup[];
+  // @Field(() => [Startup], { nullable: true })
+  // @OneToMany(
+  //   type => Startup,
+  //   startup => startup.industry
+  // )
+  // startups?: Startup[];
 
   @Field(() => [Benchmark], { nullable: true })
   @OneToMany(

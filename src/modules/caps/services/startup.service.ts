@@ -6,9 +6,10 @@ import _ from 'lodash';
 import { IndustryGraphService } from '@modules/caps/services/industry.graph.service';
 
 import { BaseService } from '@modules/common/services';
-import { Startup, Capability } from '../entities';
+import { Startup, Capability, Tag } from '../entities';
 import { StartupCreationInput, StartupInput, StartupsArgs } from '../dto';
-
+import { asyncForEach } from '@lib/sorting';
+import { CapabilityLibService } from "./capability-lib.service"
 //import { ProcessService } from './process.service';
 //import { CapabilityService } from './capability.service';
 //import { CompanyService } from './company.service';
@@ -17,23 +18,50 @@ import { StartupCreationInput, StartupInput, StartupsArgs } from '../dto';
 export class StartupService extends BaseService {
   constructor(
     private readonly industryGraphService: IndustryGraphService,
+    private readonly cabLibSrv: CapabilityLibService,
+    @InjectRepository(Tag) private readonly tagsRepository: Repository<Tag>,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Startup) private readonly startupRepository: Repository<Startup>
   ) {
     super();
   }
+  
 
-  async findAll(args: StartupsArgs): Promise<Startup[]> {
+  async findAll(args: StartupsArgs): Promise<any> {
     const options = this.getFindAllQuery(args);
-    return await this.startupRepository.find(options);
+    const startups = await this.startupRepository.find(options);
+
+    let list = [];
+
+   await asyncForEach(startups, async ({tags},i) => {
+     let tagsEntities = [];
+     if(tags.length > 0) {
+       tagsEntities = await  this.tagsRepository.findByIds(tags);
+     }
+     list.push({...startups[i], tags: tagsEntities})   
+   });
+
+     return list;
   }
 
   async findOneById(id: string): Promise<Startup> {
-    return this.startupRepository.findOne(id);
+    const startUp = await this.startupRepository.findOne(id);
+    let tags = [];
+
+    if(startUp.tags.length > 0) {
+       tags = await  this.tagsRepository.findByIds(startUp .tags)
+    }
+
+    return {...startUp,tags};
   }
 
-  async count(args: StartupsArgs) {
-    const count = await this.startupRepository.count({ where: args });
+  async count(query: StartupsArgs) {
+    const { skip, limit, ...where } = query;
+    const count = await this.startupRepository.count({
+      skip,
+      take: limit,
+      ...where
+    });
     return { total: count };
   }
 
@@ -41,11 +69,17 @@ export class StartupService extends BaseService {
     return await this.startupRepository.save(this.startupRepository.create(data));
   }
 
+  async updateTages(id,dto): Promise<Startup> {
+    const startUp = await this.startupRepository.findOne(id);
+    startUp.tags = await this.cabLibSrv.addNewTagIfNew(dto.tags);
+    return  await this.startupRepository.save(new Startup(startUp))
+  }
+
   async save(id: string, data: StartupInput): Promise<Startup> {
     const result = await this.startupRepository.save(data);
     const startup = await this.findOneById(result.cid);
     const startups = await this.startupRepository.find({
-      where: { industry_id: startup.industry_id },
+      where: { industry_tree_id: startup.industry_tree_id },
     });
     const ids = _.uniqBy(_.union(...startups.map(sup => sup.capabilities)), 'id').map(
       ({ id }) => id
@@ -58,10 +92,16 @@ export class StartupService extends BaseService {
         },
       });
     }
-    await this.industryGraphService.saveIndustryCapabilitiesById(startup.industry_id, {
+
+    data.tags = await this.cabLibSrv.addNewTagIfNew(data.tags);
+
+   return  await this.startupRepository.save(new Startup(data))
+    
+    await this.industryGraphService.saveIndustryCapabilitiesById(startup.industry_tree_id, {
       capabilities,
     });
-    return startup;
+    
+   return startup;
   }
 
   async saveMany(data: StartupInput[]) {
