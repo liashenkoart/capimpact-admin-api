@@ -98,7 +98,7 @@ export class Startup {
 
   @Field(() => ID, { nullable: true })
   @Column({
-    name: 'industry_tree_id',
+    name: 'industry_id',
     nullable: true,
   })
   industry_tree_id?: number;
@@ -110,14 +110,14 @@ export class Startup {
   })
   company_id?: number;
 
-  // @Field(() => Industry, { nullable: true })
-  // @ManyToOne(
-  //   () => Industry,
-  //   industry => industry.processes,
-  //   { cascade: true }
-  // )
-  // @JoinColumn({ name: 'industry_tree_id' })
-  // industry?: IndustryTree;
+  @Field(() =>  IndustryTree, { nullable: true })
+  @ManyToOne(
+    () => IndustryTree,
+    industry => industry.startups,
+    { cascade: true }
+  )
+  @JoinColumn({ name: 'industry_id' })
+  industry?: IndustryTree;
 
   @Field(() => String, { nullable: true })
   @Column({ type: 'text', nullable: true })

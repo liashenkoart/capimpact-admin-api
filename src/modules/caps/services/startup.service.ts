@@ -28,6 +28,7 @@ export class StartupService extends BaseService {
   
 
   async findAll(args: StartupsArgs): Promise<any> {
+   
     const options = this.getFindAllQuery(args);
     const startups = await this.startupRepository.find(options);
 
