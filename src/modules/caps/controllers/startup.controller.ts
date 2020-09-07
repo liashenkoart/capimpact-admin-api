@@ -49,6 +49,11 @@ export class StartupController {
     return this.startupService.save(id, data);
   }
 
+  @Post('tags/:id')
+  async saveTags(@Param('id') id: string, @Body() data) {
+    return this.startupService.updateTages(id, data);
+  }
+
   @ApiBody({ type: [StartupInput] })
   @Post('/bulk')
   async saveMany(@Body() data: StartupInput[]) {

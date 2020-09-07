@@ -11,10 +11,20 @@ export class StartupInput {
 
   @ApiProperty()
   @Field()
-  @IsOptional()
-  name?: string;
+  @IsNotEmpty()
+  name: string;
 
   @ApiProperty()
+  @Field({ nullable: true })
   @IsOptional()
-  capabilities?: any;
+  readonly description?: string;
+
+  @ApiProperty()
+  @Field(() => [ID])
+  @IsOptional()
+  tags: any[];
+
+  // @ApiProperty()
+  // @IsOptional()
+  // capabilities?: any;
 }
