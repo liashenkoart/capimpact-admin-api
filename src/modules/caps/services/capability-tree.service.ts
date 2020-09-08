@@ -238,8 +238,8 @@ export class CapabilityTreeService extends BaseService {
     const foundChildren = await this.getAllChildren(data.id)
     const masterTreeIDtoCompanyId = {}
 
-    await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id }) => {
-      const company = new CapabilityTree({ cap_name, type: 'company', capability_lib_id, company_id: data.company_id })
+    await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id, tags }) => {
+      const company = new CapabilityTree({ cap_name, type: 'company', capability_lib_id, company_id: data.company_id, tags})
       // IparentId of company equals parentId of moved node or newly created company
       company.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoCompanyId[parentId], 10)
 
