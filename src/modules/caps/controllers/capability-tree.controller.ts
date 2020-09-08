@@ -41,12 +41,22 @@ export class CapabilityTreeController {
   // Industry
   @Get('industry')
   async getIndustryTree(@Query() query: CapabilityTreeArgs) {
-    console.log(query)
     return this.capabilityTreeService.treeByIndustryTree(query.industryId);
   }
+
   @Post('industry')
   async createIndustry(@Body() data: CapabilityTreeIndustryCreationInput) {
     return this.capabilityTreeService.createIndustry(data);
+  }
+
+  @Post('tags/:id')
+  async saveTags(@Param('id') id: string, @Body() data) {
+    return this.capabilityTreeService.updateTags(id, data);
+  }
+
+  @Get('tags/:id')
+  async tags(@Param('id') id: string) {
+    return this.capabilityTreeService.getTags(id);
   }
 
   @Post('industry/clone')

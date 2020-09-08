@@ -88,6 +88,10 @@ export class CapabilityTree {
   @Column({ nullable: true })
   parentId?: number;
 
+  @Field(() => Number, { nullable: true, defaultValue:[] })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
+  tags: number[];
+
   constructor(partial: Partial<CapabilityTree>) {
     Object.assign(this, partial);
   }

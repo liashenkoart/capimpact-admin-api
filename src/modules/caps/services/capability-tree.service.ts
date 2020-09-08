@@ -7,13 +7,14 @@ import { CapabilityTree, CapabilityLib, IndustryTree, Capability, KpiLib } from 
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilitiesArgs, CapabilityTreeIndustryCloneInput } from '../dto';
 import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 import { CapabilityTreeMasterCreationInput } from '../dto/capability-tree-master-creation.dto';
-
+import { TagService } from "./tag.service";
 // const masterTreeTemplate = { type: 'master'};
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
 @Injectable()
 export class CapabilityTreeService extends BaseService {
   constructor(
+    private tagService: TagService,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
     @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) public readonly capabilityTreeRepository: Repository<CapabilityTree>,
@@ -39,6 +40,18 @@ export class CapabilityTreeService extends BaseService {
     node.capability_lib = await this.capabilityLibRepository.findOne({ id: node.capability_lib_id });
     node.children = await Promise.all(node.children.map(child => this.fillTree(child)));
     return node;
+  }
+
+  async updateTags(id,dto) {
+    const entity = await this.capabilityTreeRepository.findOne(id);
+    entity.tags = await this.tagService.addTagIfNew(dto.tags);
+    return  await this.capabilityTreeRepository.save(new CapabilityTree(entity));
+  }
+
+  async getTags(id) {
+    const entity = await this.capabilityTreeRepository.findOne(id);
+    const tags = await this.tagService.tagRepository.findByIds(entity.tags);
+   return { id: 1, tags}
   }
 
   async createKpi(data): Promise<Object>{
@@ -115,9 +128,9 @@ export class CapabilityTreeService extends BaseService {
     const oldCapToNewCapIDs = {}
 
     const { industry_tree_id } = rootIndustry;
-    await asyncForEach(parentChildren, async ({ id, cap_name, parentId, capability }) => {
+    await asyncForEach(parentChildren, async ({ id, cap_name, parentId, capability, tags }) => {
 
-      const newCap = new CapabilityTree({ cap_name, parentId, type: 'industry', industry_tree_id })
+      const newCap = new CapabilityTree({ cap_name, parentId, type: 'industry', industry_tree_id, tags })
       if (parentId === data.parentId) {
         newCap.parentId = data.id
       } else {
@@ -125,6 +138,7 @@ export class CapabilityTreeService extends BaseService {
       }
         
       const cap = await this.collectEntityFields(newCap)  
+
       if(capability){
         cap.capability =  await this.capabilityRepository.save(new Capability({
           name: cap.cap_name,
@@ -148,8 +162,8 @@ export class CapabilityTreeService extends BaseService {
       const foundChildren = await this.getAllChildren(data.id)
       const masterTreeIDtoIndustryId = {}
 
-      await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id }) => {
-        const industry = new CapabilityTree({ cap_name, type: 'industry', capability_lib_id, industry_tree_id: data.industry_tree_id })
+      await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id, tags }) => {
+        const industry = new CapabilityTree({ cap_name, type: 'industry', capability_lib_id, industry_tree_id: data.industry_tree_id, tags })
         // IparentId of industry equals parentId of moved node or newly created industry
         industry.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoIndustryId[parentId], 10)
 
