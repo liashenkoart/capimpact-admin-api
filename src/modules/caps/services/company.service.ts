@@ -61,8 +61,8 @@ export class CompanyService {
       rootChildren.shift()
       const oldCapToNewCapIDs = {};
 
-      await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id, type ,parentId, capability }) => {
-        const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id})
+      await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id ,parentId, capability, tags }) => {
+        const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id, tags})
         if(parentId === rootindustryid) {
           newCap.parentId = rootcompany.id
         } else {
