@@ -109,6 +109,7 @@ export class CapabilityTreeService extends BaseService {
     }
 
     const tree = await this.treeRepository.findDescendantsTree(rootIndustryCapTree);
+   
     return sortTreeByField('cap_name', tree);
   }
 

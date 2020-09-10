@@ -7,10 +7,12 @@ import { BaseService } from 'modules/common/services';
 
 import { Industry, ValueDriver } from '../entities';
 import { ValueDriverCreationInput, ValueDriverInput, ValueDriversArgs } from '../dto';
+import { TagService } from "./tag.service";
 
 @Injectable()
 export class ValueDriverService extends BaseService {
   constructor(
+    private tagService: TagService,
     @InjectRepository(ValueDriver) private readonly valueDriverRepository: Repository<ValueDriver>,
     @InjectRepository(ValueDriver) private readonly treeRepository: TreeRepository<ValueDriver>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
@@ -40,7 +42,20 @@ export class ValueDriverService extends BaseService {
       throw new NotFoundException();
     }
     const tree = await this.treeRepository.findDescendantsTree(root);
+      
     return sortTreeByField('name', tree);
+  }
+
+  async getTags(id) {
+    const entity = await this.valueDriverRepository.findOne(id);
+    const tags = await this.tagService.tagRepository.findByIds(entity.tags);
+    return { id: 1, tags}
+  }
+
+  async updateTags(id,dto) {
+    const entity = await this.valueDriverRepository.findOne(id);
+    entity.tags = await this.tagService.addTagIfNew(dto.tags);
+    return  await this.valueDriverRepository.save(new ValueDriver(entity));
   }
 
   async findAll(args: ValueDriversArgs): Promise<ValueDriver[]> {
