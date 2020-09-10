@@ -78,7 +78,19 @@ export class ValueDriverService extends BaseService {
   }
 
   async save(id: number, data: ValueDriverInput): Promise<ValueDriver> {
-    return this.valueDriverRepository.save(data);
+    let valueDriver = new ValueDriver({ ...data });
+        valueDriver.id = id;
+
+     if (valueDriver.parentId) {
+       valueDriver.parent = await this.findOneById(valueDriver.parentId);
+     }
+
+     valueDriver = await this.valueDriverRepository.save(valueDriver);
+     valueDriver = await this.valueDriverRepository.findOne({ id: valueDriver.id });
+     if (valueDriver.parentId === null) {
+        await this.industryRepository.save({ id: valueDriver.industryId, name: valueDriver.name });
+     }
+     return await this.findOneById(valueDriver.id);
   }
 
   async saveMany(data: ValueDriverInput[]) {
