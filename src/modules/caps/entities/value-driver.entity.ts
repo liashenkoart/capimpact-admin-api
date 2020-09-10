@@ -27,7 +27,7 @@ export class ValueDriver {
   name: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[]})
   readonly kpis?: string[];
 
   @Field(() => ID, { nullable: true })
@@ -92,6 +92,10 @@ export class ValueDriver {
   @Field(() => ValueDriver, { nullable: true })
   @TreeParent()
   parent?: ValueDriver;
+
+  @Field(() => Number, { nullable: true, defaultValue:[] })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
+  tags: number[];
 
   constructor(partial: Partial<ValueDriver>) {
     Object.assign(this, partial);

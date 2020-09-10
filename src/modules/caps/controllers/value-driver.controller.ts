@@ -24,15 +24,33 @@ import { ValueDriverInput, ValueDriverCreationInput, ValueDriversArgs } from '..
 export class ValueDriverController {
   constructor(private readonly valuedriverService: ValueDriverService) {}
 
+  @Get('tree')
+  async tree(@Query() query: ValueDriversArgs) {
+    console.log(query)
+    return this.valuedriverService.tree(query);
+  }
+
+  @Get('tags/:id')
+  async tags(@Param('id') id: string) {
+    return this.valuedriverService.getTags(id);
+  }
+
+  @Post('tags/:id')
+  async saveTags(@Param('id') id: string, @Body() data) {
+    return this.valuedriverService.updateTags(id, data);
+  }
+
+  @ApiBody({ type: [ValueDriverInput] })
+  @Post('/bulk')
+  async saveMany(@Body() data: ValueDriverInput[]) {
+    return this.valuedriverService.saveMany(data);
+  }
+
   @Get('')
   async findAll(@Query() args: ValueDriversArgs) {
     return this.valuedriverService.findAll(args);
   }
 
-  @Get('tree')
-  async tree(@Query() query: ValueDriversArgs) {
-    return this.valuedriverService.tree(query);
-  }
 
   @Get('/count')
   async count(@Query() args: ValueDriversArgs) {
@@ -52,12 +70,6 @@ export class ValueDriverController {
   @Post('/:id')
   async save(@Param('id', new ParseIntPipe()) id: number, @Body() data: ValueDriverInput) {
     return this.valuedriverService.save(id, data);
-  }
-
-  @ApiBody({ type: [ValueDriverInput] })
-  @Post('/bulk')
-  async saveMany(@Body() data: ValueDriverInput[]) {
-    return this.valuedriverService.saveMany(data);
   }
 
   @Delete('/:id')
