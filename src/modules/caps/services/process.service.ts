@@ -168,7 +168,7 @@ export class ProcessService {
     if (process.parentId === null) {
       await this.industryRepository.save({ id: +process.industry_id, name: process.name });
     }
-    await this.processGraphService.save(process.id, process.name);
+   // await this.processGraphService.save(process.id, process.name);
     return await this.findOneById(process.id);
   }
 
