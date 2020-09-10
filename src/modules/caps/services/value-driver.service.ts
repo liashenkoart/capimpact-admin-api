@@ -22,19 +22,16 @@ export class ValueDriverService extends BaseService {
   }
 
   async tree(query: ValueDriversArgs): Promise<ValueDriver> {
-    const { industryId, companyId } = query;
-    let rootDriverTree = null;
-    if (industryId) {
-      rootDriverTree = await this.valueDriverRepository.findOne({ industryId, parentId: null });
-    } else if (companyId) {
-      rootDriverTree = await this.valueDriverRepository.findOne({ companyId, parentId: null });
-    }
+    const { industryId } = query;
+
+      let rootDriverTree = await this.valueDriverRepository.findOne({ industryId, parentId: null });
+
     if (!rootDriverTree) {
       const industryCap = await this.industryTreeRepository.findOne({ id: industryId }) 
-      rootDriverTree = await this.valueDriverRepository.save({ name: industryCap.name, industry_id: industryCap.id, parentId: null })
+      rootDriverTree = await this.valueDriverRepository.save({ name: industryCap.name, industryId: industryCap.id, parentId: null })
     
       if (!industryCap) {
-        throw new NotFoundException(`process with industry_tree_id: ${industryId} was not found`);
+        throw new NotFoundException(`driver value with industry_tree_id: ${industryId} was not found`);
       }
     }
   
@@ -73,8 +70,11 @@ export class ValueDriverService extends BaseService {
   }
 
   async create(data: ValueDriverCreationInput): Promise<ValueDriver> {
-    data.parent = await this.findOneById(data.parentId);
-    return await this.valueDriverRepository.save(this.valueDriverRepository.create(data));
+    const process = new ValueDriver(data);
+    process.parent = await this.findOneById(data.parentId);
+    await this.valueDriverRepository.save(process);
+
+    return await this.findOneById(process.id);
   }
 
   async save(id: number, data: ValueDriverInput): Promise<ValueDriver> {

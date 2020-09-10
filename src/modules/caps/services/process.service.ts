@@ -31,7 +31,7 @@ export class ProcessService {
       rootProcessTree = await this.processRepository.save({ name: industryCap.name, industry_id: industryCap.id, parentId: null })
     
       if (!industryCap) {
-        throw new NotFoundException(`capability-tree with industry_tree_id: ${industry_id} was not found`);
+        throw new NotFoundException(`process with industry_tree_id: ${industry_id} was not found`);
       }
     }
 
