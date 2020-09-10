@@ -1,20 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
-
+import { sortTreeByField, flattenTree} from '@lib/sorting';
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
-import { flattenTree } from '@lib/sorting';
-
 import { ProcessGraphService } from '@modules/caps/services/process.graph.service';
-
-import { Industry, KpiLib, Process } from '../entities';
+import { Industry, KpiLib, Process, IndustryTree } from '../entities';
 import { ProcessesArgs, ProcessCreationInput, ProcessInput } from '../dto';
+import { TagService } from "./tag.service";
 
 @Injectable()
 export class ProcessService {
   constructor(
+    private readonly tagService: TagService,
     private readonly processGraphService: ProcessGraphService,
+    @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(KpiLib) private readonly kpiLibRepository: Repository<KpiLib>,
     @InjectRepository(Process) private readonly processRepository: Repository<Process>,
     @InjectRepository(Process) private readonly treeRepository: TreeRepository<Process>,
@@ -23,11 +23,21 @@ export class ProcessService {
 
   async tree(query: ProcessesArgs): Promise<Process> {
     const { industry_id } = query;
-    const root = await this.processRepository.findOne({ industry_id, parentId: null });
-    if (!root) {
-      throw new NotFoundException();
+    const processParams =  {  industry_id, parentId: null };
+    let rootProcessTree =  await this.processRepository.findOne({where: processParams});
+
+    if(!rootProcessTree) {
+      const industryCap = await this.industryTreeRepository.findOne({ id: industry_id }) 
+      rootProcessTree = await this.processRepository.save({ name: industryCap.name, industry_id: industryCap.id, parentId: null })
+    
+      if (!industryCap) {
+        throw new NotFoundException(`process with industry_tree_id: ${industry_id} was not found`);
+      }
     }
-    return this.treeRepository.findDescendantsTree(root);
+
+    const tree = await this.treeRepository.findDescendantsTree(rootProcessTree);
+
+    return sortTreeByField('name', tree);
   }
 
   async defaultTree(query: ProcessesArgs): Promise<any> {
@@ -55,6 +65,18 @@ export class ProcessService {
 
   async countDocuments(query: ProcessesArgs): Promise<number> {
     return this.processRepository.count(query);
+  }
+
+  async getTags(id) {
+    const entity = await this.processRepository.findOne(id);
+    const tags = await this.tagService.tagRepository.findByIds(entity.tags);
+    return { id: 1, tags}
+  }
+
+  async updateTags(id,dto) {
+    const entity = await this.processRepository.findOne(id);
+    entity.tags = await this.tagService.addTagIfNew(dto.tags);
+    return  await this.processRepository.save(new Process(entity));
   }
 
   async create(data: ProcessCreationInput, context?: any): Promise<Process> {
@@ -146,21 +168,17 @@ export class ProcessService {
     if (process.parentId === null) {
       await this.industryRepository.save({ id: +process.industry_id, name: process.name });
     }
-    await this.processGraphService.save(process.id, process.name);
+   // await this.processGraphService.save(process.id, process.name);
     return await this.findOneById(process.id);
   }
 
   async saveMany(input: ProcessInput[], context?: any) {
     const { user } = context;
-    const data = input.map(candidate => {
-      let process = new Process({ ...candidate });
-      process.user = user;
-      return process;
-    });
-    const result = await this.processRepository.save(data);
-    for (let node of result) {
-      await this.processGraphService.save(node.id, node.name);
-    }
+    const data = input.map(c => new Process({ ...c, user }));
+    await this.processRepository.save(data);
+    // for (let node of result) {
+    //   await this.processGraphService.save(node.id, node.name);
+    // }
     return await this.processRepository.findByIds(data.map(p => p.id));
   }
 

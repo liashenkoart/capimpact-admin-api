@@ -13,6 +13,7 @@ import { ObjectType, Field, ID } from 'type-graphql';
 import { User } from '@modules/users/user.entity';
 import { Industry } from './industry.entity';
 import { Company } from './company.entity';
+import { IndustryTree } from './industry-tree.entity';
 
 @ObjectType()
 @Entity('value_drivers')
@@ -65,14 +66,14 @@ export class ValueDriver {
   @JoinColumn({ name: 'user_id' })
   user?: User;
 
-  @Field(() => Industry, { nullable: true })
+  @Field(() => IndustryTree, { nullable: true })
   @ManyToOne(
-    type => Industry,
-    industry => industry.capabilities,
+    type => IndustryTree,
+    industry => industry.valueDrivers,
     { cascade: true }
   )
   @JoinColumn({ name: 'industry_id' })
-  industry?: Industry;
+  industry?: IndustryTree;
 
   @Field(() => Company, { nullable: true })
   @ManyToOne(

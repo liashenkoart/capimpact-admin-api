@@ -13,7 +13,7 @@ import {
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { User } from '@modules/users/user.entity';
-import { Industry, Company, KpiLib } from '@modules/caps/entities';
+import { Company, KpiLib, IndustryTree } from '@modules/caps/entities';
 
 @ObjectType()
 @Entity('processes')
@@ -99,14 +99,14 @@ export class Process {
   @JoinColumn({ name: 'user_id' })
   user?: User;
 
-  @Field(() => Industry, { nullable: true })
+  @Field(() => IndustryTree, { nullable: true })
   @ManyToOne(
-    type => Industry,
+    type => IndustryTree,
     industry => industry.processes,
     { cascade: true }
   )
   @JoinColumn({ name: 'industry_id' })
-  industry?: Industry;
+  industry?: IndustryTree;
 
   @Field(() => Company, { nullable: true })
   @ManyToOne(
@@ -133,6 +133,10 @@ export class Process {
     kpiLib => kpiLib.process
   )
   kpi_libs?: KpiLib[];
+
+  @Field(() => Number, { nullable: true, defaultValue:[] })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
+  tags: number[];
 
   @BeforeUpdate()
   updateDates?() {

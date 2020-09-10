@@ -36,6 +36,16 @@ export class ProcessController {
     return this.processService.tree(query);
   }
 
+  @Get('tags/:id')
+  async tags(@Param('id') id: string) {
+    return this.processService.getTags(id);
+  }
+
+  @Post('tags/:id')
+  async saveTags(@Param('id') id: string, @Body() data) {
+    return this.processService.updateTags(id, data);
+  }
+
   @Get('default-tree')
   async defaultTree(@Query() query: ProcessesArgs) {
     return this.processService.defaultTree(query);
