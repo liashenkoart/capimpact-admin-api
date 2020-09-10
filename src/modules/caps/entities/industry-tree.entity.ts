@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, Tree, OneToMany, ManyToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 import { Company } from '@modules/caps/entities/company.entity';
-import { CapabilityTree, Startup } from '@modules/caps/entities';
+import { CapabilityTree, Startup, ValueDriver, Process } from '@modules/caps/entities';
 import { Sic } from '@modules/caps/entities/sic.entity';
 
 @ObjectType()
@@ -50,6 +50,20 @@ export class IndustryTree {
     process => process.industry
   )
   startups?: Startup[];
+
+  @Field(() => ValueDriver, { nullable: true })
+  @OneToMany(
+    type => ValueDriver,
+    process => process.industry
+  )
+  valueDrivers?: ValueDriver[];
+
+  @Field(() => Process, { nullable: true })
+  @OneToMany(
+    type => Process,
+    process => process.industry
+  )
+  processes?: Process[];
 
   @Field(() => [IndustryTree], { nullable: true })
   @TreeChildren({ cascade: true })

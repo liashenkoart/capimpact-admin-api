@@ -5,14 +5,15 @@ import { Repository, TreeRepository } from 'typeorm';
 import { sortTreeByField, flattenTree } from '@lib/sorting';
 import { BaseService } from 'modules/common/services';
 
-import { Industry, ValueDriver } from '../entities';
+import { Industry, ValueDriver, IndustryTree } from '../entities';
 import { ValueDriverCreationInput, ValueDriverInput, ValueDriversArgs } from '../dto';
 import { TagService } from "./tag.service";
 
 @Injectable()
 export class ValueDriverService extends BaseService {
   constructor(
-    private tagService: TagService,
+    private readonly  tagService: TagService,
+    @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(ValueDriver) private readonly valueDriverRepository: Repository<ValueDriver>,
     @InjectRepository(ValueDriver) private readonly treeRepository: TreeRepository<ValueDriver>,
     @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
@@ -22,27 +23,23 @@ export class ValueDriverService extends BaseService {
 
   async tree(query: ValueDriversArgs): Promise<ValueDriver> {
     const { industryId, companyId } = query;
-    let root = null;
+    let rootDriverTree = null;
     if (industryId) {
-      root = await this.valueDriverRepository.findOne({ industryId, parentId: null });
+      rootDriverTree = await this.valueDriverRepository.findOne({ industryId, parentId: null });
     } else if (companyId) {
-      root = await this.valueDriverRepository.findOne({ companyId, parentId: null });
+      rootDriverTree = await this.valueDriverRepository.findOne({ companyId, parentId: null });
     }
-    if (!root) {
-      const industry = await this.industryRepository.findOne(industryId);
-      if (industry) {
-        root = await this.create({
-          name: industry.name,
-          industryId: industry.id,
-          parentId: null,
-        });
+    if (!rootDriverTree) {
+      const industryCap = await this.industryTreeRepository.findOne({ id: industryId }) 
+      rootDriverTree = await this.valueDriverRepository.save({ name: industryCap.name, industry_id: industryCap.id, parentId: null })
+    
+      if (!industryCap) {
+        throw new NotFoundException(`process with industry_tree_id: ${industryId} was not found`);
       }
     }
-    if (!root) {
-      throw new NotFoundException();
-    }
-    const tree = await this.treeRepository.findDescendantsTree(root);
-      
+  
+    const tree = await this.treeRepository.findDescendantsTree(rootDriverTree);
+
     return sortTreeByField('name', tree);
   }
 
