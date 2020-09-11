@@ -71,7 +71,7 @@ export class CapabilityTree {
   company_id?: number;
 
   @Field(() => Company, { nullable: true })
-  @ManyToOne(type => Company, company => company.capability_trees, { cascade: true}
+  @ManyToOne(type => Company, company => company.capability_trees
   )
   @JoinColumn({ name: 'company_id' })
   company?: Company;

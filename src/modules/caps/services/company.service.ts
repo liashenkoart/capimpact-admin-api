@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions, AdvancedConsoleLogger } from 'typeorm';
 
-import { Company, Capability, IndustryTree, CapabilityTree } from '../entities';
+import { Company, Capability, IndustryTree, CapabilityTree, Challenge, GroupTag } from '../entities';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
 import { asyncForEach } from '@lib/sorting';
 import { CapabilityTreeService } from './capability-tree.service';
@@ -13,6 +13,8 @@ import { each } from 'lodash';
 export class CompanyService {
   constructor(
     private capabilitiesTreeSrv:  CapabilityTreeService,
+    @InjectRepository(GroupTag) private readonly groupTagRepository: Repository<GroupTag>,
+    @InjectRepository(Challenge) private readonly challengeRepository: Repository<Challenge>,
     @InjectRepository(Company) private readonly companyRepository: Repository<Company>,
     @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) private readonly capabilityTreeRepositoryTest: Repository<CapabilityTree>,
@@ -49,15 +51,18 @@ export class CompanyService {
     const { user } = context;
     const { industry_id } = data;
     const industry = await this.industryTreeRepository.findOne(industry_id)
+
     let company = new Company(data);
     company.user = user;
     company.industry = industry;
     company = await this.companyRepository.save(company);
+
     const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name: data.name, type: "company",company_id: company.id, parentId: null })
 
     // if(industry.capability_trees) {
       const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
       const rootindustryid = rootChildren[0].id
+
       rootChildren.shift()
       const oldCapToNewCapIDs = {};
 
@@ -83,16 +88,43 @@ export class CompanyService {
     return this.companyRepository.findOne();
   }
 
-  async clone(id: number, data: CompanyInput, context?: any): Promise<Company> {
-    const originalCompany = await this.companyRepository.findOne(id);
-    return await this.create(
-      {
-        name: data.name,
-        // industry_id: originalCompany.industry_id,
-        industry_id: originalCompany.industry.id,
-      },
-      context
-    );
+  async clone(clonedId: number, data: CompanyInput, context?: any): Promise<Company> {
+    const { user } = context;
+    const { name } = data;
+    const originalCompany = await this.companyRepository.findOne(clonedId);
+    const { id, ...rest } = originalCompany;
+    let company = new Company({ ...rest, name, user });
+    company = await this.companyRepository.save(company);
+
+    const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name: name, type: "company",company_id: company.id, parentId: null })
+    const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenbyCompanyId(clonedId);
+    console.log(rootChildren)
+    const rootindustryid = rootChildren[0].id
+          rootChildren.shift();
+
+
+  const oldCapToNewCapIDs = {};
+
+      await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id ,parentId, capability, tags }) => {
+        const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id, tags})
+        if(parentId === rootindustryid) {
+          newCap.parentId = rootcompany.id
+        } else {
+          newCap.parentId = oldCapToNewCapIDs[parentId]
+        }
+        const cap = await this.capabilitiesTreeSrv.collectEntityFields(newCap)
+        if(capability){
+          cap.capability =  await this.capabilityRepository.save(new Capability({
+            name: cap.cap_name,
+            kpis: capability.kpis
+          }))
+        }
+        const createdCapability = await this.capabilitiesTreeSrv.capabilityTreeRepository.save(cap) 
+        oldCapToNewCapIDs[id] = createdCapability.id
+      });
+    // }
+    
+    return this.companyRepository.findOne();
   }
 
   async save(id: number, data: CompanyInput): Promise<Company> {
@@ -115,8 +147,13 @@ export class CompanyService {
     return await this.companyRepository.findByIds(data.map(p => p.id));
   }
 
-  async remove(id: number) {
-    await this.capabilityRepository.delete({ company_id: id });
+  async remove(id: number) {  
+    const caps = await this.capabilityTreeRepositoryTest.find({ company_id: id});
+    const challenges = await this.challengeRepository.find({ companyId: id})
+    const groupTags = await this.groupTagRepository.find({ companyId: id})
+    await this.groupTagRepository.remove(groupTags)
+    await this.challengeRepository.remove(challenges)
+    await this.capabilityTreeRepositoryTest.remove(caps)
     await this.companyRepository.delete(id);
     return { id };
   }
