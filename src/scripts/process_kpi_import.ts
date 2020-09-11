@@ -1,6 +1,6 @@
 import { createConnection, getManager } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
-import { Industry, Process, KpiLib } from '@modules/caps/entities';
+import { Industry, Process, KpiLib, IndustryTree } from '@modules/caps/entities';
 
 let connection = null;
 
@@ -30,10 +30,10 @@ async function main() {
 
   const newProcessIds = [];
   await getManager().transaction(async transactionalEntityManager => {
-    let foundIndustry = await transactionalEntityManager.findOne(Industry, { where: { name: 'BizCase' } });
+    let foundIndustry = await transactionalEntityManager.findOne(IndustryTree, { where: { name: 'BizCase' } });
 
     if (!foundIndustry) {
-      foundIndustry = await transactionalEntityManager.save(Industry, new Industry({ name: 'BizCase' }));
+      foundIndustry = await transactionalEntityManager.save(IndustryTree, new IndustryTree({ name: 'BizCase' }));
     }
 
     let rootProcess = await transactionalEntityManager.findOne(Process, { where: { name: 'BizCase' } });
