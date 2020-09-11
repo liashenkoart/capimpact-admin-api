@@ -7,6 +7,7 @@ import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
 import { asyncForEach } from '@lib/sorting';
 import { CapabilityTreeService } from './capability-tree.service';
 import { each } from 'lodash';
+import { integer } from 'neo4j-driver';
 
 
 @Injectable()
@@ -49,17 +50,22 @@ export class CompanyService {
     const { user } = context;
     const { industry_id } = data;
     const industry = await this.industryTreeRepository.findOne(industry_id)
+
+    console.log(industry,"industry")
     let company = new Company(data);
     company.user = user;
     company.industry = industry;
     company = await this.companyRepository.save(company);
+    console.log(company,"company")
     const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name: data.name, type: "company",company_id: company.id, parentId: null })
 
     // if(industry.capability_trees) {
       const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
+      console.log(rootChildren,"rootChildren")
       const rootindustryid = rootChildren[0].id
       rootChildren.shift()
       const oldCapToNewCapIDs = {};
+
 
       await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id ,parentId, capability, tags }) => {
         const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id, tags})
@@ -115,8 +121,9 @@ export class CompanyService {
     return await this.companyRepository.findByIds(data.map(p => p.id));
   }
 
-  async remove(id: number) {
-    await this.capabilityRepository.delete({ company_id: id });
+  async remove(id: number) {  
+    const caps = await this.capabilityTreeRepositoryTest.find({ company_id: id});
+    await this.capabilityTreeRepositoryTest.remove(caps)
     await this.companyRepository.delete(id);
     return { id };
   }

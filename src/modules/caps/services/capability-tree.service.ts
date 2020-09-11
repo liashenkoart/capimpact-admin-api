@@ -78,8 +78,18 @@ export class CapabilityTreeService extends BaseService {
 
   // Return all children including node itself by industry_id
   async getAllChildrenOfIndustry(id: number) {
-    const node = await this.treeRepository.findOne({where:{ industry_tree_id:id}})
+    console.log(id,"id")
+    let node = await this.treeRepository.findOne({where:{ industry_tree_id:id}})
+    console.log(node,"node")
+    if(!node) {
+      const industryCap = await this.industryTreeRepository.findOne({ id }) 
+      node = await this.treeRepository.save({ cap_name: industryCap.name, industry_id: industryCap.id, parentId: null })
+      if (!industryCap) {
+        throw new NotFoundException(`s with industry_tree_id: ${id} was not found`);
+      }
+    }
     const descendantsTree = await this.treeRepository.findDescendantsTree(node);
+    console.log(descendantsTree,"descendantsTree")
     const allRelatedIds = (descendantsTree ? flattenTree(descendantsTree, 'children') : []).map(({ id }) => id);
     const foundChildren = await Promise.all(allRelatedIds.map(id => this.findOneById(id)))
     return foundChildren

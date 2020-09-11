@@ -26,6 +26,7 @@ export class Company {
   @Column()
   name: string;
 
+
   @Field({ nullable: true })
   @Column({ nullable: true })
   cid?: string;
@@ -56,13 +57,13 @@ export class Company {
   @ManyToOne(
     type => IndustryTree,
     industryTree => industryTree.companies,
-    { eager: true }
+    { eager: true, cascade: true },
   )
   @JoinColumn({ name: 'industry_id' })
   industry: IndustryTree;
 
   @Field(() => [CapabilityTree], { nullable: true })
-  @OneToMany(type => CapabilityTree, capabilityTree => capabilityTree.company)
+  @OneToMany(type => CapabilityTree, capabilityTree => capabilityTree.company, { cascade: true})
   capability_trees?: CapabilityTree[];
 
   @Field(() => [Capability], { nullable: true })
