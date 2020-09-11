@@ -78,9 +78,7 @@ export class CapabilityTreeService extends BaseService {
 
   // Return all children including node itself by industry_id
   async getAllChildrenOfIndustry(id: number) {
-    console.log(id,"id")
     let node = await this.treeRepository.findOne({where:{ industry_tree_id:id}})
-    console.log(node,"node")
     if(!node) {
       const industryCap = await this.industryTreeRepository.findOne({ id }) 
       node = await this.treeRepository.save({ cap_name: industryCap.name, industry_id: industryCap.id, parentId: null })
@@ -89,7 +87,7 @@ export class CapabilityTreeService extends BaseService {
       }
     }
     const descendantsTree = await this.treeRepository.findDescendantsTree(node);
-    console.log(descendantsTree,"descendantsTree")
+
     const allRelatedIds = (descendantsTree ? flattenTree(descendantsTree, 'children') : []).map(({ id }) => id);
     const foundChildren = await Promise.all(allRelatedIds.map(id => this.findOneById(id)))
     return foundChildren
@@ -98,6 +96,14 @@ export class CapabilityTreeService extends BaseService {
   // Return all children including node itself (foundChildren is sorted array [parent, child, granchild, ....])
   async getAllChildren(id: number) {
     const node = await this.capabilityTreeRepository.findOne(id)
+    const descendantsTree = await this.treeRepository.findDescendantsTree(node)
+    const allRelatedIds = (descendantsTree ? flattenTree(descendantsTree, 'children') : []).map(({ id }) => id);
+    const foundChildren = await Promise.all(allRelatedIds.map(id => this.findOneById(id)))
+    return foundChildren
+  }
+
+  async getAllChildrenbyCompanyId(id: number) {
+    const node = await this.capabilityTreeRepository.findOne({company_id:id})
     const descendantsTree = await this.treeRepository.findDescendantsTree(node)
     const allRelatedIds = (descendantsTree ? flattenTree(descendantsTree, 'children') : []).map(({ id }) => id);
     const foundChildren = await Promise.all(allRelatedIds.map(id => this.findOneById(id)))
