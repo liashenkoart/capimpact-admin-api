@@ -220,6 +220,7 @@ export class CapabilityTreeService extends BaseService {
   // COMPANY
   async treeByCompanyTree(company_id: number): Promise<CapabilityTree> {
     const companyParams = { company_id, parentId: null, }
+
     let rootCompanyTree = await this.capabilityTreeRepository.findOne(companyParams);
 
     if (!rootCompanyTree) {
@@ -243,7 +244,8 @@ export class CapabilityTreeService extends BaseService {
         if(type === 'industry') {
           params['industry_tree_id'] = data.industry_tree_id;
         } else if (type === 'company') { 
-          params['company'] = data.company_id;
+          params['company_id'] = data.company_id;
+          
         }
         const industry = new CapabilityTree(params)
         // IparentId of industry equals parentId of moved node or newly created industry
