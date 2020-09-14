@@ -220,7 +220,6 @@ export class CapabilityTreeService extends BaseService {
   // COMPANY
   async treeByCompanyTree(company_id: number): Promise<CapabilityTree> {
     const companyParams = { company_id, parentId: null, }
-
     let rootCompanyTree = await this.capabilityTreeRepository.findOne(companyParams);
 
     if (!rootCompanyTree) {
@@ -455,47 +454,12 @@ export class CapabilityTreeService extends BaseService {
   }
 
   // This assigns 
-  async removeOneCapTree(capToRemoveID: number): Promise<CapabilityTree> {
-    const capToRemove = await this.capabilityTreeRepository.findOne(capToRemoveID);
-
+  async removeOneCapTree(capToRemoveID: number): Promise<any> {
     const children = await this.getAllChildrenById(capToRemoveID)
-    const oldCapToNewCapIDs = {}
-
-    await asyncForEach(children, async ({ id, cap_name, type, parentId, industry_tree_id, capability_lib_id }) => {
-      const capability = new CapabilityTree({ cap_name, type, industry_tree_id, capability_lib_id })
-      if (id !== capToRemoveID) {
-        if(parentId === capToRemoveID){
-          capability.parentId = capToRemove.parentId
-        } else {
-          capability.parentId = parseInt(oldCapToNewCapIDs[parentId], 10)
-        }
-
-        const capabilityEntities = await this.collectEntityFields(capability)
-        const createdCapability = await this.capabilityTreeRepository.save(capabilityEntities)
-        oldCapToNewCapIDs[id] = createdCapability.id
-      }
-    });
-
-    // Removing old captrees starting from children 
-    // This is neccesary beacuse if we start removing parent we will get foreign key error 
-    // because child has parentId and Parent so typeorm won't let us delete it 
     await asyncForEach(children.reverse(), async ({ id }) => {
       await this.capabilityTreeRepository.delete(id)
     });
-
-    const rootNodeOptions: { parentId: number, industry_tree_id?: number, capability_lib_id?: number} = {
-      parentId: null,
-    }
-
-    if(capToRemove.type === 'industry'){
-      rootNodeOptions.industry_tree_id = capToRemove.industry_tree_id
-      
-    } else if(capToRemove.type === 'master'){
-      rootNodeOptions.capability_lib_id = capToRemove.capability_lib_id
-    }
-
-    const rootNode = await this.capabilityTreeRepository.findOne(rootNodeOptions)
-    return this.treeRepository.findDescendantsTree(rootNode)
+    return []
   }
 
   async switch(id: any, newCapLib: any): Promise<CapabilityTree> {
