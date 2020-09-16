@@ -17,3 +17,6 @@ export { ValueDriver } from './value-driver.entity';
 export { KpiBenchmark } from './kpi-benchmark.entity';
 export { Sic } from './sic.entity';
 export { Tag } from './tags.entity';
+export { Technology } from './technology.entity';
+
+

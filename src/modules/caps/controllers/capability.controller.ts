@@ -32,6 +32,11 @@ export class CapabilityController {
     return this.capabilityService.findAll(this.parseArgs(query));
   }
 
+  @Get('list')
+  async list() {
+    return this.capabilityService.list();
+  }
+  
   @Get('tree')
   async tree(@Query() query: CapabilitiesArgs) {
     return this.capabilityService.tree(query);
@@ -46,6 +51,8 @@ export class CapabilityController {
   async findOne(@Param('id', new ParseIntPipe()) id: number) {
     return this.capabilityService.findOneById(id);
   }
+
+ 
 
   @Post('')
   async create(@Body() data: CapabilityCreationInput, @Req() req: any) {

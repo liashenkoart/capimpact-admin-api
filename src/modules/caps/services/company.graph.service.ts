@@ -60,7 +60,7 @@ export class CompanyGraphService {
         new QuerySpecification<void>('match (n:Company {cid: $cid}) set n.capabilities = $capabilities;')
           .bind({
             cid,
-            capabilities: _.uniqBy(capabilities, 'id').map(({ id, name }) => `${id}:${name}`),
+            capabilities: _.uniqBy(capabilities, 'id').map(({ id, name }) => `${name}`),
           })
       );
   }

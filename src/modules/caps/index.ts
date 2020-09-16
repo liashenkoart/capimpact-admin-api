@@ -21,7 +21,8 @@ import {
   Benchmark,
   ValueDriver,
   KpiBenchmark,
-  Tag
+  Tag,
+  Technology
 } from '@modules/caps/entities';
 
 // Services
@@ -91,7 +92,8 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
       Benchmark,
       ValueDriver,
       KpiBenchmark,
-      Tag
+      Tag,
+      Technology 
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     HttpModule,

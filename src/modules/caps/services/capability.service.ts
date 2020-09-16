@@ -56,8 +56,12 @@ export class CapabilityService {
     return tree;
   }
 
-  async tree(query: CapabilitiesArgs):Promise<any> {
 
+  async list() {
+    return this.capabilityRepository.find();
+  }
+
+  async tree(query: CapabilitiesArgs):Promise<any> {
     const { industry_id, company_id } = query;
     let root = null;
     if (industry_id) {
@@ -72,7 +76,7 @@ export class CapabilityService {
     }
 
     const test = this.listToTree(root);
-
+    return test.length > 0 ? test[0] : [];
     return test[0];
   }
 
