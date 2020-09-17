@@ -5,7 +5,7 @@ import { Repository, TreeRepository, Not, getManager, IsNull, EntityManager, Raw
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree, Capability, KpiLib } from '../entities';
-import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilitiesArgs, CapabilityTreeIndustryCloneInput } from '../dto';
+import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilitiesArgs, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto } from '../dto';
 import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 import { CapabilityTreeMasterCreationInput } from '../dto/capability-tree-master-creation.dto';
 import { TagService } from "./tag.service";
@@ -215,6 +215,25 @@ export class CapabilityTreeService extends BaseService {
     const rootNodeOfMovedCap = await this.findOneById(oldCapToNewCapIDs[selectedNodeId])
     // Returning tree so frontend can update it with new Ids and keys
     return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
+  }
+
+  async getLocation(id: string): Promise<CapabilityTreeLocationDto> {
+     const cap = await this.treeRepository.findOne({where: {id} })
+     if(!cap) throw new NotFoundException()
+     return this.toLocationObj(cap)
+  }
+
+  private toLocationObj(entity): CapabilityTreeLocationDto {
+    return { cap_id: entity.id, ...entity.location};
+  }
+
+  async saveLocation(dto:CapabilityTreeLocationDto): Promise<CapabilityTreeLocationDto> {
+    const { cap_id, ...rest } = dto;
+    let cap = await this.treeRepository.findOne(cap_id)
+    if(!cap) throw new NotFoundException()
+    cap.location = rest;
+    cap = await this.treeRepository.save(cap)
+    return this.toLocationObj(cap);
   }
 
   // COMPANY

@@ -16,7 +16,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 import { CapabilityTreeService } from '../services';
-import { CapabilityTreesArgs, CapabilityTreeInput, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput } from '../dto';
+import { CapabilityTreesArgs, CapabilityTreeInput, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput,CapabilityTreeLocationDto } from '../dto';
 import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 import { CapabilityTreeArgs } from '../dto/capability-tree.args';
 
@@ -86,6 +86,17 @@ export class CapabilityTreeController {
   async getCompanyTree(@Query() query: CapabilityTreeArgs) {
     return this.capabilityTreeService.treeByCompanyTree(query.company_id);
   }
+
+  @Get('location/:id')
+  async getLocation(@Param('id') id: string): Promise<CapabilityTreeLocationDto> {
+    return this.capabilityTreeService.getLocation(id);
+  }
+
+  @Post('location')
+  async saveLocation(@Body() data: CapabilityTreeLocationDto) {
+    return this.capabilityTreeService.saveLocation(data)
+  }
+
   @Post('company')
   async createCompany(@Body() data: CapabilityTreeIndustryCreationInput) {
     return this.capabilityTreeService.createCompany(data);
