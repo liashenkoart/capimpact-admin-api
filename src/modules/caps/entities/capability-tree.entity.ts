@@ -14,6 +14,8 @@ import { IndustryTree } from '@modules/caps/entities/industry-tree.entity';
 import { CapabilityLib } from '@modules/caps/entities/capability-lib.entity';
 import { Capability } from '@modules/caps/entities/capability.entity';
 import { Company } from '@modules/caps/entities/company.entity';
+import  Location from "../interfaces/location.interface";
+
 
 @ObjectType()
 @Entity('capability_tree')
@@ -83,14 +85,31 @@ export class CapabilityTree {
   @Field(() => CapabilityTree, { nullable: true })
   @TreeParent()
   parent?: CapabilityTree;
-  
+
   @Field(() => ID, { nullable: true })
   @Column({ nullable: true })
   parentId?: number;
 
-  @Field(() => Number, { nullable: true, defaultValue:[] })
-  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
+  @Field(() => Number, { nullable: true, defaultValue:[1] })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[1] })
   tags: number[];
+
+  @Field(() => Object, {  defaultValue:{ address: "", 
+  city: "",
+  state: "",
+  zipcode: "",
+  country: ""
+ } })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',
+  default: { address: "", 
+    city: "",
+    state: "",
+    zipcode: null,
+    country: ""
+   }})
+  location: Location;
+ 
+
 
   constructor(partial: Partial<CapabilityTree>) {
     Object.assign(this, partial);
