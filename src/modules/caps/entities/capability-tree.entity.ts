@@ -97,16 +97,15 @@ export class CapabilityTree {
   @Field(() => Object, {  defaultValue:{ address: "", 
   city: "",
   state: "",
-  zipcode: "",
+  zipcode: 0,
   country: ""
  } })
-  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',
-  default: { address: "", 
-    city: "",
-    state: "",
-    zipcode: null,
-    country: ""
-   }})
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',default:{ address: "", 
+  city: "",
+  state: "",
+  zipcode: 0,
+  country: ""
+ }})
   location: Location;
  
 
