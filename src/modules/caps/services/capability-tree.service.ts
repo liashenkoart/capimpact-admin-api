@@ -47,16 +47,35 @@ export class CapabilityTreeService extends BaseService {
     return node;
   }
 
+  async update(id,service, list:[]) {
+    const entity = await this.capabilityTreeRepository.findOne(id);
+    entity.tags = await service(list);
+    return  await this.capabilityTreeRepository.save(new CapabilityTree(entity));
+  }
+
+
   async updateTags(id,dto) {
     const entity = await this.capabilityTreeRepository.findOne(id);
-    entity.tags = await this.tagService.addTagIfNew(dto.tags);
+    entity.tags = await this.tagService.addTagIfNew(dto.list);
     return  await this.capabilityTreeRepository.save(new CapabilityTree(entity));
   }
 
   async getTags(id) {
     const entity = await this.capabilityTreeRepository.findOne(id);
-    const tags = await this.tagService.tagRepository.findByIds(entity.tags);
-   return { id: 1, tags}
+    const list = await this.tagService.tagRepository.findByIds(entity.tags);
+   return { id: 1, list}
+  }
+
+  async updateTechs(id,dto) {
+    const entity = await this.capabilityTreeRepository.findOne(id);
+    entity.technologies = await this.technologyService.addTechIfNew(dto.list);
+    return  await this.capabilityTreeRepository.save(new CapabilityTree(entity));
+  }
+
+  async getTechs(id) {
+    const entity = await this.capabilityTreeRepository.findOne(id);
+    const list = await this.technologyService.technologyRepository.findByIds(entity.technologies ? entity.technologies : []);
+   return { id: 1, list}
   }
 
   async createKpi(data): Promise<CapabilityTree | Capability>{
@@ -220,26 +239,6 @@ export class CapabilityTreeService extends BaseService {
     // Returning tree so frontend can update it with new Ids and keys
     return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
   }
-
-  async getTechnologies(id: string): Promise<Technology[]> {
-    const cap = await this.treeRepository.findOne({where: {id} })
-    if(!cap) throw new NotFoundException();
-    if(!cap.technologies) return [];
-    return await this.technologyService.findbyIds(cap.technologies)
- }
-
- async saveTechnologies(id: string, dto: SaveCapTreeTechsDto): Promise<Technology[]>  {
-  const { technologies } = dto;
-  let cap = await this.treeRepository.findOne(id)
-  if(!cap) throw new NotFoundException();
-
-  const techs = await this.technologyService.findbyIds(technologies)
-
-  cap.technologies = techs.map((t) => t.id);
-  cap = await this.treeRepository.save(cap)
-  return await this.technologyService.findbyIds(cap.technologies)
-}
-
 
   async getLocation(id: string): Promise<CapabilityTreeLocationDto> {
      const cap = await this.treeRepository.findOne({where: {id} })

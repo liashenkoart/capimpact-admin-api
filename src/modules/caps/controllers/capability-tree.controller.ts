@@ -60,6 +60,16 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.getTags(id);
   }
 
+  @Get('technologies/:id')
+  async getTechnologies(@Param('id') id: string): Promise<any> {
+    return this.capabilityTreeService.getTechs(id);
+  }
+
+  @Post('technologies/:id')
+  async saveTechnologies(@Param('id') id: string,@Body() data:SaveCapTreeTechsDto) {
+    return this.capabilityTreeService.updateTechs(id,data)
+  }
+
   @Post('industry/clone')
   async cloneIndustry(@Body() data: CapabilityTreeIndustryCloneInput) {
     console.log("CapabilityTreeController -> cloneIndustry -> data", data)
@@ -88,15 +98,6 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.treeByCompanyTree(query.company_id);
   }
 
-  @Get('technologies/:id')
-  async getTechnologies(@Param('id') id: string): Promise<Technology[]> {
-    return this.capabilityTreeService.getTechnologies(id);
-  }
-
-  @Post('technologies/:id')
-  async saveTechnologies(@Param('id') id: string,@Body() data:SaveCapTreeTechsDto) {
-    return this.capabilityTreeService.saveTechnologies(id,data)
-  }
 
   @Get('location/:id')
   async getLocation(@Param('id') id: string): Promise<CapabilityTreeLocationDto> {
