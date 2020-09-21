@@ -14,11 +14,12 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-
+import { Technology } from '../entities';
 import { CapabilityTreeService } from '../services';
 import { CapabilityTreesArgs, CapabilityTreeInput, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput,CapabilityTreeLocationDto } from '../dto';
 import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 import { CapabilityTreeArgs } from '../dto/capability-tree.args';
+import { SaveCapTreeTechsDto } from "../dto/save-cap-tree-techs.dto";
 
 @ApiBearerAuth()
 @ApiTags('capability-trees')
@@ -85,6 +86,16 @@ export class CapabilityTreeController {
   @Get('company')
   async getCompanyTree(@Query() query: CapabilityTreeArgs) {
     return this.capabilityTreeService.treeByCompanyTree(query.company_id);
+  }
+
+  @Get('technologies/:id')
+  async getTechnologies(@Param('id') id: string): Promise<Technology[]> {
+    return this.capabilityTreeService.getTechnologies(id);
+  }
+
+  @Post('technologies/:id')
+  async saveTechnologies(@Param('id') id: string,@Body() data:SaveCapTreeTechsDto) {
+    return this.capabilityTreeService.saveTechnologies(id,data)
   }
 
   @Get('location/:id')

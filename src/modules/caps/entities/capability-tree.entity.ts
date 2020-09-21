@@ -107,8 +107,10 @@ export class CapabilityTree {
   country: ""
  }})
   location: Location;
- 
 
+  @Field(() => Number, { nullable: true, defaultValue:[] })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
+  technologies: number[];
 
   constructor(partial: Partial<CapabilityTree>) {
     Object.assign(this, partial);

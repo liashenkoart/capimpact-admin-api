@@ -4,11 +4,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, Not, getManager, IsNull, EntityManager, Raw } from 'typeorm';
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
-import { CapabilityTree, CapabilityLib, IndustryTree, Capability, KpiLib } from '../entities';
-import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilitiesArgs, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto } from '../dto';
+import { CapabilityTree, CapabilityLib, IndustryTree, Capability, Technology ,KpiLib } from '../entities';
+import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto } from '../dto';
 import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 import { CapabilityTreeMasterCreationInput } from '../dto/capability-tree-master-creation.dto';
 import { TagService } from "./tag.service";
+import { TechnologyService } from "./technology.service";
+import { SaveCapTreeTechsDto } from "../dto/save-cap-tree-techs.dto";
+
 // const masterTreeTemplate = { type: 'master'};
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
@@ -16,6 +19,7 @@ const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentI
 export class CapabilityTreeService extends BaseService {
   constructor(
     private tagService: TagService,
+    private technologyService: TechnologyService,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
     @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) public readonly capabilityTreeRepository: Repository<CapabilityTree>,
@@ -216,6 +220,26 @@ export class CapabilityTreeService extends BaseService {
     // Returning tree so frontend can update it with new Ids and keys
     return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
   }
+
+  async getTechnologies(id: string): Promise<Technology[]> {
+    const cap = await this.treeRepository.findOne({where: {id} })
+    if(!cap) throw new NotFoundException();
+    if(!cap.technologies) return [];
+    return await this.technologyService.findbyIds(cap.technologies)
+ }
+
+ async saveTechnologies(id: string, dto: SaveCapTreeTechsDto): Promise<Technology[]>  {
+  const { technologies } = dto;
+  let cap = await this.treeRepository.findOne(id)
+  if(!cap) throw new NotFoundException();
+
+  const techs = await this.technologyService.findbyIds(technologies)
+
+  cap.technologies = techs.map((t) => t.id);
+  cap = await this.treeRepository.save(cap)
+  return await this.technologyService.findbyIds(cap.technologies)
+}
+
 
   async getLocation(id: string): Promise<CapabilityTreeLocationDto> {
      const cap = await this.treeRepository.findOne({where: {id} })
