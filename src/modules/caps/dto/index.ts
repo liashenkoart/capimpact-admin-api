@@ -59,6 +59,7 @@ export { KpiBenchmarksArgs } from './kpi-benchmarks.args';
 
 export { CapabilityLibItemResponse } from "./capability-lib-item-response.dto";
 export { CapabilityTreeLocationDto } from "./capabilityTreeLocation.dto";
+import { SaveCapTreeTechsDto } from "./save-cap-tree-techs.dto";
 
 
 

@@ -46,7 +46,8 @@ import {
   CompanyGraphService,
   IndustryGraphService,
   ProcessGraphService,
-  TagService
+  TagService,
+  TechnologyService
 } from '@modules/caps/services';
 
 // Controllers
@@ -66,7 +67,8 @@ import {
   GroupFilterController,
   ValueDriverController,
   KpiBenchmarkController,
-  TagsController
+  TagsController,
+  TechnologiesController
 } from '@modules/caps/controllers';
 
 // Resolvers
@@ -114,7 +116,8 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     GroupFilterController,
     ValueDriverController,
     KpiBenchmarkController,
-    TagsController
+    TagsController,
+    TechnologiesController
   ],
   providers: [
     ProcessService,
@@ -139,7 +142,8 @@ import { IndustryResolver, ProcessResolver, CapabilityResolver } from '@modules/
     CompanyGraphService,
     IndustryGraphService,
     ProcessGraphService,
-    TagService
+    TagService,
+    TechnologyService
   ],
   exports: [
     IndustryService,
