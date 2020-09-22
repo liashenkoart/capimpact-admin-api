@@ -10,5 +10,5 @@ export class Technology {
 
   @Field()
   @Column()
-  name: string;
+  value: string;
 }
