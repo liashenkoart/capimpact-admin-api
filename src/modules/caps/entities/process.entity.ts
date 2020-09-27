@@ -96,7 +96,7 @@ export class Process {
     type => User,
     user => user.processes
   )
-  @JoinColumn({ name: 'user_id' })
+  //@JoinColumn({ name: 'user_id' })
   user?: User;
 
   @Field(() => IndustryTree, { nullable: true })
@@ -105,7 +105,7 @@ export class Process {
     industry => industry.processes,
     { cascade: true }
   )
-  @JoinColumn({ name: 'industry_id' })
+ // @JoinColumn({ name: 'industry_id' })
   industry?: IndustryTree;
 
   @Field(() => Company, { nullable: true })
@@ -114,7 +114,7 @@ export class Process {
     company => company.processes,
     { cascade: true }
   )
-  @JoinColumn({ name: 'company_id' })
+  //@JoinColumn({ name: 'company_id' })
   company?: Company;
 
   @Field(() => [Process], { nullable: true })

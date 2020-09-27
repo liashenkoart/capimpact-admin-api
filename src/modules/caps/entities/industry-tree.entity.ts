@@ -40,10 +40,12 @@ export class IndustryTree {
   @Field(() => [Company], { nullable: true })
   @OneToMany(
     type => Company,
-    company => company.industry
+    company => company.industry,
+   {nullable : true} 
   )
   companies?: Company[];
 
+  
   @Field(() => Startup, { nullable: true })
   @OneToMany(
     type => Startup,

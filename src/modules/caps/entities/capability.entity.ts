@@ -39,7 +39,7 @@ export class Capability {
   @OneToOne(type => CapabilityTree, capabilityTree => capabilityTree.capability, 
     { onDelete: 'CASCADE' }
   )
-  @JoinColumn({ name: 'capability_tree'})
+  //@JoinColumn({ name: 'capability_tree'})
   capability_tree?: CapabilityTree;
   
 
@@ -124,7 +124,7 @@ export class Capability {
     type => User,
     user => user.capabilities
   )
-  @JoinColumn({ name: 'user_id' })
+ // @JoinColumn({ name: 'user_id' })
   user?: User;
 
   @Field(() => Industry, { nullable: true })
@@ -133,7 +133,7 @@ export class Capability {
     industry => industry.capabilities,
     { cascade: true }
   )
-  @JoinColumn({ name: 'industry_id' })
+  //@JoinColumn({ name: 'industry_id' })
   industry?: Industry;
 
   @Field(() => Company, { nullable: true })
@@ -142,7 +142,7 @@ export class Capability {
     company => company.capabilities,
     { cascade: true }
   )
-  @JoinColumn({ name: 'company_id' })
+  //@JoinColumn({ name: 'company_id' })
   company?: Company;
 
   @Field(() => [Capability], { nullable: true })
