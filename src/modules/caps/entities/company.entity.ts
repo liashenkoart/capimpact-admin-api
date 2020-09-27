@@ -31,19 +31,19 @@ export class Company {
   @Column({ nullable: true })
   cid?: string;
 
-  // @Field(() => ID, { nullable: true })
-  // @Column({
-  //   name: 'user_id',
-  //   nullable: true,
-  // })
-  // user_id?: number;
+  @Field(() => ID, { nullable: true })
+  @Column({
+    name: 'user_id',
+    nullable: true,
+  })
+  user_id?: number;
 
-  // @Field(() => ID, { nullable: true })
-  // @Column({
-  //   name: 'industry_id',
-  //   nullable: true,
-  // })
-  // industry_id?: number;
+   @Field(() => ID, { nullable: true })
+   @Column({
+     name: 'industry_id',
+     nullable: true,
+})
+   industry_id?: number;
 
   @Field(() => User)
   @ManyToOne(
@@ -52,14 +52,13 @@ export class Company {
   )
   @JoinColumn({ name: 'user_id' })
   user?: User;
-
   @Field(() => Industry)
   @ManyToOne(
     type => IndustryTree,
     industryTree => industryTree.companies,
-    { eager: true, cascade: true },
+    { eager: true, nullable: true, deferrable: "INITIALLY IMMEDIATE"  },
   )
-  @JoinColumn({ name: 'industry_id' })
+  @JoinColumn({ name: 'industry_id'})
   industry: IndustryTree;
 
   @Field(() => [CapabilityTree], { nullable: true })

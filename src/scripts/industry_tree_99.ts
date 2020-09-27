@@ -1,7 +1,7 @@
 import { createConnection, getManager } from 'typeorm';
 import _ from 'lodash';
 import { Industry, IndustryTree, Capability, CapabilityTree, Company } from '@modules/caps/entities';
-
+import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 let connection = null;
 
 async function main() {
@@ -10,6 +10,9 @@ async function main() {
     throw new Error('connection is not established');
   }
   await getManager().transaction(async transactionalEntityManager => {
+    await  transactionalEntityManager.query("ALTER TABLE companies DISABLE TRIGGER ALL;");
+    await transactionalEntityManager.query("SET CONSTRAINTS ALL DEFERRED");
+
     let newCapCount = 0;
     const createCapTreeNode = async (cap, parent, capTreeArray = []) => {
       const type = cap.company_id ? 'company' : 'industry' 
@@ -46,9 +49,9 @@ async function main() {
 
     const allIndustries = await transactionalEntityManager.find(Industry);
     const newIndustryTreeNodes = [];
+    console.log(allIndustries)
     for (const industry of allIndustries) {
-      const node = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name } });
-      const industryTree = new IndustryTree({ id: node?.id, name: industry.name, parent: foundRoot });
+      const industryTree = new IndustryTree({ id: industry.id, name: industry.name, parent: foundRoot });
 
       const rootCap = await transactionalEntityManager.findOne(Capability, {
         where: { industry_id: industry.id, parentId: null },
@@ -59,10 +62,16 @@ async function main() {
         const treeOfCap = await transactionalEntityManager.getTreeRepository(Capability).findDescendantsTree(rootCap);
         await createCapTreeNode(treeOfCap, null, capTreesForIndustryTree);
         industryTree.capability_trees = capTreesForIndustryTree;
-        newIndustryTreeNodes.push(industryTree);
-      }
+       
+      } 
+      newIndustryTreeNodes.push(industryTree);
     }
-    await transactionalEntityManager.save(IndustryTree, newIndustryTreeNodes);
+
+    const result = await transactionalEntityManager.save(IndustryTree, newIndustryTreeNodes);
+
+    // await asyncForEach(result, async ({ id }) => {
+    //   await this.capabilityTreeRepository.delete(id)
+    // });
 
     console.log('finish => cap-trees with industry... total cap-trees were added: ', newCapCount);
     newCapCount = 0;
@@ -89,20 +98,41 @@ async function main() {
         company,
       ];
     }
-    await transactionalEntityManager.save(Company, companiesToUpdate);
-    console.log('finish => cap-trees with company... total cap-trees were added: ', newCapCount);
-    newCapCount = 0;
-    console.log('start => cap-trees without industry & company');
 
-    const rootCapsWithNothing = await transactionalEntityManager.find(Capability, {
-      where: { industry_id: null, company_id: null, parentId: null },
+
+
+    console.log('new script starts',);
+    const companies =  await transactionalEntityManager.find(Company);
+      await asyncForEach(companies, async (comp) => {
+        const industry = await transactionalEntityManager.findOne(Industry, { where: { id: comp.industry_id }});
+        console.log(comp,industry,"---")
+        if(industry) {
+         const industryTree = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name }});
+        comp.industry_id = industryTree.id;
+        await transactionalEntityManager.save(Company, comp);
+        }
+    
+
     });
-    for (const rootCap of rootCapsWithNothing) {
-      const treeOfCap = await transactionalEntityManager.getTreeRepository(Capability).findDescendantsTree(rootCap);
-      await createCapTreeNode(treeOfCap, null);
-    }
-    console.log('finish => cap-trees without industry & company... total cap-trees were added: ', newCapCount);
-  });
+
+
+    console.log('new script finishs ');
+
+  //   console.log(companiesToUpdate)
+  //   await transactionalEntityManager.save(Company, companiesToUpdate);
+  //   console.log('finish => cap-trees with company... total cap-trees were added: ', newCapCount);
+  //   newCapCount = 0;
+  //   console.log('start => cap-trees without industry & company');
+
+  //   const rootCapsWithNothing = await transactionalEntityManager.find(Capability, {
+  //     where: { industry_id: null, company_id: null, parentId: null },
+  //   });
+  //   for (const rootCap of rootCapsWithNothing) {
+  //     const treeOfCap = await transactionalEntityManager.getTreeRepository(Capability).findDescendantsTree(rootCap);
+  //     await createCapTreeNode(treeOfCap, null);
+  //   }
+  //   console.log('finish => cap-trees without industry & company... total cap-trees were added: ', newCapCount);
+   });
 }
 
 main();
