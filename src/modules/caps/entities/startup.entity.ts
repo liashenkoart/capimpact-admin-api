@@ -116,7 +116,7 @@ export class Startup {
     industry => industry.startups,
     { cascade: true }
   )
- // @JoinColumn({ name: 'industry_id' })
+  @JoinColumn({ name: 'industry_id' })
   industry?: IndustryTree;
 
   @Field(() => String, { nullable: true })

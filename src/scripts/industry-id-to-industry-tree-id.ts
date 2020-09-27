@@ -44,42 +44,42 @@ async function main() {
 
   });
 
-//   const drivers = await transactionalEntityManager.query('SELECT * from value_drivers')
+  const drivers = await transactionalEntityManager.query('SELECT * from value_drivers')
 
-//   await asyncForEach(drivers, async (comp) => {
-//     const industry = await transactionalEntityManager.findOne(Industry, { where: { id: comp.industry_id }});
+  await asyncForEach(drivers, async (comp) => {
+    const industry = await transactionalEntityManager.findOne(Industry, { where: { id: comp.industry_id }});
    
-//     if(industry) {
-//      const industryTree = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name }});
-//      comp.industryId = industryTree.id;
-//      await transactionalEntityManager.save(ValueDriver, comp);
-//     }
-// });
+    if(industry) {
+     const industryTree = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name }});
+     comp.industryId = industryTree.id;
+     await transactionalEntityManager.save(ValueDriver, comp);
+    }
+});
 
 
-// const startups = await transactionalEntityManager.query('SELECT * from startup')
+const startups = await transactionalEntityManager.query('SELECT * from startup')
 
-// await asyncForEach(startups, async (comp) => {
-//   const industry = await transactionalEntityManager.findOne(Industry, { where: { id: comp.industry_id }});
+await asyncForEach(startups, async (comp) => {
+  const industry = await transactionalEntityManager.findOne(Industry, { where: { id: comp.industry_id }});
  
-//   if(industry) {
-//    const industryTree = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name }});
-//    comp.industry_tree_id = industryTree.id;
-//    await transactionalEntityManager.save(Startup, comp);
-//   }
-// });
+  if(industry) {
+   const industryTree = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name }});
+   comp.industry_tree_id = industryTree.id;
+   await transactionalEntityManager.save(Startup, comp);
+  }
+});
 
-// const processes = await transactionalEntityManager.query('SELECT * from processes')
+const processes = await transactionalEntityManager.query('SELECT * from processes')
 
-// await asyncForEach(processes, async (comp) => {
-//   const industry = await transactionalEntityManager.findOne(Industry, { where: { id: comp.industry_id }});
+await asyncForEach(processes, async (comp) => {
+  const industry = await transactionalEntityManager.findOne(Industry, { where: { id: comp.industry_id }});
  
-//   if(industry) {
-//    const industryTree = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name }});
-//    comp.industry_id = industryTree.id;
-//    await transactionalEntityManager.save(Process, comp);
-//   }
-// });
+  if(industry) {
+   const industryTree = await transactionalEntityManager.findOne(IndustryTree, { where: { name: industry.name }});
+   comp.industry_id = industryTree.id;
+   await transactionalEntityManager.save(Process, comp);
+  }
+});
 
    })
  

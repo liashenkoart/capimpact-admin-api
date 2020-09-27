@@ -133,7 +133,7 @@ export class Capability {
     industry => industry.capabilities,
     { cascade: true }
   )
-  //@JoinColumn({ name: 'industry_id' })
+  @JoinColumn({ name: 'industry_id' })
   industry?: Industry;
 
   @Field(() => Company, { nullable: true })
@@ -142,7 +142,7 @@ export class Capability {
     company => company.capabilities,
     { cascade: true }
   )
-  //@JoinColumn({ name: 'company_id' })
+  @JoinColumn({ name: 'company_id' })
   company?: Company;
 
   @Field(() => [Capability], { nullable: true })
