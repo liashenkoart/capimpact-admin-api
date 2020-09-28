@@ -56,9 +56,9 @@ export class Company {
   @ManyToOne(
     type => IndustryTree,
     industryTree => industryTree.companies,
-    { eager: true, nullable: true, deferrable: "INITIALLY IMMEDIATE"  },
+    { eager: true, nullable: true },
   )
- // @JoinColumn({ name: 'industry_id'})
+  @JoinColumn({ name: 'industry_id'})
   industry: IndustryTree;
 
   @Field(() => [CapabilityTree], { nullable: true })

@@ -105,7 +105,7 @@ export class Process {
     industry => industry.processes,
     { cascade: true }
   )
- // @JoinColumn({ name: 'industry_id' })
+  @JoinColumn({ name: 'industry_id' })
   industry?: IndustryTree;
 
   @Field(() => Company, { nullable: true })

@@ -124,7 +124,7 @@ export class Capability {
     type => User,
     user => user.capabilities
   )
- // @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'user_id' })
   user?: User;
 
   @Field(() => Industry, { nullable: true })
