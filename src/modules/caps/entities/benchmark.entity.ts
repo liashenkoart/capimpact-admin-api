@@ -51,18 +51,6 @@ export class Benchmark {
   @JoinColumn({ name: 'kpilib_id' })
   kpilib?: KpiLib;
 
-  /*
-  @Field(() => ID, { nullable: true })
-  @Column()
-  lense_id: number;
-
-  @ManyToOne(type => Lense, lense => lense.benchmarks, {
-    eager: true,
-  })
-  @JoinColumn({ name: 'lense_id' })
-  lense: Lense;
-  */
-
   constructor(partial: Partial<Benchmark>) {
     Object.assign(this, partial);
   }
