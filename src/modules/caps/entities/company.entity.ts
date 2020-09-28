@@ -58,7 +58,7 @@ export class Company {
     industryTree => industryTree.companies,
     { eager: true, nullable: true, deferrable: "INITIALLY IMMEDIATE"  },
   )
-  @JoinColumn({ name: 'industry_id'})
+ // @JoinColumn({ name: 'industry_id'})
   industry: IndustryTree;
 
   @Field(() => [CapabilityTree], { nullable: true })
