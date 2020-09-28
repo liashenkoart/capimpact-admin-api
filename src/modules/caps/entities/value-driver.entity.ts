@@ -72,7 +72,7 @@ export class ValueDriver {
     industry => industry.valueDrivers,
     { cascade: true }
   )
-  @JoinColumn({ name: 'industry_id' })
+  //@JoinColumn({ name: 'industry_id' })
   industry?: IndustryTree;
 
   @Field(() => Company, { nullable: true })
