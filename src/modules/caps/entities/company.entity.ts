@@ -13,8 +13,6 @@ import { GroupFilter } from '@modules/caps/entities/group-filters.entity';
 import { IndustryTree } from '@modules/caps/entities/industry-tree.entity';
 import { CapabilityTree } from '@modules/caps/entities/capability-tree.entity';
 
-
-
 @ObjectType()
 @Entity('companies')
 export class Company {
@@ -25,7 +23,6 @@ export class Company {
   @Field()
   @Column()
   name: string;
-
 
   @Field({ nullable: true })
   @Column({ nullable: true })
@@ -38,12 +35,12 @@ export class Company {
   })
   user_id?: number;
 
-   @Field(() => ID, { nullable: true })
-   @Column({
+  @Field(() => ID, { nullable: true })
+  @Column({
      name: 'industry_id',
      nullable: true,
-})
-   industry_id?: number;
+  })
+  industry_id?: number;
 
   @Field(() => User)
   @ManyToOne(
@@ -52,13 +49,14 @@ export class Company {
   )
   @JoinColumn({ name: 'user_id' })
   user?: User;
+
   @Field(() => Industry)
   @ManyToOne(
     type => IndustryTree,
     industryTree => industryTree.companies,
-    { eager: true, nullable: true, deferrable: "INITIALLY IMMEDIATE"  },
+    { eager: true, nullable: true },
   )
- // @JoinColumn({ name: 'industry_id'})
+  @JoinColumn({ name: 'industry_id'})
   industry: IndustryTree;
 
   @Field(() => [CapabilityTree], { nullable: true })
