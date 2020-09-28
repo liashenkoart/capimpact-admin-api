@@ -104,7 +104,6 @@ export class KpiLib {
   process?: Process;
 
   
-
   constructor(partial: Partial<KpiLib>) {
     Object.assign(this, partial);
   }

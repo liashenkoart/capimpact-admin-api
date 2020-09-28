@@ -9,9 +9,7 @@ import {
   TreeParent,
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
-
 import { User } from '@modules/users/user.entity';
-import { Industry } from './industry.entity';
 import { Company } from './company.entity';
 import { IndustryTree } from './industry-tree.entity';
 

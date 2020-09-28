@@ -16,7 +16,6 @@ import { Capability } from '@modules/caps/entities/capability.entity';
 import { Company } from '@modules/caps/entities/company.entity';
 import  Location from "../interfaces/location.interface";
 
-
 @ObjectType()
 @Entity('capability_tree')
 @Tree('materialized-path')
@@ -32,7 +31,6 @@ export class CapabilityTree {
   @Field({ nullable: true })
   @Column({ nullable: true })
   type: string;
-
 
   @Field(() => Capability,  { nullable: true })
   @OneToOne(type => Capability, capability => capability.capability_tree, 
@@ -54,7 +52,6 @@ export class CapabilityTree {
   @JoinColumn({ name: 'capability_lib_id' })
   capability_lib: CapabilityLib;
 
-
   @Field(() => ID, { nullable: true })
   @Column({ name: 'industry_tree_id', nullable: true })
   industry_tree_id?: number;
@@ -73,8 +70,7 @@ export class CapabilityTree {
   company_id?: number;
 
   @Field(() => Company, { nullable: true })
-  @ManyToOne(type => Company, company => company.capability_trees
-  )
+  @ManyToOne(type => Company, company => company.capability_trees)
   @JoinColumn({ name: 'company_id' })
   company?: Company;
 
@@ -94,18 +90,20 @@ export class CapabilityTree {
   @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[1] })
   tags: number[];
 
-  @Field(() => Object, {  defaultValue:{ address: "", 
-  city: "",
-  state: "",
-  zipcode: 0,
-  country: ""
- } })
-  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',default:{ address: "", 
-  city: "",
-  state: "",
-  zipcode: 0,
-  country: ""
- }})
+  @Field(() => Object, {  defaultValue: { 
+    address: "", 
+    city: "",
+    state: "",
+    zipcode: 0,
+    country: ""
+  }})
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',default:{ 
+    address: "", 
+    city: "",
+    state: "",
+    zipcode: 0,
+    country: ""
+  }})
   location: Location;
 
   @Field(() => Number, { nullable: true, defaultValue:[] })

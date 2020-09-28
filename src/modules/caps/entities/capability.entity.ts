@@ -41,7 +41,6 @@ export class Capability {
   )
   @JoinColumn({ name: 'capability_tree'})
   capability_tree?: CapabilityTree;
-  
 
   @Field(() => Float, { nullable: true })
   @Column('decimal', {
