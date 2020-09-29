@@ -336,7 +336,9 @@ export class CapabilityTreeService extends BaseService {
     }
 
     // return await this.fillTree(tree);
-    return await this.treeRepository.findDescendantsTree(root);
+    const tree = await this.treeRepository.findDescendantsTree(root);
+
+    return sortTreeByField('cap_name', tree);
 
   }
 
