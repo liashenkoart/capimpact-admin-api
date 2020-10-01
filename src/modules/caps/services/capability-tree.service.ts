@@ -11,6 +11,7 @@ import { CapabilityTreeMasterCreationInput } from '../dto/capability-tree-master
 import { TagService } from "./tag.service";
 import { TechnologyService } from "./technology.service";
 import { SaveCapTreeTechsDto } from "../dto/save-cap-tree-techs.dto";
+import { each } from 'lodash';
 
 // const masterTreeTemplate = { type: 'master'};
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
@@ -45,6 +46,15 @@ export class CapabilityTreeService extends BaseService {
     node.capability_lib = await this.capabilityLibRepository.findOne({ id: node.capability_lib_id });
     node.children = await Promise.all(node.children.map(child => this.fillTree(child)));
     return node;
+  }
+
+  async updateTreeOrder(orders: { id: number, order: number}[]): Promise<void> {
+    const caps = await this.capabilityTreeRepository.findByIds(orders.map((o) => o.id))
+          await asyncForEach(caps, async (entity) => {
+          const item = orders.find((e) => e.id === entity.id);
+          entity.hierarchy_id = item.order;
+          await this.capabilityTreeRepository.save(entity)
+    });
   }
 
   async update(id,service, list:[]) {
@@ -338,7 +348,7 @@ export class CapabilityTreeService extends BaseService {
     // return await this.fillTree(tree);
     const tree = await this.treeRepository.findDescendantsTree(root);
 
-    return sortTreeByField('cap_name', tree);
+    return sortTreeByField('hierarchy_id', tree);
 
   }
 
@@ -371,46 +381,41 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async updateMaster(selectedNodeId: number, data: CapabilityTreeInput): Promise<CapabilityTree> {
-    // data.prantId = ID of new parrent
-    // ID = ID of moved node
+    const { parentId } = data;
+    const parent = await this.capabilityTreeRepository.findOne(parentId);
+    const entity = await this.capabilityTreeRepository.findOne(selectedNodeId);
+          entity.parent = parent;
+
+    await this.capabilityTreeRepository.findOne(selectedNodeId);
+    const saved = await this.capabilityTreeRepository.save(entity);
+
+    const mpath = await this.getMpath(saved);
+
+    await this.capabilityTreeRepository.query(`UPDATE capability_tree SET mpath = '${mpath}'
+    WHERE id = '${saved.id}';`)
+
+    await this.updateTreeOrder(data.orders)
     
-    const children = await this.getAllChildrenById(selectedNodeId)
-    const oldCapToNewCapIDs = {}
-
-    await asyncForEach(children, async ({ id, cap_name, parentId, capability, capability_lib_id }) => {
-    console.log("capability", capability)
-      const masterCapability = new CapabilityTree({ cap_name, type: 'master', capability_lib_id })
-      if (id === selectedNodeId) {
-        masterCapability.parentId = data.parentId
-      } else {
-        masterCapability.parentId = parseInt(oldCapToNewCapIDs[parentId], 10)
-      }
-        
-      const cap = await this.collectEntityFields(masterCapability)  
-      if(capability){
-        cap.capability =  await this.capabilityRepository.save(new Capability({
-          name: cap.cap_name,
-          kpis: capability.kpis
-        }))
-      }
-      const createdCapability = await this.capabilityTreeRepository.save(cap)
-
-      oldCapToNewCapIDs[id] = createdCapability.id
-    });
-
-    // Removing old captrees starting from children 
-    // This is neccesary beacuse if we start removing parent we will get foreign key error 
-    // because child has parentId and Parent so typeorm won't let us delete it 
-    await asyncForEach(children.reverse(), async ({ id }) => {
-      await this.capabilityTreeRepository.delete(id)
-    });
-    
-    const rootNodeOfMovedCap = await this.findOneById(oldCapToNewCapIDs[selectedNodeId])
+    const rootNodeOfMovedCap = await this.findOneById(selectedNodeId)
+          
     return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
   }
 
+ private async getMpath(entity: CapabilityTree): Promise<number[]> {
+    const ancestors = await this.treeRepository.findAncestorsTree(entity);
+    let mpath = [];
+    const recursive = (model) => { 
+      mpath.push(model.id);
+      if(model.parent){ 
+              recursive(model.parent); 
+      } 
+    };
+    recursive(ancestors);
+    return mpath.reverse();
+  }
+
   // MASTER CAPTREE
-  async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
+   async create(data: CapabilityTreeCreationInput): Promise<CapabilityTree> {
     if (data.type === 'master' && !data.parentId) {
       const MasterCapLib = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
       data.parentId = MasterCapLib.id
