@@ -17,6 +17,10 @@ export class CapabilityTreeInput {
   @Type(() => Number)
   parentId?: number;
 
+
+  orders?: [];
+
+
   @ApiProperty({ type: Number })
   @Field(() => ID)
   @IsOptional()

@@ -1,9 +1,14 @@
 export const compareObjectsByStringFields = (a, b, fieldNames) => {
   for(const name of fieldNames) {
-    const res = (a[name] || '').localeCompare(b[name] || '', 'en', { numeric: true });
-    if (res) {
-      return res;
+    if(isNaN(a[name]) && isNaN(b[name])) {
+      const res = (a[name] || '').localeCompare(b[name] || '', 'en', { numeric: true });
+      if (res) {
+        return res;
+      }
+    } else {
+     return a[name] - b[name];
     }
+  
   }
   return 0;
 };

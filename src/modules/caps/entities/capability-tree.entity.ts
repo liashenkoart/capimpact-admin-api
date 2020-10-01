@@ -65,9 +65,14 @@ export class CapabilityTree {
   @JoinColumn({ name: 'industry_tree_id' })
   industry_tree?: IndustryTree;
 
+
   @Field(() => ID, { nullable: true })
   @Column({ name: 'company_id', nullable: true })
   company_id?: number;
+
+  @Field(() => ID, { defaultValue: 0 })
+  @Column({ name: 'hierarchy_id', default: 0})
+  hierarchy_id?: number;
 
   @Field(() => Company, { nullable: true })
   @ManyToOne(type => Company, company => company.capability_trees)
@@ -105,6 +110,7 @@ export class CapabilityTree {
     country: ""
   }})
   location: Location;
+
 
   @Field(() => Number, { nullable: true, defaultValue:[] })
   @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
