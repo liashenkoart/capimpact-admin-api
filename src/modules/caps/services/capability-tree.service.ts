@@ -10,8 +10,7 @@ import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-indu
 import { CapabilityTreeMasterCreationInput } from '../dto/capability-tree-master-creation.dto';
 import { TagService } from "./tag.service";
 import { TechnologyService } from "./technology.service";
-import { SaveCapTreeTechsDto } from "../dto/save-cap-tree-techs.dto";
-import { each } from 'lodash';
+import { createConnection } from 'typeorm';
 
 // const masterTreeTemplate = { type: 'master'};
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
@@ -386,13 +385,16 @@ export class CapabilityTreeService extends BaseService {
     const entity = await this.capabilityTreeRepository.findOne(selectedNodeId);
           entity.parent = parent;
 
-    await this.capabilityTreeRepository.findOne(selectedNodeId);
-    const saved = await this.capabilityTreeRepository.save(entity);
+   // const test = await this.capabilityTreeRepository.findOne(selectedNodeId);
+    const saved = await this.treeRepository.save(entity);
 
-    const mpath = await this.getMpath(saved);
+    // const mpath = this.getMpath(saved);
 
-    await this.capabilityTreeRepository.query(`UPDATE capability_tree SET mpath = '${mpath}'
-    WHERE id = '${saved.id}';`)
+    
+
+    // await this.capabilityTreeRepository.query(`UPDATE capability_tree
+    // SET mpath = '${mpath}'
+    // WHERE id = '${saved.id}';`)
 
     await this.updateTreeOrder(data.orders)
     
@@ -504,10 +506,22 @@ export class CapabilityTreeService extends BaseService {
 
   // This assigns 
   async removeOneCapTree(capToRemoveID: number): Promise<any> {
-    const children = await this.getAllChildrenById(capToRemoveID)
-    await asyncForEach(children.reverse(), async ({ id }) => {
-      await this.capabilityTreeRepository.delete(id)
-    });
+    await this.capabilityRepository.query(`ALTER TABLE capability_tree DISABLE TRIGGER ALL`)
+
+    await this.capabilityRepository.query(`ALTER TABLE capability_tree DROP CONSTRAINT "FK_39f6b72b3f538f5a7d881acd532", ADD CONSTRAINT "FK_39f6b72b3f538f5a7d881acd532" FOREIGN KEY ("parentId") REFERENCES capability_tree(id) ON DELETE CASCADE;`)
+   
+    const categoryToDelete = await this.capabilityTreeRepository.findOne(capToRemoveID);
+ 
+   // remove dependant tree relations
+   await this.capabilityTreeRepository
+        .createQueryBuilder()
+        .delete()
+        .from('capability_tree')                   // check your db or migrations for the actual table name
+        .where('"parentId" = :id', { id: categoryToDelete.id })
+        .execute();
+        
+    await this.capabilityTreeRepository.remove(categoryToDelete);
+  
     return []
   }
 
