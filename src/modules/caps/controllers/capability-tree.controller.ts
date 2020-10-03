@@ -87,9 +87,9 @@ export class CapabilityTreeController {
   @Post('industry/tree/:id')
   async updateIndustryTree(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body() data: CapabilityTreeIndustryCreationInput
+    @Body() data
     ) {
-    return this.capabilityTreeService.updateIndustryTree(id, data);
+    return this.capabilityTreeService.updateMaster(id, data);
   }
 
   // COMPANY
@@ -125,9 +125,9 @@ export class CapabilityTreeController {
   @Post('company/tree/:id')
   async updateCompanyTree(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body() data: CapabilityTreeIndustryCreationInput
+    @Body() data
     ) {
-    return this.capabilityTreeService.updateCompanyTree(id, data);
+    return this.capabilityTreeService.updateMaster(id, data);
   }
 
   // Master Captree
