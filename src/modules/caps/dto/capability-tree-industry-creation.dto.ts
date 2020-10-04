@@ -31,6 +31,7 @@ export class CapabilityTreeIndustryCreationInput {
 
   @ApiProperty({ type: Array })
   @IsArray()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => OrderDto)
   orders?: OrderDto[];

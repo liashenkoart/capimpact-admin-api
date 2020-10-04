@@ -295,7 +295,7 @@ export class CapabilityTreeService extends BaseService {
       });
 
 
-      await this.updateTreeOrder(data.orders)
+      if(data.orders) await this.updateTreeOrder(data.orders) 
 
       const rootNodeOfMovedCap = await this.findOneById(masterTreeIDtoIndustryId[data.id])
       console.log("CapabilityTreeService -> rootNodeOfMovedCap", rootNodeOfMovedCap)
@@ -345,7 +345,7 @@ export class CapabilityTreeService extends BaseService {
     const entity = await this.capabilityTreeRepository.findOne(selectedNodeId);
           entity.parent = parent;
     await this.treeRepository.save(entity);
-    await this.updateTreeOrder(data.orders) 
+    if(data.orders) await this.updateTreeOrder(data.orders) 
     const rootNodeOfMovedCap = await this.findOneById(selectedNodeId)       
     return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
   }
