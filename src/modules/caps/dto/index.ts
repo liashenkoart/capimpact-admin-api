@@ -34,7 +34,7 @@ export { ChallengesArgs } from './challenges.args';
 export { StartupCreationInput } from './startup-creation.dto';
 export { StartupInput } from './startup.dto';
 export { StartupsArgs } from './startups.args';
-
+export { OrderDto } from './order.dto';
 export { LensesArgs } from './lenses.args';
 
 export { KpiLibCreationInput } from './kpi-lib-creation.dto';

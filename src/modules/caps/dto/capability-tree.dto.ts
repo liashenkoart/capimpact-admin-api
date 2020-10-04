@@ -2,15 +2,7 @@ import { InputType, Field, ID } from 'type-graphql';
 import { IsOptional,IsArray, IsNumber, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-
-
-export class OrderDto {
-  @IsNumber()
-  id: number;
-
-  @IsNumber()
-  order: number;
-}
+import { OrderDto } from "./index";
 
 @InputType()
 export class UpdateCapabilityTreeNode {
