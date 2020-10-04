@@ -267,7 +267,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<CapabilityTree>  {
-    const foundChildren = await this.getAllChildrenById(data.id)
+      const foundChildren = await this.getAllChildrenById(data.id)
       const masterTreeIDtoIndustryId = {}
 
       await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id, tags }) => {
@@ -469,18 +469,15 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async collectEntityFields(capabilityTree: CapabilityTree): Promise<CapabilityTree> {
-    if (capabilityTree.parentId) {
-      capabilityTree.parent = await this.findOneById(capabilityTree.parentId);
+    const { parentId, capability_lib_id, industry_tree_id} = capabilityTree;
+    if (parentId) {
+        capabilityTree.parent = await this.findOneById(parentId);
     }
-    if (capabilityTree.capability_lib_id) {
-      capabilityTree.capability_lib = await this.capabilityLibRepository.findOne({
-        id: capabilityTree.capability_lib_id
-      });
+    if (capability_lib_id) {
+        capabilityTree.capability_lib = await this.capabilityLibRepository.findOne(capability_lib_id);
     }
-    if (capabilityTree.industry_tree_id) {
-      capabilityTree.industry_tree = await this.industryTreeRepository.findOne({
-        id: capabilityTree.industry_tree_id
-      });
+    if (industry_tree_id) {
+        capabilityTree.industry_tree = await this.industryTreeRepository.findOne(industry_tree_id);
     }
     return capabilityTree;
   }
