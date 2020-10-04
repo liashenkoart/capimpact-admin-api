@@ -153,7 +153,7 @@ export class CapabilityTreeService extends BaseService {
 
     const tree = await this.treeRepository.findDescendantsTree(rootIndustryCapTree);
 
-    return sortTreeByField('hierarchy_id', tree);
+    return sortTreeByField('code', tree);
   }
 
   async cloneIndustry(data: CapabilityTreeIndustryCloneInput): Promise<CapabilityTree>{
