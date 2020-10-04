@@ -5,7 +5,7 @@ import { Repository, TreeRepository, Not,IsNull} from 'typeorm';
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTree, CapabilityLib, IndustryTree, Capability} from '../entities';
-import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto } from '../dto';
+import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto, OrderDto } from '../dto';
 import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 import { CapabilityTreeMasterCreationInput } from '../dto/capability-tree-master-creation.dto';
 import { TagService } from "./tag.service";
@@ -46,9 +46,9 @@ export class CapabilityTreeService extends BaseService {
     return node;
   }
 
-  async updateTreeOrder(orders: { id: number, order: number}[]): Promise<void> {
-    const caps = await this.capabilityTreeRepository.findByIds(orders.map((o) => o.id))
-          await asyncForEach(caps, async (entity) => {
+  async updateTreeOrder(orders: OrderDto[]): Promise<void> {
+    const caps:CapabilityTree[] = await this.capabilityTreeRepository.findByIds(orders.map((o) => o.id))
+          await asyncForEach(caps, async (entity: CapabilityTree) => {
           const item = orders.find((e) => e.id === entity.id);
           entity.hierarchy_id = item.order;
           await this.capabilityTreeRepository.save(entity)
@@ -60,7 +60,6 @@ export class CapabilityTreeService extends BaseService {
     entity.tags = await service(list);
     return  await this.capabilityTreeRepository.save(new CapabilityTree(entity));
   }
-
 
   async updateTags(id,dto) {
     const entity = await this.capabilityTreeRepository.findOne(id);
@@ -204,7 +203,7 @@ export class CapabilityTreeService extends BaseService {
 
   async createIndustry(data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
     // Meaning user has droped node from master captree into industry
-    console.log("hhhhereee")
+
     if (data.type === 'master') {
        return this.createTree(data,'industry')
     } else {
@@ -264,6 +263,7 @@ export class CapabilityTreeService extends BaseService {
   async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<CapabilityTree>  {
       const foundChildren = await this.getAllChildrenById(data.id)
       const masterTreeIDtoIndustryId = {}
+ 
 
       await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id, tags }) => {
         let params = { cap_name,capability_lib_id, tags, type }
@@ -284,9 +284,18 @@ export class CapabilityTreeService extends BaseService {
             kpis: capability.kpis
           }))
         }
-        const createdIndustry = await this.capabilityTreeRepository.save(industryTree)
+        const createdIndustry = await this.capabilityTreeRepository.save(industryTree);
+        if(id === data.id ) {
+          let str = JSON.stringify(data.orders);
+          str = str.replace(id,createdIndustry.id.toString());
+          data.orders = JSON.parse(str);
+        }
+
         masterTreeIDtoIndustryId[id] = createdIndustry.id
       });
+
+
+      await this.updateTreeOrder(data.orders)
 
       const rootNodeOfMovedCap = await this.findOneById(masterTreeIDtoIndustryId[data.id])
       console.log("CapabilityTreeService -> rootNodeOfMovedCap", rootNodeOfMovedCap)
@@ -312,7 +321,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async createMasterCapTree(): Promise<CapabilityTree> {
-    console.log('im here')
+
     const capLibs = await this.capabilityLibRepository.find({ status: 'active'});
     
     const masterTree = await this.capabilityTreeRepository.save(new CapabilityTree(masterTreeTemplate));
@@ -336,7 +345,6 @@ export class CapabilityTreeService extends BaseService {
     const entity = await this.capabilityTreeRepository.findOne(selectedNodeId);
           entity.parent = parent;
     await this.treeRepository.save(entity);
-
     await this.updateTreeOrder(data.orders) 
     const rootNodeOfMovedCap = await this.findOneById(selectedNodeId)       
     return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)

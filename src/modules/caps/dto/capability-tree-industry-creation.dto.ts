@@ -1,11 +1,11 @@
 import { InputType, Field, ID } from 'type-graphql';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsArray, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { OrderDto } from "./index";
 
 @InputType()
 export class CapabilityTreeIndustryCreationInput {
-
 
   @ApiPropertyOptional({ type: Number})
   @Field(() => ID, { nullable: true })
@@ -28,6 +28,12 @@ export class CapabilityTreeIndustryCreationInput {
   @IsOptional()
   @Type(() => Number)
   readonly industry_tree_id?: number;
+
+  @ApiProperty({ type: Array })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => OrderDto)
+  orders?: OrderDto[];
 
   @ApiPropertyOptional({ type: Number})
   @Field(() => ID, { nullable: true })
