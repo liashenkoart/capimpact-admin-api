@@ -224,8 +224,6 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async updateIndustry(id: number, data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
-
-    console.log("update industry",data)
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return this.capabilityTreeRepository.save(capabilityTree);
   }
@@ -295,7 +293,7 @@ export class CapabilityTreeService extends BaseService {
 
         masterTreeIDtoIndustryId[id] = createdIndustry.id
       });
-      
+
 
       await this.updateTreeOrder(data.orders)
 
@@ -306,7 +304,6 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async updateCompany(id: number, data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
-    console.log("company",data)
     const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
     return this.capabilityTreeRepository.save(capabilityTree);
   }
@@ -324,7 +321,7 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async createMasterCapTree(): Promise<CapabilityTree> {
-    console.log('im here')
+
     const capLibs = await this.capabilityLibRepository.find({ status: 'active'});
     
     const masterTree = await this.capabilityTreeRepository.save(new CapabilityTree(masterTreeTemplate));
