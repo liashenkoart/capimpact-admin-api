@@ -65,7 +65,6 @@ export class CapabilityTree {
   @JoinColumn({ name: 'industry_tree_id' })
   industry_tree?: IndustryTree;
 
-
   @Field(() => ID, { nullable: true })
   @Column({ name: 'company_id', nullable: true })
   company_id?: number;

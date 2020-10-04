@@ -9,7 +9,6 @@ import { PassportModule } from '@nestjs/passport';
 
 import { DrivineModule, DrivineModuleOptions } from '@liberation-data/drivine/DrivineModule';
 import { DatabaseRegistry } from '@liberation-data/drivine/connection/DatabaseRegistry';
-
 import { User } from '@modules/users/user.entity';
 import {
   Industry,

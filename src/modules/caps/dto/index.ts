@@ -20,7 +20,7 @@ export { CapabilityLibInput } from './capability-lib.dto';
 export { CapabilityLibsArgs } from './capability-libs.args';
 
 export { CapabilityTreeCreationInput } from './capability-tree-creation.dto';
-export { CapabilityTreeInput } from './capability-tree.dto';
+export { UpdateCapabilityTreeNode } from './capability-tree.dto';
 export { CapabilityTreesArgs } from './capability-trees.args';
 
 export { CompanyCreationInput } from './company-creation.dto';
