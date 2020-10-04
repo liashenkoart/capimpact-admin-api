@@ -84,14 +84,6 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.updateIndustry(id, data);
   }
 
-  @Post('industry/tree/:id')
-  async updateIndustryTree(
-    @Param('id', new ParseIntPipe()) id: number,
-    @Body() data: UpdateCapabilityTreeNode 
-    ) {
-    return this.capabilityTreeService.updateTreeStrucure(id, data);
-  }
-
   // COMPANY
   @Get('company')
   async getCompanyTree(@Query() query: CapabilityTreeArgs) {
@@ -121,14 +113,6 @@ export class CapabilityTreeController {
     return this.capabilityTreeService.updateCompany(id, data);
   }
 
-  @Post('company/tree/:id')
-  async updateCompanyTree(
-    @Param('id', new ParseIntPipe()) id: number,
-    @Body() data
-    ) {
-    return this.capabilityTreeService.updateTreeStrucure(id, data);
-  }
-
   // Master Captree
   @Get('master')
   async findMasterCapTree() {
@@ -145,8 +129,19 @@ export class CapabilityTreeController {
     @Param('id', new ParseIntPipe()) id: number,
     @Body() data: UpdateCapabilityTreeNode,
   ) {
-    return this.capabilityTreeService.updateTreeStrucure(id, data);
+    return this.capabilityTreeService.updateTreeStructure(id, data);
   }
+
+  @Post('tree/:id')
+  async updateTree(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() data: UpdateCapabilityTreeNode,
+  ) {
+    return this.capabilityTreeService.updateTreeStructure(id, data);
+  }
+
+
+
   @Post('kpi')
   async createKpi(
     @Body() data: UpdateCapabilityTreeNode ,
