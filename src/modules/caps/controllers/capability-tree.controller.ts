@@ -16,7 +16,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { Technology } from '../entities';
 import { CapabilityTreeService } from '../services';
-import { CapabilityTreesArgs, CapabilityTreeInput, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput,CapabilityTreeLocationDto } from '../dto';
+import { CapabilityTreesArgs, UpdateCapabilityTreeNode, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput,CapabilityTreeLocationDto } from '../dto';
 import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 import { CapabilityTreeArgs } from '../dto/capability-tree.args';
 import { SaveCapTreeTechsDto } from "../dto/save-cap-tree-techs.dto";
@@ -87,9 +87,9 @@ export class CapabilityTreeController {
   @Post('industry/tree/:id')
   async updateIndustryTree(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body() data
+    @Body() data: UpdateCapabilityTreeNode 
     ) {
-    return this.capabilityTreeService.updateMaster(id, data);
+    return this.capabilityTreeService.updateTreeStrucure(id, data);
   }
 
   // COMPANY
@@ -97,7 +97,6 @@ export class CapabilityTreeController {
   async getCompanyTree(@Query() query: CapabilityTreeArgs) {
     return this.capabilityTreeService.treeByCompanyTree(query.company_id);
   }
-
 
   @Get('location/:id')
   async getLocation(@Param('id') id: string): Promise<CapabilityTreeLocationDto> {
@@ -127,7 +126,7 @@ export class CapabilityTreeController {
     @Param('id', new ParseIntPipe()) id: number,
     @Body() data
     ) {
-    return this.capabilityTreeService.updateMaster(id, data);
+    return this.capabilityTreeService.updateTreeStrucure(id, data);
   }
 
   // Master Captree
@@ -144,15 +143,13 @@ export class CapabilityTreeController {
   @Post('master/:id')
   async updateMaster(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body() data: CapabilityTreeInput,
-    @Req() req: any
+    @Body() data: UpdateCapabilityTreeNode,
   ) {
-    return this.capabilityTreeService.updateMaster(id, data);
+    return this.capabilityTreeService.updateTreeStrucure(id, data);
   }
   @Post('kpi')
   async createKpi(
-    @Body() data: CapabilityTreeInput,
-    @Req() req: any
+    @Body() data: UpdateCapabilityTreeNode ,
   ) {
     return this.capabilityTreeService.createKpi(data);
   }
@@ -174,7 +171,7 @@ export class CapabilityTreeController {
   @Post('/:id')
   async save(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body() data: CapabilityTreeInput,
+    @Body() data: UpdateCapabilityTreeNode ,
     @Req() req: any
   ) {
     return this.capabilityTreeService.save(id, data);

@@ -1,16 +1,15 @@
 
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository, Not, getManager, IsNull, EntityManager, Raw } from 'typeorm';
+import { Repository, TreeRepository, Not,IsNull} from 'typeorm';
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
-import { CapabilityTree, CapabilityLib, IndustryTree, Capability, Technology ,KpiLib } from '../entities';
-import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeInput, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto } from '../dto';
+import { CapabilityTree, CapabilityLib, IndustryTree, Capability} from '../entities';
+import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto } from '../dto';
 import { CapabilityTreeIndustryCreationInput } from '../dto/capability-tree-industry-creation.dto';
 import { CapabilityTreeMasterCreationInput } from '../dto/capability-tree-master-creation.dto';
 import { TagService } from "./tag.service";
 import { TechnologyService } from "./technology.service";
-import { createConnection } from 'typeorm';
 
 // const masterTreeTemplate = { type: 'master'};
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
@@ -199,9 +198,13 @@ export class CapabilityTreeService extends BaseService {
     return this.treeRepository.findDescendantsTree(rootIndustry)
   }
 
+  async createCompany(data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
+    return this.createTree(data,'company')
+  }
 
   async createIndustry(data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
     // Meaning user has droped node from master captree into industry
+    console.log("hhhhereee")
     if (data.type === 'master') {
        return this.createTree(data,'industry')
     } else {
@@ -210,6 +213,15 @@ export class CapabilityTreeService extends BaseService {
       capabilityTree.type = 'industry' // just making sure we set type to industry
       return this.capabilityTreeRepository.save(capabilityTree);
     }
+  }
+
+  async createMaster(data: CapabilityTreeMasterCreationInput): Promise<CapabilityTree> {
+    if (data.parentId) {
+      const MasterCapLib = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
+      data.parentId = MasterCapLib.id
+    }
+    const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
+    return await this.capabilityTreeRepository.save(capabilityTree);
   }
 
   async updateIndustry(id: number, data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
@@ -252,10 +264,6 @@ export class CapabilityTreeService extends BaseService {
 
     const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
     return sortTreeByField('hierarchy_id', tree);
-  }
-
-  async createCompany(data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
-    return this.createTree(data,'company')
   }
 
   async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<CapabilityTree>  {
@@ -302,26 +310,14 @@ export class CapabilityTreeService extends BaseService {
 
   // MASTER CAPTREE
   async findMasterCapTree(): Promise<Object> {
-    // const MasterCapTree = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
-    // console.log("CapabilityTreeService -> MasterCapTree", MasterCapTree)
-    // // return MasterCapTree
-    // let root = await this.capabilityTreeRepository.find({where: masterTreeTemplate});
-    // if (!root) {
-    //   root = await this.createMasterCapTree();
-    // }
-    // const tree = await this.treeRepository.findDescendantsTree(root);
-    // return await this.fillTree(tree);
-
     let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
     if (!root) {
       root = await this.createMasterCapTree();
     }
 
-    // return await this.fillTree(tree);
     const tree = await this.treeRepository.findDescendantsTree(root);
 
     return sortTreeByField('hierarchy_id', tree);
-
   }
 
   async createMasterCapTree(): Promise<CapabilityTree> {
@@ -343,16 +339,9 @@ export class CapabilityTreeService extends BaseService {
     return masterTree;
   }
 
-  async createMaster(data: CapabilityTreeMasterCreationInput): Promise<CapabilityTree> {
-    if (data.parentId) {
-      const MasterCapLib = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
-      data.parentId = MasterCapLib.id
-    }
-    const capabilityTree = await this.collectEntityFields(new CapabilityTree(data));
-    return await this.capabilityTreeRepository.save(capabilityTree);
-  }
+ 
 
-  async updateMaster(selectedNodeId: number, data: CapabilityTreeInput): Promise<CapabilityTree> {
+  async updateTreeStrucure(selectedNodeId: number, data): Promise<CapabilityTree> {
     const { parentId } = data;
     const parent = await this.capabilityTreeRepository.findOne(parentId);
     const entity = await this.capabilityTreeRepository.findOne(selectedNodeId);
@@ -419,7 +408,7 @@ export class CapabilityTreeService extends BaseService {
     return capTreeRepositorySave
   }
 
-  async save(id: number, data: CapabilityTreeInput): Promise<CapabilityTree> {
+  async save(id: number, data): Promise<CapabilityTree> {
         data.id = id
     if (data.status === 'inactive') {
         this.removeOneCapTree(id)
