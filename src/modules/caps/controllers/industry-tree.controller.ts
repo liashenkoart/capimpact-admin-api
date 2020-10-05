@@ -37,8 +37,8 @@ export class IndustryTreeController {
   }
 
   @Get('tree')
-  async tree(@Query() query: IndustryTreesArgs) {
-    return this.industryTreeService.tree(query);
+  async tree() {
+    return this.industryTreeService.tree();
   }
 
   @Get('tree/:code')

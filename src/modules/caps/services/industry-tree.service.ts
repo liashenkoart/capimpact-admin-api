@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, Raw } from 'typeorm';
-
+import { sortBy } from 'lodash';
 import { BaseService } from '@modules/common/services';
 import { IndustryTree, Company } from '../entities';
 import { IndustryTreesArgs, IndustryTreeCreationInput, IndustryTreeInput } from '../dto';
@@ -68,10 +68,10 @@ export class IndustryTreeService extends BaseService {
     return this.industryTreeRepository.save(industryTree);
   }
 
-  async tree(query: IndustryTreesArgs): Promise<IndustryTree[] | void> {
+  async tree(): Promise<IndustryTree[] | void> {
     const roots = await this.industryTreeRepository.find({ where: { parentId: null } });
     const treeArray = await Promise.all(roots.map(root => this.getTreeForNode(root)));
-    return treeArray.sort((a, b) => compareObjectsByStringFields(a, b, ['code', 'name']));
+    return sortBy(treeArray,["code"]);
   }
 
   async treeByCode(code: string) {
@@ -95,7 +95,7 @@ export class IndustryTreeService extends BaseService {
       throw new NotFoundException();
     }
     const tree = await this.treeRepository.findDescendantsTree(node);
-    return sortTreeByField(['code', 'name'], tree);
+    return  sortTreeByField('code', tree);
   }
 
   async getOneByIdWithCompanies(id: number): Promise<IndustryTree> {

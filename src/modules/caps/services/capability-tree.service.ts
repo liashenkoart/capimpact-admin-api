@@ -153,7 +153,7 @@ export class CapabilityTreeService extends BaseService {
 
     const tree = await this.treeRepository.findDescendantsTree(rootIndustryCapTree);
 
-    return sortTreeByField('code', tree);
+    return sortTreeByField('hierarchy_id', tree);
   }
 
   async cloneIndustry(data: CapabilityTreeIndustryCloneInput): Promise<CapabilityTree>{
@@ -263,7 +263,7 @@ export class CapabilityTreeService extends BaseService {
   async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<CapabilityTree>  {
       const foundChildren = await this.getAllChildrenById(data.id)
       const masterTreeIDtoIndustryId = {}
- 
+ console.log("old order",data.orders)
 
       await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id, tags }) => {
         let params = { cap_name,capability_lib_id, tags, type }
@@ -295,7 +295,12 @@ export class CapabilityTreeService extends BaseService {
       });
 
 
-      if(data.orders) await this.updateTreeOrder(data.orders) 
+      if(data.orders) {
+        console.log("new order",data.orders)
+
+        await this.updateTreeOrder(data.orders) 
+      }
+      
 
       const rootNodeOfMovedCap = await this.findOneById(masterTreeIDtoIndustryId[data.id])
       console.log("CapabilityTreeService -> rootNodeOfMovedCap", rootNodeOfMovedCap)
