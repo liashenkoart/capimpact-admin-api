@@ -296,8 +296,6 @@ export class CapabilityTreeService extends BaseService {
 
 
       if(data.orders) {
-        console.log("new order",data.orders)
-
         await this.updateTreeOrder(data.orders) 
       }
       
