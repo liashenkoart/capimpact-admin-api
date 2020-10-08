@@ -10,34 +10,46 @@ import { PassportModule } from '@nestjs/passport';
 import { DrivineModule, DrivineModuleOptions } from '@liberation-data/drivine/DrivineModule';
 import { DatabaseRegistry } from '@liberation-data/drivine/connection/DatabaseRegistry';
 import { User } from '@modules/users/user.entity';
-import {
-  Industry,
-  IndustryTree,
-  Company,
-  Challenge,
-  Process,
-  Capability,
-  CapabilityLib,
-  CapabilityTree,
-  Startup,
-  Classification,
-  GroupTag,
-  GroupFilter,
-  Lense,
-  KpiLib,
-  Benchmark,
-  ValueDriver,
-  KpiBenchmark,
-  Sic,
-  Tag,
-  Technology
-} from '@modules/caps/entities';
+// import {
+//   Industry,
+//   IndustryTree,
+//   Company,
+//   Challenge,
+//   Process,
+//   Capability,
+//   CapabilityLib,
+//   CapabilityTree,
+//   Startup,
+//   Classification,
+//   GroupTag,
+//   GroupFilter,
+//   Lense,
+//   KpiLib,
+//   Benchmark,
+//   ValueDriver,
+//   KpiBenchmark,
+//   Sic,
+//   Tag,
+//   Technology
+// } from '@modules/caps/entities';
 
 import { UsersModule } from '@modules/users';
 import { AuthModule } from '@modules/auth';
-import { CapsModule } from '@modules/caps';
+// import { CapsModule } from '@modules/caps';
 
 import { AppController } from './app.controller';
+
+
+
+
+import { CapabilityModule } from './modules/capability/capability.module';
+
+
+
+
+
+
+
 
 export const MODULE = {
   imports: [
@@ -55,26 +67,26 @@ export const MODULE = {
         ...configService.get('database').default,
         entities: [
           User,
-          Industry,
-          IndustryTree,
-          Company,
-          Challenge,
-          Process,
-          Capability,
-          CapabilityLib,
-          CapabilityTree,
-          Startup,
-          Classification,
-          Lense,
-          GroupTag,
-          GroupFilter,
-          KpiLib,
-          Benchmark,
-          ValueDriver,
-          KpiBenchmark,
-          Sic,
-          Tag,
-          Technology
+          // Industry,
+          // IndustryTree,
+          // Company,
+          // Challenge,
+          // Process,
+          // Capability,
+          // CapabilityLib,
+          // CapabilityTree,
+          // Startup,
+          // Classification,
+          // Lense,
+          // GroupTag,
+          // GroupFilter,
+          // KpiLib,
+          // Benchmark,
+          // ValueDriver,
+          // KpiBenchmark,
+          // Sic,
+          // Tag,
+          // Technology
         ],
       }),
       inject: [ConfigService],
@@ -88,8 +100,18 @@ export const MODULE = {
 
     AuthModule,
     UsersModule,
-    CapsModule,
+    // CapsModule,
+
+
+
+
+
+
+
+
+    CapabilityModule
   ],
+
   controllers: [AppController],
   providers: [
     /*

@@ -13,11 +13,10 @@ import {
     ParseIntPipe,
   } from '@nestjs/common';
   import { AuthGuard } from '@nestjs/passport';
-  import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
+  import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
   
   import { TagService } from '../services/tag.service';
-  import { ProcessesArgs, ProcessInput, ProcessCreationInput } from '../dto';
-  
+ 
   @ApiBearerAuth()
   @ApiTags('tags')
   @UseGuards(AuthGuard())

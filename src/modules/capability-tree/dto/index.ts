@@ -1,6 +1,10 @@
 export { CapabilityTreeIndustryCreationInput } from './capability-tree-industry-creation.dto';
 export { CapabilityTreeOrderDto } from './capability-tree-order.dto';
-export { CapabilityTreesArgs } from './capability-trees.args';
+export { CapabilityTreeArgs } from './capability-tree.args'
+export { CapabilityTreesArgs } from './capability-trees.args'
 export { SaveCapTreeTechsDto } from './save-cap-tree-techs.dto';
-
-
+export { UpdateCapabilityTreeNode } from './update-capability-tree.dto'
+export { CapabilityTreeIndustryCloneInput } from './CapabilityTreeIndustryCloneInput.dto';
+export { CapabilityTreeLocationDto } from './CapabilityTreeLocation.dto';
+export { CapabilityTreeCreationInput } from './capability-tree-creation.dto';
+export { CapabilityTreeMasterCreationInput } from './capability-tree-master-creation.dto';
