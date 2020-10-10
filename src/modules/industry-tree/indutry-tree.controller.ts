@@ -20,12 +20,13 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('industry-trees')
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('industry-trees')
   export class IndustryTreeController {
     constructor(private readonly industryTreeService: IndustryTreeService) {}
   
+    
     @Get('')
     async findAll(@Query() query: IndustryTreesArgs) {
       return this.industryTreeService.findAll(query);

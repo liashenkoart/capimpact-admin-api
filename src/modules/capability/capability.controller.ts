@@ -21,7 +21,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('capabilities')
-  @UseGuards(AuthGuard())
+  //@UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('capabilities')
   export class CapabilityController {

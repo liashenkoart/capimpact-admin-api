@@ -147,15 +147,6 @@ export const MODULE = {
 
     AuthModule,
     UsersModule,
-    // CapsModule,
-
-
-
-
-
-
-
-   
     CapabilityModule,
      IndustryModule,
     CapabilityLibsModule,

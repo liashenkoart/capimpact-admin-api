@@ -17,7 +17,7 @@ import {
   import { LenseService } from './lense.service'
   
   @ApiBearerAuth()
-  @UseGuards(AuthGuard())
+  //@UseGuards(AuthGuard())
   @ApiTags('lenses')
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('lenses')

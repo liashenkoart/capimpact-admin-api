@@ -18,7 +18,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('startups')
-  @UseGuards(AuthGuard())
+  //@UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('startups')
   export class StartupController {

@@ -19,7 +19,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('groupfilters')
-  @UseGuards(AuthGuard())
+  //@UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('groupfilters')
   export class GroupFilterController {

@@ -18,7 +18,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('grouptags')
-  @UseGuards(AuthGuard())
+  //@UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('grouptags')
   export class GroupTagController {

@@ -20,7 +20,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('processes')
-  @UseGuards(AuthGuard())
+  //@UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('processes')
   export class ProcessController {

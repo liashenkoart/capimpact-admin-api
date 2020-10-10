@@ -19,7 +19,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('industries')
-  @UseGuards(AuthGuard())
+  //@UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('industries')
   export class IndustryController {

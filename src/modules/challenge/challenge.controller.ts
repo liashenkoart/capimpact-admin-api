@@ -22,7 +22,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('challenges')
-  @UseGuards(AuthGuard())
+  //@UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('challenges')
   export class ChallengeController {

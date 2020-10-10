@@ -6,10 +6,15 @@ import { CapabilityTree } from './capability-tree.entity';
 import { CapabilityLib } from '../capability-libs/capability-lib.entity';
 import { IndustryTree } from '../industry-tree/industry-tree.entity';
 import { Capability } from '../capability/capability.entity';
+import { PassportModule } from '@nestjs/passport';
+
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([CapabilityTree, IndustryTree ,CapabilityLib, Capability])],
+  imports: [
+    TypeOrmModule.forFeature([CapabilityTree, IndustryTree ,CapabilityLib, Capability]),
+    PassportModule.register({ defaultStrategy: 'jwt' })
+  ],
   controllers: [CapabilityTreeController],
   providers: [CapabilityTreeService],
   exports: [CapabilityTreeService],
