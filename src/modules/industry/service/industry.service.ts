@@ -1,23 +1,29 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Industry } from './industry.entity';
-import { IndustryCreationInput, IndustryInput, IndustriesArgs } from './dto';
+import { Industry } from '../industry.entity';
+import { IndustryCreationInput, IndustryInput, IndustriesArgs } from '../dto';
 
-import { ProcessService } from '../process/services/process.service';
-import { CapabilityService } from '../capability/services/capability.service';
-import { CompanyService } from '../company/company.service';
-import { ValueDriverService } from '../value-driver/value-driver.service';
+import { ProcessService } from '../../process/services';
+import { CapabilityService } from '../../capability/services';
+import { ValueDriverService } from '../../value-driver/value-driver.service';
 
 @Injectable()
-export class IndustryService {
+export class IndustryService implements OnModuleInit{
+  private capabilityService: CapabilityService;
+
   constructor(
+    private moduleRef: ModuleRef,
     private readonly processService: ProcessService,
-    private readonly capabilityService: CapabilityService,
     private readonly valueDriverService: ValueDriverService,
-    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
+    @InjectRepository(Industry) public industryRepository: Repository<Industry>
   ) {}
+
+  onModuleInit() {
+    this.capabilityService = this.moduleRef.get(CapabilityService,  { strict: false });
+  }
 
   async findAll(args: IndustriesArgs): Promise<Industry[]> {
     let industries = [];

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -9,16 +9,22 @@ import { KpiLib } from '../kpi-lib/kpi-lib.entity';
 import { Tag } from '../tags/tag.entity';
 import { KpiLibCreationInput, KpiLibInput, KpiLibsArgs } from './dto';
 import { asyncForEach } from '@lib/sorting';
+import { ModuleRef } from '@nestjs/core';
 
 @Injectable()
-export class KpiLibService extends BaseService {
+export class KpiLibService extends BaseService implements OnModuleInit{
+ 
+  private capabiliLibSrv: CapabilityLibService;
   constructor(
-    private capabiliLibSrc: CapabilityLibService,
+    private moduleRef: ModuleRef,
     @InjectRepository(Tag) private readonly tagsRepository: Repository<Tag>,
-    @InjectRepository(KpiLib) private readonly kpilibRepository: Repository<KpiLib>,
+    @InjectRepository(KpiLib) public readonly kpilibRepository: Repository<KpiLib>,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>
   ) {
     super();
+  }
+  onModuleInit() {
+    this.capabiliLibSrv = this.moduleRef.get(CapabilityLibService, { strict: false });
   }
 
   async findAll(args: KpiLibsArgs): Promise<KpiLib[]> {
@@ -68,7 +74,7 @@ export class KpiLibService extends BaseService {
       ? await this.capabilityLibRepository.findByIds(data.capability_libs) : [];
    
     if(data.tags){
-      data.tags = await this.capabiliLibSrc.addNewTagIfNew(data.tags)
+      data.tags = await this.capabiliLibSrv.addNewTagIfNew(data.tags)
    }
    
       return await this.kpilibRepository.save(data);
@@ -83,7 +89,7 @@ export class KpiLibService extends BaseService {
         .filter(({ id }) => !capability_lib_ids.includes(id));
     }
 
-    data.tags = await this.capabiliLibSrc.addNewTagIfNew(data.tags);
+    data.tags = await this.capabiliLibSrv.addNewTagIfNew(data.tags);
     data.id = id;
     data.capability_libs = [...capability_libs, ...newCapabilityLibs];
     return this.kpilibRepository.save(new KpiLib(data));

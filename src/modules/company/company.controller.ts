@@ -16,7 +16,7 @@ import {
   
   import {CompanyGraphService} from "@modules/caps/services/company.graph.service";
   
-  import { CompanyService } from './company.service';
+  import { CompanyService } from './services/company.service';
   import { CompanyInput, CompanyCreationInput, CompaniesArgs } from './dto';
   
   @ApiBearerAuth()

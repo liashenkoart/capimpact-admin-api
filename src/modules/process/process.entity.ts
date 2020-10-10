@@ -13,7 +13,9 @@ import {
   import { ObjectType, Field, ID } from 'type-graphql';
   
   import { User } from '@modules/users/user.entity';
-  import { Company, KpiLib, IndustryTree } from '@modules/caps/entities';
+  import { Company } from '../company/company.entity';
+  import { KpiLib } from '../kpi-lib/kpi-lib.entity';
+  import { IndustryTree } from '../industry-tree/industry-tree.entity';
   
   @ObjectType()
   @Entity('processes')

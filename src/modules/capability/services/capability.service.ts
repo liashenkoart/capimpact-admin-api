@@ -9,19 +9,19 @@ import { CapabilityGraphService } from './capability.graph.service';
 
 import { Industry } from '../../industry/industry.entity';
 import { Capability } from '../capability.entity';
-import { CapabilityTree } from '../../capability-tree/capability-tree.entity';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
+import { CapabilityTreeService } from "../../capability-tree/capability-tree.service"
+import { IndustryService } from "../../industry/service/industry.service";
 
 @Injectable()
 export class CapabilityService {
   constructor(
+    private readonly industryService: IndustryService,
+    private readonly capTreeSrv: CapabilityTreeService,
     private readonly capabilityGraphService: CapabilityGraphService,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
-    @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
-    @InjectRepository(CapabilityTree) private readonly capTreeRepository: TreeRepository<CapabilityTree>,
-    @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
-    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
+    @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>
   ) {}
 
   private listToTree(data, options?) {
@@ -66,10 +66,10 @@ export class CapabilityService {
     const { industry_id, company_id } = query;
     let root = null;
     if (industry_id) {
-      root = await this.capTreeRepository.find({ where: {       industry_tree_id:industry_id }, 
+      root = await this.capTreeSrv.treeRepository.find({ where: {       industry_tree_id:industry_id }, 
       relations:["capability"] });
     } else if (company_id) {
-      root = await this.capTreeRepository.find({ where: { company_id }, relations:["capability"] });
+      root = await this.capTreeSrv.treeRepository.find({ where: { company_id }, relations:["capability"] });
     }
 
     if (!root) {
@@ -84,23 +84,17 @@ export class CapabilityService {
   async treeByIndustryTree(query: CapabilitiesArgs): Promise<Capability> {
     
     const { industry_id } = query;
-    const rootCapTree = await this.capabilityTreeRepository.findOne({
+    const rootCapTree = await this.capTreeSrv.capabilityTreeRepository
+    .findOne({
       industry_tree_id: industry_id,
       parentId: null,
     });
-    const tree = await this.capTreeRepository.findDescendantsTree(rootCapTree);
+    const tree = await this.capTreeSrv.treeRepository.findDescendantsTree(rootCapTree);
 
     if (!rootCapTree) {
       throw new NotFoundException(`capability-tree with industry_tree_id: ${industry_id} was not found`);
     }
-    // const root = await this.capabilityRepository.findOne({
-    //   capability_tree: rootCapTree,
-    //   parentId: null,
-    // });
-    // if (!root) {
-      // throw new NotFoundException(`capability with capability_tree: ${rootCapTree.id} was not found`);
-    // }
-    console.log(rootCapTree)
+ 
     return sortTreeByField('cap_name', tree);
   }
 
@@ -190,7 +184,7 @@ export class CapabilityService {
     capability = await this.capabilityRepository.save(capability);
     capability = await this.capabilityRepository.findOne({ id: capability.id });
     if (capability.parentId === null) {
-      await this.industryRepository.save({ id: +capability.industry_id, name: capability.name });
+      await this.industryService.industryRepository.save({ id: +capability.industry_id, name: capability.name });
     }
     await this.updateHierarchyIdNode(capability);
     await this.capabilityGraphService.save(capability.id, capability.name);
@@ -262,7 +256,7 @@ export class CapabilityService {
       await this.capabilityRepository.remove(descendants);
       await this.capabilityRepository.remove(node);
       if (node.parentId === null) {
-        await this.industryRepository.delete({ id: +node.industry_id });
+        await this.industryService.industryRepository.delete({ id: +node.industry_id });
       }
     }
     return { id };

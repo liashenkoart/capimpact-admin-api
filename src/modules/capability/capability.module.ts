@@ -2,6 +2,7 @@ import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CapabilityController } from './capability.controller';
 import { CapabilityService, CapabilityGraphService } from './services';
+import { CapabilityResolver} from './resolvers/capability.resolver';
 import { Capability } from './capability.entity';
 
 @Global()
@@ -9,7 +10,15 @@ import { Capability } from './capability.entity';
   imports: [TypeOrmModule.forFeature([Capability]),
  ],
   controllers: [CapabilityController],
-  providers: [CapabilityService, CapabilityGraphService],
-  exports: [CapabilityService, CapabilityGraphService],
+  providers: [
+    CapabilityService, 
+    CapabilityGraphService, 
+    CapabilityResolver
+  ],
+  exports: [
+    CapabilityService, 
+    CapabilityGraphService, 
+    CapabilityResolver
+  ],
 })
 export class CapabilityModule {}

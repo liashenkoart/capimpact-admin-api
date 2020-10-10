@@ -3,10 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { StartupController } from './startup.controller';
 import { StartupService } from './startup.service';
 import { Startup } from './startup.entity';
+import { Capability } from '../capability/capability.entity';
+import { Tag } from '../tags/tag.entity';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([Startup])],
+  imports: [TypeOrmModule.forFeature([Startup, Capability, Tag])],
   controllers: [StartupController],
   providers: [StartupService],
   exports: [StartupService]

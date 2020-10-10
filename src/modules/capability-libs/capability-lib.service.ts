@@ -6,16 +6,17 @@ import { Tag } from '../tags/tag.entity';
 import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput, CapabilityLibItemResponse } from './dto';
 import { asyncForEach } from '@lib/sorting';
 import { CapabilityLib } from '../capability-libs/capability-lib.entity';
-import { KpiLib } from '../kpi-lib/kpi-lib.entity';
 import { CapabilityTree } from '../capability-tree/capability-tree.entity';
 import { IndustryTree} from '../industry-tree/industry-tree.entity';
+import { TagService } from '../tags/tags.service';
+import { KpiLibService } from '../kpi-lib/kpi-lib.service';
 
 @Injectable()
 export class CapabilityLibService {
   constructor(
     private readonly capabilityTreeService: CapabilityTreeService,
-    @InjectRepository(Tag) private readonly tagsRepository: Repository<Tag>,
-    @InjectRepository(KpiLib) private readonly kpiLibRepository: Repository<KpiLib>,
+    private readonly tasgSrv: TagService,
+    private readonly kpiLibSrv: KpiLibService,
     @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
@@ -41,7 +42,7 @@ export class CapabilityLibService {
     await asyncForEach(sortedCaps, async ({tags},i) => {
       let tagsEntities = [];
       if(tags.length > 0) {
-        tagsEntities = await  this.tagsRepository.findByIds(tags);
+        tagsEntities = await  this.tasgSrv.tagRepository.findByIds(tags);
       }
       caps.push({...sortedCaps[i], tags: tagsEntities})   
     });
@@ -65,7 +66,7 @@ export class CapabilityLibService {
     let tags = [];
 
     if(capabilityLib.tags.length > 0) {
-       tags = await  this.tagsRepository.findByIds(capabilityLib.tags)
+       tags = await  this.tasgSrv.tagRepository.findByIds(capabilityLib.tags)
     }
     return {...capabilityLib,tags};
   }
@@ -100,7 +101,7 @@ export class CapabilityLibService {
         if(__isNew__) {
             const tag = new Tag(); 
             tag.value = value; 
-            const newTag = await this.tagsRepository.save(tag)
+            const newTag = await this.tasgSrv.tagRepository.save(tag)
             tags[i] = newTag;
         }
     });
@@ -115,7 +116,7 @@ export class CapabilityLibService {
        data.tags = await this.addNewTagIfNew(data.tags);
     }
 
-    data.kpi_libs = data.kpi_libs ? await this.kpiLibRepository.findByIds(data.kpi_libs) : [];
+    data.kpi_libs = data.kpi_libs ? await this.kpiLibSrv.kpilibRepository.findByIds(data.kpi_libs) : [];
     const cap_lib = await this.capabilityLibRepository.save(new CapabilityLib(data));
     return cap_lib
   }
@@ -125,7 +126,7 @@ export class CapabilityLibService {
     const kpi_lib_ids = kpi_libs.map(({ id }) => id);
     let newKpiLibs = [];
     if (data.kpi_libs) {
-      newKpiLibs = (await this.kpiLibRepository.findByIds(data.kpi_libs))
+      newKpiLibs = (await this.kpiLibSrv.kpilibRepository.findByIds(data.kpi_libs))
         .filter(({ id }) => !kpi_lib_ids.includes(id));
     }
 

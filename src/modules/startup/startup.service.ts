@@ -12,9 +12,6 @@ import { Tag } from '../tags/tag.entity';
 import { StartupCreationInput, StartupInput, StartupsArgs } from './dto';
 import { asyncForEach } from '@lib/sorting';
 import { CapabilityLibService } from "../capability-libs/capability-lib.service"
-//import { ProcessService } from './process.service';
-//import { CapabilityService } from './capability.service';
-//import { CompanyService } from './company.service';
 
 @Injectable()
 export class StartupService extends BaseService {

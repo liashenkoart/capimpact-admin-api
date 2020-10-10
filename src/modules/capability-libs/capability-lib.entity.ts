@@ -1,7 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-import { KpiLib, CapabilityTree } from '@modules/caps/entities';
+import { KpiLib } from '../kpi-lib/kpi-lib.entity';
+import { CapabilityTree } from '../capability-tree/capability-tree.entity';
 
 @ObjectType()
 @Entity('capability_lib')

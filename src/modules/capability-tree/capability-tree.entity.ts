@@ -10,10 +10,10 @@ import {
     OneToOne,
   } from 'typeorm';
   import { ObjectType, Field, ID } from 'type-graphql';
-  import { IndustryTree } from '@modules/caps/entities/industry-tree.entity';
-  import { CapabilityLib } from '@modules/caps/entities/capability-lib.entity';
-  import { Capability } from '@modules/caps/entities/capability.entity';
-  import { Company } from '@modules/caps/entities/company.entity';
+  import { IndustryTree } from '../industry-tree/industry-tree.entity';
+  import { CapabilityLib } from '../capability-libs/capability-lib.entity';
+  import { Capability } from '../capability/capability.entity';
+  import { Company } from '../company/company.entity';
   import  Location from "../common/interfaces/location.interface";
   
   @ObjectType()

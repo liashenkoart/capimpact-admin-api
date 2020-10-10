@@ -14,7 +14,7 @@ import {
   import { AuthGuard } from '@nestjs/passport';
   import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
   
-  import { IndustryService } from './industry.service';
+  import { IndustryService } from './service/industry.service';
   import { IndustryInput, IndustryCreationInput, IndustriesArgs } from './dto';
   
   @ApiBearerAuth()

@@ -1,17 +1,17 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
-import { CompanyCreationInput, CompanyInput, CompaniesArgs } from './dto';
+import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
 import { asyncForEach } from '@lib/sorting';
-import { CapabilityTreeService } from '../capability-tree/capability-tree.service';
+import { CapabilityTreeService } from '../../capability-tree/capability-tree.service';
 import { each } from 'lodash';
 
-import { Company } from './company.entity';
-import { Capability } from '../capability/capability.entity';
-import { IndustryTree } from '../industry-tree/industry-tree.entity';
-import { CapabilityTree } from '../capability-tree/capability-tree.entity';
-import { Challenge } from '../challenge/challenge.entity';
-import { GroupTag } from '../grouptag/group-tag.entity';
+import { Company } from '../company.entity';
+import { Capability } from '../../capability/capability.entity';
+import { IndustryTree } from '../../industry-tree/industry-tree.entity';
+import { CapabilityTree } from '../../capability-tree/capability-tree.entity';
+import { Challenge } from '../../challenge/challenge.entity';
+import { GroupTag } from '../../grouptag/group-tag.entity';
 
 @Injectable()
 export class CompanyService {

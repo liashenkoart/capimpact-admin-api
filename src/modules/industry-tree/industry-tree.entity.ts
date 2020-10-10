@@ -1,8 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, Tree, OneToMany, ManyToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
-import { Company } from '@modules/caps/entities/company.entity';
-import { CapabilityTree, Startup, ValueDriver, Process } from '@modules/caps/entities';
-import { Sic } from '@modules/caps/entities/sic.entity';
+import { Company } from '../company/company.entity';
+import { CapabilityTree } from '../capability-tree/capability-tree.entity';
+import { Startup } from '../startup/startup.entity';
+import { ValueDriver } from '../value-driver/value-driver.entity';
+import { Process } from '../process/process.entity';
+import { Sic } from '../common/entities/sic.entity';
 
 @ObjectType()
 @Entity('industry_tree')

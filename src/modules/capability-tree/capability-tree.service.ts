@@ -25,7 +25,7 @@ export class CapabilityTreeService extends BaseService {
     @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) public readonly capabilityTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
-    @InjectRepository(CapabilityTree) private readonly treeRepository: TreeRepository<CapabilityTree>
+    @InjectRepository(CapabilityTree) public readonly treeRepository: TreeRepository<CapabilityTree>
   ) {
     super();
   }
