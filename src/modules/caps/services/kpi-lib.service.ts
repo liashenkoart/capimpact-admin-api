@@ -27,7 +27,7 @@ export class KpiLibService extends BaseService {
 
     await asyncForEach(kpis, async ({tags},i) => {
       let tagsEntities = [];
-      if(tags.length > 0) {
+      if( tags && tags.length > 0) {
         tagsEntities = await  this.tagsRepository.findByIds(tags);
       }
       kpiResponse.push({...kpis[i], tags: tagsEntities})   
