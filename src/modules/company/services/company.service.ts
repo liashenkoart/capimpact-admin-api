@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
@@ -16,6 +16,7 @@ import { GroupTag } from '../../grouptag/group-tag.entity';
 @Injectable()
 export class CompanyService {
   constructor(
+    @Inject(forwardRef(() => CapabilityTreeService))
     private capabilitiesTreeSrv:  CapabilityTreeService,
     @InjectRepository(GroupTag) private readonly groupTagRepository: Repository<GroupTag>,
     @InjectRepository(Challenge) private readonly challengeRepository: Repository<Challenge>,

@@ -1,7 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, forwardRef, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository } from 'typeorm';
-
 import { sortTreeByField, flattenTree } from '@lib/sorting';
 import { BaseService } from 'modules/common/services';
 import { ValueDriverCreationInput, ValueDriverInput, ValueDriversArgs } from './dto';
@@ -14,6 +13,7 @@ import { IndustryTree } from '../industry-tree/industry-tree.entity';
 @Injectable()
 export class ValueDriverService extends BaseService {
   constructor(
+    @Inject(forwardRef(() => TagService))
     private readonly  tagService: TagService,
     @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(ValueDriver) private readonly valueDriverRepository: Repository<ValueDriver>,

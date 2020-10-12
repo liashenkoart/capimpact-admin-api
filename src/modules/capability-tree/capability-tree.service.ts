@@ -1,5 +1,5 @@
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, Not,IsNull} from 'typeorm';
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
@@ -19,7 +19,9 @@ const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentI
 @Injectable()
 export class CapabilityTreeService extends BaseService {
   constructor(
+    @Inject(forwardRef(() => TagService))
     private tagService: TagService,
+    @Inject(forwardRef(() => TechnologyService))
     private technologyService: TechnologyService,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
     @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,

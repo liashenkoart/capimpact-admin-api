@@ -15,12 +15,7 @@ import {
   import { KpiBenchmark } from '../kpi-benchmark/kpi-benchmark.entity';
   import { Process } from '../process/process.entity';
   import { CapabilityLib } from '../capability-libs/capability-lib.entity';
-  
-  export enum BenefitType {
-    Revenue = 'Revenue',
-    CostSaving = 'Cost Saving',
-    Productivity = 'Productivity',
-  }
+  import { BenefitType } from "./kpi-lib.enums";
   
   @ObjectType()
   @Entity('kpi_libs')

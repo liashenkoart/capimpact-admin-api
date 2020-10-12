@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, forwardRef, Inject , OnModuleInit } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -6,8 +6,8 @@ import { Repository } from 'typeorm';
 import { Industry } from '../industry.entity';
 import { IndustryCreationInput, IndustryInput, IndustriesArgs } from '../dto';
 
-import { ProcessService } from '../../process/services';
-import { CapabilityService } from '../../capability/services';
+import { ProcessService } from '../../process/services/process.service';
+import { CapabilityService } from '../../capability/services/capability.service';
 import { ValueDriverService } from '../../value-driver/value-driver.service';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class IndustryService implements OnModuleInit{
 
   async findAll(args: IndustriesArgs): Promise<Industry[]> {
     let industries = [];
-    console.log(args)
+
     let result = await this.industryRepository.find({ ...args, order: { name: 'ASC' } });
     for (let industry of result) {
       // const countProcesses = await this.processService.countDocuments({ industry_id: industry.id });

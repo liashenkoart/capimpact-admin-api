@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions } from 'typeorm';
 import { CapabilityTreeService } from '../capability-tree/capability-tree.service';
@@ -14,8 +14,11 @@ import { KpiLibService } from '../kpi-lib/kpi-lib.service';
 @Injectable()
 export class CapabilityLibService {
   constructor(
+    @Inject(forwardRef(() => CapabilityTreeService))
     private readonly capabilityTreeService: CapabilityTreeService,
+    @Inject(forwardRef(() => TagService))
     private readonly tasgSrv: TagService,
+    @Inject(forwardRef(() => KpiLibService))
     private readonly kpiLibSrv: KpiLibService,
     @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) private readonly capabilityTreeRepository: Repository<CapabilityTree>,

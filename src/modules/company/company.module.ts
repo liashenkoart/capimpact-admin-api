@@ -1,7 +1,8 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CompanyController } from './company.controller';
-import { CompanyService, CompanyGraphService  } from "./services"
+import { CompanyService  } from "./services/company.service";
+import { CompanyGraphService  } from "./services/company.graph.service";
 import { Company } from './company.entity';
 import { Capability } from '../capability/capability.entity';
 import { IndustryTree } from '../industry-tree/industry-tree.entity';

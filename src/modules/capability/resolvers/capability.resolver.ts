@@ -1,4 +1,4 @@
-import { UseGuards } from '@nestjs/common';
+import { UseGuards,  forwardRef, Inject } from '@nestjs/common';
 import { Resolver, ResolveProperty, Parent, Query, Args, Mutation } from '@nestjs/graphql';
 import { ID } from 'type-graphql';
 
@@ -9,8 +9,8 @@ import { User } from '@modules/users/user.entity';
 import { Capability } from '../capability.entity';
 import { Industry } from '../../industry/industry.entity';
 import { Company } from '../../company/company.entity';
-import { CapabilityService } from '../../capability/services';
-import { IndustryService } from '../../industry/service';
+import { CapabilityService } from '../services/capability.service';
+import { IndustryService } from '../../industry/service/industry.service';
 import { CompanyService } from '../../company/services';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
@@ -18,8 +18,11 @@ import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../d
 @Resolver(() => Capability)
 export class CapabilityResolver {
   constructor(
+    @Inject(forwardRef(() => CapabilityService))
     private readonly capabilityService: CapabilityService,
+    @Inject(forwardRef(() => IndustryService))
     private readonly industryService: IndustryService,
+    @Inject(forwardRef(() => CompanyService))
     private readonly companyService: CompanyService
   ) {}
 

@@ -1,4 +1,4 @@
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, Inject, forwardRef } from '@nestjs/common';
 import { Resolver, ResolveProperty, Parent, Query, Args, Mutation } from '@nestjs/graphql';
 import { ID } from 'type-graphql';
 
@@ -9,14 +9,16 @@ import { User } from '@modules/users/user.entity';
 import { Process } from '../process/process.entity';
 import { Industry } from '../industry/industry.entity';
 import { ProcessService } from '../process/services';
-import { IndustryService } from '../industry/service';
+import { IndustryService } from '../industry/service/industry.service';
 import { ProcessesArgs, ProcessCreationInput, ProcessInput } from './dto';
 
 @UseGuards(GqlAuthGuard)
 @Resolver(() => Process)
 export class ProcessResolver {
   constructor(
+    @Inject(forwardRef(() => ProcessService))
     private readonly processService: ProcessService,
+    @Inject(forwardRef(() => IndustryService))
     private readonly industryService: IndustryService
   ) {}
 

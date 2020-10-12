@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 
@@ -17,8 +17,11 @@ import { IndustryService } from "../../industry/service/industry.service";
 @Injectable()
 export class CapabilityService {
   constructor(
+    @Inject(forwardRef(() => IndustryService))
     private readonly industryService: IndustryService,
+    @Inject(forwardRef(() => CapabilityTreeService))
     private readonly capTreeSrv: CapabilityTreeService,
+    @Inject(forwardRef(() => CapabilityGraphService))
     private readonly capabilityGraphService: CapabilityGraphService,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>

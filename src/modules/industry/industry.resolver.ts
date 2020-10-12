@@ -1,4 +1,4 @@
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, Inject, forwardRef } from '@nestjs/common';
 import { Resolver, ResolveProperty, Parent, Query, Args, Mutation } from '@nestjs/graphql';
 import { ID } from 'type-graphql';
 
@@ -9,10 +9,10 @@ import { Process } from '../process/process.entity';
 import { Capability } from '../capability/capability.entity';
 import { Company } from '../company/company.entity';
 
-import { IndustryService } from './service';
-import { ProcessService } from '../process/services';
-import { CapabilityService } from '../capability/services';
-import { CompanyService } from '../company/services';
+import { IndustryService } from './service/industry.service';
+import { ProcessService } from '../process/services/process.service';
+import { CapabilityService } from '../capability/services/capability.service';
+import { CompanyService } from '../company/services/company.service';
 
 import { IndustriesArgs, IndustryCreationInput, IndustryInput } from './dto';
 

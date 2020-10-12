@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions, In } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import _ from 'lodash';
 
-import { IndustryGraphService } from '@modules/caps/services/industry.graph.service';
+import { IndustryGraphService } from '../industry/service/industry.graph.service';
 
 import { BaseService } from '@modules/common/services';
 import { Startup } from '../startup/startup.entity';
@@ -16,7 +16,9 @@ import { CapabilityLibService } from "../capability-libs/capability-lib.service"
 @Injectable()
 export class StartupService extends BaseService {
   constructor(
+    @Inject(forwardRef(() => IndustryGraphService))
     private readonly industryGraphService: IndustryGraphService,
+    @Inject(forwardRef(() => CapabilityLibService))
     private readonly cabLibSrv: CapabilityLibService,
     @InjectRepository(Tag) private readonly tagsRepository: Repository<Tag>,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,

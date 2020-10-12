@@ -6,7 +6,9 @@ import { Challenge } from './challenge.entity';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([Challenge])],
+  imports: [
+    TypeOrmModule.forFeature([Challenge])
+  ],
   controllers: [ChallengeController],
   providers: [ChallengeService],
   exports: [ChallengeService],

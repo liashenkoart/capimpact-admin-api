@@ -14,7 +14,7 @@ import {
   import { AuthGuard } from '@nestjs/passport';
   import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
   
-  import {CompanyGraphService} from "@modules/caps/services/company.graph.service";
+  import { CompanyGraphService } from "./services";
   
   import { CompanyService } from './services/company.service';
   import { CompanyInput, CompanyCreationInput, CompaniesArgs } from './dto';
