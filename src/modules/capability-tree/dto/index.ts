@@ -5,6 +5,6 @@ export { CapabilityTreesArgs } from './capability-trees.args'
 export { SaveCapTreeTechsDto } from './save-cap-tree-techs.dto';
 export { UpdateCapabilityTreeNode } from './update-capability-tree.dto'
 export { CapabilityTreeIndustryCloneInput } from './CapabilityTreeIndustryCloneInput.dto';
-export { CapabilityTreeLocationDto } from './CapabilityTreeLocation.dto';
+export { CapabilityTreeLocationDto } from './capabilityTreeLocation.dto';
 export { CapabilityTreeCreationInput } from './capability-tree-creation.dto';
 export { CapabilityTreeMasterCreationInput } from './capability-tree-master-creation.dto';
