@@ -1,6 +1,6 @@
 import { createConnection, getManager } from 'typeorm';
 
-import { Industry } from '@modules/caps/entities';
+import { Industry } from '../modules/industry/industry.entity';
 
 import { parseCsv } from '@lib/parseCsv';
 

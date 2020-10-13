@@ -1,6 +1,12 @@
 import { createConnection, getManager } from 'typeorm';
 
-import { Industry, Company, IndustryTree, ValueDriver, Startup, Process } from '@modules/caps/entities';
+import { ValueDriver } from '../modules/value-driver/value-driver.entity';
+import { Startup } from '../modules/startup/startup.entity';
+import { Process } from '../modules/process/process.entity';
+import { Company } from '../modules/company/company.entity';
+import { IndustryTree } from '../modules/industry-tree/industry-tree.entity';
+
+import { Industry } from '../modules/industry/industry.entity';
 
 import { asyncForEach } from '@lib/sorting';
 

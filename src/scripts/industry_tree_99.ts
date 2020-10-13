@@ -1,6 +1,12 @@
 import { createConnection, getManager } from 'typeorm';
 import _ from 'lodash';
-import { Industry, IndustryTree, Capability, CapabilityTree, Company } from '@modules/caps/entities';
+import { Company } from '../modules/company/company.entity';
+import { IndustryTree } from '../modules/industry-tree/industry-tree.entity';
+import { CapabilityTree } from '../modules/capability-tree/capability-tree.entity';
+
+import { Industry } from '../modules/industry/industry.entity';
+import { Capability } from '../modules/capability/capability.entity';
+
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 let connection = null;
 

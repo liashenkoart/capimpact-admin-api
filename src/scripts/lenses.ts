@@ -1,7 +1,8 @@
 import { createConnection, getManager } from 'typeorm';
 import { chain } from 'lodash'
 
-import { Lense, Classification } from '@modules/caps/entities';
+import { Lense } from '../modules/lense/lense.entity';
+import { Classification } from '../modules/classifications/classification.entity';
 
 import { parseCsv } from '@lib/parseCsv';
 

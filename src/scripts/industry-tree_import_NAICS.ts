@@ -1,6 +1,7 @@
 import { createConnection, getManager } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
-import { IndustryTree } from "@modules/caps/entities";
+import { IndustryTree } from '../modules/industry-tree/industry-tree.entity';
+
 
 let connection = null;
 

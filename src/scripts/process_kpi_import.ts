@@ -1,6 +1,8 @@
 import { createConnection, getManager } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
-import { Industry, Process, KpiLib, IndustryTree } from '@modules/caps/entities';
+import { Process } from '../modules/process/process.entity';
+import { KpiLib } from '../modules/kpi-lib/kpi-lib.entity';
+import { IndustryTree } from '../modules/industry-tree/industry-tree.entity';
 
 let connection = null;
 

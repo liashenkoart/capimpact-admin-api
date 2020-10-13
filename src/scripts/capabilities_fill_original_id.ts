@@ -1,6 +1,8 @@
 import { createConnection, getManager } from 'typeorm';
 
-import { Industry, Capability, Company } from '@modules/caps/entities';
+import { Industry } from '../modules/industry/industry.entity';
+import { Capability } from '../modules/capability/capability.entity';
+import { Company } from '../modules/company/company.entity';
 
 let connection = null;
 

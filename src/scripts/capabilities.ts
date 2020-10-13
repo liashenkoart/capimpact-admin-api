@@ -1,6 +1,7 @@
 import { createConnection, getManager } from 'typeorm';
 
-import { Industry, Capability } from '@modules/caps/entities';
+import { Industry } from '../modules/industry/industry.entity';
+import { Capability } from '../modules/capability/capability.entity';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';

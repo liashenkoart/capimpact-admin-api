@@ -1,7 +1,8 @@
 import { createConnection, getManager } from 'typeorm';
 import { parseCsv } from '@lib/parseCsv';
 import { chain } from 'lodash'
-import { IndustryTree, Sic } from '@modules/caps/entities';
+import { IndustryTree } from '../modules/industry-tree/industry-tree.entity';
+import { Sic } from '../modules/common/entities/sic.entity';
 
 async function main() {
   const connection = await createConnection();
