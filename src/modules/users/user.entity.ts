@@ -4,7 +4,9 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToMany } from 
 import { Exclude } from 'class-transformer';
 import passwordCrypt from '@lib/passwordCrypt';
 
-import { Process, Capability, Company } from '@modules/caps/entities';
+import { Process } from '../process/process.entity';
+import { Capability } from '../capability/capability.entity';
+import { Company } from '../company/company.entity';
 
 @ObjectType()
 @Entity('users')
