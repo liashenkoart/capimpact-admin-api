@@ -12,9 +12,10 @@ import {
   import { GroupFilter } from '../groupfilter/groupfilter.entity';
   import { IndustryTree } from '../industry-tree/industry-tree.entity';
   import { CapabilityTree } from '../capability-tree/capability-tree.entity';
-  
+  import { COMPANY_COLUMN_NAME } from './company.constants';
+
   @ObjectType()
-  @Entity('companies')
+  @Entity(COMPANY_COLUMN_NAME)
   export class Company {
     @Field(() => ID)
     @PrimaryGeneratedColumn()

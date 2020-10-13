@@ -2,9 +2,10 @@ import { Entity, Column, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from
 import { ObjectType, Field, ID, Int } from 'type-graphql';
 
 import { Classification } from '../classifications/classification.entity';
+import { LENSES_COLUMN_NAME } from './lenses.constants';
 
 @ObjectType()
-@Entity('lenses')
+@Entity(LENSES_COLUMN_NAME)
 export class Lense {
   @Field(() => ID)
   @PrimaryGeneratedColumn()

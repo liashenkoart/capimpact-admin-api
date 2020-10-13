@@ -17,12 +17,13 @@ import {
   
   import { IndustryTreeService } from './industry-tree.service';
   import { IndustryTreesArgs, IndustryTreeInput, IndustryTreeCreationInput } from './dto';
-  
+  import { INDUSTRY_TREE_API_TAG } from './industry-tree.constants'
+
   @ApiBearerAuth()
-  @ApiTags('industry-trees')
+  @ApiTags(INDUSTRY_TREE_API_TAG)
   @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('industry-trees')
+  @Controller(INDUSTRY_TREE_API_TAG)
   export class IndustryTreeController {
     constructor(private readonly industryTreeService: IndustryTreeService) {}
   

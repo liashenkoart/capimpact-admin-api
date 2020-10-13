@@ -16,9 +16,10 @@ import {
   import { Company } from '../company/company.entity';
   import { KpiLib } from '../kpi-lib/kpi-lib.entity';
   import { IndustryTree } from '../industry-tree/industry-tree.entity';
-  
+  import { PROCESS_COLUMN_NAME } from './process.constants';
+
   @ObjectType()
-  @Entity('processes')
+  @Entity(PROCESS_COLUMN_NAME)
   @Tree('materialized-path')
   export class Process {
     @Field(() => ID)

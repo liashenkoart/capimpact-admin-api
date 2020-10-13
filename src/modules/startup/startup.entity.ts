@@ -1,11 +1,11 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
 import { IndustryTree } from '../industry-tree/industry-tree.entity';
-import { Industry } from '../industry/industry.entity';
 import { Capability } from '../capability/capability.entity';
+import { STARTUP_COLUMN_NAME} from './startup.constants';
 
 @ObjectType()
-@Entity('startup')
+@Entity(STARTUP_COLUMN_NAME)
 export class Startup {
   @Field(() => ID)
   @PrimaryColumn({

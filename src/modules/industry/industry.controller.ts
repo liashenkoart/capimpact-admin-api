@@ -16,12 +16,13 @@ import {
   
   import { IndustryService } from './service/industry.service';
   import { IndustryInput, IndustryCreationInput, IndustriesArgs } from './dto';
-  
+  import { INDUSTRY_API_TAG } from './industry.constants'
+
   @ApiBearerAuth()
-  @ApiTags('industries')
+  @ApiTags(INDUSTRY_API_TAG)
   @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('industries')
+  @Controller(INDUSTRY_API_TAG)
   export class IndustryController {
     constructor(
       private readonly industryService: IndustryService //@Inject(CACHE_MANAGER) private cacheManager

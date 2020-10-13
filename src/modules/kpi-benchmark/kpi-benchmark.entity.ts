@@ -8,9 +8,10 @@ import {
   import { ObjectType, Field, ID } from 'type-graphql';
   import { Industry } from '../industry/industry.entity';
   import { KpiLib } from '../kpi-lib/kpi-lib.entity';
-  
+  import { KPI_BENCHMARK_COLUMN_NAME } from './kpi-benchmark.constants'   
+
   @ObjectType()
-  @Entity('kpi_benchmarks')
+  @Entity(KPI_BENCHMARK_COLUMN_NAME)
   export class KpiBenchmark {
     @Field(() => ID)
     @PrimaryGeneratedColumn()

@@ -16,12 +16,13 @@ import {
   import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
   
   import { TagService } from './tags.service';
- 
+  import { TAGS_API_TAG } from './tags.constants';
+
   @ApiBearerAuth()
-  @ApiTags('tags')
+  @ApiTags(TAGS_API_TAG)
   @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('tags')
+  @Controller(TAGS_API_TAG)
   export class TagsController {
     constructor(private readonly tagsService: TagService) {}
   

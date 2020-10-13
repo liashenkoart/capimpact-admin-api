@@ -15,12 +15,13 @@ import {
   import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
   import { GroupTagService } from './grouptag.service';
   import { GroupTagInput, GroupTagCreationInput, GroupTagsArgs } from './dto';
-  
+  import { GROUP_TAG_API_TAG } from './group-tag.constants'
+
   @ApiBearerAuth()
-  @ApiTags('grouptags')
+  @ApiTags(GROUP_TAG_API_TAG)
   @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('grouptags')
+  @Controller(GROUP_TAG_API_TAG)
   export class GroupTagController {
     constructor(private readonly grouptagService: GroupTagService) {}
   

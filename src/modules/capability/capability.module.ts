@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
 import { CapabilityController } from './capability.controller';
 import { CapabilityService } from './services/capability.service';
 import { CapabilityGraphService } from './services/capability.graph.service';
@@ -10,6 +11,7 @@ import { Capability } from './capability.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Capability]),
+    PassportModule.register({ defaultStrategy: 'jwt' })
  ],
   controllers: [CapabilityController],
   providers: [

@@ -3,9 +3,10 @@ import { ObjectType, Field, ID } from 'type-graphql';
 
 import { KpiLib } from '../kpi-lib/kpi-lib.entity';
 import { CapabilityTree } from '../capability-tree/capability-tree.entity';
+import { CAPABILITY_LIB_COLUMN_NAME } from './capability-lib.constants';
 
 @ObjectType()
-@Entity('capability_lib')
+@Entity(CAPABILITY_LIB_COLUMN_NAME)
 export class CapabilityLib {
   @Field(() => ID)
   @PrimaryGeneratedColumn()

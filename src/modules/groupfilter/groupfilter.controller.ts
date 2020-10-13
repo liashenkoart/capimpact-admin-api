@@ -12,16 +12,17 @@ import {
     ParseIntPipe,
   } from '@nestjs/common';
   import { AuthGuard } from '@nestjs/passport';
-  import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
+  import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
   
   import { GroupFilterService } from './groupfilter.service';
   import { GroupFilterInput, GroupFilterCreationInput, GroupFiltersArgs } from './dto';
-  
+  import { GROUP_FILTER_API_TAG } from './groupfilter.constants';
+
   @ApiBearerAuth()
-  @ApiTags('groupfilters')
+  @ApiTags(GROUP_FILTER_API_TAG)
   @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('groupfilters')
+  @Controller(GROUP_FILTER_API_TAG)
   export class GroupFilterController {
     constructor(private readonly groupFilterService: GroupFilterService) {}
   

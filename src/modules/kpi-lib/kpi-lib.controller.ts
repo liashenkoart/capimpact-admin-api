@@ -20,12 +20,13 @@ import {
   
   import { KpiLibService } from './kpi-lib.service';
   import { KpiLibInput, KpiLibCreationInput, KpiLibsArgs } from './dto';
-  
+  import { KPI_LIB_API_TAG } from './kpi-lib.constants';
+
   //@ApiBearerAuth()
-  @ApiTags('kpilibs')
+  @ApiTags(KPI_LIB_API_TAG)
   @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('kpilibs')
+  @Controller(KPI_LIB_API_TAG)
   export class KpiLibController {
     constructor(private readonly kpilibService: KpiLibService) {}
   

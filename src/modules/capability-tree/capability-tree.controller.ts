@@ -18,12 +18,13 @@ import {
   import { CapabilityTreeArgs, UpdateCapabilityTreeNode, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput,CapabilityTreeLocationDto } from './dto';
   import { CapabilityTreeIndustryCreationInput } from './dto/capability-tree-industry-creation.dto';
   import { SaveCapTreeTechsDto } from "./dto";
-  
+  import { CAPABILITY_TREE_API_TAG } from "./capability-tree.constants"
+
   @ApiBearerAuth()
-  @ApiTags('capability-trees')
+  @ApiTags(CAPABILITY_TREE_API_TAG)
   @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('capability-trees')
+  @Controller(CAPABILITY_TREE_API_TAG)
   export class CapabilityTreeController {
     constructor(private readonly capabilityTreeService: CapabilityTreeService) {}
   

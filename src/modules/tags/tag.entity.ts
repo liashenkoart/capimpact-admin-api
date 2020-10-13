@@ -1,8 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
+import { TAGS_COLUMN_NAME } from './tags.constants';
 
 @ObjectType()
-@Entity('tags')
+@Entity(TAGS_COLUMN_NAME)
 export class Tag {
   @Field(() => ID)
   @PrimaryGeneratedColumn()

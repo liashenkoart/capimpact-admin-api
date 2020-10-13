@@ -17,12 +17,13 @@ import {
   
   import { ProcessService } from './services';
   import { ProcessesArgs, ProcessInput, ProcessCreationInput } from './dto';
-  
+  import { PROCESS_API_TAG } from './process.constants';
+
   @ApiBearerAuth()
-  @ApiTags('processes')
+  @ApiTags(PROCESS_API_TAG)
   @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('processes')
+  @Controller(PROCESS_API_TAG)
   export class ProcessController {
     constructor(private readonly processService: ProcessService) {}
   
