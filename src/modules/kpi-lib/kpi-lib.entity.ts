@@ -16,9 +16,10 @@ import {
   import { Process } from '../process/process.entity';
   import { CapabilityLib } from '../capability-libs/capability-lib.entity';
   import { BenefitType } from "./kpi-lib.enums";
-  
+  import { KPI_LIB_COLUMN_NAME } from './kpi-lib.constants';
+
   @ObjectType()
-  @Entity('kpi_libs')
+  @Entity(KPI_LIB_COLUMN_NAME)
   @Unique(['label'])
   export class KpiLib {
     @Field(() => ID)

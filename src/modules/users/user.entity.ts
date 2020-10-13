@@ -7,9 +7,10 @@ import passwordCrypt from '@lib/passwordCrypt';
 import { Process } from '../process/process.entity';
 import { Capability } from '../capability/capability.entity';
 import { Company } from '../company/company.entity';
+import { USERS_COLUMN_NAME } from './users.constants';
 
 @ObjectType()
-@Entity('users')
+@Entity(USERS_COLUMN_NAME)
 export class User {
   @Field(type => Int)
   @PrimaryGeneratedColumn()

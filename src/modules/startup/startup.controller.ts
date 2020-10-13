@@ -15,12 +15,13 @@ import {
   
   import { StartupService } from './startup.service';
   import { StartupInput, StartupCreationInput, StartupsArgs } from './dto';
-  
+  import { STARTUP_API_TAG } from './startup.constants';
+
   @ApiBearerAuth()
-  @ApiTags('startups')
-  //@UseGuards(AuthGuard())
+  @ApiTags(STARTUP_API_TAG)
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('startups')
+  @Controller(STARTUP_API_TAG)
   export class StartupController {
     constructor(private readonly startupService: StartupService) {}
   

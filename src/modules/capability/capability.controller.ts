@@ -18,12 +18,13 @@ import {
   
   import { CapabilityService } from './services/capability.service';
   import { CapabilitiesArgs, CapabilityInput, CapabilityCreationInput } from './dto';
-  
+  import { CAPABILITY_API_TAG } from './capability.constants';
+
   @ApiBearerAuth()
-  @ApiTags('capabilities')
-  //@UseGuards(AuthGuard())
+  @ApiTags(CAPABILITY_API_TAG)
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('capabilities')
+  @Controller(CAPABILITY_API_TAG)
   export class CapabilityController {
     constructor(private readonly capabilityService: CapabilityService) {}
   

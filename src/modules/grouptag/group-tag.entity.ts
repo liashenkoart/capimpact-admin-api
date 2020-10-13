@@ -1,9 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 import { Company } from '../company/company.entity';
+import { GROUP_TAG_COLUMN_NAME } from './group-tag.constants'
 
 @ObjectType()
-@Entity('group_tags')
+@Entity(GROUP_TAG_COLUMN_NAME)
 export class GroupTag {
   @Field(() => ID)
   @PrimaryGeneratedColumn()

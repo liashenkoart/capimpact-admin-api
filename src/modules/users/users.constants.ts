@@ -1,0 +1,1 @@
+export const USERS_COLUMN_NAME = 'users';

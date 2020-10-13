@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
 import { ProcessGraphService, ProcessService } from './services';
 import { ProcessController } from './process.controller';
 import { Process } from './process.entity';
@@ -10,7 +11,9 @@ import { ProcessResolver } from './process.resolver';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([Process, Industry, KpiLib, IndustryTree])],
+  imports: [
+    TypeOrmModule.forFeature([Process, Industry, KpiLib, IndustryTree]),
+    PassportModule.register({ defaultStrategy: 'jwt' })],
   controllers: [ProcessController],
   providers: [
     ProcessService,

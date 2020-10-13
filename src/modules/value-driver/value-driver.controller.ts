@@ -16,11 +16,12 @@ import {
   
   import { ValueDriverService } from './value-driver.service';
   import { ValueDriverInput, ValueDriverCreationInput, ValueDriversArgs } from './dto';
-  
-  //@UseGuards(AuthGuard())
-  @ApiTags('valuedrivers')
+  import { VALUE_DRIVER_API_TAG} from './value-driver.constants';
+
+  @UseGuards(AuthGuard())
+  @ApiTags(VALUE_DRIVER_API_TAG)
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('valuedrivers')
+  @Controller(VALUE_DRIVER_API_TAG)
   export class ValueDriverController {
     constructor(private readonly valuedriverService: ValueDriverService) {}
   

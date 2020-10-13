@@ -1,9 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 import { Company } from '../company/company.entity';
+import { GROUP_FILTER_COLUMN_NAME} from './groupfilter.constants';
 
 @ObjectType()
-@Entity('group_filters')
+@Entity(GROUP_FILTER_COLUMN_NAME)
 export class GroupFilter {
   @Field(() => ID)
   @PrimaryGeneratedColumn()

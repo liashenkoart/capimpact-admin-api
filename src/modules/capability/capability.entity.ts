@@ -18,9 +18,10 @@ import {
   import { Company } from '../company/company.entity';
   import { Classification } from '../classifications/classification.entity';
   import { CapabilityTree } from '../capability-tree/capability-tree.entity';
-  
+  import { CAPABILITY_COLUMN_NAME } from './capability.constants';
+
   @ObjectType()
-  @Entity('capabilities')
+  @Entity(CAPABILITY_COLUMN_NAME)
   @Tree('materialized-path')
   export class Capability {
     @Field(() => ID)

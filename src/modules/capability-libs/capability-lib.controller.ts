@@ -17,12 +17,13 @@ import {
   
   import { CapabilityLibService } from './capability-lib.service';
   import { CapabilityLibsArgs, CapabilityLibInput, CapabilityLibCreationInput } from './dto';
-  
+  import { CAPABILITY_LIB_API_TAG } from './capability-lib.constants';
+
   @ApiBearerAuth()
-  @ApiTags('capability-libs')
-  //@UseGuards(AuthGuard())
+  @ApiTags(CAPABILITY_LIB_API_TAG)
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('capability-libs')
+  @Controller(CAPABILITY_LIB_API_TAG)
   export class CapabilityLibController {
     constructor(private readonly capabilityLibService: CapabilityLibService) {}
   

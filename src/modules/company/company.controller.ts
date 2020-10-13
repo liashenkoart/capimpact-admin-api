@@ -18,12 +18,13 @@ import {
   
   import { CompanyService } from './services/company.service';
   import { CompanyInput, CompanyCreationInput, CompaniesArgs } from './dto';
-  
+  import { COMPANY_API_TAG } from './company.constants';
+
   @ApiBearerAuth()
-  @ApiTags('companies')
-//  @UseGuards(AuthGuard())
+  @ApiTags(COMPANY_API_TAG)
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('companies')
+  @Controller(COMPANY_API_TAG)
   export class CompanyController {
     constructor(
       private readonly companyService: CompanyService,

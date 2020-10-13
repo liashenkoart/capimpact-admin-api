@@ -2,9 +2,10 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColum
 import { ObjectType, Field, ID } from 'type-graphql';
 import { User } from '@modules/users/user.entity';
 import { Company } from '../company/company.entity';
+import { CHALLANGE_COLUMN_NAME } from './challange.constants';
 
 @ObjectType()
-@Entity('challenges')
+@Entity(CHALLANGE_COLUMN_NAME)
 export class Challenge {
   @Field(() => ID)
   @PrimaryGeneratedColumn()

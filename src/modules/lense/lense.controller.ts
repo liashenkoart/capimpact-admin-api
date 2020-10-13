@@ -11,16 +11,17 @@ import {
     Query,
   } from '@nestjs/common';
   import { AuthGuard } from '@nestjs/passport';
-  import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
+  import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
   
   import { LensesArgs } from './dto';
   import { LenseService } from './lense.service'
-  
+  import { LENSES_API_TAG } from './lenses.constants';
+
   @ApiBearerAuth()
-  //@UseGuards(AuthGuard())
-  @ApiTags('lenses')
+  @UseGuards(AuthGuard())
+  @ApiTags(LENSES_API_TAG)
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('lenses')
+  @Controller(LENSES_API_TAG)
   export class LenseController {
   
     constructor(private readonly lenseService: LenseService) {}

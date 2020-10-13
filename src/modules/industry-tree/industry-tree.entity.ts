@@ -6,9 +6,10 @@ import { Startup } from '../startup/startup.entity';
 import { ValueDriver } from '../value-driver/value-driver.entity';
 import { Process } from '../process/process.entity';
 import { Sic } from '../common/entities/sic.entity';
+import { INDUSTRY_TREE_COLUMN_NAME } from './industry-tree.constants'
 
 @ObjectType()
-@Entity('industry_tree')
+@Entity(INDUSTRY_TREE_COLUMN_NAME)
 @Tree('materialized-path')
 export class IndustryTree {
   @Field(() => ID)

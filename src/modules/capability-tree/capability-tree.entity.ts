@@ -16,9 +16,10 @@ import {
   import { Capability } from '../capability/capability.entity';
   import { Company } from '../company/company.entity';
   import  Location from "../common/interfaces/location.interface";
-  
+  import { CAPABILITY_TREE_COLUMN_NAME } from "./capability-tree.constants"
+
   @ObjectType()
-  @Entity('capability_tree')
+  @Entity(CAPABILITY_TREE_COLUMN_NAME)
   @Tree('materialized-path')
   export class CapabilityTree {
     @Field(() => ID)

@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
 import { CompanyController } from './company.controller';
 import { CompanyService  } from "./services/company.service";
 import { CompanyGraphService  } from "./services/company.graph.service";
@@ -12,7 +13,9 @@ import { GroupTag } from '../grouptag/group-tag.entity';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([Company, Capability, IndustryTree, CapabilityTree, Challenge, GroupTag])],
+  imports: [
+    TypeOrmModule.forFeature([Company, Capability, IndustryTree, CapabilityTree, Challenge, GroupTag]),
+    PassportModule.register({ defaultStrategy: 'jwt' })],
   controllers: [CompanyController],
   providers: [CompanyService, CompanyGraphService],
   exports: [CompanyService, CompanyGraphService]

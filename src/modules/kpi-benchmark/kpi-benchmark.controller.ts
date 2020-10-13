@@ -16,11 +16,12 @@ import {
   
   import { KpiBenchmarkService } from './kpi-benchmark.service';
   import { KpiBenchmarkInput, KpiBenchmarkCreationInput, KpiBenchmarksArgs } from './dto';
-  
-  //@UseGuards(AuthGuard())
-  @ApiTags('kpi-benchmarks')
+import { KPI_BENCHMARK_API_TAG } from './kpi-benchmark.constants'   
+
+  @UseGuards(AuthGuard())
+  @ApiTags(KPI_BENCHMARK_API_TAG)
   @UseInterceptors(ClassSerializerInterceptor)
-  @Controller('kpi-benchmarks')
+  @Controller(KPI_BENCHMARK_API_TAG)
   export class KpiBenchmarkController {
     constructor(private readonly kpiBenchmarkService: KpiBenchmarkService) {}
   

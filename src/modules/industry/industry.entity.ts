@@ -4,9 +4,10 @@ import { Process } from '../process/process.entity';
 import { Capability } from '../capability/capability.entity';
 import { Benchmark } from '../benchmark/benchmark.entity';
 import { KpiBenchmark } from '../kpi-benchmark/kpi-benchmark.entity';
+import { INDUSTRY_COLUMN_NAME } from './industry.constants'
 
 @ObjectType()
-@Entity('industries')
+@Entity(INDUSTRY_COLUMN_NAME)
 export class Industry {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
