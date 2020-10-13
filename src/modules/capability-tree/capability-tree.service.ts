@@ -346,15 +346,49 @@ export class CapabilityTreeService extends BaseService {
     return masterTree;
   }
 
+  searchTree(element, id){
+    if(element.id == id){
+         return element;
+    } else if (element.children != null){
+         var i;
+         var result = null;
+         for(i=0; result == null && i < element.children.length; i++){
+              result = this.searchTree(element.children[i], id);
+         }
+         return result;
+    }
+    return null;
+}
+
   async updateTreeStructure(selectedNodeId: number, data): Promise<CapabilityTree> {
     const { parentId } = data;
     const parent = await this.capabilityTreeRepository.findOne(parentId);
     const entity = await this.capabilityTreeRepository.findOne(selectedNodeId);
           entity.parent = parent;
     await this.treeRepository.save(entity);
-    if(data.orders) await this.updateTreeOrder(data.orders) 
-    const rootNodeOfMovedCap = await this.findOneById(selectedNodeId)       
-    return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
+    if(data.orders) await this.updateTreeOrder(data.orders);
+    let tree = null;
+    if(data.type === "industry") {
+      tree = await this.treeByIndustryTree(data.industry_tree_id);
+    }
+
+    if(data.type === "master") {
+       tree = await this.findMasterCapTree()
+    }
+
+    if(data.type === "company") {
+      tree = await this.treeByCompanyTree(data.company_id);
+   }
+ 
+    const result = this.searchTree(tree,entity.id);
+    return result;
+  }
+
+  async check(id): Promise<CapabilityTree> {
+    const rootNodeOfMovedCap = await this.capabilityTreeRepository.findOne(id);
+    const result = await this.treeRepository.findDescendantsTree(rootNodeOfMovedCap);
+    console.log(result)
+    return result;
   }
 
   // MASTER CAPTREE
