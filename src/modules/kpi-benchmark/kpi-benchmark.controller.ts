@@ -17,7 +17,7 @@ import {
   import { KpiBenchmarkService } from './kpi-benchmark.service';
   import { KpiBenchmarkInput, KpiBenchmarkCreationInput, KpiBenchmarksArgs } from './dto';
   
-  //@UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @ApiTags('kpi-benchmarks')
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('kpi-benchmarks')

@@ -10,32 +10,9 @@ import { PassportModule } from '@nestjs/passport';
 import { DrivineModule, DrivineModuleOptions } from '@liberation-data/drivine/DrivineModule';
 import { DatabaseRegistry } from '@liberation-data/drivine/connection/DatabaseRegistry';
 import { User } from '@modules/users/user.entity';
-// import {
-//   Industry,
-//   IndustryTree,
-//   Company,
-//   Challenge,
-//   Process,
-//   Capability,
-//   CapabilityLib,
-//   CapabilityTree,
-//   Startup,
-//   Classification,
-//   GroupTag,
-//   GroupFilter,
-//   Lense,
-//   KpiLib,
-//   Benchmark,
-//   ValueDriver,
-//   KpiBenchmark,
-//   Sic,
-//   Tag,
-//   Technology
-// } from '@modules/caps/entities';
 
 import { UsersModule } from '@modules/users';
 import { AuthModule } from '@modules/auth';
-// import { CapsModule } from '@modules/caps';
 
 import { AppController } from './app.controller';
 
@@ -142,9 +119,7 @@ export const MODULE = {
     DrivineModule.withOptions(<DrivineModuleOptions>{
       connectionProviders: [DatabaseRegistry.buildOrResolveFromEnv('GRAPH')]
     }),
-
-    // PassportModule.register({ defaultStrategy: 'jwt' }),
-
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     AuthModule,
     UsersModule,
     CapabilityModule,

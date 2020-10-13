@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
 import { CapabilityTreeController } from './capability-tree.controller';
 import { CapabilityTreeService } from './capability-tree.service';
 import { CapabilityTree } from './capability-tree.entity';
@@ -11,6 +12,7 @@ import { Capability } from '../capability/capability.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([CapabilityTree, IndustryTree ,CapabilityLib, Capability]),
+    PassportModule.register({ defaultStrategy: 'jwt' })
   ],
   controllers: [CapabilityTreeController],
   providers: [CapabilityTreeService],

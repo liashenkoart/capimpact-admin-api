@@ -1,5 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
 import { StartupController } from './startup.controller';
 import { StartupService } from './startup.service';
 import { Startup } from './startup.entity';
@@ -8,7 +9,9 @@ import { Tag } from '../tags/tag.entity';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([Startup, Capability, Tag])],
+  imports: [
+    TypeOrmModule.forFeature([Startup, Capability, Tag]),
+    PassportModule.register({ defaultStrategy: 'jwt' })],
   controllers: [StartupController],
   providers: [StartupService],
   exports: [StartupService]

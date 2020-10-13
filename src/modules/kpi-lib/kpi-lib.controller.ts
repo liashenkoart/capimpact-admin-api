@@ -2,7 +2,7 @@ import {
     Controller,
     Get,
     Post,
-  //  UseGuards,
+    UseGuards,
     Body,
     UseInterceptors,
     ClassSerializerInterceptor,
@@ -11,7 +11,7 @@ import {
     Query,
     ParseIntPipe,
   } from '@nestjs/common';
-  //import { AuthGuard } from '@nestjs/passport';
+  import { AuthGuard } from '@nestjs/passport';
   import {
     ApiTags,
   //  ApiBearerAuth,
@@ -23,7 +23,7 @@ import {
   
   //@ApiBearerAuth()
   @ApiTags('kpilibs')
-  //@UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('kpilibs')
   export class KpiLibController {

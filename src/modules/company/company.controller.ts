@@ -21,7 +21,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('companies')
-//  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('companies')
   export class CompanyController {

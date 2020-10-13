@@ -20,7 +20,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('capability-libs')
-  //@UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('capability-libs')
   export class CapabilityLibController {

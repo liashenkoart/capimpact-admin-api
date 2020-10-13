@@ -20,7 +20,7 @@ import {
   
   @ApiBearerAuth()
   @ApiTags('industry-trees')
-  // @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('industry-trees')
   export class IndustryTreeController {

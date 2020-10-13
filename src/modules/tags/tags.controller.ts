@@ -19,7 +19,7 @@ import {
  
   @ApiBearerAuth()
   @ApiTags('tags')
-  //@UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('tags')
   export class TagsController {

@@ -17,7 +17,7 @@ import {
   import { ValueDriverService } from './value-driver.service';
   import { ValueDriverInput, ValueDriverCreationInput, ValueDriversArgs } from './dto';
   
-  //@UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @ApiTags('valuedrivers')
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('valuedrivers')

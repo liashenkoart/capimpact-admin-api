@@ -11,7 +11,7 @@ import {
 
   @ApiBearerAuth()
   @ApiTags('technologies')
-  //@UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('technologies')
   export class TechnologiesController {

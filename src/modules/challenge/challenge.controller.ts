@@ -13,16 +13,12 @@ import {
   } from '@nestjs/common';
   import { AuthGuard } from '@nestjs/passport';
   import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
-  
-  //import { CurrentUser } from 'modules/common/decorators';
-  
-  //import { User } from '@modules/users/user.entity';
   import { ChallengeService } from './challenge.service';
   import { ChallengeInput, ChallengeCreationInput, ChallengesArgs } from './dto';
   
   @ApiBearerAuth()
   @ApiTags('challenges')
-  //@UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller('challenges')
   export class ChallengeController {

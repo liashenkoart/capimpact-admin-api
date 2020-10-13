@@ -10,5 +10,6 @@ export class Tag {
 
   @Field()
   @Column()
+  
   value: string;
 }
