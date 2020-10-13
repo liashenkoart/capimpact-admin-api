@@ -31,6 +31,11 @@ import {
     async findAll(@Query() query: CapabilityTreeArgs) {
       return this.capabilityTreeService.findAll(query);
     }
+
+    @Get('check/:id')
+    async check(@Param('id', new ParseIntPipe()) id: number) {
+      return this.capabilityTreeService.check(id);
+    }
   
     @Get('tree')
     async tree(@Query() query: CapabilityTreeArgs) {
