@@ -124,7 +124,23 @@ export class CapabilityTreeService extends BaseService {
   }
 
  async getAllChildrenOfNode(node:CapabilityTree): Promise<CapabilityTree[]> {
-    const descendantsTree = await this.treeRepository.findDescendantsTree(node)
+    let descendantsTree = null;
+
+    if(node.type === "industry") {
+      descendantsTree = await this.treeByIndustryTree(node.industry_tree_id);
+    }
+
+    if(node.type === "master") {
+       descendantsTree = await this.findMasterCapTree()
+    }
+
+    if(node.type === "company") {
+      descendantsTree = await this.treeByCompanyTree(node.company_id);
+   }
+
+    descendantsTree = this.searchTree(descendantsTree,node.id);
+      
+
     const allRelatedIds = (descendantsTree ? flattenTree(descendantsTree, 'children') : []).map(({ id }) => id);
     const foundChildren = await Promise.all(allRelatedIds.map(id => this.findOneById(id)))
     return foundChildren
@@ -207,7 +223,7 @@ export class CapabilityTreeService extends BaseService {
 
   async createIndustry(data: CapabilityTreeIndustryCreationInput): Promise<CapabilityTree> {
     // Meaning user has droped node from master captree into industry
-
+console.log("heeeeeereeee")
     if (data.type === 'master') {
        return this.createTree(data,'industry')
     } else {
@@ -264,10 +280,12 @@ export class CapabilityTreeService extends BaseService {
     return sortTreeByField('hierarchy_id', tree);
   }
 
-  async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<CapabilityTree>  {
-      const foundChildren = await this.getAllChildrenById(data.id)
+  async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<any>  {
+      const foundChildren = await this.getAllChildrenById(data.id);
+
       const masterTreeIDtoIndustryId = {}
- console.log("old order",data.orders)
+
+  let count = 0;
 
       await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id, tags }) => {
         let params = { cap_name,capability_lib_id, tags, type }
@@ -277,6 +295,10 @@ export class CapabilityTreeService extends BaseService {
           params['company_id'] = data.company_id;
           
         }
+
+        console.log('++',id, cap_name, capability, parentId, capability_lib_id, tags,'++')
+        console.log('count',count++);
+
         const industry = new CapabilityTree(params)
         // IparentId of industry equals parentId of moved node or newly created industry
         industry.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoIndustryId[parentId], 10)
@@ -306,7 +328,7 @@ export class CapabilityTreeService extends BaseService {
 
       const rootNodeOfMovedCap = await this.findOneById(masterTreeIDtoIndustryId[data.id])
       console.log("CapabilityTreeService -> rootNodeOfMovedCap", rootNodeOfMovedCap)
-      
+      console.log("foundChildren ends")
       return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
   }
 

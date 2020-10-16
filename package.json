@@ -36,6 +36,8 @@
     "@fast-csv/parse": "^4.0.2",
     "@liberation-data/agensgraph": "0.1.0-rc",
     "@liberation-data/drivine": "2.0.7",
+    "@nest-middlewares/connect-timeout": "^6.0.0",
+    "@nest-middlewares/helmet": "^6.0.0",
     "@nestjs/common": "^6.11.5",
     "@nestjs/config": "^0.1.0",
     "@nestjs/core": "^6.11.5",

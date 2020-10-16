@@ -22,7 +22,7 @@ import {
 
   @ApiBearerAuth()
   @ApiTags(CAPABILITY_TREE_API_TAG)
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller(CAPABILITY_TREE_API_TAG)
   export class CapabilityTreeController {
@@ -33,9 +33,21 @@ import {
       return this.capabilityTreeService.findAll(query);
     }
 
-    @Get('check/:id')
-    async check(@Param('id', new ParseIntPipe()) id: number) {
-      return this.capabilityTreeService.check(id);
+    delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    @Post('check')
+    async check() {
+      var start = new Date();
+      console.log('here')
+      
+     return this.delay(999999).then(() => {
+      var 
+      end = new Date();
+       console.log(start, end
+       );
+     })
     }
   
     @Get('tree')
@@ -106,6 +118,7 @@ import {
   
     @Post('company')
     async createCompany(@Body() data: CapabilityTreeIndustryCreationInput) {
+      console.log(data,'----')
       return this.capabilityTreeService.createCompany(data);
     }
   
