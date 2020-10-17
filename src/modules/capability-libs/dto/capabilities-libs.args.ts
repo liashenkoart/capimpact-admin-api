@@ -16,4 +16,9 @@ export class CapabilityLibsArgs extends BaseArgs {
   @IsOptional()
   status?: 'active' | 'inactive';
 
+  @ApiPropertyOptional({ type: String})
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  search?: string;
+  
 }
