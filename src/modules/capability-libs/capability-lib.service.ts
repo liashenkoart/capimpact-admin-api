@@ -170,11 +170,6 @@ export class CapabilityLibService {
 
   getFindAllQuery(query: CapabilityLibsArgs): FindManyOptions {
     const { skip, limit, ...where } = query;
-
-    Object.keys(where).forEach((key) => {
-console.log(key,'---')
-    })
-
     return {
       skip,
       take: limit,
