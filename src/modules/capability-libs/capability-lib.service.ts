@@ -1,6 +1,6 @@
 import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions } from 'typeorm';
+import { Repository, FindManyOptions, Like, Raw } from 'typeorm';
 import { CapabilityTreeService } from '../capability-tree/capability-tree.service';
 import { Tag } from '../tags/tag.entity';
 import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput, CapabilityLibItemResponse } from './dto';
@@ -29,17 +29,24 @@ export class CapabilityLibService {
 
     // TODO: Change to adapt to every query
     const options: any = this.getFindAllQuery(query);
+     
     if (options.sort) {
       options.order = { [options.sort[0]]: options.sort[1] }
     }
+
+      options.where = []
+    
     if (query.status) {
-      options.where = { status: query.status }
+        options.where.push({ status: query.status })
     }
 
-    // FOR CAPABILITY TABLE /capability_libs
-    options.relations = ['kpi_libs'];
-    const sortedCaps = await this.capabilityLibRepository.find(options);
-
+    if (query.search) {
+       options.where = [ ...options.where, 
+                        { name: Raw(alias => `${alias} ILIKE '%${query.search}%'`)},
+                        { description: Raw(alias => `${alias} ILIKE '%${query.search}%'`)}]
+    }
+      // FOR CAPABILITY TABLE /capability_libs
+    const sortedCaps = await this.capabilityLibRepository.find({ ...options, relations:['kpi_libs']});
     let caps = [];
 
     await asyncForEach(sortedCaps, async ({tags},i) => {
@@ -163,7 +170,6 @@ export class CapabilityLibService {
 
   getFindAllQuery(query: CapabilityLibsArgs): FindManyOptions {
     const { skip, limit, ...where } = query;
-
     return {
       skip,
       take: limit,
