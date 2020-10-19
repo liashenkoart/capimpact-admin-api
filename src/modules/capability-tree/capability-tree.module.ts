@@ -25,5 +25,5 @@ export class CapabilityTreeModule {
     // IMPORTANT! Call Middleware.configure BEFORE using it for routes
     HelmetMiddleware.configure( {} )
     consumer.apply(ConnectTimeoutMiddleware).forRoutes( '9999999999999999999');
-}
+  }
 }
