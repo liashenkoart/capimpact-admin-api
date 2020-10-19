@@ -15,7 +15,8 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.use('/api/files', express.static(path.join(__dirname, 'public')));
-  app.use(timeout('999999s'))
+  app.use(timeout('1800000s'))
+ // app.setTimeout();
   app.use((err, res, req, next) => req.jsonp(err,'====')); // DON'T USE FOR PRODUCTION
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 

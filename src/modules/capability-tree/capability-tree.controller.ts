@@ -11,6 +11,7 @@ import {
     Query,
     Req,
     ParseIntPipe,
+    Res,
   } from '@nestjs/common';
   import { AuthGuard } from '@nestjs/passport';
   import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -37,18 +38,6 @@ import {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    @Post('check')
-    async check() {
-      var start = new Date();
-      console.log('here')
-      
-     return this.delay(999999).then(() => {
-      var 
-      end = new Date();
-       console.log(start, end
-       );
-     })
-    }
   
     @Get('tree')
     async tree(@Query() query: CapabilityTreeArgs) {
@@ -60,10 +49,16 @@ import {
     async getIndustryTree(@Query() query: CapabilityTreeArgs) {
       return this.capabilityTreeService.treeByIndustryTree(query.industryId);
     }
+
+    @Get('clonning-status')
+    async cloningStatus(@Query() query) {
+      return this.capabilityTreeService.nodeCloningStatus(query);
+    }
+
   
     @Post('industry')
-    async createIndustry(@Body() data: CapabilityTreeIndustryCreationInput) {
-      return this.capabilityTreeService.createIndustry(data);
+    async createIndustry(@Body() data, @Res() res) {
+      return this.capabilityTreeService.createIndustry(data,res);
     }
   
     @Post('tags/:id')
@@ -118,7 +113,6 @@ import {
   
     @Post('company')
     async createCompany(@Body() data: CapabilityTreeIndustryCreationInput) {
-      console.log(data,'----')
       return this.capabilityTreeService.createCompany(data);
     }
   
