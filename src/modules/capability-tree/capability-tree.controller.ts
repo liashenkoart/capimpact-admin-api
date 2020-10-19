@@ -33,11 +33,6 @@ import {
     async findAll(@Query() query: CapabilityTreeArgs) {
       return this.capabilityTreeService.findAll(query);
     }
-
-    delay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
   
     @Get('tree')
     async tree(@Query() query: CapabilityTreeArgs) {
@@ -55,6 +50,15 @@ import {
       return this.capabilityTreeService.nodeCloningStatus(query);
     }
 
+    @Get('master-to-company/clonning-status')
+    async cloningMasterToCompanyNode(@Query() query) {
+      return this.capabilityTreeService.cloningMasterToCompanyNode(query);
+    }
+
+    @Get('master-to-industry/clonning-status')
+    async cloningMasterToIndustryNode(@Query() query) {
+      return this.capabilityTreeService.cloningMasterToIndustryNode(query);
+    }
   
     @Post('industry')
     async createIndustry(@Body() data, @Res() res) {
@@ -112,8 +116,8 @@ import {
     }
   
     @Post('company')
-    async createCompany(@Body() data: CapabilityTreeIndustryCreationInput) {
-      return this.capabilityTreeService.createCompany(data);
+    async createCompany(@Body() data: CapabilityTreeIndustryCreationInput, @Res() res) {
+      return this.capabilityTreeService.createCompany(data,res);
     }
   
     @Post('company/:id')
