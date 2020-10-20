@@ -46,20 +46,10 @@ import {
     }
 
     @Get('clonning-status')
-    async cloningStatus(@Query() query) {
-      return this.capabilityTreeService.nodeCloningStatus(query);
+    async clonicloningIndustryToCompanyNode(@Query() query) {
+      return this.capabilityTreeService.getCloningStatus(query);
     }
 
-    @Get('master-to-company/clonning-status')
-    async cloningMasterToCompanyNode(@Query() query) {
-      return this.capabilityTreeService.cloningMasterToCompanyNode(query);
-    }
-
-    @Get('master-to-industry/clonning-status')
-    async cloningMasterToIndustryNode(@Query() query) {
-      return this.capabilityTreeService.cloningMasterToIndustryNode(query);
-    }
-  
     @Post('industry')
     async createIndustry(@Body() data, @Res() res) {
       return this.capabilityTreeService.createIndustry(data,res);

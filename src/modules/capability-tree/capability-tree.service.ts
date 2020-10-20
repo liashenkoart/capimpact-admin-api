@@ -165,6 +165,25 @@ export class CapabilityTreeService extends BaseService {
     return this.getAllChildrenOfNode(node);
   }
 
+  async getTreeById(id: number) {
+    const node = await this.capabilityTreeRepository.findOne(id);
+    let descendantsTree = null;
+
+    if(node.type === "industry") {
+      descendantsTree = await this.treeByIndustryTree(node.industry_tree_id);
+    }
+
+    if(node.type === "master") {
+       descendantsTree = await this.findMasterCapTree()
+    }
+
+    if(node.type === "company") {
+      descendantsTree = await this.treeByCompanyTree(node.company_id);
+    }
+
+    return this.searchTree(descendantsTree,node.id);
+  }
+
   // INDUSTRY
   async treeByIndustryTree(industryId: number): Promise<CapabilityTree> {
     const industryParams = { industry_tree_id: industryId, parentId: null, }
@@ -355,68 +374,15 @@ export class CapabilityTreeService extends BaseService {
       return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
   }
 
-  async nodeCloningStatus(data: any) {
-    const { clonedId, newId, industry_tree_id, company_id, type } = data;
+  async getCloningStatus(data: any): Promise<any> {
+    const { clonedId, newId } = data;
+    const tree = await this.getTreeById(newId);
+    let [newTree, clonedTree] = await Promise.all([ this.getAllChildrenById(newId), 
+                                                    this.getAllChildrenById(clonedId)]);
 
-    let newTree: any = null;
-    if(type === 'industry') {
-      newTree = await this.treeByIndustryTree(industry_tree_id);
-    }
-
-    if(type === 'company') {
-      newTree = await this.treeByCompanyTree(company_id);
-    }
-    
-    let  clonedTree: any = await this.findMasterCapTree()
-    
-    newTree = this.searchTree(newTree,newId);
-
-    clonedTree = this.searchTree(clonedTree,clonedId);
+    const progress = Number(((100 * newTree.length) / clonedTree.length).toFixed(0));
  
-    const clonedTreeLength = flattenTree(clonedTree, 'children').length;
-
-    const newTreeLength = flattenTree(newTree, 'children').length;
-
-    const progress = Number(((100 * newTreeLength) / clonedTreeLength).toFixed(0));
- 
-     return { progress, newTree: newTreeLength, clonedTree: clonedTreeLength, tree: newTree};
-  
-  }
-
-  async cloningMasterToIndustryNode(data: any) {
-    const { clonedId, newId, industry_tree_id } = data;
-    let newTree = await this.treeByIndustryTree(industry_tree_id);
-    let  clonedTree: any = await this.findMasterCapTree()
-    
-    newTree = this.searchTree(newTree,newId);
-
-    clonedTree = this.searchTree(clonedTree,clonedId);
- 
-    const clonedTreeLength = flattenTree(clonedTree, 'children').length;
-
-    const newTreeLength = flattenTree(newTree, 'children').length;
-
-    const progress = Number(((100 * newTreeLength) / clonedTreeLength).toFixed(0));
- 
-     return { progress, newTree: newTreeLength, clonedTree: clonedTreeLength, tree: newTree};
-  }
-
-  async cloningMasterToCompanyNode(data: any) {
-    const { clonedId, newId, company_id } = data;
-    let newTree = await this.treeByCompanyTree(company_id);
-    let  clonedTree: any = await this.findMasterCapTree()
-    
-    newTree = this.searchTree(newTree,newId);
-
-    clonedTree = this.searchTree(clonedTree,clonedId);
- 
-    const clonedTreeLength = flattenTree(clonedTree, 'children').length;
-
-    const newTreeLength = flattenTree(newTree, 'children').length;
-
-    const progress = Number(((100 * newTreeLength) / clonedTreeLength).toFixed(0));
- 
-     return { progress, newTree: newTreeLength, clonedTree: clonedTreeLength, tree: newTree};
+    return { progress, tree };
   }
 
   async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<any>  {
