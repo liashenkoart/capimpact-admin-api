@@ -6,13 +6,18 @@ import path from 'path';
 import { ApplicationModule } from './app.module';
 import { setupSwaggerModule } from './setupSwaggerModule';
 import { setupFixtures } from './fixtures';
+var timeout = require('connect-timeout')
 
 async function bootstrap() {
   const app = await NestFactory.create(ApplicationModule, {
     cors: true,
   });
+
   app.setGlobalPrefix('api');
   app.use('/api/files', express.static(path.join(__dirname, 'public')));
+  app.use(timeout('1800000s'))
+ // app.setTimeout();
+  app.use((err, res, req, next) => req.jsonp(err,'====')); // DON'T USE FOR PRODUCTION
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   const configService = app.get(ConfigService);

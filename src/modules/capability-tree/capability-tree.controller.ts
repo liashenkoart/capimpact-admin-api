@@ -11,6 +11,7 @@ import {
     Query,
     Req,
     ParseIntPipe,
+    Res,
   } from '@nestjs/common';
   import { AuthGuard } from '@nestjs/passport';
   import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -22,7 +23,7 @@ import {
 
   @ApiBearerAuth()
   @ApiTags(CAPABILITY_TREE_API_TAG)
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller(CAPABILITY_TREE_API_TAG)
   export class CapabilityTreeController {
@@ -31,11 +32,6 @@ import {
     @Get('')
     async findAll(@Query() query: CapabilityTreeArgs) {
       return this.capabilityTreeService.findAll(query);
-    }
-
-    @Get('check/:id')
-    async check(@Param('id', new ParseIntPipe()) id: number) {
-      return this.capabilityTreeService.check(id);
     }
   
     @Get('tree')
@@ -48,10 +44,15 @@ import {
     async getIndustryTree(@Query() query: CapabilityTreeArgs) {
       return this.capabilityTreeService.treeByIndustryTree(query.industryId);
     }
-  
+
+    @Get('clonning-status')
+    async clonicloningIndustryToCompanyNode(@Query() query) {
+      return this.capabilityTreeService.getCloningStatus(query);
+    }
+
     @Post('industry')
-    async createIndustry(@Body() data: CapabilityTreeIndustryCreationInput) {
-      return this.capabilityTreeService.createIndustry(data);
+    async createIndustry(@Body() data, @Res() res) {
+      return this.capabilityTreeService.createIndustry(data,res);
     }
   
     @Post('tags/:id')
@@ -105,8 +106,8 @@ import {
     }
   
     @Post('company')
-    async createCompany(@Body() data: CapabilityTreeIndustryCreationInput) {
-      return this.capabilityTreeService.createCompany(data);
+    async createCompany(@Body() data: CapabilityTreeIndustryCreationInput, @Res() res) {
+      return this.capabilityTreeService.createCompany(data,res);
     }
   
     @Post('company/:id')
