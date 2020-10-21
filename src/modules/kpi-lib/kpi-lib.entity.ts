@@ -30,6 +30,10 @@ import {
     @Column({ type: 'text', nullable: true })
     label?: string;
   
+    @Field()
+    @Column({ default:'' })
+    calculation: string;
+
     @Field({ nullable: true })
     @Column({ type: 'real', nullable: true })
     min?: number;
