@@ -123,6 +123,15 @@ export class CapabilityTreeService extends BaseService {
         throw new NotFoundException(`s with industry_tree_id: ${industry_tree_id} was not found`);
       }
     }
+
+    
+
+    if(!node.type) {
+      node.type = 'industry';
+      node = await this.treeRepository.save(node);
+    }
+
+    
     return this.getAllChildrenOfNode(node);
   }
 
@@ -191,11 +200,16 @@ export class CapabilityTreeService extends BaseService {
 
     if (!rootIndustryCapTree) {
       const industryCap = await this.industryTreeRepository.findOne({ id: industryId })
-      rootIndustryCapTree = await this.capabilityTreeRepository.save({ cap_name: industryCap.name, industry_tree_id: industryCap.id, parentId: null })
+      rootIndustryCapTree = await this.capabilityTreeRepository.save({ cap_name: industryCap.name, industry_tree_id: industryCap.id, parentId: null, type: 'industry' })
 
       if (!industryCap) {
         throw new NotFoundException(`capability-tree with industry_tree_id: ${industryId} was not found`);
       }
+    }
+
+    if(!rootIndustryCapTree.type) {
+      rootIndustryCapTree.type = 'industry';
+      rootIndustryCapTree = await this.treeRepository.save(rootIndustryCapTree);
     }
 
     const tree = await this.treeRepository.findDescendantsTree(rootIndustryCapTree);
@@ -422,7 +436,6 @@ export class CapabilityTreeService extends BaseService {
         await this.updateTreeOrder(data.orders) 
       }
       
-
       const rootNodeOfMovedCap = await this.findOneById(masterTreeIDtoIndustryId[data.id])
       console.log("CapabilityTreeService -> rootNodeOfMovedCap", rootNodeOfMovedCap)
 

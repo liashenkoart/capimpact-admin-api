@@ -54,12 +54,13 @@ export class CompanyService {
     const { user } = context;
     const { industry_id, name } = data;
     const industry = await this.industryTreeRepository.findOne(industry_id)
-
+console.log(industry)
     let company = new Company(data);
     company.user = user;
     company.industry = industry;
     company = await this.companyRepository.save(company);
 
+    console.log(company)
      const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
      await this.createEntity(rootChildren, company,name, res);
     
@@ -69,7 +70,8 @@ export class CompanyService {
   async createEntity(rootChildren:CapabilityTree[], company: Company,cap_name: string, res?) {
     let count = 0;
     const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name, type: "company",company_id: company.id, parentId: null })
-    const rootindustryid = rootChildren[0].id
+    const rootindustryid = rootChildren[0].id;
+    const clonedNodeId = rootChildren[0].id;
     rootChildren.shift();
     const oldCapToNewCapIDs = {}; 
 
@@ -98,7 +100,7 @@ export class CompanyService {
       if(count === 1) {
        await  res.status(200).send({ 
          newNodeId: rootcompany.id, 
-         clonedNodeId: id,
+         clonedNodeId,
          clone: true
         });
       }
