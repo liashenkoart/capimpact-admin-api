@@ -43,8 +43,6 @@ export class CompanyService {
 
  async recursiveFunction(collection){ 
     each(collection, (model) => { 
-        console.log(model); 
-        // const cap =
         if(model.pages.length > 0){ 
             this.recursiveFunction(model.pages); 
         }
@@ -75,7 +73,6 @@ export class CompanyService {
     rootChildren.shift();
     const oldCapToNewCapIDs = {}; 
 
-console.log(rootChildren)
     if(rootChildren.length === 0) {
       await  res.status(200).send({ 
         clone: false

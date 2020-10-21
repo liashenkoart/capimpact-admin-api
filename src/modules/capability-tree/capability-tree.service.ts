@@ -118,7 +118,7 @@ export class CapabilityTreeService extends BaseService {
     let node = await this.treeRepository.findOne({where:{ industry_tree_id}})
     if(!node) {
       const industryCap = await this.industryTreeRepository.findOne(industry_tree_id) 
-      node = await this.treeRepository.save({ cap_name: industryCap.name, industry_id: industryCap.id, parentId: null })
+      node = await this.treeRepository.save({ cap_name: industryCap.name, industry_id: industryCap.id, parentId: null, type: 'industry' })
       if (!industryCap) {
         throw new NotFoundException(`s with industry_tree_id: ${industry_tree_id} was not found`);
       }
@@ -323,7 +323,6 @@ export class CapabilityTreeService extends BaseService {
 
     let count = 0;
     const masterTreeIDtoIndustryId = {}
-    console.log('hhhereee')
 
       await asyncForEach(foundChildren, async ({ id, cap_name, capability, parentId, capability_lib_id, tags }) => {
         count++;
@@ -352,7 +351,7 @@ export class CapabilityTreeService extends BaseService {
           str = str.replace(id,createdIndustry.id.toString());
           data.orders = JSON.parse(str);
         }
-        console.log(count)
+
         if(count === 1) {
          await  res.status(200).send({ 
            newNodeId: createdIndustry.id, 
@@ -370,7 +369,6 @@ export class CapabilityTreeService extends BaseService {
       
       const rootNodeOfMovedCap = await this.findOneById(masterTreeIDtoIndustryId[data.id])
       console.log("CapabilityTreeService -> rootNodeOfMovedCap", rootNodeOfMovedCap)
-      console.log('finish')
       return this.treeRepository.findDescendantsTree(rootNodeOfMovedCap)
   }
 
