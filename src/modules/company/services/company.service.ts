@@ -51,7 +51,7 @@ export class CompanyService {
     }); 
   };
 
-  async create(data: CompanyCreationInput, context?: any): Promise<Company> {
+  async create(data: CompanyCreationInput, context?: any, res?: any): Promise<Company> {
     console.log("CompanyService -> data", data);
     const { user } = context;
     const { industry_id, name } = data;
@@ -63,17 +63,26 @@ export class CompanyService {
     company = await this.companyRepository.save(company);
 
      const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
-     await this.createEntity(rootChildren, company,name);
+     await this.createEntity(rootChildren, company,name, res);
     
     return this.companyRepository.findOne();
   }
 
-  async createEntity(rootChildren:CapabilityTree[], company: Company,cap_name: string) {
+  async createEntity(rootChildren:CapabilityTree[], company: Company,cap_name: string, res?) {
+    let count = 0;
     const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name, type: "company",company_id: company.id, parentId: null })
     const rootindustryid = rootChildren[0].id
     rootChildren.shift();
     const oldCapToNewCapIDs = {}; 
+
+console.log(rootChildren)
+    if(rootChildren.length === 0) {
+      await  res.status(200).send({ 
+        clone: false
+       });
+     }
     await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id ,parentId, capability, tags }) => {
+      count++;
       const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id, tags})
       if(parentId === rootindustryid) {
          newCap.parentId = rootcompany.id
@@ -88,6 +97,14 @@ export class CompanyService {
         }))
       }
       const createdCapability = await this.capabilitiesTreeSrv.capabilityTreeRepository.save(cap) 
+ 
+      if(count === 1) {
+       await  res.status(200).send({ 
+         newNodeId: rootcompany.id, 
+         clonedNodeId: id,
+         clone: true
+        });
+      }
       oldCapToNewCapIDs[id] = createdCapability.id
     });
   }

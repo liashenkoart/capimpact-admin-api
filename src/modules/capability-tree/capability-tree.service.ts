@@ -382,7 +382,7 @@ export class CapabilityTreeService extends BaseService {
 
     const progress = Number(((100 * newTree.length) / clonedTree.length).toFixed(0));
  
-    return { progress, tree };
+    return { progress, tree, newTree, clonedTree};
   }
 
   async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<any>  {
