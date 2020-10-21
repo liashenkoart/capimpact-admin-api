@@ -9,6 +9,7 @@ import {
     Param,
     Delete,
     Req,
+    Res,
     ParseIntPipe, Query,
   } from '@nestjs/common';
   import { AuthGuard } from '@nestjs/passport';
@@ -67,8 +68,8 @@ import {
     }
   
     @Post('')
-    async create(@Body() data: CompanyCreationInput, @Req() req: any) {
-      return this.companyService.create(data, { user: req.user });
+    async create(@Body() data: CompanyCreationInput, @Req() req: any,  @Res() res) {
+      return this.companyService.create(data, { user: req.user },res);
     }
   
     @ApiBody({ type: [CompanyInput] })
