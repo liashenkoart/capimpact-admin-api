@@ -17,4 +17,9 @@ export class CompaniesArgs extends BaseArgs {
   @Field(() => [ID], { nullable: true })
   @IsOptional()
   industry_trees?: number[];
+
+  @ApiPropertyOptional({ type: String})
+  @Field(() => [ID], { nullable: true })
+  @IsOptional()
+  search?: string;
 }

@@ -1,6 +1,6 @@
 import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository, FindManyOptions } from 'typeorm';
+import { Repository, TreeRepository, FindManyOptions, Raw } from 'typeorm';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
 import { asyncForEach } from '@lib/sorting';
 import { CapabilityTreeService } from '../../capability-tree/capability-tree.service';
@@ -28,9 +28,20 @@ export class CompanyService {
   ) {}
 
   async findAll(query: CompaniesArgs): Promise<Company[]> {
-    const options = this.getFindAllQuery(query);
-    // options.relations = ['industry_trees'];
-    return this.companyRepository.find(options);
+    const options: any = this.getFindAllQuery(query);
+
+    if (options.sort) {
+      options.order = { [options.sort[0]]: options.sort[1] }
+    }
+
+      options.where = []
+    
+    if (query.search) {
+       options.where = [ ...options.where, 
+                        { name: Raw(alias => `${alias} ILIKE '%${query.search}%'`)}]
+    }
+;
+    return this.companyRepository.find({ ...options, relations:['industry']});
   }
 
   findOneById(id: number): Promise<Company> {
@@ -150,11 +161,11 @@ console.log(industry)
   }
 
   getFindAllQuery(query: CompaniesArgs): FindManyOptions {
-    const { page, skip, limit, ...where } = query;
+    const { skip, limit, ...where } = query;
     return {
-      skip: (page - 1) * limit,
+      skip,
       take: limit,
-      where,
+      ...where
     };
   }
 
