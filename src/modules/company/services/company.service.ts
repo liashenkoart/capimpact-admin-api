@@ -165,7 +165,6 @@ export class CompanyService {
   }
 
   getFindAllQuery(query): FindManyOptions {
-    //console.log(query,'query')
     const { sort } = query;
     
     if( sort ) {
