@@ -153,14 +153,17 @@ export class CompanyService {
     return await this.companyRepository.findByIds(data.map(p => p.id));
   }
 
-  async remove(id: number) {  
-    const caps = await this.capabilityTreeRepositoryTest.find({ company_id: id});
-    const challenges = await this.challengeRepository.find({ companyId: id})
-    const groupTags = await this.groupTagRepository.find({ companyId: id})
-    await this.groupTagRepository.remove(groupTags)
-    await this.challengeRepository.remove(challenges)
-    await this.capabilityTreeRepositoryTest.remove(caps)
-    await this.companyRepository.delete(id);
+  async remove(id: number) { 
+   const [caps,  challenges, groupTags]  = 
+   await Promise.all([this.capabilityTreeRepositoryTest.find({ company_id: id}),
+                      this.challengeRepository.find({ companyId: id}),
+                      this.groupTagRepository.find({ companyId: id})])
+
+   await Promise.all([this.groupTagRepository.remove(groupTags),
+                      this.challengeRepository.remove(challenges),
+                      this.capabilityTreeRepositoryTest.remove(caps),
+                      this.companyRepository.delete(id)])                                         
+   
     return { id };
   }
 
