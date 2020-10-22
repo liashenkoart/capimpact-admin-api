@@ -30,18 +30,23 @@ export class CompanyService {
   async findAll(query: CompaniesArgs): Promise<Company[]> {
     const options: any = this.getFindAllQuery(query);
 
-    if (options.sort) {
-      options.order = { [options.sort[0]]: options.sort[1] }
+    const { take = null, skip = 0, search = '' } = options;
+
+    let orderBy = 'companies.name';
+    let ordertType = 'ASC';
+    if(options.sort) {
+      orderBy = options.sort[0];
+      ordertType = options.sort[1] as any;
     }
 
-      options.where = []
-    
-    if (query.search) {
-       options.where = [ ...options.where, 
-                        { name: Raw(alias => `${alias} ILIKE '%${query.search}%'`)}]
-    }
-;
-    return this.companyRepository.find({ ...options, relations:['industry']});
+    return this.companyRepository.createQueryBuilder('companies')
+    .leftJoinAndSelect('companies.industry', 'industry')
+    .orderBy(orderBy , ordertType as 'ASC' | 'DESC')
+    .where("companies.name ILIKE :name", { name: `%${search}%` })
+    .orWhere("industry.name ILIKE :name", { name: `%${search}%` })
+    .skip(skip)
+    .take(take)
+    .getMany();
   }
 
   findOneById(id: number): Promise<Company> {
@@ -65,13 +70,12 @@ export class CompanyService {
     const { user } = context;
     const { industry_id, name } = data;
     const industry = await this.industryTreeRepository.findOne(industry_id)
-console.log(industry)
+
     let company = new Company(data);
     company.user = user;
     company.industry = industry;
     company = await this.companyRepository.save(company);
 
-    console.log(company)
      const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
      await this.createEntity(rootChildren, company,name, res);
     
@@ -160,7 +164,16 @@ console.log(industry)
     return { id };
   }
 
-  getFindAllQuery(query: CompaniesArgs): FindManyOptions {
+  getFindAllQuery(query): FindManyOptions {
+    //console.log(query,'query')
+    const { sort } = query;
+    
+    if( sort ) {
+      const [prop, value] = sort;
+      if(!prop.includes('.')) {
+        query.sort = [`${'companies.' + prop}`, value]
+      }
+    }
     const { skip, limit, ...where } = query;
     return {
       skip,
