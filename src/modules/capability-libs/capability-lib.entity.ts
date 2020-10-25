@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, Unique } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { KpiLib } from '../kpi-lib/kpi-lib.entity';
@@ -7,6 +7,7 @@ import { CAPABILITY_LIB_COLUMN_NAME } from './capability-lib.constants';
 
 @ObjectType()
 @Entity(CAPABILITY_LIB_COLUMN_NAME)
+// @Unique(["name"])
 export class CapabilityLib {
   @Field(() => ID)
   @PrimaryGeneratedColumn()

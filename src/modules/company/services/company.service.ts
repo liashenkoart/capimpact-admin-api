@@ -17,17 +17,14 @@ import { GroupTag } from '../../grouptag/group-tag.entity';
 export class CompanyService {
   constructor(
     @Inject(forwardRef(() => CapabilityTreeService))
-    private capabilitiesTreeSrv: CapabilityTreeService,
+    private capabilitiesTreeSrv:  CapabilityTreeService,
     @InjectRepository(GroupTag) private readonly groupTagRepository: Repository<GroupTag>,
     @InjectRepository(Challenge) private readonly challengeRepository: Repository<Challenge>,
     @InjectRepository(Company) private readonly companyRepository: Repository<Company>,
-    @InjectRepository(IndustryTree)
-    private readonly industryTreeRepository: Repository<IndustryTree>,
-    @InjectRepository(CapabilityTree)
-    private readonly capabilityTreeRepositoryTest: Repository<CapabilityTree>,
-    @InjectRepository(Capability)
-    private readonly capabilityTreeRepository: TreeRepository<Capability>,
-    @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>
+    @InjectRepository(IndustryTree) private readonly industryTreeRepository: Repository<IndustryTree>,
+    @InjectRepository(CapabilityTree) private readonly capabilityTreeRepositoryTest: Repository<CapabilityTree>,
+    @InjectRepository(Capability) private readonly capabilityTreeRepository: TreeRepository<Capability>,
+    @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
   ) {}
 
   async findAll(query: CompaniesArgs): Promise<Company[]> {
@@ -37,112 +34,94 @@ export class CompanyService {
 
     let orderBy = 'companies.name';
     let ordertType = 'ASC';
-    if (options.sort) {
+    if(options.sort) {
       orderBy = options.sort[0];
       ordertType = options.sort[1] as any;
     }
 
-    return this.companyRepository
-      .createQueryBuilder('companies')
-      .leftJoinAndSelect('companies.industry', 'industry')
-      .orderBy(orderBy, ordertType as 'ASC' | 'DESC')
-      .where('companies.name ILIKE :name', { name: `%${search}%` })
-      .orWhere('industry.name ILIKE :name', { name: `%${search}%` })
-      .skip(skip)
-      .take(take)
-      .getMany();
+    return this.companyRepository.createQueryBuilder('companies')
+    .leftJoinAndSelect('companies.industry', 'industry')
+    .orderBy(orderBy , ordertType as 'ASC' | 'DESC')
+    .where("companies.name ILIKE :name", { name: `%${search}%` })
+    .orWhere("industry.name ILIKE :name", { name: `%${search}%` })
+    .skip(skip)
+    .take(take)
+    .getMany();
   }
 
   findOneById(id: number): Promise<Company> {
-    return this.getOneByIdWithIndustryTrees(id);
+    return this.getOneByIdWithIndustryTrees(id)
   }
 
   async countDocuments(query: CompaniesArgs): Promise<number> {
     return this.companyRepository.count(query);
   }
 
-  async recursiveFunction(collection) {
-    each(collection, model => {
-      if (model.pages.length > 0) {
-        this.recursiveFunction(model.pages);
-      }
-    });
-  }
+ async recursiveFunction(collection){ 
+    each(collection, (model) => { 
+        if(model.pages.length > 0){ 
+            this.recursiveFunction(model.pages); 
+        }
+    }); 
+  };
 
   async create(data: CompanyCreationInput, context?: any, res?: any): Promise<Company> {
-    console.log('CompanyService -> data', data);
+    console.log("CompanyService -> data", data);
     const { user } = context;
     const { industry_id, name } = data;
-    const industry = await this.industryTreeRepository.findOne(industry_id);
+    const industry = await this.industryTreeRepository.findOne(industry_id)
 
     let company = new Company(data);
     company.user = user;
     company.industry = industry;
     company = await this.companyRepository.save(company);
 
-    const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
-    await this.createEntity(rootChildren, company, name, res);
-
+     const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
+     await this.createEntity(rootChildren, company,name, res);
+    
     return this.companyRepository.findOne();
   }
 
-  async createEntity(rootChildren: CapabilityTree[], company: Company, cap_name: string, res?) {
+  async createEntity(rootChildren:CapabilityTree[], company: Company,cap_name: string, res?) {
     let count = 0;
-    const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({
-      cap_name,
-      type: 'company',
-      company_id: company.id,
-      parentId: null,
-    });
+    const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name, type: "company",company_id: company.id, parentId: null })
     const rootindustryid = rootChildren[0].id;
     const clonedNodeId = rootChildren[0].id;
     rootChildren.shift();
-    const oldCapToNewCapIDs = {};
+    const oldCapToNewCapIDs = {}; 
 
-    if (rootChildren.length === 0) {
-      await res.status(200).send({
-        clone: false,
-      });
-    }
-    await asyncForEach(
-      rootChildren,
-      async ({ id, cap_name, capability_lib_id, parentId, capability, tags }) => {
-        count++;
-        const newCap = new CapabilityTree({
-          cap_name,
-          parentId,
-          capability_lib_id,
-          type: 'company',
-          company_id: company.id,
-          tags,
-        });
-        if (parentId === rootindustryid) {
-          newCap.parentId = rootcompany.id;
-        } else {
-          newCap.parentId = oldCapToNewCapIDs[parentId];
-        }
-        console.log(count);
-        const cap = await this.capabilitiesTreeSrv.collectEntityFields(newCap);
-        if (capability) {
-          cap.capability = await this.capabilityRepository.save(
-            new Capability({
-              name: cap.cap_name,
-              kpis: capability.kpis,
-            })
-          );
-        }
-        const createdCapability = await this.capabilitiesTreeSrv.capabilityTreeRepository.save(cap);
-
-        if (count === 1) {
-          await res.status(200).send({
-            newNodeId: rootcompany.id,
-            clonedNodeId,
-            clone: true,
-          });
-        }
-        oldCapToNewCapIDs[id] = createdCapability.id;
+    if(rootChildren.length === 0) {
+      await  res.status(200).send({ 
+        clone: false
+       });
+     }
+    await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id ,parentId, capability, tags }) => {
+      count++;
+      const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id, tags})
+      if(parentId === rootindustryid) {
+         newCap.parentId = rootcompany.id
+      } else {
+         newCap.parentId = oldCapToNewCapIDs[parentId]
       }
-    );
+
+      const cap = await this.capabilitiesTreeSrv.collectEntityFields(newCap)
+      if(capability){
+        cap.capability =  await this.capabilityRepository.save(new Capability({
+          name: cap.cap_name,
+          kpis: capability.kpis
+        }))
+      }
+      const createdCapability = await this.capabilitiesTreeSrv.capabilityTreeRepository.save(cap) 
+ 
+      if(count === 1) {
+       await  res.status(200).send({ 
+         newNodeId: rootcompany.id, 
+         clonedNodeId,
+         clone: true
+        });
+      }
+      oldCapToNewCapIDs[id] = createdCapability.id
+    });
   }
 
   async clone(clonedId: number, data: CompanyInput, context?: any, res?: any): Promise<void> {
@@ -154,7 +133,7 @@ export class CompanyService {
     company = await this.companyRepository.save(company);
     const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenbyCompanyId(clonedId);
 
-    await this.createEntity(rootChildren, company, name, res);
+    await this.createEntity(rootChildren,company,name,res);
   }
 
   async save(id: number, data: CompanyInput): Promise<Company> {
@@ -175,37 +154,34 @@ export class CompanyService {
     return await this.companyRepository.findByIds(data.map(p => p.id));
   }
 
-  async remove(id: number) {
-    const [caps, challenges, groupTags] = await Promise.all([
-      this.capabilityTreeRepositoryTest.find({ company_id: id }),
-      this.challengeRepository.find({ companyId: id }),
-      this.groupTagRepository.find({ companyId: id }),
-    ]);
+  async remove(id: number) { 
+   const [caps,  challenges, groupTags]  = 
+   await Promise.all([this.capabilityTreeRepositoryTest.find({ company_id: id}),
+                      this.challengeRepository.find({ companyId: id}),
+                      this.groupTagRepository.find({ companyId: id})])
 
-    await Promise.all([
-      this.groupTagRepository.remove(groupTags),
-      this.challengeRepository.remove(challenges),
-      this.capabilityTreeRepositoryTest.remove(caps),
-      this.companyRepository.delete(id),
-    ]);
-
+   await Promise.all([this.groupTagRepository.remove(groupTags),
+                      this.challengeRepository.remove(challenges),
+                      this.capabilityTreeRepositoryTest.remove(caps),
+                      this.companyRepository.delete(id)])                                         
+   
     return { id };
   }
 
   getFindAllQuery(query): FindManyOptions {
     const { sort } = query;
-
-    if (sort) {
+    
+    if( sort ) {
       const [prop, value] = sort;
-      if (!prop.includes('.')) {
-        query.sort = [`${'companies.' + prop}`, value];
+      if(!prop.includes('.')) {
+        query.sort = [`${'companies.' + prop}`, value]
       }
     }
     const { skip, limit, ...where } = query;
     return {
       skip,
       take: limit,
-      ...where,
+      ...where
     };
   }
 

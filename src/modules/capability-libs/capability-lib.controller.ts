@@ -16,7 +16,7 @@ import {
   import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
   
   import { CapabilityLibService } from './capability-lib.service';
-  import { CapabilityLibsArgs, CapabilityLibInput, CapabilityLibCreationInput } from './dto';
+  import { CapabilityLibsArgs, CapabilityLibInput, CapabilityLibCreationInput, CapabilityLibNameAvailableArgs } from './dto';
   import { CAPABILITY_LIB_API_TAG } from './capability-lib.constants';
 
   @ApiBearerAuth()
@@ -35,12 +35,17 @@ import {
     async count(@Query() query: CapabilityLibsArgs) {
       return this.capabilityLibService.count(query);
     }
-  
+
+    @Get('/name-available')
+    async nameIsAvaliable(@Query() query: CapabilityLibNameAvailableArgs) {
+      return this.capabilityLibService.nameIsAvaliable(query);
+    }
+
     @Get('/:id')
     async findOne(@Param('id', new ParseIntPipe()) id: number) {
       return this.capabilityLibService.findOneById(id);
     }
-  
+
     @Get('industry/:id')
     async findAssociatedIndustries(@Param('id', new ParseIntPipe()) id: number) {
       return this.capabilityLibService.findAssociatedIndustries(id);

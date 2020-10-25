@@ -1,9 +1,9 @@
-import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
+import { Injectable, forwardRef, Inject, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions, Like, Raw } from 'typeorm';
+import { Repository, FindManyOptions, Like, Raw, Not } from 'typeorm';
 import { CapabilityTreeService } from '../capability-tree/capability-tree.service';
 import { Tag } from '../tags/tag.entity';
-import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput, CapabilityLibItemResponse } from './dto';
+import { CapabilityLibsArgs, CapabilityLibCreationInput, CapabilityLibInput, CapabilityLibItemResponse, CapabilityLibNameAvailableArgs } from './dto';
 import { asyncForEach } from '@lib/sorting';
 import { CapabilityLib } from '../capability-libs/capability-lib.entity';
 import { CapabilityTree } from '../capability-tree/capability-tree.entity';
@@ -119,9 +119,20 @@ export class CapabilityLibService {
     return tags;
   }
 
-  
+  async nameIsAvaliable(data: CapabilityLibNameAvailableArgs): Promise<{ available: boolean }>{
+    let { id, name } = data;
+    let where = { ...(id ? { id: Not(id) } : { }), name:  Raw(alias => `${alias} ILIKE '${name}'`)  };
+    const capLib =  await this.capabilityLibRepository.findOne({where});
+    return { available: Boolean(capLib) };
+  }
+
+
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
 
+   const { available } =  await this.nameIsAvaliable({ name: data.name });
+
+    if(available)  throw new ConflictException(`${data.name} alredy exists`)
+    
     if(data.tags){
        data.tags = await this.addNewTagIfNew(data.tags);
     }
@@ -132,6 +143,9 @@ export class CapabilityLibService {
   }
 
   async save(id: number, data: CapabilityLibInput): Promise<CapabilityLib> {
+   const { available } = await this.nameIsAvaliable({ id, name: data.name });
+   if(available)  throw new ConflictException(`${data.name} alredy exists`);
+
     const { kpi_libs } = await this.getOneByIdWithKpiLibs(id);
     const kpi_lib_ids = kpi_libs.map(({ id }) => id);
     let newKpiLibs = [];
