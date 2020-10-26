@@ -7,7 +7,7 @@ import { CAPABILITY_LIB_COLUMN_NAME } from './capability-lib.constants';
 
 @ObjectType()
 @Entity(CAPABILITY_LIB_COLUMN_NAME)
-// @Unique(["name"])
+@Unique(["name"])
 export class CapabilityLib {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
