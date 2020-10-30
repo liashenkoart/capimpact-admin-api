@@ -53,8 +53,6 @@ import {
       return this.capabilityService.findOneById(id);
     }
   
-   
-  
     @Post('')
     async create(@Body() data: CapabilityCreationInput, @Req() req: any) {
       return this.capabilityService.create(data, { user: req.user });
@@ -85,7 +83,8 @@ import {
         args.ids = Object.values(args.ids).map(id => Number(id));
         args.limit = 0;
       }
-      return args;
+      delete args['sort'];
+      return args; 
     }
   }
   
