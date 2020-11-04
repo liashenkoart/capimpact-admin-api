@@ -488,7 +488,7 @@ export class CapabilityTreeService extends BaseService {
 
     const tree = await this.capabilityTreeRepository.find({where : { type: 'master'}});
 
-    return this.listToTree(tree)[0]
+    return  sortTreeByField('hierarchy_id', this.listToTree(tree)[0]);
   }
 
   
