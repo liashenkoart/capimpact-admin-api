@@ -64,16 +64,6 @@ import { Technology } from "./modules/technology/technology.entity";
 import { Sic } from './modules/common/entities/sic.entity';
 
 
-          // Sic,
-          // Tag,
-          // Technology
-
-
-
-
-
-
-
 export const MODULE = {
   imports: [
     ConfigModule.forRoot({

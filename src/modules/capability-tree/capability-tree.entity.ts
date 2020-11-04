@@ -44,6 +44,12 @@ import {
     @Field(() => ID, { nullable: true })
     @Column({ name: 'capability_lib_id', nullable: true })
     capability_lib_id?: number;
+
+    @Column({ nullable: true })
+    prevParentId: number;
+
+    @Column({ nullable: true })
+    prevId: number;
   
     @Field(() => CapabilityLib, { nullable: true })
     @ManyToOne(

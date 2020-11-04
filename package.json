@@ -22,6 +22,7 @@
     "industries": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industries.ts",
     "processes": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/processes.ts",
     "capabilities": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities.ts",
+    "cap_libs": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/moving-cap-libs-and-master-cap-tree-to-staging.ts",
     "capabilities_fill_original_id": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/capabilities_fill_original_id.ts",
     "industry_tree_import": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industry-tree_import_NAICS.ts",
     "process_kpi_import": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/process_kpi_import.ts",

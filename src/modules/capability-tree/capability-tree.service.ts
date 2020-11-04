@@ -447,6 +447,38 @@ export class CapabilityTreeService extends BaseService {
     return this.capabilityTreeRepository.save(capabilityTree);
   }
 
+  private listToTree(data, options?) {
+    options = options || {};
+    var ID_KEY = options.idKey || 'id';
+    var PARENT_KEY = options.parentKey || 'parentId';
+    var CHILDREN_KEY = options.childrenKey || 'children';
+  
+    var tree = [],
+      childrenOf = {};
+    var item, id, parentId;
+  
+    for (var i = 0, length = data.length; i < length; i++) {
+      item = data[i];
+      id = item[ID_KEY];
+      parentId = item[PARENT_KEY] || 0;
+      // every item may have children
+      childrenOf[id] = childrenOf[id] || [];
+      // init its children
+      item[CHILDREN_KEY] = childrenOf[id];
+      if (parentId != 0) {
+        // init its parent's children object
+        childrenOf[parentId] = childrenOf[parentId] || [];
+
+        const { capability, ...rest} = item;
+        // push it into its parent's children object
+        childrenOf[parentId].push({ ...rest, ...capability  });
+      } else {
+        tree.push(item);
+      }
+    };
+  
+    return tree;
+  }
   // MASTER CAPTREE
   async findMasterCapTree(): Promise<Object> {
     let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
@@ -454,10 +486,12 @@ export class CapabilityTreeService extends BaseService {
       root = await this.createMasterCapTree();
     }
 
-    const tree = await this.treeRepository.findDescendantsTree(root);
+    const tree = await this.capabilityTreeRepository.find({where : { type: 'master'}});
 
-    return sortTreeByField('hierarchy_id', tree);
+    return  sortTreeByField('hierarchy_id', this.listToTree(tree)[0]);
   }
+
+  
 
   async createMasterCapTree(): Promise<CapabilityTree> {
 
