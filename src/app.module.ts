@@ -62,15 +62,7 @@ import { KpiBenchmark } from "./modules/kpi-benchmark/kpi-benchmark.entity";
 import { Tag } from "./modules/tags/tag.entity";
 import { Technology } from "./modules/technology/technology.entity";
 import { Sic } from './modules/common/entities/sic.entity';
-
-
-          // Sic,
-          // Tag,
-          // Technology
-
-
-
-
+import { MasterCapabilityTree } from './modules/capability-tree/master-capability-tree.entity';
 
 
 
@@ -93,6 +85,7 @@ export const MODULE = {
           Process,
           Industry,
           IndustryTree,
+          MasterCapabilityTree,
           Company,
           Challenge,
           Process,

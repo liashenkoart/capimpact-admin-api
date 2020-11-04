@@ -19,9 +19,9 @@ import {
   import { CAPABILITY_TREE_COLUMN_NAME } from "./capability-tree.constants"
 
   @ObjectType()
-  @Entity(CAPABILITY_TREE_COLUMN_NAME)
+  @Entity('master_cap_tree')
   @Tree('materialized-path')
-  export class CapabilityTree {
+  export class MasterCapabilityTree {
     @Field(() => ID)
     @PrimaryGeneratedColumn()
     id: number;
@@ -33,6 +33,12 @@ import {
     @Field({ nullable: true })
     @Column({ nullable: true })
     type: string;
+
+    @Column({ nullable: true })
+    prevParentId: number;
+
+    @Column({ nullable: true })
+    prevId: number;
   
     @Field(() => Capability,  { nullable: true })
     @OneToOne(type => Capability, capability => capability.capability_tree, 
@@ -44,12 +50,6 @@ import {
     @Field(() => ID, { nullable: true })
     @Column({ name: 'capability_lib_id', nullable: true })
     capability_lib_id?: number;
-
-    // @Column({ nullable: true })
-    // prevParentId: number;
-
-    // @Column({ nullable: true })
-    // prevId: number;
   
     @Field(() => CapabilityLib, { nullable: true })
     @ManyToOne(
@@ -86,13 +86,13 @@ import {
     @JoinColumn({ name: 'company_id' })
     company?: Company;
   
-    @Field(() => [CapabilityTree], { nullable: true })
+    @Field(() => [MasterCapabilityTree], { nullable: true })
     @TreeChildren({ cascade: true })
-    children?: CapabilityTree[];
+    children?: MasterCapabilityTree[];
   
-    @Field(() => CapabilityTree, { nullable: true })
+    @Field(() => MasterCapabilityTree, { nullable: true })
     @TreeParent()
-    parent?: CapabilityTree;
+    parent?: MasterCapabilityTree;
   
     @Field(() => ID, { nullable: true })
     @Column({ nullable: true })
@@ -123,7 +123,7 @@ import {
     @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
     technologies: number[];
   
-    constructor(partial: Partial<CapabilityTree>) {
+    constructor(partial: Partial<MasterCapabilityTree>) {
       Object.assign(this, partial);
     }
   }
