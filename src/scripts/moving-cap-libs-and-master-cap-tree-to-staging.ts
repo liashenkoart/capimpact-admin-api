@@ -4,7 +4,6 @@ import { omit } from 'lodash'
 import { CapabilityLib } from '../modules/capability-libs/capability-lib.entity';
 import { CapabilityTree } from '../modules/capability-tree/capability-tree.entity';
 import { asyncForEach } from '@lib/sorting';
-import { MasterCapabilityTree } from '@app/modules/capability-tree/master-capability-tree.entity';
 
 let connection = null;
 
@@ -21,14 +20,7 @@ async function main() {
 
      await transactionalEntityManager.delete(CapabilityTree, 15019);
      await transactionalEntityManager.delete(CapabilityTree, 15018);
-     await transactionalEntityManager.getRepository(CapabilityLib)
-           .createQueryBuilder("cap_libs")
-           .update()
-           .set({ name: cap_libs[0].name, status: cap_libs[0].status ,description: cap_libs[0].description  })
-           .where("id = :id",{ id: 1 })
-           .execute();
-           capLibsIds[1] = 1
-           cap_libs.shift();
+
   
   await asyncForEach(cap_libs, async (lib) => {
         const newLib =  await transactionalEntityManager.save(CapabilityLib, new CapabilityLib(omit({...lib, tags: JSON.parse(lib.tags)},['id'])));
