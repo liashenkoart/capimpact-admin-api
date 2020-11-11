@@ -14,7 +14,14 @@ import { TechnologyService } from "../technology/technology.service";
 import { CapabilityTree } from './capability-tree.entity';
 import { CapabilityLib } from '../capability-libs/capability-lib.entity';
 import { IndustryTree } from '../industry-tree/industry-tree.entity';
+import { KpiLibService } from '../kpi-lib/kpi-lib.service';
 import { Capability } from '../capability/capability.entity';
+// import * as ExcelJs from 'exceljs/dist/exceljs.min.js';
+import * as Excel from "exceljs/dist/exceljs.min.js";
+import * as ExcelProper from "exceljs";
+import { Workbook } from 'exceljs';
+import * as fs from 'file-saver';
+import * as _ from 'lodash';
 
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
@@ -25,6 +32,7 @@ export class CapabilityTreeService extends BaseService {
     private tagService: TagService,
     @Inject(forwardRef(() => TechnologyService))
     private technologyService: TechnologyService,
+    public kpiLibSrv: KpiLibService,
     @InjectRepository(CapabilityLib) private readonly capabilityLibRepository: Repository<CapabilityLib>,
     @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(CapabilityTree) public readonly capabilityTreeRepository: Repository<CapabilityTree>,
@@ -46,6 +54,84 @@ export class CapabilityTreeService extends BaseService {
     return this.capabilityTreeRepository.findOne({where: { id}, relations:['capability'] });
   }
 
+  async nodeExcellTo(res) {
+ 
+  let list: CapabilityTree[] = await this.capabilityTreeRepository.findByIds([22881],{  where: { type: 'master' }, relations: ['capability']});
+
+  let checkList = [];
+
+  await asyncForEach(list, async (item) => {
+    const d = _.pick(item,['id','cap_name', 'hierarchy_id','capability','kpis'])
+    let kpis = [];
+    if(d.capability) {
+        kpis = await this.kpiLibSrv.kpilibRepository.findByIds(d.capability.kpis, { select: ['label'] });
+    }
+    checkList.push({ id: d.id, cap_name: d.cap_name, hierarchy_id: d.hierarchy_id, capability: d.capability ? d.capability.name : '', kpis: kpis.map(K => K.label).join(',')});
+  })
+
+  const title = 'Manufacturing 2.0 Tree';
+  const header = ['id', 'Capability','Heirarchy ID','capability','Kpis'];
+
+  // Create workbook and worksheet
+  const workbook = new Workbook();
+  const worksheet = workbook.addWorksheet('Car Data');
+
+// Add Row and formatting
+  const titleRow = worksheet.addRow([title]);
+  titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
+  worksheet.addRow([]);
+
+  worksheet.mergeCells('A1:D2');
+
+// Blank Row
+  worksheet.addRow([]);
+
+// Add Header Row
+  const headerRow = worksheet.addRow(header);
+
+// Cell Style : Fill and Border
+  headerRow.eachCell((cell, number) => {
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFFFFF00' },
+      bgColor: { argb: 'FF0000FF' }
+    };
+    cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+  });
+
+// Add Data and Conditional Formatting
+  checkList.forEach(d => {
+     worksheet.addRow(_.values(d));
+  });
+
+   worksheet.getColumn(2).width = 50;
+   worksheet.getColumn(2).width = 30;
+   worksheet.getColumn(4).width = 50;
+   worksheet.getColumn(5).width = 100;
+   worksheet.addRow([]);
+
+   const footerRow = worksheet.addRow(['This is system generated excel sheet.']);
+   footerRow.getCell(1).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFCCFFE5' }
+   };
+   footerRow.getCell(1).border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+
+// Merge Cells
+  worksheet.mergeCells(`A${footerRow.number}:F${footerRow.number}`);
+
+// Generate Excel File with given name
+await workbook.xlsx.writeFile('sales-report.xlsx')
+console.log('done')
+//   workbook.xlsx.writeBuffer().then((data: any) => {
+// const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+//  fs.saveAs(blob, 'CarData.xlsx');
+//   })
+  }
+
+  
   async fillTree(node): Promise<Object> {
     node.capability_lib = await this.capabilityLibRepository.findOne({ id: node.capability_lib_id });
     node.children = await Promise.all(node.children.map(child => this.fillTree(child)));
