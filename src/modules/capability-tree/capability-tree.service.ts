@@ -22,6 +22,8 @@ import * as ExcelProper from "exceljs";
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
 import * as _ from 'lodash';
+import { each } from 'lodash';
+const Blob = require("cross-blob");
 
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
@@ -54,81 +56,125 @@ export class CapabilityTreeService extends BaseService {
     return this.capabilityTreeRepository.findOne({where: { id}, relations:['capability'] });
   }
 
-  async nodeExcellTo(res) {
+   private getDepthOfTree(array): number {
+    return 1 + Math.max(0, ...array.map(({ children = [] }) => this.getDepthOfTree(children)));
+  }
+
+  async recursiveFunction(collection){ 
+    each(collection, (model) => { 
+        if(model.children.length > 0){ 
+            this.recursiveFunction(model.children); 
+        }
+    }); 
+  };
+
+  private async getMasterTreeNodeWithChildrenById(id:number) {
+    const tree: any = await this.findMasterCapTree();
+    const masterNode = this.searchTree(tree,id);
  
-  let list: CapabilityTree[] = await this.capabilityTreeRepository.findByIds([22881],{  where: { type: 'master' }, relations: ['capability']});
+    return masterNode;
+  }
 
-  let checkList = [];
+  async nodeExcellTo(id: number, res) {
+   const tree = await this.getMasterTreeNodeWithChildrenById(id);
+   const flatten = flattenTree(tree,'children');
+   const maxTreeDepth = this.getDepthOfTree(tree.children);
+         flatten[0].parentId = null;
 
-  await asyncForEach(list, async (item) => {
-    const d = _.pick(item,['id','cap_name', 'hierarchy_id','capability','kpis'])
-    let kpis = [];
-    if(d.capability) {
-        kpis = await this.kpiLibSrv.kpilibRepository.findByIds(d.capability.kpis, { select: ['label'] });
-    }
-    checkList.push({ id: d.id, cap_name: d.cap_name, hierarchy_id: d.hierarchy_id, capability: d.capability ? d.capability.name : '', kpis: kpis.map(K => K.label).join(',')});
-  })
-
-  const title = 'Manufacturing 2.0 Tree';
-  const header = ['id', 'Capability','Heirarchy ID','capability','Kpis'];
-
-  // Create workbook and worksheet
-  const workbook = new Workbook();
-  const worksheet = workbook.addWorksheet('Car Data');
-
-// Add Row and formatting
-  const titleRow = worksheet.addRow([title]);
-  titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
-  worksheet.addRow([]);
-
-  worksheet.mergeCells('A1:D2');
-
-// Blank Row
-  worksheet.addRow([]);
-
-// Add Header Row
-  const headerRow = worksheet.addRow(header);
-
-// Cell Style : Fill and Border
-  headerRow.eachCell((cell, number) => {
-    cell.fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'FFFFFF00' },
-      bgColor: { argb: 'FF0000FF' }
+   const recursiveFunction = (item,pathArr: any[]) => { 
+       const found: any =  flatten.find((i) => i.id == item.parentId);
+       pathArr.push(found.cap_name)
+       if(found.parentId) {
+        recursiveFunction(found,pathArr);
+       } else {
+         return pathArr;
+       }
     };
-    cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
-  });
 
-// Add Data and Conditional Formatting
-  checkList.forEach(d => {
-     worksheet.addRow(_.values(d));
-  });
+   const check = [];
 
-   worksheet.getColumn(2).width = 50;
-   worksheet.getColumn(2).width = 30;
-   worksheet.getColumn(4).width = 50;
-   worksheet.getColumn(5).width = 100;
+   const header = ['id','Heirarchy ID', ...Array.from(Array(maxTreeDepth).keys()).map((v,i) => (`Capability ${i + 1}`)), 'Description','Kpis'];
+   const testArray = Array.from(Array(maxTreeDepth).keys()).map(() => '')
+
+   let checkList = [];
+
+    await asyncForEach(flatten, async (item) => {
+      const d = _.pick(item,['id','cap_name', 'hierarchy_id','capability','kpis','capability_lib_id'])
+      let kpis = [];
+      let description = '';
+      if(d.capability) {
+          kpis = await this.kpiLibSrv.kpilibRepository.findByIds(d.capability.kpis, { select: ['label'] });
+      }
+
+      if(d.capability_lib_id) {
+        const cap_lib = await this.capabilityLibRepository.findOne(d.capability_lib_id)
+        description = cap_lib.description;
+      }
+
+      let capTreePath = [item.cap_name];
+        if(item.parentId) {  
+          recursiveFunction(item,capTreePath);
+          check.push(capTreePath.reverse())
+      }
+
+      checkList.push([d.id, d.hierarchy_id,  ...testArray.map((v,i) => i < capTreePath.length ? capTreePath[i] : ''), description ,kpis.map(K => K.label).join(',')]);
+      capTreePath = [];
+    })
+
+   const title = flatten[0].cap_name;
+
+   // Create workbook and worksheet
+   const workbook = new Workbook();
+   const worksheet = workbook.addWorksheet('Car Data');
+
+   // Add Row and formatting
+   const titleRow = worksheet.addRow([title]);
+   titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };   worksheet.addRow([]);
+ 
+   worksheet.mergeCells('A1:D2');
+
+   // Blank Row
    worksheet.addRow([]);
 
-   const footerRow = worksheet.addRow(['This is system generated excel sheet.']);
-   footerRow.getCell(1).fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'FFCCFFE5' }
-   };
-   footerRow.getCell(1).border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+   // Add Header Row
+   const headerRow = worksheet.addRow(header);
 
-// Merge Cells
-  worksheet.mergeCells(`A${footerRow.number}:F${footerRow.number}`);
+   // Cell Style : Fill and Border
+   headerRow.eachCell((cell, number) => {
+    cell.fill = {
+       type: 'pattern',
+       pattern: 'solid',
+       fgColor: { argb: 'FFFFFF00' },
+       bgColor: { argb: 'FF0000FF' }
+     };
+     cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+   });
 
-// Generate Excel File with given name
-await workbook.xlsx.writeFile('sales-report.xlsx')
-console.log('done')
-//   workbook.xlsx.writeBuffer().then((data: any) => {
-// const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-//  fs.saveAs(blob, 'CarData.xlsx');
-//   })
+   // Add Data and Conditional Formatting
+   checkList.forEach(d => {
+     worksheet.addRow(d);
+   });
+  
+  Array.from(Array(maxTreeDepth).keys()).forEach((v,i) => {
+    worksheet.getColumn(i + 3).width = 100;
+  })
+  worksheet.getColumn(maxTreeDepth + 3).width = 100;
+  worksheet.getColumn(maxTreeDepth + 4).width = 300;
+
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  );
+  res.setHeader(
+    "Content-Disposition",
+    "attachment; filename=" + `${title}.xlsx`
+  );
+  
+  return workbook.xlsx.write(res).then(function () {
+    res.status(200).end();
+  });
+
   }
 
   
@@ -283,6 +329,7 @@ console.log('done')
   async treeByIndustryTree(industryId: number): Promise<CapabilityTree> {
     const industryParams = { industry_tree_id: industryId, parentId: null, }
     let rootIndustryCapTree = await this.capabilityTreeRepository.findOne({where: industryParams, relations: ['capability']});
+
 
     if (!rootIndustryCapTree) {
       const industryCap = await this.industryTreeRepository.findOne({ id: industryId })
@@ -557,7 +604,7 @@ console.log('done')
 
         const { capability, ...rest} = item;
         // push it into its parent's children object
-        childrenOf[parentId].push({ ...rest, ...capability  });
+        childrenOf[parentId].push(item);
       } else {
         tree.push(item);
       }
@@ -569,11 +616,13 @@ console.log('done')
   async findMasterCapTree(): Promise<Object> {
     let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
     if (!root) {
+      console.log('here')
       root = await this.createMasterCapTree();
     }
 
     const tree = await this.capabilityTreeRepository.find({where : { type: 'master'}});
 
+    console.log(tree[0])
     return  sortTreeByField('hierarchy_id', this.listToTree(tree)[0]);
   }
 

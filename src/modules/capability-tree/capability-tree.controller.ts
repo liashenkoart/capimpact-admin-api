@@ -29,15 +29,15 @@ import {
   export class CapabilityTreeController {
     constructor(private readonly capabilityTreeService: CapabilityTreeService) {}
   
-    @Get('excell')
-    async check(@Res() res) {
-      return this.capabilityTreeService.nodeExcellTo(res);
+    @Get('master/excell/:id')
+    async check( @Param('id', new ParseIntPipe()) id: number,@Res() res) {
+      return this.capabilityTreeService.nodeExcellTo(id, res);
     }
 
-    // @Get('')
-    // async findAll(@Query() query: CapabilityTreeArgs) {
-    //   return this.capabilityTreeService.findAll(query);
-    // }
+    @Get('')
+    async findAll(@Query() query: CapabilityTreeArgs) {
+      return this.capabilityTreeService.findAll(query);
+    }
   
     @Get('tree')
     async tree(@Query() query: CapabilityTreeArgs) {
@@ -129,7 +129,6 @@ import {
       return this.capabilityTreeService.findMasterCapTree();
     }
 
-    
   
     @Post('master')
     async createMaster(@Body() data: CapabilityTreeCreationInput, @Req() req: any) {
