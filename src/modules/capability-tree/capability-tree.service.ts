@@ -16,14 +16,9 @@ import { CapabilityLib } from '../capability-libs/capability-lib.entity';
 import { IndustryTree } from '../industry-tree/industry-tree.entity';
 import { KpiLibService } from '../kpi-lib/kpi-lib.service';
 import { Capability } from '../capability/capability.entity';
-// import * as ExcelJs from 'exceljs/dist/exceljs.min.js';
-import * as Excel from "exceljs/dist/exceljs.min.js";
-import * as ExcelProper from "exceljs";
 import { Workbook } from 'exceljs';
-import * as fs from 'file-saver';
-import * as _ from 'lodash';
-import { each } from 'lodash';
-const Blob = require("cross-blob");
+import { MASTER_TREE_NODE_NOT_FOUND } from './capability-tree.constants';
+import { each, pick } from 'lodash';
 
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
@@ -71,21 +66,23 @@ export class CapabilityTreeService extends BaseService {
   private async getMasterTreeNodeWithChildrenById(id:number) {
     const tree: any = await this.findMasterCapTree();
     const masterNode = this.searchTree(tree,id);
- 
+    if(!masterNode) throw new NotFoundException(MASTER_TREE_NODE_NOT_FOUND)
     return masterNode;
   }
 
   async nodeExcellTo(id: number, res) {
    const tree = await this.getMasterTreeNodeWithChildrenById(id);
+  
    const flatten = flattenTree(tree,'children');
+   //Get max depth tree
    const maxTreeDepth = this.getDepthOfTree(tree.children);
          flatten[0].parentId = null;
 
-   const recursiveFunction = (item,pathArr: any[]) => { 
+   const getPathFromRootToNode = (item,pathArr: any[]) => { 
        const found: any =  flatten.find((i) => i.id == item.parentId);
        pathArr.push(found.cap_name)
        if(found.parentId) {
-        recursiveFunction(found,pathArr);
+        getPathFromRootToNode(found,pathArr);
        } else {
          return pathArr;
        }
@@ -93,87 +90,92 @@ export class CapabilityTreeService extends BaseService {
 
    const check = [];
 
+   // Excell headers with dynamic amount of capability columns bases on max tree depths
    const header = ['id','Heirarchy ID', ...Array.from(Array(maxTreeDepth).keys()).map((v,i) => (`Capability ${i + 1}`)), 'Description','Kpis'];
    const testArray = Array.from(Array(maxTreeDepth).keys()).map(() => '')
 
-   let checkList = [];
+   let columns = [];
 
     await asyncForEach(flatten, async (item) => {
-      const d = _.pick(item,['id','cap_name', 'hierarchy_id','capability','kpis','capability_lib_id'])
+      const d = pick(item,['id','cap_name', 'hierarchy_id','capability','kpis','capability_lib_id'])
       let kpis = [];
       let description = '';
+
+      // Get kpis of related capability
       if(d.capability) {
           kpis = await this.kpiLibSrv.kpilibRepository.findByIds(d.capability.kpis, { select: ['label'] });
       }
 
+       // Get description of reletaed capability lib
       if(d.capability_lib_id) {
         const cap_lib = await this.capabilityLibRepository.findOne(d.capability_lib_id)
         description = cap_lib.description;
       }
 
+      // Get all parents nodes names to insert in dynamic cap columns
       let capTreePath = [item.cap_name];
         if(item.parentId) {  
-          recursiveFunction(item,capTreePath);
+          getPathFromRootToNode(item,capTreePath);
           check.push(capTreePath.reverse())
       }
 
-      checkList.push([d.id, d.hierarchy_id,  ...testArray.map((v,i) => i < capTreePath.length ? capTreePath[i] : ''), description ,kpis.map(K => K.label).join(',')]);
+      columns.push([d.id, d.hierarchy_id,  ...testArray.map((v,i) => i < capTreePath.length ? capTreePath[i] : ''), description ,kpis.map(K => K.label).join(',')]);
       capTreePath = [];
     })
 
-   const title = flatten[0].cap_name;
+    const title = flatten[0].cap_name;
 
-   // Create workbook and worksheet
-   const workbook = new Workbook();
-   const worksheet = workbook.addWorksheet('Car Data');
+    // Create workbook and worksheet
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('Car Data');
 
-   // Add Row and formatting
-   const titleRow = worksheet.addRow([title]);
-   titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };   worksheet.addRow([]);
- 
-   worksheet.mergeCells('A1:D2');
+    // Add Row and formatting
+    const titleRow = worksheet.addRow([title]);
+    titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };   worksheet.addRow([]);
+   
+    worksheet.mergeCells('A1:D2');
 
-   // Blank Row
-   worksheet.addRow([]);
+    // Blank Row
+    worksheet.addRow([]);
 
-   // Add Header Row
-   const headerRow = worksheet.addRow(header);
+    // Add Header Row
+    const headerRow = worksheet.addRow(header);
 
-   // Cell Style : Fill and Border
-   headerRow.eachCell((cell, number) => {
-    cell.fill = {
-       type: 'pattern',
-       pattern: 'solid',
-       fgColor: { argb: 'FFFFFF00' },
-       bgColor: { argb: 'FF0000FF' }
-     };
-     cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
-   });
+    // Cell Style : Fill and Border
+    headerRow.eachCell((cell, number) => {
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFFFFF00' },
+        bgColor: { argb: 'FF0000FF' }
+      };
+      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+    });
 
-   // Add Data and Conditional Formatting
-   checkList.forEach(d => {
-     worksheet.addRow(d);
-   });
-  
-  Array.from(Array(maxTreeDepth).keys()).forEach((v,i) => {
-    worksheet.getColumn(i + 3).width = 100;
-  })
-  worksheet.getColumn(maxTreeDepth + 3).width = 100;
-  worksheet.getColumn(maxTreeDepth + 4).width = 300;
+    // Add Data and Conditional Formatting
+    columns.forEach(d => {
+      worksheet.addRow(d);
+    });
+    
+    Array.from(Array(maxTreeDepth).keys()).forEach((v,i) => {
+      worksheet.getColumn(i + 3).width = 100;
+    })
+    worksheet.getColumn(maxTreeDepth + 3).width = 100;
+    worksheet.getColumn(maxTreeDepth + 4).width = 300;
 
 
-  res.setHeader(
-    "Content-Type",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  );
-  res.setHeader(
-    "Content-Disposition",
-    "attachment; filename=" + `${title}.xlsx`
-  );
-  
-  return workbook.xlsx.write(res).then(function () {
-    res.status(200).end();
-  });
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=" + `${title}.xlsx`
+    );
+    
+    return workbook.xlsx.write(res).then(function () {
+      res.status(200).end();
+    });
 
   }
 
