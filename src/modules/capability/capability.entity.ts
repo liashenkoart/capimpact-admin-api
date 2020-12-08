@@ -66,7 +66,7 @@ import {
       type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',
       nullable: true,
     })
-    readonly tags?: { [key: string]: any };
+     tags?: { [key: string]: any };
   
     @Field(() => String, { nullable: true })
     @Column({

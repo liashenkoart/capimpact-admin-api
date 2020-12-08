@@ -99,6 +99,12 @@ import {
     async getCompanyTree(@Query() query: CapabilityTreeArgs) {
       return this.capabilityTreeService.treeByCompanyTree(query.company_id);
     }
+
+    @Get('company/tags')
+    async getCompanyTreeWithTgas(@Query() query: CapabilityTreeArgs) {
+      console.log('here')
+      return this.capabilityTreeService.treeByCompanyTreeWithTags(query.company_id);
+    }
   
     @Get('location/:id')
     async getLocation(@Param('id') id: string): Promise<CapabilityTreeLocationDto> {

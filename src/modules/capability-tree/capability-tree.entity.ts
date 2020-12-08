@@ -98,7 +98,7 @@ import {
     @Column({ nullable: true })
     parentId?: number;
   
-    @Field(() => Number, { nullable: true, defaultValue:[1] })
+    @Field(() => Number, { nullable: true, defaultValue:[] })
     @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[1] })
     tags: number[];
   
@@ -117,7 +117,6 @@ import {
       country: ""
     }})
     location: Location;
-  
   
     @Field(() => Number, { nullable: true, defaultValue:[] })
     @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })

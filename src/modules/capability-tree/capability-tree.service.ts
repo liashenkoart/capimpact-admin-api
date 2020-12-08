@@ -18,7 +18,7 @@ import { KpiLibService } from '../kpi-lib/kpi-lib.service';
 import { Capability } from '../capability/capability.entity';
 import { Workbook } from 'exceljs';
 import { MASTER_TREE_NODE_NOT_FOUND } from './capability-tree.constants';
-import { each, pick } from 'lodash';
+import { each, pick, get } from 'lodash';
 
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
@@ -454,6 +454,37 @@ export class CapabilityTreeService extends BaseService {
     }
 
     const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
+ 
+  
+    return sortTreeByField('hierarchy_id', tree);
+  }
+
+  async treeByCompanyTreeWithTags(company_id: number): Promise<CapabilityTree> {
+    const companyParams = { company_id, parentId: null, }
+    let rootCompanyTree = await this.capabilityTreeRepository.findOne(companyParams);
+
+    if (!rootCompanyTree) {
+        throw new NotFoundException(`capability-tree with company_id: ${company_id} was not found`);
+    }
+
+    let capsWIthTags = [];
+
+    const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
+    await asyncForEach(tree.children,async (t) => {
+      await asyncForEach(t.children, async (cap) => {
+            capsWIthTags.push(await this.capabilityRepository.findOne({ where: { capability_tree: { id: cap.id }},relations:['capability_tree']}));
+      })
+    })
+
+    tree.children = tree.children.map((v) => {
+              v.children = v.children.map((cap) => {
+                  const { tags } = capsWIthTags.find((c) => c.capability_tree.id === cap.id);
+                  cap.tags = tags;
+                return cap;
+              });
+      return v;
+    })
+
     return sortTreeByField('hierarchy_id', tree);
   }
 
