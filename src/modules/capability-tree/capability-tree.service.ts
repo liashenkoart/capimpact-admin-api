@@ -476,6 +476,8 @@ export class CapabilityTreeService extends BaseService {
       })
     })
 
+
+    console.log(capsWIthTags)
     tree.children = tree.children.map((v) => {
               v.children = v.children.map((cap) => {
                   const { tags } = capsWIthTags.find((c) => c.capability_tree.id === cap.id);

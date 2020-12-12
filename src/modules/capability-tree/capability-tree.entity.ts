@@ -40,6 +40,7 @@ import {
     )
     @JoinColumn({ name: 'capability' })
     capability: Capability;
+
   
     @Field(() => ID, { nullable: true })
     @Column({ name: 'capability_lib_id', nullable: true })
