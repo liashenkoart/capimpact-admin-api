@@ -472,16 +472,23 @@ export class CapabilityTreeService extends BaseService {
     const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
     await asyncForEach(tree.children,async (t) => {
       await asyncForEach(t.children, async (cap) => {
-            capsWIthTags.push(await this.capabilityRepository.findOne({ where: { capability_tree: { id: cap.id }},relations:['capability_tree']}));
+        
+        let capability = await this.capabilityRepository.findOne({ where: { capability_tree: { id: cap.id }},relations:['capability_tree']});
+        if(capability) {
+           capsWIthTags.push(capability)
+        } else {
+          capability = await this.capabilityRepository.save(new Capability({ name: cap.cap_name, capability_tree: cap}));
+        }
+            
       })
     })
 
 
-    console.log(capsWIthTags)
     tree.children = tree.children.map((v) => {
               v.children = v.children.map((cap) => {
-                  const { tags } = capsWIthTags.find((c) => c.capability_tree.id === cap.id);
-                  cap.tags = tags;
+                  const test = capsWIthTags.find((c) => c.capability_tree.id === cap.id);
+                  cap.tags = get(test,'tags',null);
+                  cap['filters'] = get(test,'filters',null);
                 return cap;
               });
       return v;
@@ -651,13 +658,10 @@ export class CapabilityTreeService extends BaseService {
   async findMasterCapTree(): Promise<Object> {
     let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
     if (!root) {
-      console.log('here')
       root = await this.createMasterCapTree();
     }
 
     const tree = await this.capabilityTreeRepository.find({where : { type: 'master'}});
-
-    console.log(tree[0])
     return  sortTreeByField('hierarchy_id', this.listToTree(tree)[0]);
   }
 
@@ -821,6 +825,12 @@ export class CapabilityTreeService extends BaseService {
         .execute();
         
     await this.capabilityTreeRepository.remove(capToDelete);
+
+    const capability = await this.capabilityRepository.findOne({ where: { capability_tree: { id: capToDelete.id }}, relations: ['capability_tree']});
+    if(capability) {
+       await this.capabilityRepository.remove(capability);
+    }
+
     return capToDelete;
   }
 

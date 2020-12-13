@@ -17,7 +17,7 @@ import {
   import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
   
   import { CapabilityService } from './services/capability.service';
-  import { CapabilitiesArgs, CapabilityInput, CapabilityCreationInput } from './dto';
+  import { CapabilitiesArgs, CapabilityInput, CapabilityCreationInput, CapabilityFilterUpdate } from './dto';
   import { CAPABILITY_API_TAG } from './capability.constants';
 
   @ApiBearerAuth()
@@ -59,9 +59,15 @@ import {
     }
   
     @ApiBody({ type: [CapabilityInput] })
-    @Post('/bulk')
-    async saveMany(@Body() data: CapabilityInput[], @Req() req: any) {
-      return this.capabilityService.saveMany(data, { user: req.user });
+    @Post('/tags/bulk')
+    async saveManyTags(@Body() data: CapabilityInput[], @Req() req: any) {
+      return this.capabilityService.saveManyTags(data, { user: req.user });
+    }
+
+    @ApiBody({ type: [CapabilityFilterUpdate] })
+    @Post('/filters/bulk')
+    async saveManyFIlters(@Body() data:  CapabilityFilterUpdate[], @Req() req: any) {
+      return this.capabilityService.saveManyFilters(data, { user: req.user });
     }
   
     @Post('/:id')

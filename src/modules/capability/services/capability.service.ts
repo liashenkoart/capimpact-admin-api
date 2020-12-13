@@ -221,6 +221,54 @@ export class CapabilityService {
     return data;
   }
 
+
+  async saveManyTags(input: CapabilityInput[], context?: any) {
+    const { user } = context;
+    let data = []
+    await asyncForEach(input, async (cap) => {
+      const { tags } = cap;
+      let entity = await this.capabilityRepository.findOne({ where: { capability_tree: { id: cap.id } }, relations: ['capability_tree']  });
+      if(entity) {
+         entity.tags = tags;
+         entity.user = user;
+         data.push(await this.capabilityRepository.save(entity));
+      } else {
+          const capability_tree = await this.capTreeSrv.treeRepository.findOne(cap.id);
+          const capability = new Capability({name: capability_tree.cap_name, tags, user, capability_tree})
+          data.push(await this.capabilityRepository.save(capability));
+      }
+    })
+    //  for (let node of data) {
+    //   await this.capabilityGraphService.save(node.id, node.name);
+    //  }
+    
+    // for (let node of data) {
+    //   await this.updateHierarchyIdNode(node);
+    // }
+  
+    return data;
+  }
+
+
+  async saveManyFilters(input: any[], context?: any) {
+    const { user } = context;
+    let data = []
+    await asyncForEach(input, async (cap) => {
+      const { filters } = cap;
+      let entity = await this.capabilityRepository.findOne({ where: { capability_tree: { id: cap.id } }, relations: ['capability_tree']  });
+      if(entity) {
+         entity.filters = filters;
+         entity.user = user;
+         data.push(await this.capabilityRepository.save(entity));
+      } else {
+          const capability_tree = await this.capTreeSrv.treeRepository.findOne(cap.id);
+          const capability = new Capability({name: capability_tree.cap_name, filters, user, capability_tree})
+          data.push(await this.capabilityRepository.save(capability));
+      }
+    })
+  
+    return data;
+  }
   async cloneTreeFromIndustry(id: any, industry: Industry, context?: any): Promise<Capability> {
     const { user } = context;
     const industryId = parseInt(id, 10); // cloned industry id
