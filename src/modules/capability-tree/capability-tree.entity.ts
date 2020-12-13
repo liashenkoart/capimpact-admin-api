@@ -9,6 +9,7 @@ import {
     ManyToOne,
     JoinColumn,
     OneToOne,
+    RelationId
   } from 'typeorm';
   import { ObjectType, Field, ID } from 'type-graphql';
   import { IndustryTree } from '../industry-tree/industry-tree.entity';
@@ -41,6 +42,8 @@ import {
     @JoinColumn({ name: 'capability' })
     capability: Capability;
 
+    @RelationId((capabilityTree: CapabilityTree) => capabilityTree.capability)
+    capabilityId: number;
   
     @Field(() => ID, { nullable: true })
     @Column({ name: 'capability_lib_id', nullable: true })

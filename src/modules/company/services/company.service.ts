@@ -77,14 +77,15 @@ export class CompanyService {
     company = await this.companyRepository.save(company);
 
      const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
-     await this.createEntity(rootChildren, company,name, res);
-    
+     if(rootChildren.length > 0) {
+       await this.createEntity(rootChildren, company,name, res); 
+     }
     return this.companyRepository.findOne();
   }
 
   async createEntity(rootChildren:CapabilityTree[], company: Company,cap_name: string, res?) {
     let count = 0;
-    const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name, type: "company",company_id: company.id, parentId: null })
+    const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name, type: "company",company_id: company.id, parentId: null });
     const rootindustryid = rootChildren[0].id;
     const clonedNodeId = rootChildren[0].id;
     rootChildren.shift();

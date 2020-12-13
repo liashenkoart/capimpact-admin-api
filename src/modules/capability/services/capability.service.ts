@@ -122,7 +122,7 @@ export class CapabilityService {
     capability.user = user;
     capability = await this.capabilityRepository.save(capability);
     await this.updateHierarchyIdNode(capability);
-    return await this.findOneById(capability.id);
+    return null;
   }
 
   createRootNode(industry: Industry, context?: any): Promise<Capability> {
