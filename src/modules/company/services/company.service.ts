@@ -93,11 +93,7 @@ export class CompanyService {
     rootChildren.shift();
     const oldCapToNewCapIDs = {}; 
 
-    if(rootChildren.length === 0) {
-      await  res.status(200).send({ 
-        clone: false
-       });
-     }
+
     await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id ,parentId, capability, tags }) => {
       count++;
       const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id, tags})
@@ -125,6 +121,10 @@ export class CompanyService {
       }
       oldCapToNewCapIDs[id] = createdCapability.id
     });
+  } else {
+    await  res.status(200).send({ 
+      clone: false
+     });
   }
   }
 
