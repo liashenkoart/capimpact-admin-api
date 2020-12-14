@@ -18,7 +18,7 @@ import { KpiLibService } from '../kpi-lib/kpi-lib.service';
 import { Capability } from '../capability/capability.entity';
 import { Workbook } from 'exceljs';
 import { MASTER_TREE_NODE_NOT_FOUND } from './capability-tree.constants';
-import { each, pick } from 'lodash';
+import { each, pick, get } from 'lodash';
 
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
@@ -454,6 +454,41 @@ export class CapabilityTreeService extends BaseService {
     }
 
     const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
+ 
+  
+    return sortTreeByField('hierarchy_id', tree);
+  }
+
+  async treeByCompanyTreeWithTags(company_id: number): Promise<CapabilityTree> {
+    const companyParams = { company_id, parentId: null, }
+    let rootCompanyTree = await this.capabilityTreeRepository.findOne(companyParams);
+
+    if (!rootCompanyTree) {
+        throw new NotFoundException(`capability-tree with company_id: ${company_id} was not found`);
+    }
+
+    let capsWIthTags = [];
+
+    const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
+    await asyncForEach(tree.children,async (t) => {
+      await asyncForEach(t.children, async (cap) => {  
+        let capability = await this.capabilityRepository.findOne({ where: { id: cap.capabilityId }});
+           capsWIthTags.push(capability)
+            
+      })
+    })
+
+
+    tree.children = tree.children.map((v) => {
+              v.children = v.children.map((cap) => {
+                  const test = capsWIthTags.find((c) => c.id === cap.capabilityId);
+                  cap.tags = get(test,'tags',null);
+                  cap['filters'] = get(test,'filters',null);
+                return cap;
+              });
+      return v;
+    })
+
     return sortTreeByField('hierarchy_id', tree);
   }
 
@@ -490,6 +525,10 @@ export class CapabilityTreeService extends BaseService {
           industryTree.capability =  await this.capabilityRepository.save(new Capability({
             name: industryTree.cap_name,
             kpis: capability.kpis
+          }))
+        } else if(!capability && type === 'company') {
+          industryTree.capability =  await this.capabilityRepository.save(new Capability({
+            name: industryTree.cap_name,
           }))
         }
  
@@ -618,13 +657,10 @@ export class CapabilityTreeService extends BaseService {
   async findMasterCapTree(): Promise<Object> {
     let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
     if (!root) {
-      console.log('here')
       root = await this.createMasterCapTree();
     }
 
     const tree = await this.capabilityTreeRepository.find({where : { type: 'master'}});
-
-    console.log(tree[0])
     return  sortTreeByField('hierarchy_id', this.listToTree(tree)[0]);
   }
 
@@ -788,6 +824,12 @@ export class CapabilityTreeService extends BaseService {
         .execute();
         
     await this.capabilityTreeRepository.remove(capToDelete);
+
+    const capability = await this.capabilityRepository.findOne({ where: { capability_tree: { id: capToDelete.id }}, relations: ['capability_tree']});
+    if(capability) {
+       await this.capabilityRepository.remove(capability);
+    }
+
     return capToDelete;
   }
 

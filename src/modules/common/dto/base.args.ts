@@ -14,12 +14,12 @@ export class BaseArgs {
   @IsOptional()
   @Min(0)
   @Type(() => Number)
-  skip?: number = 0;
+  skip?: number;
 
   @Field(() => Int, { nullable: true })
   @IsOptional()
   @Min(0)
   @Max(1000)
   @Type(() => Number)
-  limit?: number = 25;
+  limit?: number;
 }

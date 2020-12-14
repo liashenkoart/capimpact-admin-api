@@ -39,14 +39,18 @@ export class CompanyService {
       ordertType = options.sort[1] as any;
     }
 
-    return this.companyRepository.createQueryBuilder('companies')
+    let companiesQuery = this.companyRepository.createQueryBuilder('companies')
     .leftJoinAndSelect('companies.industry', 'industry')
     .orderBy(orderBy , ordertType as 'ASC' | 'DESC')
     .where("companies.name ILIKE :name", { name: `%${search}%` })
     .orWhere("industry.name ILIKE :name", { name: `%${search}%` })
-    .skip(skip)
-    .take(take)
-    .getMany();
+
+    if(take)
+      companiesQuery.take(take)
+    if(skip)
+      companiesQuery.skip(skip)
+
+    return companiesQuery.getMany();
   }
 
   findOneById(id: number): Promise<Company> {
@@ -77,24 +81,23 @@ export class CompanyService {
     company = await this.companyRepository.save(company);
 
      const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
-     await this.createEntity(rootChildren, company,name, res);
+
+       await this.createEntity(rootChildren, company,name, res); 
     
     return this.companyRepository.findOne();
   }
 
   async createEntity(rootChildren:CapabilityTree[], company: Company,cap_name: string, res?) {
     let count = 0;
-    const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name, type: "company",company_id: company.id, parentId: null })
+    
+    const rootcompany = await this.capabilitiesTreeSrv.capabilityTreeRepository.save({ cap_name, type: "company",company_id: company.id, parentId: null });
+   if(rootChildren.length > 0 ) {
     const rootindustryid = rootChildren[0].id;
     const clonedNodeId = rootChildren[0].id;
     rootChildren.shift();
     const oldCapToNewCapIDs = {}; 
 
-    if(rootChildren.length === 0) {
-      await  res.status(200).send({ 
-        clone: false
-       });
-     }
+
     await asyncForEach(rootChildren, async ({ id,cap_name, capability_lib_id ,parentId, capability, tags }) => {
       count++;
       const newCap = new CapabilityTree({ cap_name, parentId, capability_lib_id, type: 'company', company_id: company.id, tags})
@@ -122,6 +125,11 @@ export class CompanyService {
       }
       oldCapToNewCapIDs[id] = createdCapability.id
     });
+  } else {
+    await  res.status(200).send({ 
+      clone: false
+     });
+  }
   }
 
   async clone(clonedId: number, data: CompanyInput, context?: any, res?: any): Promise<void> {

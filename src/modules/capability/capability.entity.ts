@@ -11,6 +11,7 @@ import {
     ManyToMany,
     OneToOne,
     JoinTable,
+    RelationId
   } from 'typeorm';
   import { ObjectType, Field, Float, ID } from 'type-graphql';
   import { User } from '@modules/users/user.entity';
@@ -19,6 +20,7 @@ import {
   import { Classification } from '../classifications/classification.entity';
   import { CapabilityTree } from '../capability-tree/capability-tree.entity';
   import { CAPABILITY_COLUMN_NAME } from './capability.constants';
+
 
   @ObjectType()
   @Entity(CAPABILITY_COLUMN_NAME)
@@ -43,6 +45,9 @@ import {
     @JoinColumn({ name: 'capability_tree'})
     capability_tree?: CapabilityTree;
   
+    @RelationId((capability: Capability) => capability.capability_tree)
+    capabilityTreeId: number;
+
     @Field(() => Float, { nullable: true })
     @Column('decimal', {
       nullable: true,
@@ -66,14 +71,14 @@ import {
       type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',
       nullable: true,
     })
-    readonly tags?: { [key: string]: any };
+     tags?: { [key: string]: any };
   
     @Field(() => String, { nullable: true })
     @Column({
       type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb',
       nullable: true,
     })
-    readonly filters?: { [key: string]: any };
+    filters?: { [key: string]: any };
   
     @Field(() => String, { nullable: true })
     @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })

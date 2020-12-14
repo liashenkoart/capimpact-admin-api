@@ -4,7 +4,7 @@ import { Repository, TreeRepository, FindManyOptions, In } from 'typeorm';
 
 import { parseCsv } from '@lib/parseCsv';
 import { getPath } from '@lib/getPath';
-import { sortTreeByField, flattenTree } from '@lib/sorting';
+import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { CapabilityGraphService } from './capability.graph.service';
 
 import { Industry } from '../../industry/industry.entity';
@@ -196,25 +196,66 @@ export class CapabilityService {
 
   async saveMany(input: CapabilityInput[], context?: any) {
     const { user } = context;
-    const data = input.map(candidate => {
-      let capability = new Capability({ ...candidate });
-      capability.user = user;
-
-      return capability;
-    });
-
-    let result = await this.capabilityRepository.save(data);
-    for (let node of result) {
-      await this.capabilityGraphService.save(node.id, node.name);
-    }
-    /*
-    for (let node of result) {
-      await this.updateHierarchyIdNode(node);
-    }
-    */
-    return await this.capabilityRepository.findByIds(data.map(p => p.id));
+    let data = []
+    await asyncForEach(input, async (cap) => {
+      const { tags } = cap;
+      let entity = await this.capabilityRepository.findOne({ where: { capability_tree: { id: cap.id } }, relations: ['capability_tree']  });
+      if(entity) {
+         entity.tags = tags;
+         entity.user = user;
+         data.push(await this.capabilityRepository.save(entity));
+      } else {
+          const capability_tree = await this.capTreeSrv.treeRepository.findOne(cap.id);
+          const capability = new Capability({name: capability_tree.cap_name, tags, user, capability_tree})
+          data.push(await this.capabilityRepository.save(capability));
+      }
+    })
+    return data;
   }
 
+
+  async saveManyTags(input: CapabilityInput[], context?: any) {
+    const { user } = context;
+    let data = []
+    await asyncForEach(input, async (cap) => {
+      const { tags } = cap;
+      const capTree =  await this.capTreeSrv.treeRepository.findOne({ where: { id: cap.id }});
+      let entity = await this.capabilityRepository.findOne({ where: { id: capTree.capabilityId } });
+      if(entity) {
+         entity.tags = tags;
+         entity.user = user;
+         data.push(await this.capabilityRepository.save(entity));
+      } else {
+          const capability_tree = await this.capTreeSrv.treeRepository.findOne(cap.id);
+          const capability = new Capability({name: capability_tree.cap_name, tags, user, capability_tree})
+          data.push(await this.capabilityRepository.save(capability));
+      }
+    })
+
+    return data;
+  }
+
+
+  async saveManyFilters(input: any[], context?: any) {
+    const { user } = context;
+    let data = []
+    await asyncForEach(input, async (cap) => {
+      const { filters } = cap;
+      const capTree =  await this.capTreeSrv.treeRepository.findOne({ where: { id: cap.id }});
+      let entity = await this.capabilityRepository.findOne({ where: { id: capTree.capabilityId } });
+      if(entity) {
+         entity.filters = filters;
+         entity.user = user;
+         data.push(await this.capabilityRepository.save(entity));
+      } else {
+          const capability_tree = await this.capTreeSrv.treeRepository.findOne(cap.id);
+          const capability = new Capability({name: capability_tree.cap_name, filters, user, capability_tree})
+          data.push(await this.capabilityRepository.save(capability));
+      }
+    })
+  
+    return data;
+  }
   async cloneTreeFromIndustry(id: any, industry: Industry, context?: any): Promise<Capability> {
     const { user } = context;
     const industryId = parseInt(id, 10); // cloned industry id
