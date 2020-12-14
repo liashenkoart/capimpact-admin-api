@@ -39,14 +39,18 @@ export class CompanyService {
       ordertType = options.sort[1] as any;
     }
 
-    return this.companyRepository.createQueryBuilder('companies')
+    let companiesQuery = this.companyRepository.createQueryBuilder('companies')
     .leftJoinAndSelect('companies.industry', 'industry')
     .orderBy(orderBy , ordertType as 'ASC' | 'DESC')
     .where("companies.name ILIKE :name", { name: `%${search}%` })
     .orWhere("industry.name ILIKE :name", { name: `%${search}%` })
-    .skip(skip)
-    .take(take)
-    .getMany();
+
+    if(take)
+      companiesQuery.take(take)
+    if(skip)
+      companiesQuery.skip(skip)
+
+    return companiesQuery.getMany();
   }
 
   findOneById(id: number): Promise<Company> {
