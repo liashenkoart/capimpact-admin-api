@@ -122,7 +122,7 @@ export class CapabilityService {
     capability.user = user;
     capability = await this.capabilityRepository.save(capability);
     await this.updateHierarchyIdNode(capability);
-    return null;
+    return await this.findOneById(capability.id);
   }
 
   createRootNode(industry: Industry, context?: any): Promise<Capability> {
@@ -210,14 +210,6 @@ export class CapabilityService {
           data.push(await this.capabilityRepository.save(capability));
       }
     })
-    //  for (let node of data) {
-    //   await this.capabilityGraphService.save(node.id, node.name);
-    //  }
-    
-    // for (let node of data) {
-    //   await this.updateHierarchyIdNode(node);
-    // }
-  
     return data;
   }
 
@@ -227,7 +219,8 @@ export class CapabilityService {
     let data = []
     await asyncForEach(input, async (cap) => {
       const { tags } = cap;
-      let entity = await this.capabilityRepository.findOne({ where: { capability_tree: { id: cap.id } }, relations: ['capability_tree']  });
+      const capTree =  await this.capTreeSrv.treeRepository.findOne({ where: { id: cap.id }});
+      let entity = await this.capabilityRepository.findOne({ where: { id: capTree.capabilityId } });
       if(entity) {
          entity.tags = tags;
          entity.user = user;
@@ -238,14 +231,7 @@ export class CapabilityService {
           data.push(await this.capabilityRepository.save(capability));
       }
     })
-    //  for (let node of data) {
-    //   await this.capabilityGraphService.save(node.id, node.name);
-    //  }
-    
-    // for (let node of data) {
-    //   await this.updateHierarchyIdNode(node);
-    // }
-  
+
     return data;
   }
 
@@ -255,7 +241,8 @@ export class CapabilityService {
     let data = []
     await asyncForEach(input, async (cap) => {
       const { filters } = cap;
-      let entity = await this.capabilityRepository.findOne({ where: { capability_tree: { id: cap.id } }, relations: ['capability_tree']  });
+      const capTree =  await this.capTreeSrv.treeRepository.findOne({ where: { id: cap.id }});
+      let entity = await this.capabilityRepository.findOne({ where: { id: capTree.capabilityId } });
       if(entity) {
          entity.filters = filters;
          entity.user = user;

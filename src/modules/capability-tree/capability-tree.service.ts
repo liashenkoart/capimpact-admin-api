@@ -471,14 +471,9 @@ export class CapabilityTreeService extends BaseService {
 
     const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
     await asyncForEach(tree.children,async (t) => {
-      await asyncForEach(t.children, async (cap) => {
-        
-        let capability = await this.capabilityRepository.findOne({ where: { capability_tree: { id: cap.id }},relations:['capability_tree']});
-        if(capability) {
+      await asyncForEach(t.children, async (cap) => {  
+        let capability = await this.capabilityRepository.findOne({ where: { id: cap.capabilityId }});
            capsWIthTags.push(capability)
-        } else {
-          capability = await this.capabilityRepository.save(new Capability({ name: cap.cap_name, capability_tree: cap}));
-        }
             
       })
     })
@@ -486,7 +481,7 @@ export class CapabilityTreeService extends BaseService {
 
     tree.children = tree.children.map((v) => {
               v.children = v.children.map((cap) => {
-                  const test = capsWIthTags.find((c) => c.capability_tree.id === cap.id);
+                  const test = capsWIthTags.find((c) => c.id === cap.capabilityId);
                   cap.tags = get(test,'tags',null);
                   cap['filters'] = get(test,'filters',null);
                 return cap;
@@ -530,6 +525,10 @@ export class CapabilityTreeService extends BaseService {
           industryTree.capability =  await this.capabilityRepository.save(new Capability({
             name: industryTree.cap_name,
             kpis: capability.kpis
+          }))
+        } else if(!capability && type === 'company') {
+          industryTree.capability =  await this.capabilityRepository.save(new Capability({
+            name: industryTree.cap_name,
           }))
         }
  
