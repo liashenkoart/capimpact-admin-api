@@ -12,6 +12,7 @@ import { IndustryTree } from '../../industry-tree/industry-tree.entity';
 import { CapabilityTree } from '../../capability-tree/capability-tree.entity';
 import { Challenge } from '../../challenge/challenge.entity';
 import { GroupTag } from '../../grouptag/group-tag.entity';
+import { get } from 'lodash';
 
 @Injectable()
 export class CompanyService {
@@ -82,7 +83,7 @@ export class CompanyService {
 
      const rootChildren = await this.capabilitiesTreeSrv.getAllChildrenOfIndustry(industry_id);
 
-       await this.createEntity(rootChildren, company,name, res); 
+      await this.createEntity(rootChildren, company,name, res); 
     
     return this.companyRepository.findOne();
   }
@@ -107,13 +108,14 @@ export class CompanyService {
          newCap.parentId = oldCapToNewCapIDs[parentId]
       }
 
-      const cap = await this.capabilitiesTreeSrv.collectEntityFields(newCap)
-      if(capability){
+      const cap = await this.capabilitiesTreeSrv.collectEntityFields(newCap);
+      console.log(capability,'create company')
+      // if(capability){
         cap.capability =  await this.capabilityRepository.save(new Capability({
           name: cap.cap_name,
-          kpis: capability.kpis
+          kpis: get(capability,'kpis',null),
         }))
-      }
+      // }
       const createdCapability = await this.capabilitiesTreeSrv.capabilityTreeRepository.save(cap) 
  
       if(count === 1) {
