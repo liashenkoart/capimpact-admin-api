@@ -472,12 +472,14 @@ export class CapabilityTreeService extends BaseService {
     const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
     await asyncForEach(tree.children,async (t) => {
       await asyncForEach(t.children, async (cap) => {  
+        console.log(cap)
         let capability = await this.capabilityRepository.findOne({ where: { id: cap.capabilityId }});
            capsWIthTags.push(capability)
             
       })
-    })
+    });
 
+    console.log(capsWIthTags)
 
     tree.children = tree.children.map((v) => {
               v.children = v.children.map((cap) => {
@@ -520,7 +522,8 @@ export class CapabilityTreeService extends BaseService {
         // IparentId of industry equals parentId of moved node or newly created industry
         industry.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoIndustryId[parentId], 10)
 
-        const industryTree = await this.collectEntityFields(industry)
+        const industryTree = await this.collectEntityFields(industry);
+        console.log(capability,'capability')
         if(capability){
           industryTree.capability =  await this.capabilityRepository.save(new Capability({
             name: industryTree.cap_name,
