@@ -52,19 +52,19 @@ import {
     @Column('decimal', {
       nullable: true,
     })
-    readonly capitalCosts?: number;
+    capitalCosts?: number;
   
     @Field(() => Float, { nullable: true })
     @Column('decimal', {
       nullable: true,
     })
-    readonly fte?: number;
+    fte?: number;
   
     @Field(() => Float, { nullable: true })
     @Column('decimal', {
       nullable: true,
     })
-    readonly salaryCosts?: number;
+    salaryCosts?: number;
   
     @Field(() => String, { nullable: true })
     @Column({

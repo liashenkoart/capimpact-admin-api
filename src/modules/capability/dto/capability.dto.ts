@@ -22,17 +22,17 @@ export class CapabilityInput {
   @ApiProperty()
   @Field({ nullable: true })
   @IsOptional()
-  readonly capitalCosts?: number;
-
-  @ApiProperty()
-  @Field({ nullable: true })
-  @IsOptional()
   readonly fte?: number;
 
   @ApiProperty()
   @Field({ nullable: true })
   @IsOptional()
-  readonly salaryCosts?: number;
+  readonly capitalCosts: number;
+
+  @ApiProperty()
+  @Field({ nullable: true })
+  @IsOptional()
+  readonly salaryCosts: number;
 
   @ApiProperty()
   @IsOptional()

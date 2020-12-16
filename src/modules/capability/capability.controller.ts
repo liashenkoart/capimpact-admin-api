@@ -64,6 +64,12 @@ import {
       return this.capabilityService.saveManyTags(data, { user: req.user });
     }
 
+    @ApiBody({ type: [CapabilityInput] })
+    @Post('/spend-fte/bulk')
+    async saveManySpendFTe(@Body() data: CapabilityInput[], @Req() req: any) {
+      return this.capabilityService.saveManySpendFTe(data, { user: req.user });
+    }
+
     @ApiBody({ type: [CapabilityFilterUpdate] })
     @Post('/filters/bulk')
     async saveManyFIlters(@Body() data:  CapabilityFilterUpdate[], @Req() req: any) {

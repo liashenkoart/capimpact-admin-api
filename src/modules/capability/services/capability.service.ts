@@ -213,6 +213,27 @@ export class CapabilityService {
     return data;
   }
 
+  async saveManySpendFTe(input: CapabilityInput[], context?: any) {
+    const { user } = context;
+    let data = []
+    await asyncForEach(input, async (cap) => {
+      const { fte, salaryCosts, capitalCosts } = cap;
+      const capTree =  await this.capTreeSrv.treeRepository.findOne({ where: { id: cap.id }});
+      let entity = await this.capabilityRepository.findOne({ where: { id: capTree.capabilityId } });
+      if(entity) {
+         entity.fte = fte;
+         entity.capitalCosts = capitalCosts;
+         entity.salaryCosts = salaryCosts;
+         data.push(await this.capabilityRepository.save(entity));
+      } else {
+          const capability_tree = await this.capTreeSrv.treeRepository.findOne(cap.id);
+          const capability = new Capability({name: capability_tree.cap_name, fte, salaryCosts, capitalCosts , user, capability_tree})
+          data.push(await this.capabilityRepository.save(capability));
+      }
+    })
+
+    return data;
+  }
 
   async saveManyTags(input: CapabilityInput[], context?: any) {
     const { user } = context;

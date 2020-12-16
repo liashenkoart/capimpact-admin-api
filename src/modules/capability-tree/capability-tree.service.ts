@@ -472,20 +472,20 @@ export class CapabilityTreeService extends BaseService {
     const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
     await asyncForEach(tree.children,async (t) => {
       await asyncForEach(t.children, async (cap) => {  
-        console.log(cap)
         let capability = await this.capabilityRepository.findOne({ where: { id: cap.capabilityId }});
            capsWIthTags.push(capability)
             
       })
     });
 
-    console.log(capsWIthTags)
-
     tree.children = tree.children.map((v) => {
               v.children = v.children.map((cap) => {
                   const test = capsWIthTags.find((c) => c.id === cap.capabilityId);
                   cap.tags = get(test,'tags',null);
                   cap['filters'] = get(test,'filters',null);
+                  cap['capitalCosts'] = get(test,'capitalCosts',null);
+                  cap['salaryCosts'] = get(test,'salaryCosts',null);
+                  cap['fte'] = get(test,'fte',null);
                 return cap;
               });
       return v;
