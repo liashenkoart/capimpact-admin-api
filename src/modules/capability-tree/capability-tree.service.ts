@@ -45,7 +45,6 @@ export class CapabilityTreeService extends BaseService {
     // For some reason true or false comes as string
     if (query.onlyCapLibs === 'true') {
       return this.capabilityRepository.query(`SELECT * FROM capability_tree where capability_lib_id IS NOT NULL;`)
-     // return this.capabilityTreeRepository.find({ where: { capability_lib_id: Not(IsNull()) } });
     }
     return this.capabilityTreeRepository.find(this.getFindAllQuery(query));
   }
@@ -65,6 +64,7 @@ export class CapabilityTreeService extends BaseService {
         }
     }); 
   };
+  
 
   private async getMasterTreeNodeWithChildrenById(id:number) {
     const tree: any = await this.findMasterCapTree();
