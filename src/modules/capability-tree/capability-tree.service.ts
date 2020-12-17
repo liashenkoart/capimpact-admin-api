@@ -20,6 +20,8 @@ import { Workbook } from 'exceljs';
 import { MASTER_TREE_NODE_NOT_FOUND } from './capability-tree.constants';
 import { each, pick, get } from 'lodash';
 
+import moment from 'moment';
+
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
 @Injectable()
@@ -658,13 +660,15 @@ export class CapabilityTreeService extends BaseService {
   }
   // MASTER CAPTREE
   async findMasterCapTree(): Promise<Object> {
+    
     let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
     if (!root) {
       root = await this.createMasterCapTree();
     }
 
-    const tree = await this.capabilityTreeRepository.find({where : { type: 'master'}});
-    return  sortTreeByField('hierarchy_id', this.listToTree(tree)[0]);
+   const data = await this.capabilityRepository.query(`SELECT * FROM capability_tree where type = 'master';`)
+
+   return  sortTreeByField('hierarchy_id', this.listToTree(data)[0]);
   }
 
   

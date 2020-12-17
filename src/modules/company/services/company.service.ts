@@ -58,6 +58,12 @@ export class CompanyService {
     return this.getOneByIdWithIndustryTrees(id)
   }
 
+  async count() {
+    const count = await this.companyRepository.count();
+    return { total: count };
+  }
+
+
   async countDocuments(query: CompaniesArgs): Promise<number> {
     return this.companyRepository.count(query);
   }

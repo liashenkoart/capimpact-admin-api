@@ -33,6 +33,11 @@ export class CompanyController {
     private readonly companyGraphService: CompanyGraphService
   ) {}
 
+  @Get('/count')
+  async count() {
+    return this.companyService.count();
+  }
+
   @Get('')
   async findAll(@Query() args: CompaniesArgs) {
     return this.companyService.findAll(args);
@@ -43,6 +48,7 @@ export class CompanyController {
     return this.companyService.findOneById(id);
   }
 
+ 
   @Get(`/:cid/partner-networks`)
   async findPartnerNetworksByCid(@Param('cid') cid: string) {
     return this.companyGraphService.findPartnerNetworksByCid(cid);
