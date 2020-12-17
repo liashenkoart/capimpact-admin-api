@@ -21,5 +21,5 @@ export class BaseArgs {
   @Min(0)
   @Max(1000)
   @Type(() => Number)
-  limit?: number;
+  limit?: number = 25;
 }

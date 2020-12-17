@@ -523,7 +523,7 @@ export class CapabilityTreeService extends BaseService {
         industry.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoIndustryId[parentId], 10)
 
         const industryTree = await this.collectEntityFields(industry);
-        console.log(capability,'capability')
+
         if(capability){
           industryTree.capability =  await this.capabilityRepository.save(new Capability({
             name: industryTree.cap_name,

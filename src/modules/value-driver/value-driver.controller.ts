@@ -27,7 +27,6 @@ import {
   
     @Get('tree')
     async tree(@Query() query: ValueDriversArgs) {
-      console.log(query)
       return this.valuedriverService.tree(query);
     }
   

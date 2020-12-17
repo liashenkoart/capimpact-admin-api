@@ -55,7 +55,6 @@ async function main() {
 
     const allIndustries = await transactionalEntityManager.find(Industry);
     const newIndustryTreeNodes = [];
-    console.log(allIndustries)
     for (const industry of allIndustries) {
       const industryTree = new IndustryTree({ id: industry.id, name: industry.name, parent: foundRoot });
 
