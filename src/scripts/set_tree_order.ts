@@ -35,7 +35,6 @@ async function main() {
          let count = 0;
         each(collection, (model) => {  
            model.hierarchy_id = count++;
-            console.log(model);
             array.push(model)
             if(model.children.length > 0){ 
                 recursiveFunction(model.children); 

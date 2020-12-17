@@ -102,7 +102,6 @@ import {
 
     @Get('company/tags')
     async getCompanyTreeWithTgas(@Query() query: CapabilityTreeArgs) {
-      console.log('here')
       return this.capabilityTreeService.treeByCompanyTreeWithTags(query.company_id);
     }
   

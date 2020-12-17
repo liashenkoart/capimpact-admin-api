@@ -20,6 +20,8 @@ import { Workbook } from 'exceljs';
 import { MASTER_TREE_NODE_NOT_FOUND } from './capability-tree.constants';
 import { each, pick, get } from 'lodash';
 
+import moment from 'moment';
+
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
 @Injectable()
@@ -42,7 +44,7 @@ export class CapabilityTreeService extends BaseService {
   async findAll(query: CapabilityTreesArgs): Promise<CapabilityTree[] | void> {
     // For some reason true or false comes as string
     if (query.onlyCapLibs === 'true') {
-      return this.capabilityTreeRepository.find({ where: { capability_lib_id: Not(IsNull()) } });
+      return this.capabilityRepository.query(`SELECT * FROM capability_tree where capability_lib_id IS NOT NULL;`)
     }
     return this.capabilityTreeRepository.find(this.getFindAllQuery(query));
   }
@@ -62,6 +64,7 @@ export class CapabilityTreeService extends BaseService {
         }
     }); 
   };
+  
 
   private async getMasterTreeNodeWithChildrenById(id:number) {
     const tree: any = await this.findMasterCapTree();
@@ -472,20 +475,20 @@ export class CapabilityTreeService extends BaseService {
     const tree = await this.treeRepository.findDescendantsTree(rootCompanyTree);
     await asyncForEach(tree.children,async (t) => {
       await asyncForEach(t.children, async (cap) => {  
-        console.log(cap)
         let capability = await this.capabilityRepository.findOne({ where: { id: cap.capabilityId }});
            capsWIthTags.push(capability)
             
       })
     });
 
-    console.log(capsWIthTags)
-
     tree.children = tree.children.map((v) => {
               v.children = v.children.map((cap) => {
                   const test = capsWIthTags.find((c) => c.id === cap.capabilityId);
                   cap.tags = get(test,'tags',null);
                   cap['filters'] = get(test,'filters',null);
+                  cap['capitalCosts'] = get(test,'capitalCosts',null);
+                  cap['salaryCosts'] = get(test,'salaryCosts',null);
+                  cap['fte'] = get(test,'fte',null);
                 return cap;
               });
       return v;
@@ -523,7 +526,7 @@ export class CapabilityTreeService extends BaseService {
         industry.parentId = id === data.id ? data.parentId : parseInt(masterTreeIDtoIndustryId[parentId], 10)
 
         const industryTree = await this.collectEntityFields(industry);
-        console.log(capability,'capability')
+
         if(capability){
           industryTree.capability =  await this.capabilityRepository.save(new Capability({
             name: industryTree.cap_name,
@@ -658,13 +661,15 @@ export class CapabilityTreeService extends BaseService {
   }
   // MASTER CAPTREE
   async findMasterCapTree(): Promise<Object> {
+    
     let root = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
     if (!root) {
       root = await this.createMasterCapTree();
     }
+    
+   const data = await this.capabilityRepository.query(`SELECT * FROM capability_tree where type = 'master';`)
 
-    const tree = await this.capabilityTreeRepository.find({where : { type: 'master'}});
-    return  sortTreeByField('hierarchy_id', this.listToTree(tree)[0]);
+   return  sortTreeByField('hierarchy_id', this.listToTree(data)[0]);
   }
 
   
