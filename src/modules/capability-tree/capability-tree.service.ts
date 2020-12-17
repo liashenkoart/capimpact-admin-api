@@ -44,7 +44,8 @@ export class CapabilityTreeService extends BaseService {
   async findAll(query: CapabilityTreesArgs): Promise<CapabilityTree[] | void> {
     // For some reason true or false comes as string
     if (query.onlyCapLibs === 'true') {
-      return this.capabilityTreeRepository.find({ where: { capability_lib_id: Not(IsNull()) } });
+      return this.capabilityRepository.query(`SELECT * FROM capability_tree where capability_lib_id IS NOT NULL;`)
+     // return this.capabilityTreeRepository.find({ where: { capability_lib_id: Not(IsNull()) } });
     }
     return this.capabilityTreeRepository.find(this.getFindAllQuery(query));
   }
@@ -665,7 +666,7 @@ export class CapabilityTreeService extends BaseService {
     if (!root) {
       root = await this.createMasterCapTree();
     }
-
+    
    const data = await this.capabilityRepository.query(`SELECT * FROM capability_tree where type = 'master';`)
 
    return  sortTreeByField('hierarchy_id', this.listToTree(data)[0]);
