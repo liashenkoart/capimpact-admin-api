@@ -14,7 +14,7 @@ export class BaseArgs {
   @IsOptional()
   @Min(0)
   @Type(() => Number)
-  skip?: number;
+  skip?: number = 0;
 
   @Field(() => Int, { nullable: true })
   @IsOptional()
