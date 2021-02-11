@@ -1,4 +1,4 @@
-import { Injectable, forwardRef, Inject } from '@nestjs/common';
+import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import _ from 'lodash';
@@ -9,7 +9,7 @@ import { BaseService } from '@modules/common/services';
 import { Startup } from '../startup/startup.entity';
 import { Capability } from '../capability/capability.entity';
 import { Tag } from '../tags/tag.entity';
-import { StartupCreationInput, StartupInput, StartupsArgs } from './dto';
+import { StartupCreationInput, StartupInput, StartupsArgs, StartupCapsDto } from './dto';
 import { asyncForEach } from '@lib/sorting';
 import { CapabilityLibService } from "../capability-libs/capability-lib.service"
 
@@ -75,6 +75,21 @@ export class StartupService extends BaseService {
     const startUp = await this.startupRepository.findOne(id);
     startUp.tags = await this.cabLibSrv.addNewTagIfNew(dto.tags);
     return  await this.startupRepository.save(new Startup(startUp))
+  }
+
+  async saveCaps({ capabilities, cid }: StartupCapsDto): Promise<Startup> {
+    const caps = await this.capabilityRepository.find({
+      select: ['id','name'],
+      where: {
+        id: In(capabilities),
+      },
+    }); 
+    const startup = await this.findOneById(cid);   
+    if(!startup) throw new NotFoundException('START UP NOT FOUND');
+    
+    startup.capabilities = caps;
+    return  await this.startupRepository.save(startup)
+ 
   }
 
   async save(id: string, data: StartupInput): Promise<Startup> {

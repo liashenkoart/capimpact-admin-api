@@ -14,8 +14,9 @@ import {
   import { ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
   
   import { StartupService } from './startup.service';
-  import { StartupInput, StartupCreationInput, StartupsArgs } from './dto';
+  import { StartupInput, StartupCreationInput, StartupsArgs, StartupCapsDto } from './dto';
   import { STARTUP_API_TAG } from './startup.constants';
+  import { Startup } from './startup.entity';
 
   @ApiBearerAuth()
   @ApiTags(STARTUP_API_TAG)
@@ -45,6 +46,11 @@ import {
       return this.startupService.create(data);
     }
   
+    @Post('/caps')
+    async saveCaps(@Body() data: StartupCapsDto): Promise<Startup> {
+      return this.startupService.saveCaps(data);
+    }
+
     @Post('/:id')
     async save(@Param('id') id: string, @Body() data: StartupInput) {
       return this.startupService.save(id, data);

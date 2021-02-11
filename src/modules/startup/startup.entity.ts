@@ -84,10 +84,11 @@ export class Startup {
 
   @Field(() => [Capability], { nullable: true })
   @Column({
-    type: 'simple-json',
-    nullable: true,
+    type: 'jsonb', 
+    nullable: true, 
+    default:[] 
   })
-  capabilities?: Capability[];
+  capabilities: {id: number, name: string}[];
 
   @Field({ nullable: true })
   @Column({
