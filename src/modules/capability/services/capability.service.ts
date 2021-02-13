@@ -367,4 +367,9 @@ export class CapabilityService {
     );
     return await this.findOneById(node.id);
   }
+
+
+  async test() {
+    return this.capabilityRepository.find({relations: ['startups']});
+  }
 }

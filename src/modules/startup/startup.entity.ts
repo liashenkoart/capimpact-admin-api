@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
 import { IndustryTree } from '../industry-tree/industry-tree.entity';
 import { Capability } from '../capability/capability.entity';
@@ -82,13 +82,21 @@ export class Startup {
   })
   verticals?: string;
 
-  @Field(() => [Capability], { nullable: true })
-  @Column({
-    type: 'jsonb', 
-    nullable: true, 
-    default:[] 
+  // @Field(() => [Capability], { nullable: true })
+  // @Column({
+  //   type: 'jsonb', 
+  //   nullable: true, 
+  //   default:[] 
+  // })
+  // capabilities: {id: number, name: string1}[];
+
+  @ManyToMany(() => Capability)
+  @JoinTable({
+    name: "startup_capabilities_capabilities",
+    joinColumns: [{ name: "cid" }],
+    inverseJoinColumns: [{ name: "capabilitiesId" }]
   })
-  capabilities: {id: number, name: string}[];
+  capabilities: Capability[];
 
   @Field({ nullable: true })
   @Column({

@@ -46,8 +46,8 @@ export class StartupService extends BaseService {
      return list;
   }
 
-  async findOneById(id: string): Promise<Startup> {
-    const startUp = await this.startupRepository.findOne(id);
+  async findOneById(cid: string): Promise<Startup> {
+    const startUp = await this.startupRepository.findOne({ where: { cid }, relations: ['capabilities']});
     let tags = [];
 
     if(startUp.tags.length > 0) {
@@ -79,7 +79,6 @@ export class StartupService extends BaseService {
 
   async saveCaps({ capabilities, cid }: StartupCapsDto): Promise<Startup> {
     const caps = await this.capabilityRepository.find({
-      select: ['id','name'],
       where: {
         id: In(capabilities),
       },
@@ -119,6 +118,20 @@ export class StartupService extends BaseService {
     });
     
    return startup;
+  }
+
+
+  async totalFunding(id: string): Promise<{ totalValue: number }>{
+    const list =  await this.startupRepository
+    .createQueryBuilder("startups")
+    .leftJoinAndSelect("startups.capabilities", "capability")
+    .where("capability.id = :id", { id})
+    .getMany();
+
+   const totalValue = list.map(({ first_financing_size, last_financing_size }) => ( first_financing_size + last_financing_size))
+                          .reduce((a, c) => a + c, 0);
+  
+   return { totalValue };
   }
 
   async saveMany(data: StartupInput[]) {

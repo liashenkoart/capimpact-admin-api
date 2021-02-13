@@ -32,7 +32,7 @@ import {
     async findAll(@Query() query: CapabilitiesArgs) {
       return this.capabilityService.findAll(this.parseArgs(query));
     }
-  
+
     @Get('list')
     async list() {
       return this.capabilityService.list();

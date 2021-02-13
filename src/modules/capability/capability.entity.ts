@@ -17,6 +17,7 @@ import {
   import { User } from '@modules/users/user.entity';
   import { Industry } from '../industry/industry.entity';
   import { Company } from '../company/company.entity';
+  import { Startup } from '../startup/startup.entity';
   import { Classification } from '../classifications/classification.entity';
   import { CapabilityTree } from '../capability-tree/capability-tree.entity';
   import { CAPABILITY_COLUMN_NAME } from './capability.constants';
@@ -79,6 +80,10 @@ import {
       nullable: true,
     })
     filters?: { [key: string]: any };
+
+    @ManyToMany(type => Startup, startup => startup.capabilities)
+    startups: Startup[];
+
   
     @Field(() => String, { nullable: true })
     @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
