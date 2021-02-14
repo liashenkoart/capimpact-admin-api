@@ -15,6 +15,7 @@ import { CapabilityTree } from './capability-tree.entity';
 import { CapabilityLib } from '../capability-libs/capability-lib.entity';
 import { IndustryTree } from '../industry-tree/industry-tree.entity';
 import { KpiLibService } from '../kpi-lib/kpi-lib.service';
+import { StartupService } from '../startup/startup.service';
 import { Capability } from '../capability/capability.entity';
 import { Workbook } from 'exceljs';
 import { MASTER_TREE_NODE_NOT_FOUND } from './capability-tree.constants';
@@ -29,6 +30,8 @@ export class CapabilityTreeService extends BaseService {
   constructor(
     @Inject(forwardRef(() => TagService))
     private tagService: TagService,
+    @Inject(forwardRef(() => StartupService))
+    private startUpService: StartupService,
     @Inject(forwardRef(() => TechnologyService))
     private technologyService: TechnologyService,
     public kpiLibSrv: KpiLibService,
@@ -57,20 +60,23 @@ export class CapabilityTreeService extends BaseService {
     return 1 + Math.max(0, ...array.map(({ children = [] }) => this.getDepthOfTree(children)));
   }
 
-  async recursiveFunction(collection){ 
-    each(collection, (model) => { 
-        if(model.children.length > 0){ 
-            this.recursiveFunction(model.children); 
-        }
-    }); 
-  };
-  
-
   private async getMasterTreeNodeWithChildrenById(id:number) {
     const tree: any = await this.findMasterCapTree();
     const masterNode = this.searchTree(tree,id);
     if(!masterNode) throw new NotFoundException(MASTER_TREE_NODE_NOT_FOUND)
     return masterNode;
+  }
+
+  async capTreeWithStartUps(id: number) {
+    const tree =  await this.treeByIndustryTree(id);
+    const flatten = flattenTree(tree,'children');
+    const newList  = []
+    await asyncForEach(flatten, async (node) => {
+      // node.capability = await this.capabilityRepository.findOne({ where: { id:node.capabilityId }, relations:['startups']})
+      node.test = await this.startUpService.totalFunding(node.capabilityId)
+      newList.push(node)
+    })
+   return this.listToTree(newList)[0];
   }
 
   async nodeExcellTo(id: number, res) {

@@ -29,6 +29,11 @@ import {
   export class CapabilityTreeController {
     constructor(private readonly capabilityTreeService: CapabilityTreeService) {}
   
+    @Get('industry/startups')
+    async getIndustryTreeWithStartUps(@Query() query: CapabilityTreeArgs) {
+      return this.capabilityTreeService.capTreeWithStartUps(query.industryId);
+    }
+    
     @Get('master/excell/:id')
     async check( @Param('id', new ParseIntPipe()) id: number,@Res() res) {
       return this.capabilityTreeService.nodeExcellTo(id, res);
@@ -43,7 +48,7 @@ import {
     async tree(@Query() query: CapabilityTreeArgs) {
       return this.capabilityTreeService.tree(query);
     }
-  
+   
     // Industry
     @Get('industry')
     async getIndustryTree(@Query() query: CapabilityTreeArgs) {

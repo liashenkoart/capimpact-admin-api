@@ -91,11 +91,13 @@ export class Startup {
   // capabilities: {id: number, name: string1}[];
 
   @ManyToMany(() => Capability)
-  @JoinTable({
+  @JoinTable(
+    {
     name: "startup_capabilities_capabilities",
     joinColumns: [{ name: "cid" }],
     inverseJoinColumns: [{ name: "capabilitiesId" }]
-  })
+  }
+  )
   capabilities: Capability[];
 
   @Field({ nullable: true })
