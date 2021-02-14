@@ -121,17 +121,16 @@ export class StartupService extends BaseService {
   }
 
 
-  async totalFunding(id: string): Promise<{ totalValue: number }>{
+  async capabilityStartUps(id: string): Promise<any[]>{
     const list =  await this.startupRepository
     .createQueryBuilder("startups")
     .leftJoinAndSelect("startups.capabilities", "capability")
     .where("capability.id = :id", { id})
     .getMany();
 
-   const totalValue = list.map(({ first_financing_size, last_financing_size }) => ( first_financing_size + last_financing_size))
-                          .reduce((a, c) => a + c, 0);
-  
-   return { totalValue };
+   const startUps = list.map(({ cid, name, first_financing_size, last_financing_size }) => ({ cid, name,first_financing_size ,last_financing_size}))
+                        
+   return startUps;
   }
 
   async saveMany(data: StartupInput[]) {

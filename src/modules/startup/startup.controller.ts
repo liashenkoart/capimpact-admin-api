@@ -25,11 +25,6 @@ import {
   @Controller(STARTUP_API_TAG)
   export class StartupController {
     constructor(private readonly startupService: StartupService) {}
-
-    @Get('totalFunding/:id')
-    async totalFunding(@Param('id') id: string) {
-      return this.startupService.totalFunding(id);
-    }
   
     @Get('')
     async findAll(@Query() args: StartupsArgs) {

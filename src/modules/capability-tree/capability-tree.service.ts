@@ -72,8 +72,7 @@ export class CapabilityTreeService extends BaseService {
     const flatten = flattenTree(tree,'children');
     const newList  = []
     await asyncForEach(flatten, async (node) => {
-      // node.capability = await this.capabilityRepository.findOne({ where: { id:node.capabilityId }, relations:['startups']})
-      node.test = await this.startUpService.totalFunding(node.capabilityId)
+      node.startups = await this.startUpService.capabilityStartUps(node.capabilityId)
       newList.push(node)
     })
    return this.listToTree(newList)[0];
