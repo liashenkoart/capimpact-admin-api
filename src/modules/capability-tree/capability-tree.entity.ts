@@ -128,7 +128,7 @@ import {
     @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
     technologies: number[];
 
-    @ManyToMany(type => Startup, startup => startup.capability_tree)
+    @ManyToMany(type => Startup, startup => startup.capabilities)
     startups: Startup[];
 
   

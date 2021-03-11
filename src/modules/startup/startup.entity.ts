@@ -104,11 +104,11 @@ export class Startup {
   @ManyToMany(() => CapabilityTree)
   @JoinTable(
     {
-    name: "startup_capability_tree",
+    name: "startup_capabilities",
     joinColumns: [{ name: "cid" }],
-    inverseJoinColumns: [{ name: "capabilitiesTreeId" }]
+    inverseJoinColumns: [{ name: "capability_tree_id" }]
   })
-  capability_tree: CapabilityTree[];
+  capabilities: CapabilityTree[];
 
   @Field({ nullable: true })
   @Column({

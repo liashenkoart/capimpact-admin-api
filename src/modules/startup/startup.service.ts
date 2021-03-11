@@ -7,6 +7,7 @@ import { IndustryGraphService } from '../industry/service/industry.graph.service
 
 import { BaseService } from '@modules/common/services';
 import { Startup } from '../startup/startup.entity';
+import { CapabilityTree} from '../capability-tree/capability-tree.entity';
 import { Capability } from '../capability/capability.entity';
 import { Tag } from '../tags/tag.entity';
 import { StartupCreationInput, StartupInput, StartupsArgs, StartupCapsDto } from './dto';
@@ -21,6 +22,7 @@ export class StartupService extends BaseService {
     @Inject(forwardRef(() => CapabilityLibService))
     private readonly cabLibSrv: CapabilityLibService,
     @InjectRepository(Tag) private readonly tagsRepository: Repository<Tag>,
+    @InjectRepository(CapabilityTree) private readonly capabilitytTreeRepository: Repository<CapabilityTree>,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
     @InjectRepository(Startup) private readonly startupRepository: Repository<Startup>
   ) {
@@ -78,42 +80,41 @@ export class StartupService extends BaseService {
   }
 
   async saveCaps({ capabilities, cid }: StartupCapsDto): Promise<any> {
-    // const caps = await this.capabilityRepository.find({
-    //   where: {
-    //     id: In(capabilities),
-    //   },
-    // }); 
-    // const startup = await this.findOneById(cid);   
-    // if(!startup) throw new NotFoundException('START UP NOT FOUND');
+    const caps = await this.capabilitytTreeRepository.find({
+      where: {
+        id: In(capabilities),
+      },
+    }); 
+    const startup = await this.findOneById(cid);   
+    if(!startup) throw new NotFoundException('START UP NOT FOUND');
     
-    // startup.capabilities = caps;
-    // return  await this.startupRepository.save(startup)
-    // startup.capabilities = caps;
-
+    startup.capabilities = caps;
+    return  await this.startupRepository.save(startup)
  
   }
+  
 
   async save(id: string, data: StartupInput): Promise<any> {
-  //   const result = await this.startupRepository.save(data);
-  //   const startup = await this.findOneById(result.cid);
-  //   const startups = await this.startupRepository.find({
-  //     where: { industry_tree_id: startup.industry_tree_id },
-  //   });
-  //   const ids = _.uniqBy(_.union(...startups.map(sup => sup.capabilities)), 'id').map(
-  //     ({ id }) => id
-  //   );
-  //   let capabilities = [];
-  //   if (ids && ids.length) {
-  //     capabilities = await this.capabilityRepository.find({
-  //       where: {
-  //         id: In(ids),
-  //       },
-  //     });
-  //   }
+    const result = await this.startupRepository.save(data);
+    const startup = await this.findOneById(result.cid);
+    const startups = await this.startupRepository.find({
+      where: { industry_tree_id: startup.industry_tree_id },
+    });
+    const ids = _.uniqBy(_.union(...startups.map(sup => sup.capabilities)), 'id').map(
+      ({ id }) => id
+    );
+    let capabilities = [];
+    if (ids && ids.length) {
+      capabilities = await this.capabilityRepository.find({
+        where: {
+          id: In(ids),
+        },
+      });
+    }
 
-  //   data.tags = await this.cabLibSrv.addNewTagIfNew(data.tags);
+    data.tags = await this.cabLibSrv.addNewTagIfNew(data.tags);
 
-  //  return  await this.startupRepository.save(new Startup(data))
+   return  await this.startupRepository.save(new Startup(data))
     
   }
 
