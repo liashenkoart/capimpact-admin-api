@@ -77,47 +77,44 @@ export class StartupService extends BaseService {
     return  await this.startupRepository.save(new Startup(startUp))
   }
 
-  async saveCaps({ capabilities, cid }: StartupCapsDto): Promise<Startup> {
-    const caps = await this.capabilityRepository.find({
-      where: {
-        id: In(capabilities),
-      },
-    }); 
-    const startup = await this.findOneById(cid);   
-    if(!startup) throw new NotFoundException('START UP NOT FOUND');
+  async saveCaps({ capabilities, cid }: StartupCapsDto): Promise<any> {
+    // const caps = await this.capabilityRepository.find({
+    //   where: {
+    //     id: In(capabilities),
+    //   },
+    // }); 
+    // const startup = await this.findOneById(cid);   
+    // if(!startup) throw new NotFoundException('START UP NOT FOUND');
     
-    startup.capabilities = caps;
-    return  await this.startupRepository.save(startup)
+    // startup.capabilities = caps;
+    // return  await this.startupRepository.save(startup)
+    // startup.capabilities = caps;
+
  
   }
 
-  async save(id: string, data: StartupInput): Promise<Startup> {
-    const result = await this.startupRepository.save(data);
-    const startup = await this.findOneById(result.cid);
-    const startups = await this.startupRepository.find({
-      where: { industry_tree_id: startup.industry_tree_id },
-    });
-    const ids = _.uniqBy(_.union(...startups.map(sup => sup.capabilities)), 'id').map(
-      ({ id }) => id
-    );
-    let capabilities = [];
-    if (ids && ids.length) {
-      capabilities = await this.capabilityRepository.find({
-        where: {
-          id: In(ids),
-        },
-      });
-    }
+  async save(id: string, data: StartupInput): Promise<any> {
+  //   const result = await this.startupRepository.save(data);
+  //   const startup = await this.findOneById(result.cid);
+  //   const startups = await this.startupRepository.find({
+  //     where: { industry_tree_id: startup.industry_tree_id },
+  //   });
+  //   const ids = _.uniqBy(_.union(...startups.map(sup => sup.capabilities)), 'id').map(
+  //     ({ id }) => id
+  //   );
+  //   let capabilities = [];
+  //   if (ids && ids.length) {
+  //     capabilities = await this.capabilityRepository.find({
+  //       where: {
+  //         id: In(ids),
+  //       },
+  //     });
+  //   }
 
-    data.tags = await this.cabLibSrv.addNewTagIfNew(data.tags);
+  //   data.tags = await this.cabLibSrv.addNewTagIfNew(data.tags);
 
-   return  await this.startupRepository.save(new Startup(data))
+  //  return  await this.startupRepository.save(new Startup(data))
     
-    await this.industryGraphService.saveIndustryCapabilitiesById(startup.industry_tree_id, {
-      capabilities,
-    });
-    
-   return startup;
   }
 
 

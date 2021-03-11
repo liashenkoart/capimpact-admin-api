@@ -30,7 +30,8 @@
     "set_tree_order": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/set_tree_order.ts",
     "industry_id_to_industry_tree_id": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/industry-id-to-industry-tree-id.ts",
     "naics2sic": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/naics2sic.ts",
-    "lenses": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/lenses.ts"
+    "lenses": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/lenses.ts",
+    "test2": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/test.ts"
   },
   "license": "ISC",
   "dependencies": {

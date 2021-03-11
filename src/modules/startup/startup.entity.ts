@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, ManyToMany, JoinT
 import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
 import { IndustryTree } from '../industry-tree/industry-tree.entity';
 import { Capability } from '../capability/capability.entity';
+import { CapabilityTree } from '../capability-tree/capability-tree.entity';
 import { STARTUP_COLUMN_NAME} from './startup.constants';
 
 @ObjectType()
@@ -90,15 +91,24 @@ export class Startup {
   // })
   // capabilities: {id: number, name: string1}[];
 
-  @ManyToMany(() => Capability)
+  // @ManyToMany(() => Capability)
+  // @JoinTable(
+  //   {
+  //   name: "startup_capabilities_capabilities",
+  //   joinColumns: [{ name: "cid" }],
+  //   inverseJoinColumns: [{ name: "capabilitiesId" }]
+  // }
+  // )
+  // capabilities: Capability[];
+
+  @ManyToMany(() => CapabilityTree)
   @JoinTable(
     {
-    name: "startup_capabilities_capabilities",
+    name: "startup_capability_tree",
     joinColumns: [{ name: "cid" }],
-    inverseJoinColumns: [{ name: "capabilitiesId" }]
-  }
-  )
-  capabilities: Capability[];
+    inverseJoinColumns: [{ name: "capabilitiesTreeId" }]
+  })
+  capability_tree: CapabilityTree[];
 
   @Field({ nullable: true })
   @Column({

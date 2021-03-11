@@ -9,10 +9,12 @@ import {
     ManyToOne,
     JoinColumn,
     OneToOne,
-    RelationId
+    RelationId,
+    ManyToMany
   } from 'typeorm';
   import { ObjectType, Field, ID } from 'type-graphql';
   import { IndustryTree } from '../industry-tree/industry-tree.entity';
+  import { Startup } from '../startup/startup.entity';
   import { CapabilityLib } from '../capability-libs/capability-lib.entity';
   import { Capability } from '../capability/capability.entity';
   import { Company } from '../company/company.entity';
@@ -125,6 +127,10 @@ import {
     @Field(() => Number, { nullable: true, defaultValue:[] })
     @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default:[] })
     technologies: number[];
+
+    @ManyToMany(type => Startup, startup => startup.capability_tree)
+    startups: Startup[];
+
   
     constructor(partial: Partial<CapabilityTree>) {
       Object.assign(this, partial);

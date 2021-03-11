@@ -81,8 +81,8 @@ import {
     })
     filters?: { [key: string]: any };
 
-    @ManyToMany(type => Startup, startup => startup.capabilities)
-    startups: Startup[];
+    // @ManyToMany(type => Startup, startup => startup.capabilities)
+    // startups: Startup[];
 
   
     @Field(() => String, { nullable: true })
