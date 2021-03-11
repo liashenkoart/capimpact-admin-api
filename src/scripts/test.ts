@@ -25,27 +25,16 @@ async function main() {
          if (list.length > 0) { 
              const capsIds = list.map((i) => i.capabilitiesId);
              const capabilities = await transactionalEntityManager.find(Capability, { where:  { id: In(capsIds)}});
-          //   console.log(capabilities)
+
              const capTreeIds = capabilities.filter((u) => u.capabilityTreeId).map((i) => i.capabilityTreeId);
 
-             console.log('caps',capTreeIds)
              const capTrees = await transactionalEntityManager.find(CapabilityTree, { where:  { id: In(capTreeIds)}})
              const startUp = await transactionalEntityManager.findOne(Startup, { where: { cid:comp.cid }});
 
-          
-            startUp.capabilities = capTrees; 
+                   startUp.capabilities = capTrees; 
 
-            console.log('start up starts');
-            console.log(startUp);
-            console.log('start up ends');
-
-            console.log('capTrees starts');
-            console.log(capTrees);
-            console.log('capTrees ends');
-            
           await transactionalEntityManager.save(Startup, startUp);
         }
-      
        })
 
    })
