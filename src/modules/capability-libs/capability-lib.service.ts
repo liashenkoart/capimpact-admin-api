@@ -10,6 +10,10 @@ import { CapabilityTree } from '../capability-tree/capability-tree.entity';
 import { IndustryTree} from '../industry-tree/industry-tree.entity';
 import { TagService } from '../tags/tags.service';
 import { KpiLibService } from '../kpi-lib/kpi-lib.service';
+import { CapabilityTreeCreationInput } from '../capability-tree/dto';
+
+
+const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 
 @Injectable()
 export class CapabilityLibService {
@@ -128,18 +132,28 @@ export class CapabilityLibService {
 
 
   async create(data: CapabilityLibCreationInput): Promise<CapabilityLib> {
+   const { industryId, tags, name, kpi_libs } = data;
+   const { available } =  await this.nameIsAvaliable({ name: name });
 
-   const { available } =  await this.nameIsAvaliable({ name: data.name });
-
-    if(available)  throw new ConflictException(`${data.name} alredy exists`)
+    if(available)  throw new ConflictException(`${name} alredy exists`)
     
     if(data.tags){
-       data.tags = await this.addNewTagIfNew(data.tags);
+       data.tags = await this.addNewTagIfNew(tags);
     }
 
-    data.kpi_libs = data.kpi_libs ? await this.kpiLibSrv.kpilibRepository.findByIds(data.kpi_libs) : [];
+    data.kpi_libs = kpi_libs ? await this.kpiLibSrv.kpilibRepository.findByIds(kpi_libs) : [];
     const cap_lib = await this.capabilityLibRepository.save(new CapabilityLib(data));
-    return cap_lib
+
+    if(industryId) {  
+     const masterRoot = await this.capabilityTreeRepository.findOne(masterTreeTemplate);
+     const industryTreeRoot = await this.capabilityTreeRepository.findOne({ type: 'industry',industry_tree_id: industryId, parentId: null});
+     Promise.all([
+         await this.capabilityTreeService.addCapLibToTree({ capability_lib_id: cap_lib.id, parentId: masterRoot.id }),
+         await this.capabilityTreeService.addCapLibToTree({ capability_lib_id: cap_lib.id, parentId: industryTreeRoot.id, props: { industry_tree_id: industryId} })
+     ]);
+    }
+
+    return cap_lib;
   }
 
   async save(id: number, data: CapabilityLibInput): Promise<CapabilityLib> {

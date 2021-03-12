@@ -852,4 +852,18 @@ export class CapabilityTreeService extends BaseService {
     oldCap.capability_lib_id = newCapLib.id
     return await this.capabilityTreeRepository.save(oldCap);
   }
+
+
+  async addCapLibToTree(data: any) {
+    const { parentId, capability_lib_id, props = {} } = data;
+    const cap_lib = await this.capabilityLibRepository.findOne(capability_lib_id);
+    if(!cap_lib) throw new NotFoundException('Cap lib not found')
+
+    const parent = await this.capabilityTreeRepository.findOne(parentId);
+    if(!parent) throw new NotFoundException('Parent node not found');
+
+    const node = new CapabilityTree({ cap_name: cap_lib.name, parent, capability_lib_id, type: parent.type, ...props});
+
+    return await this.capabilityTreeRepository.save(node);
+  }
 }

@@ -16,7 +16,10 @@ import {
   import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
   
   import { CapabilityLibService } from './capability-lib.service';
-  import { CapabilityLibsArgs, CapabilityLibInput, CapabilityLibCreationInput, CapabilityLibNameAvailableArgs } from './dto';
+  import { CapabilityLibsArgs,
+           CapabilityLibInput,
+           CapabilityLibCreationInput,
+           CapabilityLibNameAvailableArgs } from './dto';
   import { CAPABILITY_LIB_API_TAG } from './capability-lib.constants';
 
   @ApiBearerAuth()

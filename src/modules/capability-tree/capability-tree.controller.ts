@@ -181,7 +181,7 @@ import {
     async create(@Body() data: CapabilityTreeCreationInput, @Req() req: any) {
       return this.capabilityTreeService.create(data);
     }
-  
+
     @Post('/:id')
     async save(
       @Param('id', new ParseIntPipe()) id: number,
