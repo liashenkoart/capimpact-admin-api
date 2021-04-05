@@ -116,7 +116,7 @@ export class CapabilityTreeService extends BaseService {
       console.log('step 9.1')
       // Get kpis of related capability
       if(d.capability) {
-        console.log(d.capability,'d.capability')
+        console.log(d,'d.capability')
           kpis = await this.kpiLibSrv.kpilibRepository.findByIds(d.capability.kpis, { select: ['label'] });
           console.log('step 9.2')
         }
