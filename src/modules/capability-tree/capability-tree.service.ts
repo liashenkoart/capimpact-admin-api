@@ -79,16 +79,15 @@ export class CapabilityTreeService extends BaseService {
   }
 
   async nodeExcellTo(id: number, res) {
-    console.log('step 1')
    const tree = await this.getMasterTreeNodeWithChildrenById(id);
-   console.log('step 2')
+
    const flatten = flattenTree(tree,'children');
-   console.log('step 3')
+
    //Get max depth tree
    const maxTreeDepth = this.getDepthOfTree(tree.children);
-   console.log('step 4')
+
          flatten[0].parentId = null;
-         console.log('step 5')
+
    const getPathFromRootToNode = (item,pathArr: any[]) => { 
        const found: any =  flatten.find((i) => i.id == item.parentId);
        pathArr.push(found.cap_name)
@@ -98,48 +97,41 @@ export class CapabilityTreeService extends BaseService {
          return pathArr;
        }
     };
-    console.log('step 6')
+
    const check = [];
 
    // Excell headers with dynamic amount of capability columns bases on max tree depths
  
    const header = ['id','Heirarchy ID', ...Array.from(Array(maxTreeDepth).keys()).map((v,i) => (`Capability ${i + 1}`)), 'Description','Kpis'];
-   console.log('step 7')
+
    const testArray = Array.from(Array(maxTreeDepth).keys()).map(() => '')
-   console.log('step 8')
+
    let columns = [];
 
     await asyncForEach(flatten, async (item) => {
       const d = pick(item,['id','cap_name', 'hierarchy_id','capability','kpis','capability_lib_id'])
       let kpis = [];
       let description = '';
-      console.log(d,'step 9.1')
       // Get kpis of related capability
       if(d.capability) {
-        console.log(d,'d.capability')
-          const capability = await this.capabilityRepository.findOne(d.capability)
+          const capability = await this.capabilityRepository.findOne(d.capability);
           kpis = await this.kpiLibSrv.kpilibRepository.findByIds(capability.kpis, { select: ['label'] });
-          console.log('step 9.2')
-        }
+      }
      
        // Get description of reletaed capability lib
       if(d.capability_lib_id) {
         const cap_lib = await this.capabilityLibRepository.findOne(d.capability_lib_id)
-          console.log('step 9.3')
            description = cap_lib.description;
       }
 
       // Get all parents nodes names to insert in dynamic cap columns
       let capTreePath = [item.cap_name];
         if(item.parentId) {  
-          console.log('step 9.4')
           getPathFromRootToNode(item,capTreePath);
-          console.log('step 9.5')
           check.push(capTreePath.reverse())
       }
 
       columns.push([d.id, d.hierarchy_id,  ...testArray.map((v,i) => i < capTreePath.length ? capTreePath[i] : ''), description ,kpis.map(K => K.label).join(',')]);
-      console.log('step 9.6')
       capTreePath = [];
     })
 
@@ -148,7 +140,6 @@ export class CapabilityTreeService extends BaseService {
     // Create workbook and worksheet
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet('Car Data');
-    console.log('step 10')
     // Add Row and formatting
     const titleRow = worksheet.addRow([title]);
     titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };   worksheet.addRow([]);
@@ -171,7 +162,6 @@ export class CapabilityTreeService extends BaseService {
       };
       cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
     });
-    console.log('step 11')
 
     // Add Data and Conditional Formatting
     columns.forEach(d => {
