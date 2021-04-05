@@ -6,7 +6,8 @@ import faker from 'faker';
 import { UsersService } from '../src/modules/users/user.service';
 import { IndustryTreeService } from '../src/modules/industry-tree/industry-tree.service';
 import { CapabilityTreeService } from '../src/modules/capability-tree/capability-tree.service';
-import { CapabilityService } from '../src/modules/capability/services/capability.service';
+import
+ { CapabilityService } from '../src/modules/capability/services/capability.service';
 import { KpiLibService } from '../src/modules/kpi-lib/kpi-lib.service';
 import { AuthService } from '../src/modules/auth/auth.service';
 import { User } from '../src/modules/users/user.entity';
