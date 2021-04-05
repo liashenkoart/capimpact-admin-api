@@ -113,11 +113,12 @@ export class CapabilityTreeService extends BaseService {
       const d = pick(item,['id','cap_name', 'hierarchy_id','capability','kpis','capability_lib_id'])
       let kpis = [];
       let description = '';
-      console.log('step 9.1')
+      console.log(d,'step 9.1')
       // Get kpis of related capability
       if(d.capability) {
         console.log(d,'d.capability')
-          kpis = await this.kpiLibSrv.kpilibRepository.findByIds(d.capability.kpis, { select: ['label'] });
+          const capability = await this.capabilityRepository.findOne(d.capability)
+          kpis = await this.kpiLibSrv.kpilibRepository.findByIds(capability.kpis, { select: ['label'] });
           console.log('step 9.2')
         }
      
