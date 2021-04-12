@@ -15,6 +15,10 @@ export class OntoTree {
   @TreeChildren()
   children: OntoTree[];
 
+  @Field()
+  @Column()
+  name: string;
+
   @TreeParent()
   parent: OntoTree;
 
