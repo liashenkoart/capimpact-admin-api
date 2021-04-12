@@ -36,9 +36,8 @@ import { StartupModule } from './modules/startup/startup.module';
 import { TagsModule } from './modules/tags/tags.module';
 import { TechnologyModule } from './modules/technology/technology.module';
 import { ValueDriverModule } from './modules/value-driver/value-driver.module';
-
-
-
+import { OntologiesModule } from './modules/ontologies/ontology.module';
+import { OntoTreeModule } from './modules/ontotree/ontotree.module';
 
 import { Process } from "./modules/process/process.entity"
 import { Industry } from "./modules/industry/industry.entity"
@@ -62,6 +61,8 @@ import { KpiBenchmark } from "./modules/kpi-benchmark/kpi-benchmark.entity";
 import { Tag } from "./modules/tags/tag.entity";
 import { Technology } from "./modules/technology/technology.entity";
 import { Sic } from './modules/common/entities/sic.entity';
+import { Ontology } from './modules/ontologies/ontology.entity';
+import { OntoTree } from './modules/ontotree/ontotree.entity';
 
 
 export const MODULE = {
@@ -100,7 +101,9 @@ export const MODULE = {
           KpiBenchmark,
           Sic,
           Tag,
-          Technology
+          Technology,
+          OntoTree, 
+          Ontology
         ],
       }),
       inject: [ConfigService],
@@ -128,7 +131,9 @@ export const MODULE = {
     StartupModule,
     TagsModule,
     TechnologyModule,
-    ValueDriverModule
+    ValueDriverModule,
+    OntoTreeModule,
+    OntologiesModule
   ],
 
   controllers: [AppController],
