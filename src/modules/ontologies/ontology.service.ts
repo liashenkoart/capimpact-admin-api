@@ -12,7 +12,6 @@ export class OntologyService {
     return this.ontologyRepository.find();
   }
 
-
   async findOneById(id: number) {
     const entity = await this.ontologyRepository.findOne(id);
     if(!entity) throw new NotFoundException(ONTOLOGY_NOT_FOUND_ERROR);
