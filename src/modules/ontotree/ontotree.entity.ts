@@ -30,7 +30,7 @@ export class OntoTree {
   @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
   meta: [];
 
-  constructor(partial: Partial<OntoTree>) {
+  constructor(partial?: Partial<OntoTree>) {
     Object.assign(this, partial);
   }
 }
