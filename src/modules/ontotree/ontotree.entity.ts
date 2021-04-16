@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Field, Int, ObjectType } from 'type-graphql';
-import { Entity, PrimaryGeneratedColumn, Column, Tree, TreeChildren, TreeParent,  OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Tree, TreeChildren, TreeParent, ManyToOne} from 'typeorm';
 import { ONTOTREE_COLUMN_NAME } from './ontotree.constants';
 import { Ontology } from '../ontologies/ontology.entity';
 
@@ -8,7 +8,7 @@ import { Ontology } from '../ontologies/ontology.entity';
 @Tree("materialized-path")
 @Entity(ONTOTREE_COLUMN_NAME)
 export class OntoTree {
-  @Field(type => Int)
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,13 +22,13 @@ export class OntoTree {
   @TreeParent()
   parent: OntoTree;
 
-  @OneToOne(() => Ontology)
-  @JoinColumn()
+  @ManyToOne(() => Ontology, ontology => ontology.nodes)
   ontology: Ontology;
 
   @Field(() => String, { nullable: true })
   @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
-  meta: [];
+  meta?: [];
+    ontoTreeNode: { name: any; };
 
   constructor(partial?: Partial<OntoTree>) {
     Object.assign(this, partial);
