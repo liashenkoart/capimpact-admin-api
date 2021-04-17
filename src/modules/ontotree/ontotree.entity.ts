@@ -4,6 +4,10 @@ import { Entity, PrimaryGeneratedColumn, Column, Tree, TreeChildren, TreeParent,
 import { ONTOTREE_COLUMN_NAME } from './ontotree.constants';
 import { Ontology } from '../ontologies/ontology.entity';
 
+export interface MetaProperties {
+  url: string;
+}
+
 @ObjectType()
 @Tree("materialized-path")
 @Entity(ONTOTREE_COLUMN_NAME)
@@ -25,10 +29,8 @@ export class OntoTree {
   @ManyToOne(() => Ontology, ontology => ontology.nodes)
   ontology: Ontology;
 
-  @Field(() => String, { nullable: true })
-  @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
-  meta?: [];
-    ontoTreeNode: { name: any; };
+  @Column({ type: 'jsonb', default: {} })
+  meta: MetaProperties;
 
   constructor(partial?: Partial<OntoTree>) {
     Object.assign(this, partial);
