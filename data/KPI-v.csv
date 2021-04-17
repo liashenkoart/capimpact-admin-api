@@ -1,0 +1,7 @@
+id,name,uri
+3407,KPI,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#KPI
+3566,L2,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#L2
+3565,L2,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#L1
+8765,RiskKPI,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#RiskKPI
+11186,OperationKPI,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#OperationKPI
+668,FinancialKPI,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#FinancialKPI

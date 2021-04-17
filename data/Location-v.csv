@@ -1,0 +1,6 @@
+id,name,uri
+4221,Location,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#Location
+3024,CityAbbreviation,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#CityAbbreviation
+5106,CountryAbbreviation,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#CountryAbbreviation
+4024,City,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#City
+205,Country,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#Country

@@ -1,0 +1,13 @@
+id,name,uri
+809,ResourcePeople,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#ResourcePeople
+12208,ONETSOCCode,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#ONETSOCCode
+9047,OccupationCode,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#OccupationCode
+8430,OccupationTitle,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#OccupationTitle
+11820,OccupationType2018FTE,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#OccupationType2018FTE
+3950,CAP7Interface,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#CAP7Interface
+553,CAP7DataProcessing,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#CAP7DataProcessing
+2318,CAP7ExpertiseDigital,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#CAP7ExpertiseDigital
+976,CAP7hysicalproblemsolving,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#CAP7hysicalproblemsolving
+5797,CAP7ExpertiseDomain,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#CAP7ExpertiseDomain
+2883,CAP7Managerial,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#CAP7Managerial
+4694,CAP7hysicalpredictable,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#CAP7hysicalpredictable

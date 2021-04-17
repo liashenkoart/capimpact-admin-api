@@ -1,0 +1,6 @@
+id,name,uri
+2823,Industry,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#Industry
+8972,SICDescript,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#SICDescript
+7927,SICCode,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#SICCode
+994,NAICS,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#NAICSCode
+2121,NAICSDescription,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#NAICSDescription

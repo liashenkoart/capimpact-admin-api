@@ -1,0 +1,5 @@
+id,name,uri
+4499,ResourceMaterial,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#ResourceMaterial
+208,Product,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#Product
+13019,ProductQuality,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#ProductQuality
+3891,HS4Code,http://www.semanticweb.org/ektao/ontologies/2021/3/MinervaOntology#Hs4Code
