@@ -25,7 +25,7 @@ async function main() {
        if (fs.existsSync(filePathToE) && fs.existsSync(filePathToV)) {
         await Promise.all([await parseCsv(filePathToV),
                            await parseCsv(filePathToE)]).then(async ([nodes,edges]) => {
-        const ontology = await transactionalEntityManager.save(Ontology, new Ontology({ name: 'FinancialServicesOntology' }));
+        const ontology = await transactionalEntityManager.save(Ontology, new Ontology({ name: fileName }));
                   
         await asyncForEach((nodes as any[]),async (row, index) => {
         const { id, name, uri: url } = row;
