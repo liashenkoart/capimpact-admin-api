@@ -201,6 +201,19 @@ export class CompanyService {
     };
   }
 
+  
+  async getOneByMinervaProjectWithIndustryTrees(mnv_project_id: number): Promise<Company> {
+    const company = await this.companyRepository
+      .createQueryBuilder('company')
+      .where('company.mnv_project_id = :mnv_project_id', { mnv_project_id })
+      .leftJoinAndSelect('company.industry', 'industry')
+      .getOne();
+    if (!company) {
+      throw new NotFoundException();
+    }
+    return company;
+  }
+
   async getOneByIdWithIndustryTrees(id: number): Promise<Company> {
     const company = await this.companyRepository
       .createQueryBuilder('company')

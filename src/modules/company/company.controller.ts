@@ -48,7 +48,11 @@ export class CompanyController {
     return this.companyService.findOneById(id);
   }
 
- 
+  @Get('minerva/:id')
+  async findByMinervaProject(@Param('id', new ParseIntPipe()) id: number) {
+    return this.companyService.getOneByMinervaProjectWithIndustryTrees(id);
+  }
+
   @Get(`/:cid/partner-networks`)
   async findPartnerNetworksByCid(@Param('cid') cid: string) {
     return this.companyGraphService.findPartnerNetworksByCid(cid);

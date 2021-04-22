@@ -24,7 +24,10 @@ import {
     @Field()
     @Column()
     name: string;
-  
+
+    @Column({ nullable: true })
+    mnv_project_id : number;
+
     @Field({ nullable: true })
     @Column({ nullable: true })
     cid?: string;
