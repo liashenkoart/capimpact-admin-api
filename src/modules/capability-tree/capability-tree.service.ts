@@ -78,8 +78,17 @@ export class CapabilityTreeService extends BaseService {
    return this.listToTree(newList)[0];
   }
 
-  async nodeExcellTo(id: number, res) {
-   const tree = await this.getMasterTreeNodeWithChildrenById(id);
+  async nodeExcellToMater(id: number, res) {
+    const tree = await this.getMasterTreeNodeWithChildrenById(id);
+    return this.nodeExcellTo(tree,res);
+  }
+
+  async nodeExcellToIndustry(id: number, res) {
+    const tree = await this.treeByIndustryTree(id);
+    return this.nodeExcellTo(tree,res);
+  }
+
+  async nodeExcellTo(tree,res) {
 
    const flatten = flattenTree(tree,'children');
 
@@ -109,13 +118,14 @@ export class CapabilityTreeService extends BaseService {
    let columns = [];
 
     await asyncForEach(flatten, async (item) => {
-      const d = pick(item,['id','cap_name', 'hierarchy_id','capability','kpis','capability_lib_id'])
+      const d = pick(item,['id','cap_name', 'hierarchy_id','capability','kpis','capability_lib_id','capabilityId'])
       let kpis = [];
       let description = '';
-      // Get kpis of related capability
-      if(d.capability) {
-          const capability = await this.capabilityRepository.findOne(d.capability);
-          kpis = await this.kpiLibSrv.kpilibRepository.findByIds(capability.kpis, { select: ['label'] });
+      //Get kpis of related capability
+      if(item.capabilityId)
+      if(d.capability || d.capabilityId) {
+          const capability = await this.capabilityRepository.findOne(d.capabilityId || d.capability);
+          kpis = await this.kpiLibSrv.kpilibRepository.findByIds(capability.kpis || [], { select: ['label'] });
       }
      
        // Get description of reletaed capability lib
@@ -131,7 +141,7 @@ export class CapabilityTreeService extends BaseService {
           check.push(capTreePath.reverse())
       }
 
-      columns.push([d.id, d.hierarchy_id,  ...testArray.map((v,i) => i < capTreePath.length ? capTreePath[i] : ''), description ,kpis.map(K => K.label).join(',')]);
+      columns.push([d.id, d.hierarchy_id,  ...testArray.map((v,i) => i < capTreePath.length ? capTreePath[i] : ''), description ,kpis.map(K => K.label).join('\n')]);
       capTreePath = [];
     })
 

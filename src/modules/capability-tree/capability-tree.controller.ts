@@ -36,7 +36,12 @@ import {
     
     @Get('master/excell/:id')
     async check( @Param('id', new ParseIntPipe()) id: number,@Res() res) {
-      return this.capabilityTreeService.nodeExcellTo(id, res);
+      return this.capabilityTreeService.nodeExcellToMater(id, res);
+    }
+
+    @Get('industry/excell/:id')
+    async check2( @Param('id', new ParseIntPipe()) id: number,@Res() res) {
+      return this.capabilityTreeService.nodeExcellToIndustry(id, res);
     }
 
     @Get('')
