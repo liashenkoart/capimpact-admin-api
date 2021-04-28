@@ -191,7 +191,7 @@ export class CapabilityTreeService extends BaseService {
     );
     res.setHeader(
       "Content-Disposition",
-      "attachment; filename=" + `${title}.xlsx`
+      `attachment; filename="${title}.xlsx"`
     );
     
     return workbook.xlsx.write(res).then(function () {
