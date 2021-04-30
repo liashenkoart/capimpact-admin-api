@@ -25,6 +25,8 @@ async function main() {
       const clonedTree = await transactionalEntityManager.getTreeRepository(OntoTree).findDescendantsTree(root);
 
      await  asyncForEach(flattenTree(clonedTree, 'children'), async ({id , name, parentId },index) => {
+        const capLibExist = await transactionalEntityManager.findOne(CapabilityLib,{ where: { name } });
+        name = capLibExist ? `${name}_duplicated_${Math.floor(Math.random() * 9999)}` : name; 
         const capTree = new CapabilityTree({ cap_name: name, type: 'master'});
               capTree.capability_lib = await transactionalEntityManager.save(CapabilityLib,new CapabilityLib({name}));
         if(index === 0) {
