@@ -33,7 +33,8 @@
     "naics2sic": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/naics2sic.ts",
     "lenses": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/lenses.ts",
     "test2": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/test.ts",
-    "root-insutry-tree-name-as-industry": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/root-insutry-tree-name-as-industry.ts"
+    "root-insutry-tree-name-as-industry": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/root-insutry-tree-name-as-industry.ts",
+    "convert-ontree-captree": "ts-node -r dotenv/config -r tsconfig-paths/register src/scripts/convert-ontree-captree.ts"
   },
   "license": "ISC",
   "dependencies": {

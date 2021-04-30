@@ -160,6 +160,12 @@ export class CapabilityLibService {
    const { available } = await this.nameIsAvaliable({ id, name: data.name });
    if(available)  throw new ConflictException(`${data.name} alredy exists`);
 
+    const node = await this.capabilityTreeRepository.findOne({ where: { capability_lib_id: id } })
+    if(node) {
+      node.cap_name = data.name;
+      await this.capabilityTreeRepository.save(node);
+    }
+    
     const { kpi_libs } = await this.getOneByIdWithKpiLibs(id);
     const kpi_lib_ids = kpi_libs.map(({ id }) => id);
     let newKpiLibs = [];
