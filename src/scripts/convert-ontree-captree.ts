@@ -14,12 +14,12 @@ async function main() {
 
   await getManager().transaction(async transactionalEntityManager => {
 
-     const ontoNodeId = process.argv[2];
+      const ontologyId = process.argv[2];
       const oldCapToNewCapIDs = {}
-      const root = await transactionalEntityManager.findOne(OntoTree,ontoNodeId);
+      const root = await transactionalEntityManager.findOne(OntoTree,{ where: { ontology: { id: ontologyId }, parentId: null }, relations: ['ontology']});
   
       if(!root) {
-        throw new Error('Onto tree node not found');
+        throw new Error('Ontology not found');
       }
 
       const clonedTree = await transactionalEntityManager.getTreeRepository(OntoTree).findDescendantsTree(root);

@@ -29,7 +29,8 @@ export class OntoTree {
   @ManyToOne(() => Ontology, ontology => ontology.nodes)
   ontology: Ontology;
 
-  @RelationId((parent: OntoTree) => parent.parent)
+  //@RelationId((parent: OntoTree) => parent.parent)
+  @Column({ nullable: true })
   parentId: number;
 
   @Column({ type: 'jsonb', default: {} })
