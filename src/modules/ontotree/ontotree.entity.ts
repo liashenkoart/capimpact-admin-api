@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Field, Int, ObjectType } from 'type-graphql';
-import { Entity, PrimaryGeneratedColumn, Column, Tree, TreeChildren, TreeParent, ManyToOne} from 'typeorm';
+import { Entity, RelationId, PrimaryGeneratedColumn, Column, Tree, TreeChildren, TreeParent, ManyToOne} from 'typeorm';
 import { ONTOTREE_COLUMN_NAME } from './ontotree.constants';
 import { Ontology } from '../ontologies/ontology.entity';
 
@@ -28,6 +28,9 @@ export class OntoTree {
 
   @ManyToOne(() => Ontology, ontology => ontology.nodes)
   ontology: Ontology;
+
+  @RelationId((parent: OntoTree) => parent.parent)
+  parentId: number;
 
   @Column({ type: 'jsonb', default: {} })
   meta: MetaProperties;
