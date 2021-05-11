@@ -29,6 +29,11 @@ import {
   export class CapabilityTreeController {
     constructor(private readonly capabilityTreeService: CapabilityTreeService) {}
   
+    @Get('/nodes-names')
+    async getCapTreeNodesNames(@Query() query) {
+     return this.capabilityTreeService.getCapTreeNodesNames(query.ids);
+    }
+    
     @Get('industry/startups')
     async getIndustryTreeWithStartUps(@Query() query: CapabilityTreeArgs) {
       return this.capabilityTreeService.capTreeWithStartUps(query.industryId);

@@ -3,7 +3,7 @@ import { Injectable, forwardRef, Inject, NotFoundException, Request,
   Res,
   Response } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository, Not,IsNull} from 'typeorm';
+import { Repository, TreeRepository, In } from 'typeorm';
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto, CapabilityTreeOrderDto } from './dto';
@@ -19,7 +19,7 @@ import { StartupService } from '../startup/startup.service';
 import { Capability } from '../capability/capability.entity';
 import { Workbook } from 'exceljs';
 import { MASTER_TREE_NODE_NOT_FOUND } from './capability-tree.constants';
-import { each, pick, get } from 'lodash';
+import { each, pick, get, omit } from 'lodash';
 
 import moment from 'moment';
 
@@ -878,5 +878,9 @@ export class CapabilityTreeService extends BaseService {
     const node = new CapabilityTree({ cap_name: cap_lib.name, parent, capability_lib_id, type: parent.type, ...props});
 
     return await this.capabilityTreeRepository.save(node);
+  }
+
+  async getCapTreeNodesNames(ids:number[]): Promise<any> {
+    return await this.capabilityTreeRepository.findByIds(ids, { select: ['id','cap_name'] })
   }
 }
