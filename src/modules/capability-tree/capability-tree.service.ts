@@ -3,7 +3,7 @@ import { Injectable, forwardRef, Inject, NotFoundException, Request,
   Res,
   Response } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository, In } from 'typeorm';
+import { Repository, TreeRepository, Raw } from 'typeorm';
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto, CapabilityTreeOrderDto } from './dto';
@@ -593,6 +593,11 @@ export class CapabilityTreeService extends BaseService {
     const progress = Number(((100 * newTree.length) / clonedTree.length).toFixed(0));
  
     return { progress, tree, newTree, clonedTree};
+  }
+  
+  async getCapsByKpi(id: number) {
+    const result = await this.capabilityRepository.query(`select capability_tree FROM capabilities WHERE "kpis"::TEXT LIKE '%"${id}"%';`)
+    return  await this.capabilityTreeRepository.findByIds(result.map(d => d.capability_tree));
   }
 
   async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<any>  {
