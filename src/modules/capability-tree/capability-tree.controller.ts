@@ -39,6 +39,11 @@ import {
       return this.capabilityTreeService.capTreeWithStartUps(query.industryId);
     }
     
+    @Get('caps-by-kpi/:id')
+    async getCapsByKpi(@Param('id') id: number) {
+      return this.capabilityTreeService.getCapsByKpi(id);
+    }
+
     @Get('master/excell/:id')
     async check( @Param('id', new ParseIntPipe()) id: number,@Res() res) {
       return this.capabilityTreeService.nodeExcellToMater(id, res);

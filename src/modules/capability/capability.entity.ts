@@ -86,7 +86,7 @@ import {
 
   
     @Field(() => String, { nullable: true })
-    @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true })
+    @Column({ type: process.env.NODE_ENV === 'test' ? 'simple-json' : 'jsonb', nullable: true, default: [] })
     kpis?: string[];
   
     @Field({ nullable: true })
