@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, forwardRef, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, TreeRepository } from 'typeorm';
-import { sortTreeByField, flattenTree } from '@lib/sorting';
+import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from 'modules/common/services';
 import { ValueDriverCreationInput, ValueDriverInput, ValueDriversArgs } from './dto';
 import { TagService } from "../tags/tags.service";
@@ -18,7 +18,7 @@ export class ValueDriverService extends BaseService {
     @InjectRepository(IndustryTree) public readonly industryTreeRepository: Repository<IndustryTree>,
     @InjectRepository(ValueDriver) private readonly valueDriverRepository: Repository<ValueDriver>,
     @InjectRepository(ValueDriver) private readonly treeRepository: TreeRepository<ValueDriver>,
-    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>
+    @InjectRepository(Industry) private readonly industryRepository: Repository<Industry>,
   ) {
     super();
   }
@@ -136,11 +136,16 @@ export class ValueDriverService extends BaseService {
   }
 
   async remove(id: number) {
-    await this.valueDriverRepository.delete(id);
-    return { id };
+    const node =  await this.valueDriverRepository.findOne(id);
+      if(!node) throw new NotFoundException('Not found exception');
+      const list = await  this.treeRepository.findDescendants(node);
+      await asyncForEach(list.reverse(), async (node) => {
+            await this.treeRepository.remove(node)
+      })
+      return node;
   }
 
   async removeByIndustry(industryId: any) {
-    return this.valueDriverRepository.delete({ industryId: +industryId });
+    return this.valueDriverRepository.delete({ industryId });
   }
 }
