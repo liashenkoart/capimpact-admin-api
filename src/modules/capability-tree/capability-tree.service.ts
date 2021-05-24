@@ -595,9 +595,12 @@ export class CapabilityTreeService extends BaseService {
     return { progress, tree, newTree, clonedTree};
   }
   
-  async getCapsByKpi(id: number) {
-    const result = await this.capabilityRepository.query(`select capability_tree FROM capabilities WHERE "kpis"::TEXT LIKE '%"${id}"%';`)
-    return  await this.capabilityTreeRepository.findByIds(result.map(d => d.capability_tree));
+  async getCapsByKpi(id: number): Promise<CapabilityTree[]> {
+    return  this.capabilityTreeRepository
+    .createQueryBuilder('cap_tree')
+    .leftJoinAndSelect('cap_tree.capability','capability')
+    .where(`capability.kpis::TEXT LIKE '%"${id}"%'`)
+    .getMany();
   }
 
   async createTree(data: CapabilityTreeIndustryCreationInput, type: 'industry' | 'company'): Promise<any>  {
