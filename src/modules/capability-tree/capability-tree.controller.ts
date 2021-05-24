@@ -20,10 +20,11 @@ import {
   import { CapabilityTreeIndustryCreationInput } from './dto/capability-tree-industry-creation.dto';
   import { SaveCapTreeTechsDto } from "./dto";
   import { CAPABILITY_TREE_API_TAG } from "./capability-tree.constants"
+  import { CapabilityTree } from './capability-tree.entity';
 
   @ApiBearerAuth()
   @ApiTags(CAPABILITY_TREE_API_TAG)
-  // @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller(CAPABILITY_TREE_API_TAG)
   export class CapabilityTreeController {
@@ -40,7 +41,7 @@ import {
     }
     
     @Get('caps-by-kpi/:id')
-    async getCapsByKpi(@Param('id') id: number) {
+    async getCapsByKpi(@Param('id') id: number): Promise<CapabilityTree[]>  {
       return this.capabilityTreeService.getCapsByKpi(id);
     }
 
