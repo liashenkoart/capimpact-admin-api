@@ -84,7 +84,7 @@ import {
   
     @Field(() => [ValueDriver], { nullable: true })
     @TreeChildren({
-      cascade: true,
+      cascade: true
     })
     children?: ValueDriver[];
   
