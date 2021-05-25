@@ -24,7 +24,7 @@ import {
 
   @ApiBearerAuth()
   @ApiTags(CAPABILITY_TREE_API_TAG)
-  // @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @UseInterceptors(ClassSerializerInterceptor)
   @Controller(CAPABILITY_TREE_API_TAG)
   export class CapabilityTreeController {
