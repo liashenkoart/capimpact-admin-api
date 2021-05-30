@@ -103,7 +103,6 @@ export class CapabilityService {
 
   async findAll(query: CapabilitiesArgs): Promise<Capability[] | void> {
     const options = this.getFindAllQuery(query);
-
     return this.capabilityRepository.find(options);
   }
 
@@ -329,6 +328,10 @@ export class CapabilityService {
 
   async removeByIndustry(industryId: any) {
     return this.capabilityRepository.delete({ industry_id: +industryId });
+  }
+
+  async getCapabilitiesByIds(ids: number[]) {
+    return await this.capabilityRepository.findByIds(ids);
   }
 
   getFindAllQuery(query: CapabilitiesArgs): FindManyOptions {

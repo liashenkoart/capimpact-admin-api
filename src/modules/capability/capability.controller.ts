@@ -11,6 +11,7 @@ import {
     Query,
     Req,
     ParseIntPipe,
+    ParseArrayPipe
   } from '@nestjs/common';
   import { AuthGuard } from '@nestjs/passport';
   import _ from 'lodash';
@@ -31,6 +32,14 @@ import {
     @Get('')
     async findAll(@Query() query: CapabilitiesArgs) {
       return this.capabilityService.findAll(this.parseArgs(query));
+    }
+
+    @Get('/by-ids')
+    findByIds(
+      @Query('ids',new ParseArrayPipe({ items: Number, separator: ',' }))
+      ids: number[],
+    ) {
+      return this.capabilityService.getCapabilitiesByIds(ids)
     }
 
     @Get('list')
