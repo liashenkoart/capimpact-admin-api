@@ -1,6 +1,5 @@
 import { Entity, Column, OneToOne, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectType, Field, ID, Int } from 'type-graphql';
-
 import { Industry } from '../industry/industry.entity';
 import { KpiLib } from '../kpi-lib/kpi-lib.entity';
 
