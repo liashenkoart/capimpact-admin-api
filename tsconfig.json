@@ -13,8 +13,12 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "declaration": false,
+    "skipLibCheck": true,
     "removeComments": true,
     "allowJs": true,
+    "lib": [
+      "es2019"
+    ],
     "paths": {
       "@/*": [
         "../*"
