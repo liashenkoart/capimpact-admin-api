@@ -28,7 +28,8 @@ ADD . /root/app
 WORKDIR /root/app
 
 RUN yarn global add pegjs
-RUN yarn --pure-lockfile
+RUN apk add --no-cache git
+RUN yarn
 RUN yarn cache clean
 
 CMD [ "pm2-runtime", "start", "ecosystem.config.js"]
