@@ -13,9 +13,9 @@ pipeline {
     GIT_COMMIT_SHA      = ""
     GIT_DESC            = ""
 
-    DATABASE_USERNAME_DEV       = 'agens'
+    DATABASE_USERNAME_DEV       = 'postgres'
     DATABASE_PASSWORD_DEV       = credentials('capimpact-admin-api-db-password-dev')
-    DATABASE_USERNAME_STAGING   = 'postgres'
+    DATABASE_USERNAME_STAGING   = 'agens'
     DATABASE_PASSWORD_STAGING   = credentials('capimpact-admin-api-db-password-staging')
   }
 
@@ -40,6 +40,7 @@ pipeline {
           steps {
               sh 'yarn config set cache-folder /root/.yarn-cache'
               // sh 'yarn global add @nestjs/cli'
+	      sh 'apk add --no-cache git'
               sh 'yarn global add pegjs'
               sh 'yarn --pure-lockfile'
           }
@@ -70,7 +71,7 @@ pipeline {
             script {
               docker.build(
                 "visavis/capimpact-admin-api-dev:latest",
-                "--build-arg DATABASE_HOST='172.26.0.2' --build-arg DATABASE_PORT='5432' --build-arg DATABASE_NAME='capdata' --build-arg DATABASE_PASSWORD='$DATABASE_PASSWORD_DEV' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME_DEV' ."
+                "--build-arg DATABASE_HOST='3.222.200.206' --build-arg DATABASE_PORT='5432' --build-arg DATABASE_NAME='capdata' --build-arg DATABASE_PASSWORD='$DATABASE_PASSWORD_DEV' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME_DEV' ."
               )
             }
           }
@@ -102,10 +103,10 @@ pipeline {
           steps {
             copyArtifacts filter: "${BUILD_DIR}/**/*", fingerprintArtifacts: true, projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}')
             script {
-              docker.withServer("ssh://ec2-user@52.90.155.127") {
+              docker.withServer("ssh://ec2-user@34.193.19.30") {
                 docker.build(
                   "visavis/capimpact-admin-api-staging:latest",
-                  "--build-arg DATABASE_HOST='35.153.253.163' --build-arg DATABASE_PORT='35432' --build-arg DATABASE_NAME='capdata' --build-arg  DATABASE_PASSWORD='$DATABASE_PASSWORD_STAGING' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME_STAGING' ."
+                  "--build-arg DATABASE_HOST='172.18.0.2' --build-arg DATABASE_PORT='5432' --build-arg DATABASE_NAME='capdata' --build-arg  DATABASE_PASSWORD='$DATABASE_PASSWORD_STAGING' --build-arg DATABASE_USERNAME='$DATABASE_USERNAME_STAGING' ."
                 )
               }
             }
@@ -114,7 +115,7 @@ pipeline {
 
         stage('staging: docker-compose to remote server') {
           steps {
-            withEnv(["DOCKER_HOST=ssh://ec2-user@52.90.155.127"]) {
+            withEnv(["DOCKER_HOST=ssh://ec2-user@34.193.19.30"]) {
               sh 'mkdir -p __docker'
               dir('__docker') {
                 git(
