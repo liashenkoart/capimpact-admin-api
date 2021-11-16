@@ -34,6 +34,12 @@ import {
     async getCapTreeNodesNames(@Query() query) {
      return this.capabilityTreeService.getCapTreeNodesNames(query.ids);
     }
+
+    @Get('/capabilities/:companyId')
+    @UseGuards(AuthGuard())
+    async getCapabilitiesByCompanyId(@Param('companyId') id) {
+     return this.capabilityTreeService.getCapabilitiesByCompanyId(id);
+    }
     
     @Get('industry/startups')
     @UseGuards(AuthGuard())

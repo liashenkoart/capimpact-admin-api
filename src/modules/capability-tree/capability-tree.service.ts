@@ -52,6 +52,15 @@ export class CapabilityTreeService extends BaseService {
     return this.capabilityTreeRepository.find(this.getFindAllQuery(query));
   }
 
+  async getCapabilitiesByCompanyId(companyId: number): Promise<any[]> {
+    return this.capabilityTreeRepository.createQueryBuilder('cap_tree')
+                                        .select('cap_tree.id','id')
+                                        .addSelect('cap_tree.cap_name','name')
+                                        .where('cap_tree.company_id = :companyId')
+                                        .setParameter('companyId',companyId)
+                                        .getRawMany();
+  }
+
   async findOneById(id: number): Promise<CapabilityTree> {
     return this.capabilityTreeRepository.findOne({where: { id}, relations:['capability'] });
   }
@@ -278,8 +287,6 @@ export class CapabilityTreeService extends BaseService {
         throw new NotFoundException(`s with industry_tree_id: ${industry_tree_id} was not found`);
       }
     }
-
-    
 
     if(!node.type) {
       node.type = 'industry';
