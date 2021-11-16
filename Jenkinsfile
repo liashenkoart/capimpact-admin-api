@@ -40,7 +40,7 @@ pipeline {
           steps {
               sh 'yarn config set cache-folder /root/.yarn-cache'
               // sh 'yarn global add @nestjs/cli'
-	      sh 'apk add --no-cache git'
+	            sh 'apk add --no-cache git'
               sh 'yarn global add pegjs'
               sh 'yarn --pure-lockfile'
           }
