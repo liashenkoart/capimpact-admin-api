@@ -1,0 +1,18 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "apqc_r721",
+  "entities": [
+    "src/modules/**/*.entity{.ts,.js}"
+  ],
+  "synchronize": true,
+  "logging": true,
+  "migrationsRun": true,
+  "migrations": ["src/migration/*{.ts,.js}"],
+  "cli": {
+    "migrationsDir": "src/migration"
+  }
+}

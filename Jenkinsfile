@@ -27,10 +27,10 @@ pipeline {
       }
     }
 
-    stage('build using node:10-alpine') {
+    stage('build using node:12-alpine') {
       agent {
         docker {
-          image 'node:10-alpine'
+          image 'node:12-alpine'
           args '-v $WORKSPACE/.yarn-cache:/root/.yarn-cache'
         }
       }
@@ -40,6 +40,7 @@ pipeline {
           steps {
               sh 'yarn config set cache-folder /root/.yarn-cache'
               // sh 'yarn global add @nestjs/cli'
+	            sh 'apk add --no-cache git'
               sh 'yarn global add pegjs'
               sh 'yarn --pure-lockfile'
           }
