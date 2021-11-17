@@ -121,7 +121,6 @@ import {
     @Post('industry/clone')
     @UseGuards(AuthGuard())
     async cloneIndustry(@Body() data: CapabilityTreeIndustryCloneInput) {
-      console.log("CapabilityTreeController -> cloneIndustry -> data", data)
       return this.capabilityTreeService.cloneIndustry(data);
     }
   
@@ -133,8 +132,7 @@ import {
       ) {
       return this.capabilityTreeService.updateIndustry(id, data);
     }
-  
-    // COMPANY
+
     @Get('company')
     @UseGuards(AuthGuard())
     async getCompanyTree(@Query() query: CapabilityTreeArgs) {

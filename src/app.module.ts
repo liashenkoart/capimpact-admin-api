@@ -38,10 +38,11 @@ import { TechnologyModule } from './modules/technology/technology.module';
 import { ValueDriverModule } from './modules/value-driver/value-driver.module';
 import { OntologiesModule } from './modules/ontologies/ontology.module';
 import { OntoTreeModule } from './modules/ontotree/ontotree.module';
+import { ValueDriverLibsModule } from './modules/value_driver_lib/value_driver_lib.module';
 
 import { Process } from "./modules/process/process.entity"
 import { Industry } from "./modules/industry/industry.entity"
-
+import { ValueDriverLib } from './modules/value_driver_lib/value_driver_lib.entity';
 
 import { IndustryTree } from "./modules/industry-tree/industry-tree.entity";
 import { Company } from "./modules/company/company.entity";
@@ -90,6 +91,7 @@ export const MODULE = {
           Capability,
           CapabilityLib,
           CapabilityTree,
+          ValueDriverLib,
           Startup,
           Classification,
           Lense,
@@ -119,6 +121,7 @@ export const MODULE = {
     IndustryModule,
     CapabilityLibsModule,
     CapabilityTreeModule,
+    ValueDriverLibsModule,
     ChallengeModule,
     CompanyModule,
     GroupFilterModule,
