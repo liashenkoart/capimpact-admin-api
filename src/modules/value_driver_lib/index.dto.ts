@@ -1,9 +1,11 @@
 import { InputType, Field, ID } from 'type-graphql';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString, IsArray, IsBoolean, IsNumberString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { ValueDriverLib } from './value_driver_lib.entity';
+import { Type } from 'class-transformer';
 
 @InputType()
-export class UpdateValueDriveLib {
+export class ValueDriveLib {
   @ApiProperty()
   @IsString()
   readonly name: string;
@@ -13,7 +15,44 @@ export class UpdateValueDriveLib {
   readonly description: string;
 
   @ApiProperty()
-  @IsString()
-  readonly status: string;
+  @IsBoolean()
+  readonly status: boolean;
 
+  @ApiProperty()
+  @IsArray({ each: true})
+  readonly tags: string;
 }
+
+@InputType()
+export class ValueDriverLibResponseDto extends ValueDriverLib {
+    @ApiProperty()
+    @IsString()
+    readonly id: number;
+}
+
+@InputType()
+export class UpdateValueDriverLibDto extends ValueDriverLib {}
+
+@InputType()
+export class CreateValueDriverLibDto extends ValueDriverLib {}
+@InputType()
+export class UpdateValueDriverLibResponseDto extends ValueDriverLibResponseDto {}
+
+@InputType()
+export class CreateValueDriverLibResponseDto extends ValueDriverLibResponseDto {}
+
+
+export class CapabilityLibNameAvailableArgs {
+  @Type(() => Number)
+  @IsNumber()
+  page: number;
+
+  @Type(() => Number)
+  @IsNumber()
+  limit: number;
+
+  @IsString()
+  @IsOptional()
+  search: string;
+}
+

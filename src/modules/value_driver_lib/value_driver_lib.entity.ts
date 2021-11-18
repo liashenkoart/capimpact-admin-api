@@ -14,8 +14,8 @@ export class ValueDriverLib {
   @Column()
   name: string;
 
-  @Column()
-  status: string;
+  @Column({ default: false })
+  status: boolean;
 
   @Column()
   description: string;
