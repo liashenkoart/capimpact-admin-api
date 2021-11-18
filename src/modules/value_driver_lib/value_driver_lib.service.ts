@@ -20,32 +20,38 @@ export class ValueDriverLibService {
       async list(query:CapabilityLibNameAvailableArgs): Promise<any> {
         const { page, limit, search } = query;
 
+        const { pages } = await this.countQuery(limit,search)
+        const data = await this.searchQuery(page, limit, search);
+      
+        return { pages, page, data };
+    }
+
+    private async countQuery(limit: number, search: string) {
+        const countQuery = this.queryBuilder()
+        .select('(COUNT(vdl.id) / :limit)::INTEGER','pages') 
+        .setParameter('limit',limit)
+ 
+        if(search) {
+            countQuery.where("vdl.name ILIKE :key")
+                      .setParameter('key',`%${search}%` )        
+        }
+
+       return await countQuery.getRawOne();
+    }
+
+    private async searchQuery(page: number, limit: number, search: string) {
         const selectedNames = ['vdl.id as id','vdl.name as name','vdl.description as description','vdl.status as status','vdl.tags as tags'];
 
-        const countQuery = this.queryBuilder()
-                                .select('(COUNT(vdl.id) / :limit)::INTEGER','pages') 
-                                .setParameter('limit',limit)
-                         
-
-       if(search) {
-          countQuery.where("vdl.name ILIKE :key")
-                    .setParameter('key',`%${search}%` )        
-       }
-
-       const { pages } = await countQuery.getRawOne();
-                                    
-       const dataQuery = await this.queryBuilder() 
-                                   .select(selectedNames)
-                                   .skip(page * limit)
-                                   .take(limit)
+        const dataQuery = await this.queryBuilder() 
+                                    .select(selectedNames)
+                                    .skip(page * limit)
+                                    .take(limit)
       if(search) {
          dataQuery.where("vdl.name ILIKE :key") 
                   .setParameter('key',`%${search}%` )       
       }
 
-      const data = await dataQuery.getRawMany()
-      
-      return { pages, page, data };
+      return  await dataQuery.getRawMany();
     }
 
     async create(dto: CreateValueDriverLibDto): Promise<CreateValueDriverLibResponseDto>{
