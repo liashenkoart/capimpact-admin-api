@@ -3,8 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, QueryBuilder} from 'typeorm';
 import { ValueDriverLib } from './value_driver_lib.entity';
 import { TagService } from '../tags/tags.service';
-import { ValueDriverLibResponseDto,
-         CapabilityLibNameAvailableArgs,
+import { CapabilityLibNameAvailableArgs,
          UpdateValueDriverLibDto, 
          CreateValueDriverLibDto,
          UpdateValueDriverLibResponseDto,
