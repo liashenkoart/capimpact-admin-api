@@ -6,7 +6,7 @@ import { BaseService } from '@modules/common/services';
 import { Tag } from './tag.entity';
 
 import { asyncForEach } from '@lib/sorting';
-import { map, uniq } from 'lodash';
+import { map, uniq, difference, merge } from 'lodash';
 
 @Injectable()
 export class TagService extends BaseService {
@@ -20,14 +20,25 @@ export class TagService extends BaseService {
     return this.tagRepository.find();
   }
 
-  async findTagsByIds(ids: number[]): Promise<any>{
+  async insertTagsIfNew(names: number[]): Promise<number[]>{
+    const filteredOnUniq = uniq(names);
+
     const tags =  await  this.tagRepository.createQueryBuilder('tags')
     .select('tags.id','id')
-    .where("tags.id IN(:...ids)")
-    .setParameter('ids',uniq(ids))
+    .addSelect('tags.value','value')
+    .where("tags.value IN(:...values)")
+    .setParameter('values',filteredOnUniq)
     .getRawMany();
 
-    return map(tags,'id');
+    const newTags = difference(filteredOnUniq,map(tags,'value'));
+
+    const { raw = [] } =  await this.tagRepository.createQueryBuilder('tags')
+                                                      .insert()
+                                                      .into(Tag)
+                                                      .values(map(newTags, value => ({ value })))
+                                                      .returning(['id'])
+                                                      .execute();
+    return map(merge(tags, raw),'id');
   }
 
   async addTagIfNew(tagsList:any[]):Promise<number[]> {

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, QueryBuilder} from 'typeorm';
 import { ValueDriverLib } from './value_driver_lib.entity';
@@ -25,7 +25,7 @@ export class ValueDriverLibService {
         return { pages, page, data };
     }
 
-    private async countQuery(limit: number, search: string) {
+    private async countQuery(limit: number, search: string): Promise<{ pages: number }> {
         const countQuery = this.queryBuilder()
         .select('(COUNT(vdl.id) / :limit)::INTEGER','pages') 
         .setParameter('limit',limit)
@@ -53,9 +53,21 @@ export class ValueDriverLibService {
       return  await dataQuery.getRawMany();
     }
 
-    async create(dto: CreateValueDriverLibDto): Promise<CreateValueDriverLibResponseDto>{
+    private async valueDriverLibNameExists(name: string) {
+      const exist = await this.valueDriverLibsRepository.createQueryBuilder('lib')
+                                                        .select('id')
+                                                        .where('lib.name =:name', { name })
+                                                        .getRawOne();
+      if(exist) throw new BadRequestException('Value Driver Lib Name Exists');                                                 
+      return exist;
+    }
 
-       dto.tags = await this.tagsSrv.findTagsByIds(dto.tags);
+    async create(dto: CreateValueDriverLibDto): Promise<CreateValueDriverLibResponseDto>{
+       const { name } = dto;
+      
+       await this.valueDriverLibNameExists(name);
+       
+       dto.tags = await this.tagsSrv.insertTagsIfNew(dto.tags);
 
        const { raw: [entity] } =  await this.queryBuilder()
         .insert()
@@ -80,7 +92,7 @@ export class ValueDriverLibService {
 
     async update(id: number,dto: UpdateValueDriverLibDto): Promise<UpdateValueDriverLibResponseDto> {
 
-        dto.tags = await this.tagsSrv.findTagsByIds(dto.tags);
+        dto.tags = await this.tagsSrv.insertTagsIfNew(dto.tags);
 
         const { affected, raw: [entity] } =  await this.queryBuilder()
         .update(ValueDriverLib)
