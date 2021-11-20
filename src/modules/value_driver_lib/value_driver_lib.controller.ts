@@ -27,6 +27,11 @@ import { ValueDriverLibResponseDto,
         return this.valueDriverlIBSService.list(query);
     }
 
+    @Get('/:id')
+    item(@Param('id') id: number): Promise<ValueDriverLibResponseDto> {
+        return this.valueDriverlIBSService.findOne(id);
+    }
+
     @Post()
     create(@Body() body: UpdateValueDriverLibDto): Promise<CreateValueDriverLibResponseDto> {
         return this.valueDriverlIBSService.create(body);

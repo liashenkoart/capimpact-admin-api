@@ -54,5 +54,8 @@ export class CapabilityLibNameAvailableArgs {
   @IsString()
   @IsOptional()
   search: string;
+  
+  @IsOptional()
+  order: any;
 }
 

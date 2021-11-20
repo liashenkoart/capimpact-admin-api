@@ -19,6 +19,15 @@ export class TagService extends BaseService {
   async findAll(): Promise<Tag[]> {
     return this.tagRepository.find();
   }
+  
+  async findByIds(ids: []) {
+    return  await  this.tagRepository.createQueryBuilder('tags')
+    .select('tags.id','id')
+    .addSelect('tags.value','value')
+    .where("tags.id IN(:...ids)")
+    .setParameter('ids',ids)
+    .getRawMany();
+  }
 
   async insertTagsIfNew(names: number[]): Promise<number[]>{
     const filteredOnUniq = uniq(names);
