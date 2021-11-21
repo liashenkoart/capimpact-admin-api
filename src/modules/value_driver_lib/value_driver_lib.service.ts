@@ -1,13 +1,14 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, QueryBuilder} from 'typeorm';
+import { Repository, QueryBuilder, SelectQueryBuilder} from 'typeorm';
 import { ValueDriverLib } from './value_driver_lib.entity';
 import { TagService } from '../tags/tags.service';
 import { CapabilityLibNameAvailableArgs,
          UpdateValueDriverLibDto, 
          CreateValueDriverLibDto,
          UpdateValueDriverLibResponseDto,
-         CreateValueDriverLibResponseDto,} from './index.dto';
+         CreateValueDriverLibResponseDto, 
+         ValueDriveLib} from './index.dto';
 
 @Injectable()
 export class ValueDriverLibService {  
@@ -22,44 +23,42 @@ export class ValueDriverLibService {
 
          const { page, limit, search } = query;
 
-         const [countResult, data] =  await Promise.all([await this.countQuery(limit,search),
+         const [countResult, data] = await Promise.all([await this.countQuery(limit,search),
                                                          await this.searchQuery(query)]);
          const { pages } = countResult;
    
-         return { pages, page, data };
+         return { pages: pages, page, data };
+    }
+
+    private appendSearchCondition(query, key: string): SelectQueryBuilder<ValueDriveLib>{
+        if(key) {
+            query.where("vdl.name ILIKE :key")
+                      .orWhere("vdl.description ILIKE :key")
+                      .setParameter('key',`%${key}%` )        
+        }
+        return query;
     }
 
     private async countQuery(limit: number, search: string): Promise<{ pages: number }> {
         const countQuery = this.queryBuilder()
-        .select('(COUNT(vdl.id) / :limit)::INTEGER','pages') 
+        .select('ceil(COUNT(vdl.id)::decimal / :limit)::INTEGER','pages') 
         .setParameter('limit',limit)
- 
-        if(search) {
-            countQuery.where("vdl.name ILIKE :key")
-                      .setParameter('key',`%${search}%` )        
-        }
-
-        return await countQuery.getRawOne();
+        return await this.appendSearchCondition(countQuery,search).getRawOne();
     }
 
     private async searchQuery({ page, limit, search, order } :CapabilityLibNameAvailableArgs) {
       
-
         const dataQuery = await this.queryBuilder() 
                                     .select(this.baseSelectedNames)
-                                    .addSelect(`(SELECT json_agg(json_build_object('id',tags.id,'value',tags.value,'label',tags.value)) FROM tags WHERE vdl.tags @> to_jsonb(ARRAY[tags.id]))`,'tags')
+                                    .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',tags.id,'value',tags.value,'label',tags.value)), '[]'::json) FROM tags WHERE vdl.tags @> to_jsonb(ARRAY[tags.id]) )`,'tags')
                                     .skip(page * limit)
-                                    .take(limit)
-        if(search) {
-           dataQuery.where("vdl.name ILIKE :key") 
-                  .setParameter('key',`%${search}%` )       
-        }
+                                    .take(limit);
 
         if(order) {
            dataQuery.orderBy(order.name, order.direction)
         }
 
-        return  await dataQuery.getRawMany();
+        return await this.appendSearchCondition(dataQuery,search).getRawMany();
     }
 
     private async valueDriverLibNameExists(name: string) {
@@ -92,18 +91,19 @@ export class ValueDriverLibService {
     }
 
     async delete(id: number) {
-        return await this.queryBuilder()
+       const { affected } =  await this.queryBuilder()
             .delete()
             .from(ValueDriverLib)
             .where("id = :id", { id })
             .execute();
+       return { affected }
     }
 
     async findOne(id: number) {
        const valueDriverLib = await this.valueDriverLibsRepository
                                         .createQueryBuilder('vdl')
                                         .select(this.baseSelectedNames)
-                                        .addSelect(`(SELECT json_agg(json_build_object('id',tags.id,'value',tags.value,'label',tags.value)) FROM tags WHERE vdl.tags @> to_jsonb(ARRAY[tags.id]))`,'tags')
+                                        .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',tags.id,'value',tags.value,'label',tags.value)), '[]'::json) FROM tags WHERE vdl.tags @> to_jsonb(ARRAY[tags.id]) )`,'tags')
                                         .where('vdl.id = :id', { id })
                                         .groupBy('vdl.id')
                                         .getRawOne();

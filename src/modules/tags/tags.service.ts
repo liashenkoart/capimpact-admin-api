@@ -30,24 +30,28 @@ export class TagService extends BaseService {
   }
 
   async insertTagsIfNew(names: number[]): Promise<number[]>{
-    const filteredOnUniq = uniq(names);
+      if(names.length > 1) {
+          const filteredOnUniq = uniq(names);
 
-    const tags =  await  this.tagRepository.createQueryBuilder('tags')
-    .select('tags.id','id')
-    .addSelect('tags.value','value')
-    .where("tags.value IN(:...values)")
-    .setParameter('values',filteredOnUniq)
-    .getRawMany();
+          const tags =  await  this.tagRepository.createQueryBuilder('tags')
+          .select('tags.id','id')
+          .addSelect('tags.value','value')
+          .where("tags.value IN (:...values)")
+          .setParameter('values',filteredOnUniq)
+          .getRawMany();
 
-    const newTags = difference(filteredOnUniq,map(tags,'value'));
+          const newTags = difference(filteredOnUniq,map(tags,'value'));
+          const { raw = [] } =  await this.tagRepository.createQueryBuilder('tags')
+                                                            .insert()
+                                                            .into(Tag)
+                                                            .values(map(newTags, value => ({ value })))
+                                                            .returning(['id','value'])
+                                                            .execute();
 
-    const { raw = [] } =  await this.tagRepository.createQueryBuilder('tags')
-                                                      .insert()
-                                                      .into(Tag)
-                                                      .values(map(newTags, value => ({ value })))
-                                                      .returning(['id'])
-                                                      .execute();
-    return map(merge(tags, raw),'id');
+          return map(tags.concat(raw),'id');
+      } else {
+        return []
+      }
   }
 
   async addTagIfNew(tagsList:any[]):Promise<number[]> {

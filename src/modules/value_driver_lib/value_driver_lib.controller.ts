@@ -3,6 +3,7 @@ import {
     Get,
     Post,
     Body,
+    Delete,
     Put,
     UseInterceptors,
     ClassSerializerInterceptor,
@@ -30,6 +31,11 @@ import { ValueDriverLibResponseDto,
     @Get('/:id')
     item(@Param('id') id: number): Promise<ValueDriverLibResponseDto> {
         return this.valueDriverlIBSService.findOne(id);
+    }
+
+    @Delete('/:id')
+    delete(@Param('id') id: number): Promise<any> {
+        return this.valueDriverlIBSService.delete(id);
     }
 
     @Post()
