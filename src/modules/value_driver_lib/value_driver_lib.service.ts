@@ -24,7 +24,7 @@ export class ValueDriverLibService {
          const { page, limit, search } = query;
 
          const [countResult, data] = await Promise.all([await this.countQuery(limit,search),
-                                                         await this.searchQuery(query)]);
+                                                        await this.searchQuery(query)]);
          const { pages } = countResult;
    
          return { pages: pages, page, data };
@@ -100,8 +100,7 @@ export class ValueDriverLibService {
     }
 
     async findOne(id: number) {
-       const valueDriverLib = await this.valueDriverLibsRepository
-                                        .createQueryBuilder('vdl')
+       const valueDriverLib = await this.queryBuilder()
                                         .select(this.baseSelectedNames)
                                         .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',tags.id,'value',tags.value,'label',tags.value)), '[]'::json) FROM tags WHERE vdl.tags @> to_jsonb(ARRAY[tags.id]) )`,'tags')
                                         .where('vdl.id = :id', { id })
@@ -111,6 +110,18 @@ export class ValueDriverLibService {
        if(!valueDriverLib) throw new NotFoundException('Not Found');
        return valueDriverLib;
     }
+
+    async findOneSimple(id: number) {
+      const valueDriverLib = await this.queryBuilder()
+                                       .select(this.baseSelectedNames)
+                                       .addSelect('tags','tags')
+                                       .where('vdl.id = :id', { id })
+                                       .groupBy('vdl.id')
+                                       .getRawOne();
+
+      if(!valueDriverLib) throw new NotFoundException('Not Found');
+      return valueDriverLib;
+   }
 
     async update(id: number,dto: UpdateValueDriverLibDto): Promise<UpdateValueDriverLibResponseDto> {
 

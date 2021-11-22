@@ -1,13 +1,15 @@
 import {
     Column,
+    OneToMany,
+    OneToOne
   } from 'typeorm';
-import { Field, Int, ObjectType } from 'type-graphql';
+import {  ObjectType } from 'type-graphql';
 import { Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ValueDriverTree } from '../value-driver-tree/value-driver-tree.entity';
 
 @ObjectType()
 @Entity('value_driver_lib')
 export class ValueDriverLib {
-  @Field(type => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -21,7 +23,7 @@ export class ValueDriverLib {
   description: string;
 
   @Column({ type: 'jsonb' })
-  public tags: any[];
+  public tags: number[];
 
   constructor(partial: Partial<ValueDriverLib>) {
     Object.assign(this, partial);

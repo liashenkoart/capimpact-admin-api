@@ -39,7 +39,9 @@ import { ValueDriverModule } from './modules/value-driver/value-driver.module';
 import { OntologiesModule } from './modules/ontologies/ontology.module';
 import { OntoTreeModule } from './modules/ontotree/ontotree.module';
 import { ValueDriverLibsModule } from './modules/value_driver_lib/value_driver_lib.module';
+import { ValueDriverTreeModule } from './modules/value-driver-tree/value-driver-tree.module';
 
+import { ValueDriverTree } from "./modules/value-driver-tree/value-driver-tree.entity"
 import { Process } from "./modules/process/process.entity"
 import { Industry } from "./modules/industry/industry.entity"
 import { ValueDriverLib } from './modules/value_driver_lib/value_driver_lib.entity';
@@ -81,6 +83,7 @@ export const MODULE = {
       useFactory: async (configService: ConfigService) => ({
         ...configService.get('database').default,
         entities: [
+          ValueDriverTree,
           User,
           Process,
           Industry,
@@ -123,6 +126,7 @@ export const MODULE = {
     CapabilityTreeModule,
     ValueDriverLibsModule,
     ChallengeModule,
+    ValueDriverTreeModule,
     CompanyModule,
     GroupFilterModule,
     GroupTagModule,
