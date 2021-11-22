@@ -57,15 +57,15 @@ export class ValueDriverTreeService {
   }
 
   async toggleNode({ value_driver_lib_id, type }) {
-       const [lib,exist, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),
-                                                      await this.treeRepository.findOne({ value_driver_lib_id, type }), 
-                                                      await this.getMasterRootNode()]);
-       const { name, tags } = lib;
+       const [valueDriverLib,node, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),
+                                                                await this.treeRepository.findOne({ value_driver_lib_id, type }), 
+                                                                await this.getMasterRootNode()]);
+       const { name, tags } = valueDriverLib;
 
-       if(!exist) {
+       if(!node) {
           return await this.treeRepository.save(new ValueDriverTree({ name, tags, type, parent, value_driver_lib_id }))
        } else {
-          return await this.treeRepository.remove(exist)
+          return await this.treeRepository.remove(node)
        }
   }
 }
