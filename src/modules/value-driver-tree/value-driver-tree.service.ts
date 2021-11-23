@@ -44,28 +44,39 @@ export class ValueDriverTreeService {
   async getMasterTree() {
    const root = await this.getMasterRootNode();
  
-   return this.treeRepository.findDescendantsTree(root);
+   const { children = []} = await this.treeRepository.findDescendantsTree(root);
+
+   return children;
   }
 
-  async moveNode({ nodeId, parentId}) {
+  async moveNode({ nodeId, parentId }) {
     const [node, parent] = await Promise.all([ await this.findNode({ where: { id: nodeId }}),
-                                               await this.findNode({ where: { id: parentId}})]);
-    
-    node.parent = parent;
+                                               await this.findNode({ where: { id: parentId }})]);
+      node.parent = parent;
+
+      return this.valueDriverTreeRepository.save(node);
+  }
+
+  async moverToMasterRoot(nodeId) {
+    const node =  await this.findNode({ where: { id: nodeId }});
+
+          node.parent = await this.getMasterRootNode()
 
     return this.valueDriverTreeRepository.save(node);
   }
 
   async toggleNode({ value_driver_lib_id, type }) {
-       const [valueDriverLib,node, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),
+       const [valueDriverLib,entity, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),
                                                                 await this.treeRepository.findOne({ value_driver_lib_id, type }), 
                                                                 await this.getMasterRootNode()]);
        const { name, tags } = valueDriverLib;
 
-       if(!node) {
-          return await this.treeRepository.save(new ValueDriverTree({ name, tags, type, parent, value_driver_lib_id }))
-       } else {
-          return await this.treeRepository.remove(node)
+       if(!entity) {
+          const node = await this.treeRepository.save(new ValueDriverTree({ name, tags, type, parent, value_driver_lib_id }))
+          return { node, action: 'added'}
+        } else {
+          const node = await this.treeRepository.remove(entity);
+          return { node, action: 'deleted' }
        }
   }
 }

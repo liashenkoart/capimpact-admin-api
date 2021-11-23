@@ -9,6 +9,7 @@ import { CapabilityLibNameAvailableArgs,
          UpdateValueDriverLibResponseDto,
          CreateValueDriverLibResponseDto, 
          ValueDriveLib} from './index.dto';
+import { ValueDriverTree } from '../value-driver-tree/value-driver-tree.entity';
 
 @Injectable()
 export class ValueDriverLibService {  
@@ -26,9 +27,10 @@ export class ValueDriverLibService {
          const [countResult, data] = await Promise.all([await this.countQuery(limit,search),
                                                         await this.searchQuery(query)]);
          const { pages } = countResult;
-   
-         return { pages: pages, page, data };
+
+         return { pages, page, data };
     }
+
 
     private appendSearchCondition(query, key: string): SelectQueryBuilder<ValueDriveLib>{
         if(key) {
@@ -50,10 +52,25 @@ export class ValueDriverLibService {
       
         const dataQuery = await this.queryBuilder() 
                                     .select(this.baseSelectedNames)
+                                    .addSelect(subQuery => {
+                                       return subQuery
+                                           .select("COUNT(tree.id)::INTEGER::boolean", "tree")
+                                           .from(ValueDriverTree, "tree")
+                                           .where("tree.value_driver_lib_id = vdl.id")
+                                           .andWhere("tree.type = 'master'")
+                                           .limit(1);
+                                   }, "usedByMasterTree")
                                     .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',tags.id,'value',tags.value,'label',tags.value)), '[]'::json) FROM tags WHERE vdl.tags @> to_jsonb(ARRAY[tags.id]) )`,'tags')
-                                    .skip(page * limit)
-                                    .take(limit);
+                                   
 
+        if(page && limit) {
+            dataQuery.skip(page * limit)
+         }
+
+         if(limit) {
+            dataQuery.take(limit);
+         }
+                                   
         if(order) {
            dataQuery.orderBy(order.name, order.direction)
         }
@@ -86,7 +103,7 @@ export class ValueDriverLibService {
         return entity;
     }
 
-    private queryBuilder(): QueryBuilder<ValueDriverLib> {
+    private queryBuilder():any {
         return this.valueDriverLibsRepository.createQueryBuilder('vdl')
     }
 
@@ -102,6 +119,14 @@ export class ValueDriverLibService {
     async findOne(id: number) {
        const valueDriverLib = await this.queryBuilder()
                                         .select(this.baseSelectedNames)
+                                        .addSelect(subQuery => {
+                                          return subQuery
+                                              .select("COUNT(tree.id)::INTEGER::boolean", "tree")
+                                              .from(ValueDriverTree, "tree")
+                                              .where("tree.value_driver_lib_id = vdl.id")
+                                              .andWhere("tree.type = 'master'")
+                                              .limit(1);
+                                      }, "usedByMasterTree")
                                         .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',tags.id,'value',tags.value,'label',tags.value)), '[]'::json) FROM tags WHERE vdl.tags @> to_jsonb(ARRAY[tags.id]) )`,'tags')
                                         .where('vdl.id = :id', { id })
                                         .groupBy('vdl.id')
@@ -122,6 +147,7 @@ export class ValueDriverLibService {
       if(!valueDriverLib) throw new NotFoundException('Not Found');
       return valueDriverLib;
    }
+   
 
     async update(id: number,dto: UpdateValueDriverLibDto): Promise<UpdateValueDriverLibResponseDto> {
 

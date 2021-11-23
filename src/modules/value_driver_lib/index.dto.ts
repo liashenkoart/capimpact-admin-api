@@ -44,10 +44,12 @@ export class CreateValueDriverLibResponseDto extends ValueDriverLibResponseDto {
 
 export class CapabilityLibNameAvailableArgs {
   @Type(() => Number)
+  @IsOptional()
   @IsNumber()
   page: number;
 
   @Type(() => Number)
+  @IsOptional()
   @IsNumber()
   limit: number;
 

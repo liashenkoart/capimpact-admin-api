@@ -19,7 +19,12 @@ import { ValueDriverTreeService } from './value-driver-tree.service';
       return this.valueDriverTreeSrv.getMasterTree()
     }
 
-    @Put('move/:nodeId/:parentId')
+    @Put('master/move/:nodeId/root')
+    toMasterRoot(@Param('nodeId') nodeId) {
+      return this.valueDriverTreeSrv.moverToMasterRoot(nodeId)
+    }
+
+    @Put('master/move/:nodeId/:parentId')
     move(@Param() params) {
       return this.valueDriverTreeSrv.moveNode(params)
     }
@@ -29,5 +34,6 @@ import { ValueDriverTreeService } from './value-driver-tree.service';
       return this.valueDriverTreeSrv.toggleNode(params)
     }
 
+  
   }
   
