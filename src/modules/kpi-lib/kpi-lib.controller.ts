@@ -34,6 +34,12 @@ import {
     async findAll(@Query() args: KpiLibsArgs) {
       return this.kpilibService.findAll(args);
     }
+
+      
+    @Get('full')
+    async simpleFullList() {
+      return this.kpilibService.simpleFullList();
+    }
   
     @Get('/count')
     async count(@Query() args: KpiLibsArgs) {

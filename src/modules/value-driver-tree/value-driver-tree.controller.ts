@@ -4,7 +4,8 @@ import {
     ClassSerializerInterceptor,
     Put,
     Param,
-    Get
+    Get,
+    Body
   } from '@nestjs/common';
 import { ValueDriverTreeService } from './value-driver-tree.service';
 
@@ -15,13 +16,23 @@ import { ValueDriverTreeService } from './value-driver-tree.service';
 
 
     @Get('/master')
-    master(@Param() params) {
+    master() {
       return this.valueDriverTreeSrv.getMasterTree()
+    }
+
+    @Get('/node/:id')
+    node(@Param("id") id) {
+      return this.valueDriverTreeSrv.getNodeWithAgreggatedKpisAndTags(id)
     }
 
     @Put('master/move/:nodeId/root')
     toMasterRoot(@Param('nodeId') nodeId) {
       return this.valueDriverTreeSrv.moverToMasterRoot(nodeId)
+    }
+
+    @Put('master/node/kpis/:nodeId')
+    kpis(@Param('nodeId') nodeId, @Body() dto) {
+      return this.valueDriverTreeSrv.updateNodeKpis(nodeId, dto)
     }
 
     @Put('master/move/:nodeId/:parentId')

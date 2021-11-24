@@ -5,10 +5,15 @@ import { ValueDriverLibService } from '../value_driver_lib/value_driver_lib.serv
 import { ValudDriverType } from './velue-driver-type.enum';
 import { ValueDriverTree } from './value-driver-tree.entity';
 
+import { KpiLibService } from '../kpi-lib/kpi-lib.service';
+
+import { map } from 'lodash';
+
 @Injectable()
 export class ValueDriverTreeService {  
     constructor(
        private valueDriverLib: ValueDriverLibService,
+       private kpisSrv: KpiLibService,
        @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
        @InjectRepository(ValueDriverTree) private readonly valueDriverTreeRepository: Repository<ValueDriverTree>) {}
 
@@ -27,7 +32,7 @@ export class ValueDriverTreeService {
         .insert()
         .into(ValueDriverTree)
         .values({ name: 'Master Value Driver', type: ValudDriverType.MASTER })
-        .returning(['name','description','tags'])
+        .returning(['name','description','tags','kpis'])
         .execute();
         return entity;
     }
@@ -44,9 +49,7 @@ export class ValueDriverTreeService {
   async getMasterTree() {
    const root = await this.getMasterRootNode();
  
-   const { children = []} = await this.treeRepository.findDescendantsTree(root);
-
-   return children;
+   return await this.treeRepository.findDescendantsTree(root, { });
   }
 
   async moveNode({ nodeId, parentId }) {
@@ -65,10 +68,35 @@ export class ValueDriverTreeService {
     return this.valueDriverTreeRepository.save(node);
   }
 
+  async getNodeWithAgreggatedKpisAndTags(id: number) {
+     const node = await this.queryBuilder()
+                 .select('*')
+                 .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',tags.id,'value',tags.value)), '[]'::json) FROM tags WHERE tree.tags @> to_jsonb(ARRAY[tags.id]) )`,'tags')
+                 .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',kpi_libs.id,'label',kpi_libs.label)), '[]'::json) FROM kpi_libs WHERE tree.kpis @> to_jsonb(ARRAY[kpi_libs.id]) )`,'kpis')
+                 .where('tree.id = :id', { id })
+                 .getRawOne();
+
+      return node;
+  }
+
+  async updateNodeKpis(id,dto):Promise<any> {
+    const { kpis } = dto;
+
+    const list = await this.kpisSrv.findManyKpisByIds(kpis)
+
+    const node = await this.findNode({ where: { id }});
+
+          node.kpis = map(list,'id');
+
+    await this.treeRepository.save(node);
+
+    return this.getNodeWithAgreggatedKpisAndTags(id);
+  }
+
   async toggleNode({ value_driver_lib_id, type }) {
        const [valueDriverLib,entity, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),
-                                                                await this.treeRepository.findOne({ value_driver_lib_id, type }), 
-                                                                await this.getMasterRootNode()]);
+                                                                  await this.treeRepository.findOne({ value_driver_lib_id, type }), 
+                                                                  await this.getMasterRootNode()]);
        const { name, tags } = valueDriverLib;
 
        if(!entity) {

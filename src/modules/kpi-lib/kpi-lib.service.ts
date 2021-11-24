@@ -27,6 +27,15 @@ export class KpiLibService extends BaseService implements OnModuleInit{
     this.capabiliLibSrv = this.moduleRef.get(CapabilityLibService, { strict: false });
   }
 
+
+  async simpleFullList() {
+    return await this.kpilibRepository.createQueryBuilder('kpis').select(["kpis.id as id",'label as label']).getRawMany()
+  }
+
+  async findManyKpisByIds(ids: number[]) {
+    return await this.kpilibRepository.createQueryBuilder('kpis').select("kpis.id",'id').whereInIds(ids).getRawMany()
+  }
+
   async findAll(args: KpiLibsArgs): Promise<KpiLib[]> {
     const options = this.getFindAllQuery(args);
     options.relations = ['capability_libs'];

@@ -5,15 +5,15 @@ import {
     PrimaryGeneratedColumn,
     TreeChildren,
     TreeParent,
-    RelationId,
-    ManyToOne,
     JoinColumn,
     Tree,
     OneToOne
+    
   } from 'typeorm';
 import { ObjectType } from 'type-graphql';
 import { ValudDriverType } from './velue-driver-type.enum';
 import { ValueDriverLib} from '../value_driver_lib/value_driver_lib.entity';
+
 
 @ObjectType() 
 @Entity('value_driver_tree')
@@ -46,6 +46,9 @@ import { ValueDriverLib} from '../value_driver_lib/value_driver_lib.entity';
 
     @Column({ type: 'jsonb', default: []})
     public tags: number[];
+
+    @Column({ type: 'jsonb', default: []})
+    public kpis: number[];
 
     @Column({ nullable: true})
     value_driver_lib_id: number;
