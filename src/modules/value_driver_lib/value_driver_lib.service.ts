@@ -88,16 +88,16 @@ export class ValueDriverLibService {
     }
 
     async create(dto: CreateValueDriverLibDto): Promise<CreateValueDriverLibResponseDto>{
-       const { name } = dto;
+       const { name, tags: dtoTags} = dto;
       
        await this.valueDriverLibNameExists(name);
        
-       dto.tags = await this.tagsSrv.insertTagsIfNew(dto.tags);
+       const tags  = await this.tagsSrv.insertTagsIfNew(dtoTags);
 
        const { raw: [entity] } =  await this.queryBuilder()
         .insert()
         .into(ValueDriverLib)
-        .values(dto)
+        .values({ ...dto, tags })
         .returning(['name','description','tags'])
         .execute();
         return entity;
@@ -147,15 +147,14 @@ export class ValueDriverLibService {
       if(!valueDriverLib) throw new NotFoundException('Not Found');
       return valueDriverLib;
    }
-   
 
     async update(id: number,dto: UpdateValueDriverLibDto): Promise<UpdateValueDriverLibResponseDto> {
-
-        dto.tags = await this.tagsSrv.insertTagsIfNew(dto.tags);
+        
+        const tags = await this.tagsSrv.insertTagsIfNew(dto.tags);
 
         const { affected, raw: [entity] } =  await this.queryBuilder()
         .update(ValueDriverLib)
-        .set(dto)
+        .set({...dto, tags})
         .where("id = :id", { id })
         .returning(['id','name','description','status','tags'])
         .execute();

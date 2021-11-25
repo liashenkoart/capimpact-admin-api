@@ -35,6 +35,11 @@ import { ValueDriverTreeService } from './value-driver-tree.service';
       return this.valueDriverTreeSrv.updateNodeKpis(nodeId, dto)
     }
 
+    @Put('master/node/tags/:nodeId')
+    tags(@Param('nodeId') nodeId, @Body() dto) {
+      return this.valueDriverTreeSrv.updateNodeTags(nodeId, dto)
+    }
+
     @Put('master/move/:nodeId/:parentId')
     move(@Param() params) {
       return this.valueDriverTreeSrv.moveNode(params)

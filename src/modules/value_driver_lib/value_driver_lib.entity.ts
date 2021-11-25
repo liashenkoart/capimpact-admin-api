@@ -23,7 +23,7 @@ export class ValueDriverLib {
   description: string;
 
   @Column({ type: 'jsonb' })
-  public tags: number[];
+  public tags: string[];
 
   constructor(partial: Partial<ValueDriverLib>) {
     Object.assign(this, partial);

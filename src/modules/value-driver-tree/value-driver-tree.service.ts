@@ -1,17 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, QueryBuilder, TreeRepository } from 'typeorm';
-import { ValueDriverLibService } from '../value_driver_lib/value_driver_lib.service';
 import { ValudDriverType } from './velue-driver-type.enum';
 import { ValueDriverTree } from './value-driver-tree.entity';
 
+// Services 
 import { KpiLibService } from '../kpi-lib/kpi-lib.service';
+import { TagService } from '../tags/tags.service';
+import { ValueDriverLibService } from '../value_driver_lib/value_driver_lib.service';
 
+// Libs
 import { map } from 'lodash';
 
 @Injectable()
 export class ValueDriverTreeService {  
     constructor(
+       private tagService: TagService,
        private valueDriverLib: ValueDriverLibService,
        private kpisSrv: KpiLibService,
        @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
@@ -79,19 +83,30 @@ export class ValueDriverTreeService {
       return node;
   }
 
-  async updateNodeKpis(id,dto):Promise<any> {
-    const { kpis } = dto;
+  private  async saveNode(node) {
+    const { id } =  await this.treeRepository.save(node);
+     return this.getNodeWithAgreggatedKpisAndTags(id);
+   } 
+
+  async updateNodeKpis(id: number,{ kpis }):Promise<any> {
+    const node = await this.findNode({ where: { id }});
 
     const list = await this.kpisSrv.findManyKpisByIds(kpis)
 
-    const node = await this.findNode({ where: { id }});
-
           node.kpis = map(list,'id');
 
-    await this.treeRepository.save(node);
-
-    return this.getNodeWithAgreggatedKpisAndTags(id);
+    return this.saveNode(node);
   }
+
+  async updateNodeTags(id: number,{ tags }):Promise<any> {
+    
+     const node = await this.findNode({ where: { id }});
+
+     node.tags = await this.tagService.insertTagsIfNew(tags);
+
+     return this.saveNode(node);
+  }
+
 
   async toggleNode({ value_driver_lib_id, type }) {
        const [valueDriverLib,entity, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),

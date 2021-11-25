@@ -29,7 +29,7 @@ export class TagService extends BaseService {
     .getRawMany();
   }
 
-  async insertTagsIfNew(names: number[]): Promise<number[]>{
+  async insertTagsIfNew(names: string[]): Promise<number[]>{
       if(names.length > 1) {
           const filteredOnUniq = uniq(names);
 

@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { ValueDriverLibsModule } from '../value_driver_lib/value_driver_lib.module';
 import { KpiLibModule } from '../kpi-lib/kpi-lib.module';
+import { TagsModule } from '../tags/tags.module';
 
 // Controllers
 import { ValueDriverTreeontroller } from './value-driver-tree.controller';
@@ -19,6 +20,7 @@ import { ValueDriverTree } from './value-driver-tree.entity';
   imports: [
     ValueDriverLibsModule,
     KpiLibModule,
+    TagsModule,
     TypeOrmModule.forFeature([ValueDriverTree]),
     PassportModule.register({ defaultStrategy: 'jwt' })
   ],
