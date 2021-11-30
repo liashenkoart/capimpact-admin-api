@@ -6,9 +6,8 @@ import {
     TreeChildren,
     TreeParent,
     JoinColumn,
-    Tree,
-    OneToOne
-    
+    ManyToOne,
+    Tree
   } from 'typeorm';
 import { ObjectType } from 'type-graphql';
 import { ValudDriverType } from './velue-driver-type.enum';
@@ -40,7 +39,7 @@ import { ValueDriverLib} from '../value_driver_lib/value_driver_lib.entity';
     @Column({ nullable: true})
     parentId: number;
 
-    @OneToOne(() => ValueDriverLib)
+    @ManyToOne(() => ValueDriverLib, lib => lib.treeNodes)
     @JoinColumn({ name: 'value_driver_lib_id' })
     valueDriverLib: ValueDriverLib;
 

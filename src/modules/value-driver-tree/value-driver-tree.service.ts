@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, QueryBuilder, TreeRepository } from 'typeorm';
 import { ValudDriverType } from './velue-driver-type.enum';
@@ -46,8 +46,12 @@ export class ValueDriverTreeService {
     return this.valueDriverTreeRepository.createQueryBuilder('tree');
   }
 
-  private findNode(params) {
-    return this.valueDriverTreeRepository.findOne(params);
+  private async findNode(params) {
+    const node = await this.valueDriverTreeRepository.findOne(params);
+   
+    if(!node) throw new NotFoundException('Node not found');
+    
+    return node;
   }
 
   async getMasterTree() {
@@ -59,9 +63,9 @@ export class ValueDriverTreeService {
   async moveNode({ nodeId, parentId }) {
     const [node, parent] = await Promise.all([ await this.findNode({ where: { id: nodeId }}),
                                                await this.findNode({ where: { id: parentId }})]);
-      node.parent = parent;
+       node.parent = parent;
 
-      return this.valueDriverTreeRepository.save(node);
+     return this.valueDriverTreeRepository.save(node);
   }
 
   async moverToMasterRoot(nodeId) {
@@ -84,7 +88,7 @@ export class ValueDriverTreeService {
   }
 
   private  async saveNode(node) {
-    const { id } =  await this.treeRepository.save(node);
+     const { id } =  await this.treeRepository.save(node);
      return this.getNodeWithAgreggatedKpisAndTags(id);
    } 
 
@@ -107,19 +111,17 @@ export class ValueDriverTreeService {
      return this.saveNode(node);
   }
 
+  async removeNode(id) {
+    const node = await this.findNode({ where: { id }})
 
-  async toggleNode({ value_driver_lib_id, type }) {
-       const [valueDriverLib,entity, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),
-                                                                  await this.treeRepository.findOne({ value_driver_lib_id, type }), 
-                                                                  await this.getMasterRootNode()]);
+    return await this.treeRepository.remove(node,{ });
+  }
+
+  async addNode({ value_driver_lib_id, type }) {
+       const [valueDriverLib, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),
+                                                           await this.getMasterRootNode()]);
        const { name, tags } = valueDriverLib;
 
-       if(!entity) {
-          const node = await this.treeRepository.save(new ValueDriverTree({ name, tags, type, parent, value_driver_lib_id }))
-          return { node, action: 'added'}
-        } else {
-          const node = await this.treeRepository.remove(entity);
-          return { node, action: 'deleted' }
-       }
+       return await this.treeRepository.save(new ValueDriverTree({ name, tags, type, parent, value_driver_lib_id }))
   }
 }

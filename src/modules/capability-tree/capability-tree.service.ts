@@ -21,7 +21,6 @@ import { Workbook } from 'exceljs';
 import { MASTER_TREE_NODE_NOT_FOUND } from './capability-tree.constants';
 import { each, pick, get, omit } from 'lodash';
 
-import moment from 'moment';
 
 const masterTreeTemplate = { cap_name: 'Master CapTree', type: 'master', parentId: null };
 

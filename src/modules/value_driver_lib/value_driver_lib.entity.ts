@@ -25,6 +25,9 @@ export class ValueDriverLib {
   @Column({ type: 'jsonb' })
   public tags: string[];
 
+  @OneToMany(() => ValueDriverTree, node => node.valueDriverLib)
+  treeNodes: ValueDriverTree[];
+
   constructor(partial: Partial<ValueDriverLib>) {
     Object.assign(this, partial);
   }

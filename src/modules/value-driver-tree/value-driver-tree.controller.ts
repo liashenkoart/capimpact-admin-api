@@ -5,7 +5,9 @@ import {
     Put,
     Param,
     Get,
-    Body
+    Body,
+    Delete,
+    Post
   } from '@nestjs/common';
 import { ValueDriverTreeService } from './value-driver-tree.service';
 
@@ -13,7 +15,6 @@ import { ValueDriverTreeService } from './value-driver-tree.service';
 @Controller('value_driver_tree')
   export class ValueDriverTreeontroller {
     constructor(private readonly valueDriverTreeSrv: ValueDriverTreeService) {}
-
 
     @Get('/master')
     master() {
@@ -45,11 +46,15 @@ import { ValueDriverTreeService } from './value-driver-tree.service';
       return this.valueDriverTreeSrv.moveNode(params)
     }
 
-    @Put(':value_driver_lib_id/:type')
+    @Post(':value_driver_lib_id/:type')
     toggle(@Param() params) {
-      return this.valueDriverTreeSrv.toggleNode(params)
+      return this.valueDriverTreeSrv.addNode(params)
     }
 
-  
+    @Delete(':id')
+    delete(@Param('id') id) {
+      return this.valueDriverTreeSrv.removeNode(id)
+    }
+
   }
   
