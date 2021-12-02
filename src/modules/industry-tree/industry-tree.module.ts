@@ -5,6 +5,7 @@ import { IndustryTreeService } from './industry-tree.service';
 import { IndustryTreeController } from './indutry-tree.controller';
 import { IndustryTree } from './industry-tree.entity';
 import { Company } from '../company/company.entity';
+import { ValueDriverTree } from '../value-driver-tree/value-driver-tree.entity';
 
 @Global()
 @Module({

@@ -9,12 +9,12 @@ import {
     Delete,
     Post
   } from '@nestjs/common';
-import { ValueDriverTreeService } from './value-driver-tree.service';
+import { VDMasterTree } from '../services';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('value_driver_tree')
-  export class ValueDriverTreeontroller {
-    constructor(private readonly valueDriverTreeSrv: ValueDriverTreeService) {}
+  export class VDMasterController {
+    constructor(private readonly valueDriverTreeSrv: VDMasterTree) {}
 
     @Get('/master')
     master() {

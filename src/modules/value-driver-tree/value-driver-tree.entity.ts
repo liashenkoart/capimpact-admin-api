@@ -12,7 +12,7 @@ import {
 import { ObjectType } from 'type-graphql';
 import { ValudDriverType } from './velue-driver-type.enum';
 import { ValueDriverLib} from '../value_driver_lib/value_driver_lib.entity';
-
+import { IndustryTree } from '../industry-tree/industry-tree.entity';
 
 @ObjectType() 
 @Entity('value_driver_tree')
@@ -51,6 +51,17 @@ import { ValueDriverLib} from '../value_driver_lib/value_driver_lib.entity';
 
     @Column({ nullable: true})
     value_driver_lib_id: number;
+
+    @ManyToOne(
+      type => IndustryTree,
+      industryTree => industryTree.capability_trees,
+      { cascade: true }
+    )
+    @JoinColumn({ name: 'industry_tree_id' })
+    industry_tree?: IndustryTree;
+
+    @Column({ nullable: true})
+    industry_tree_id: number;
    
     constructor(partial: Partial<ValueDriverTree>) {
       Object.assign(this, partial);

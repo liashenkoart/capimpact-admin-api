@@ -2,6 +2,8 @@ import { Entity, Column, PrimaryGeneratedColumn, TreeChildren, TreeParent, Tree,
 import { ObjectType, Field, ID } from 'type-graphql';
 import { Company } from '../company/company.entity';
 import { CapabilityTree } from '../capability-tree/capability-tree.entity';
+import { ValueDriverTree } from '../value-driver-tree/value-driver-tree.entity';
+
 import { Startup } from '../startup/startup.entity';
 import { ValueDriver } from '../value-driver/value-driver.entity';
 import { Process } from '../process/process.entity';
@@ -41,6 +43,8 @@ export class IndustryTree {
   )
   capability_trees?: CapabilityTree[];
 
+
+
   @Field(() => [Company], { nullable: true })
   @OneToMany(
     type => Company,
@@ -63,6 +67,12 @@ export class IndustryTree {
     process => process.industry
   )
   valueDrivers?: ValueDriver[];
+
+  @OneToMany(
+    type => ValueDriverTree,
+    vdTree => vdTree.industry_tree
+  )
+  valueDriverTreeNodes?: ValueDriverTree[];
 
   @Field(() => Process, { nullable: true })
   @OneToMany(
