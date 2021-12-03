@@ -9,12 +9,11 @@ import { IndustryTreeModule } from '../industry-tree/industry-tree.module'
 
 // Controllers
 import { VDMasterController,
+         VDTreeController,
          VDIndustryController } from './controllers/index'
 
 // Services 
-import { 
-  VDMasterTree,
-  VDIndustryTree } from './services';
+import { VDMasterTreeService, VDIndustryTreeService, VDTreeService } from './services';
 
 // Entities 
 import { ValueDriverTree } from './value-driver-tree.entity';
@@ -31,13 +30,16 @@ import { ValueDriverTree } from './value-driver-tree.entity';
   ],
   controllers: [
     VDMasterController,
-    VDIndustryController
+    VDIndustryController,
+    VDTreeController
   ],
   providers: [
-    VDMasterTree,
-    VDIndustryTree],
+    VDMasterTreeService,
+    VDTreeService,
+    VDIndustryTreeService],
   exports: [
-    VDMasterTree,
-    VDIndustryTree]
+    VDMasterTreeService,
+    VDTreeService,
+    VDIndustryTreeService]
 })
 export class ValueDriverTreeModule {}

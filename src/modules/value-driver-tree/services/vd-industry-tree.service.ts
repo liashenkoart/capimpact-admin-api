@@ -7,9 +7,9 @@ import { ValueDriverTree } from '../value-driver-tree.entity';
 import { KpiLibService } from '../../kpi-lib/kpi-lib.service';
 import { TagService } from '../../tags/tags.service';
 import { IndustryTreeService } from '../../industry-tree/industry-tree.service';
-import { VDMasterTree } from './vd-master-tree.service';
+import { VDMasterTreeService } from './vd-master-tree.service';
 // Libs
-import { VDTree } from './vd-tree.service';
+import { VDTreeService } from './vd-tree.service';
 
 
 export async function asyncForEach(array, callback) {
@@ -20,13 +20,13 @@ export async function asyncForEach(array, callback) {
 
 
 @Injectable()
-export class VDIndustryTree  extends VDTree{  
+export class VDIndustryTreeService  extends VDTreeService {  
     constructor(
-        protected tagService: TagService,
-        protected kpisSrv: KpiLibService,
+        public tagService: TagService,
+        public kpisSrv: KpiLibService,
         @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
-        private industryTreeSrv: IndustryTreeService,
-        private masterTreeSrv: VDMasterTree
+        public industryTreeSrv: IndustryTreeService,
+        public masterTreeSrv: VDMasterTreeService
     ) {
         super(tagService,kpisSrv,treeRepository);
      }
@@ -80,11 +80,28 @@ export class VDIndustryTree  extends VDTree{
         return  await this.treeRepository.save(new ValueDriverTree({name, type: ValudDriverType.INDUSTRY, industry_tree_id, parentId, kpis, tags}));
       }
 
+      public async updateNodeTags(id: number,{ tags }):Promise<any> {
+    
+        const node = await this.findNode({ where: { id }});
+
+        node.tags = await this.tagService.insertTagsIfNew(tags);
+
+        return this.saveNode(node);
+     }
+
+     public async updateNodeName({ name },id: number):Promise<any> {
+    
+      const node = await this.findNode({ where: { id }});
+
+      node.name = name;
+
+      return this.saveNode(node);
+   }
 
       async cloneMasterToIndustry({ masterNodeId, industryNodeId }) {
 
-        const industryNode: ValueDriverTree = await this.findNode({ where: { id: 410, type: ValudDriverType.INDUSTRY }});
-        const flattenedMasterBranch: ValueDriverTree[] = await this.masterTreeSrv.getMasterBranchByParent({ where: { id: 350, type: ValudDriverType.MASTER } } );
+        const industryNode: ValueDriverTree = await this.findNode({ where: { id: industryNodeId, type: ValudDriverType.INDUSTRY }});
+        const flattenedMasterBranch: ValueDriverTree[] = await this.masterTreeSrv.getMasterBranchByParent({ where: { id: masterNodeId, type: ValudDriverType.MASTER } } );
 
         const [topMasterNode] = flattenedMasterBranch;
 
@@ -101,7 +118,6 @@ export class VDIndustryTree  extends VDTree{
           })
 
         return flattenedMasterBranch;
-
       }
 
 }

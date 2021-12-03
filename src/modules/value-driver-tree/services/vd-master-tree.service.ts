@@ -8,19 +8,18 @@ import { ValueDriverTree } from '../value-driver-tree.entity';
 import { KpiLibService } from '../../kpi-lib/kpi-lib.service';
 import { TagService } from '../../tags/tags.service';
 import { ValueDriverLibService } from '../../value_driver_lib/value_driver_lib.service';
-import { VDTree } from './vd-tree.service';
+import { VDTreeService } from './vd-tree.service';
 
 @Injectable()
-export class VDMasterTree extends VDTree {  
+export class VDMasterTreeService extends VDTreeService {  
     constructor(
-       protected tagService: TagService,
-       private valueDriverLib: ValueDriverLibService,
-       protected kpisSrv: KpiLibService,
        @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
-       @InjectRepository(ValueDriverTree) private readonly valueDriverTreeRepository: Repository<ValueDriverTree>) {
+       @InjectRepository(ValueDriverTree) public readonly valueDriverTreeRepository: Repository<ValueDriverTree>,
+       public tagService: TagService,
+       public valueDriverLib: ValueDriverLibService,
+       public kpisSrv: KpiLibService,) {
         super(tagService,kpisSrv,treeRepository);
        }
-
 
   async getMasterRootNode(): Promise<ValueDriverTree> {
     const rootNode = await this.queryBuilder()
@@ -56,6 +55,15 @@ export class VDMasterTree extends VDTree {
      return this.valueDriverTreeRepository.save(node);
   }
 
+  async updateMasterNodeKpis(id,dto) {
+    return this.updateNodeKpis(id,dto);
+  }
+
+
+  async updateMasterNodeTags(id,dto) {
+    return this.updateNodeTags(id,dto);
+  }
+
   async moverToMasterRoot(nodeId) {
     const node =  await this.findNode({ where: { id: nodeId }});
 
@@ -73,11 +81,11 @@ export class VDMasterTree extends VDTree {
     return masterDescendants;
   }
 
-  async addNode({ value_driver_lib_id, type }) {
+  async addNode({ value_driver_lib_id }) {
        const [valueDriverLib, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),
                                                            await this.getMasterRootNode()]);
        const { name, tags } = valueDriverLib;
 
-       return await this.treeRepository.save(new ValueDriverTree({ name, tags, type, parent, value_driver_lib_id }))
+       return await this.treeRepository.save(new ValueDriverTree({ name, tags, type: ValudDriverType.MASTER, parent, value_driver_lib_id }))
   }
 }

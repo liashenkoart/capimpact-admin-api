@@ -6,7 +6,7 @@ import { BaseService } from '@modules/common/services';
 import { Tag } from './tag.entity';
 
 import { asyncForEach } from '@lib/sorting';
-import { map, uniq, difference, merge } from 'lodash';
+import { map, uniq, difference } from 'lodash';
 
 @Injectable()
 export class TagService extends BaseService {
@@ -30,7 +30,7 @@ export class TagService extends BaseService {
   }
 
   async insertTagsIfNew(names: string[]): Promise<number[]>{
-      if(names.length > 1) {
+      if(names.length > 0) {
           const filteredOnUniq = uniq(names);
 
           const tags =  await  this.tagRepository.createQueryBuilder('tags')

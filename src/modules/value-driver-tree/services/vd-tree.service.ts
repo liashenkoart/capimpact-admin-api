@@ -1,27 +1,25 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, QueryBuilder, TreeRepository } from 'typeorm';
-import { ValudDriverType } from '../velue-driver-type.enum';
+import { QueryBuilder, TreeRepository } from 'typeorm';
 import { ValueDriverTree } from '../value-driver-tree.entity';
 
 // Services 
 import { KpiLibService } from '../../kpi-lib/kpi-lib.service';
 import { TagService } from '../../tags/tags.service';
-import { ValueDriverLibService } from '../../value_driver_lib/value_driver_lib.service';
 
 // Libs
 import { map } from 'lodash';
 
 
 @Injectable()
-export class VDTree {  
+export class VDTreeService {  
     constructor(
-        protected tagService: TagService,
-        protected kpisSrv: KpiLibService,
-        @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>
+        public tagService: TagService,
+        public kpisSrv: KpiLibService,
+        @InjectRepository(ValueDriverTree) public treeRepository: TreeRepository<ValueDriverTree>
     ) { }
 
-    protected async findNode(params) {
+    public async findNode(params) {
         const node = await this.treeRepository.findOne(params);
        
         if(!node) throw new NotFoundException('Node not found');
@@ -29,11 +27,11 @@ export class VDTree {
         return node;
     }
 
-    protected queryBuilder(): QueryBuilder<ValueDriverTree> {
+    public queryBuilder(): QueryBuilder<ValueDriverTree> {
         return this.treeRepository.createQueryBuilder('tree');
      }
 
-      async updateNodeKpis(id: number,{ kpis }):Promise<any> {
+     public async updateNodeKpis(id: number,{ kpis }):Promise<any> {
         const node = await this.findNode({ where: { id }});
     
         const list = await this.kpisSrv.findManyKpisByIds(kpis)
@@ -43,12 +41,12 @@ export class VDTree {
         return this.saveNode(node);
       }
 
-     async updateNodeTags(id: number,{ tags }):Promise<any> {
+    public async updateNodeTags(id: number,{ tags }):Promise<any> {
     
         const node = await this.findNode({ where: { id }});
-   
+
         node.tags = await this.tagService.insertTagsIfNew(tags);
-   
+
         return this.saveNode(node);
      }
 
@@ -58,7 +56,7 @@ export class VDTree {
       return await this.treeRepository.remove(node,{ });
     }
 
-      protected  async saveNode(node) {
+      public  async saveNode(node) {
         const { id } =  await this.treeRepository.save(node);
         return this.getNodeWithAgreggatedKpisAndTags(id);
       } 
