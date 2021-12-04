@@ -78,7 +78,7 @@ export class VDMasterTreeService extends VDTreeService {
 
     const masterDescendants = await this.treeRepository.findDescendants(masterRoot);
 
-    return masterDescendants;
+    return masterDescendants.reverse();
   }
 
   async addNode({ value_driver_lib_id }) {

@@ -31,7 +31,32 @@ export class VDIndustryTreeService  extends VDTreeService {
         super(tagService,kpisSrv,treeRepository);
      }
 
+     
+
+     async getIndustryRootNode(): Promise<ValueDriverTree> {
+      const rootNode = await this.queryBuilder()
+                                     .select('id')
+                                     .where('type = :type', { type: ValudDriverType.INDUSTRY})
+                                     .andWhere('tree.parentId IS NULL')
+                                     .getRawOne();
+  
+      if(rootNode) {
+          return rootNode;
+      } else {
+          const { raw: [entity] } =  await this.queryBuilder()
+          .insert()
+          .into(ValueDriverTree)
+          .values({ name: 'Industry Value Driver', type: ValudDriverType.INDUSTRY })
+          .returning(['name','description','tags','kpis'])
+          .execute();
+          return entity;
+      }
+    }
+
      async getRootVDIndustryNode(id: number): Promise<ValueDriverTree> {
+
+      const root =  await this.getIndustryRootNode();
+
 
         const industry = await this.industryTreeSrv.test(id)
 
@@ -46,20 +71,15 @@ export class VDIndustryTreeService  extends VDTreeService {
                                        .addSelect('tree.value_driver_lib_id','value_driver_lib_id')
                                        .where('tree.type = :type', { type: ValudDriverType.INDUSTRY})
                                        .andWhere('tree.industry_tree_id = :id', { id })
-                                       .andWhere('tree.parentId IS NULL')
+                                     
                                        .getRawOne();
 
     
         if(rootNode) {
             return rootNode;
         } else {
-            const { raw: [entity] } =  await this.queryBuilder()
-            .insert()
-            .into(ValueDriverTree)
-            .values({ name: industry.name, type: ValudDriverType.INDUSTRY, industry_tree_id: industry.id })
-            .returning(['name','description','tags','kpis'])
-            .execute();
-            return entity;
+      
+            return  await this.treeRepository.save(new ValueDriverTree({name: industry.name, type: ValudDriverType.INDUSTRY, industry_tree_id: industry.id, parent: root}));
         }
       }
      
@@ -70,14 +90,8 @@ export class VDIndustryTreeService  extends VDTreeService {
       }
 
 
-      async cloneMasterEntityToIndustry({ name, kpis, tags }: ValueDriverTree, industry_tree_id: number, parentId: number) {
-      //  return  await this.queryBuilder()
-      //   .insert()
-      //   .into(ValueDriverTree)
-      //   .values({ name, industry_tree_id, parentId, kpis, tags, type: ValudDriverType.INDUSTRY })
-      //   .returning(['id','name','type','description','industry_tree_id','tags','kpis'])
-      //   .execute();
-        return  await this.treeRepository.save(new ValueDriverTree({name, type: ValudDriverType.INDUSTRY, industry_tree_id, parentId, kpis, tags}));
+      async cloneMasterEntityToIndustry({ name, kpis, tags }: ValueDriverTree, industry_tree_id: number, parent: ValueDriverTree) {
+        return  await this.treeRepository.save(new ValueDriverTree({name, type: ValudDriverType.INDUSTRY, industry_tree_id, parent, kpis, tags}));
       }
 
       public async updateNodeTags(id: number,{ tags }):Promise<any> {
@@ -105,19 +119,24 @@ export class VDIndustryTreeService  extends VDTreeService {
 
         const [topMasterNode] = flattenedMasterBranch;
 
-        const check = { [`${topMasterNode.parentId}`]: industryNode.id} ;
+        const check = { [`${topMasterNode.parentId}`]: industryNode };
+
+        const savedNodes = [];
 
         await asyncForEach(flattenedMasterBranch, async (node: ValueDriverTree) => {
 
-          const parentId =  check[node.parentId];
+          const parent =  check[node.parentId];
           const industry_tree_id = industryNode.id;
 
-          const { id } = await this.cloneMasterEntityToIndustry(node,industry_tree_id, parentId);
-                check[node.id] = id;   
+          const savedNode  = await this.cloneMasterEntityToIndustry(node,industry_tree_id, parent);
+
+                check[node.id] = savedNode;   
+                savedNodes.push(savedNode)
 
           })
 
-        return flattenedMasterBranch;
+   
+       return this.treeRepository.findDescendantsTree(savedNodes[0])
       }
 
 }
