@@ -19,9 +19,10 @@ export class VDTreeService {
         @InjectRepository(ValueDriverTree) public treeRepository: TreeRepository<ValueDriverTree>
     ) { }
 
-    public async findNode(params) {
+    public async findNode(params = {}) {
+   
         const node = await this.treeRepository.findOne(params);
-       
+     
         if(!node) throw new NotFoundException('Node not found');
         
         return node;

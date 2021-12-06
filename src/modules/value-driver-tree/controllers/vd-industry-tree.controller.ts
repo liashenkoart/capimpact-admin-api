@@ -19,6 +19,11 @@ import { VDIndustryTreeService } from '../services';
       return this.VDIndustryTree.getVDIndustryTreeByIndustryId(industry_tree_id)
     }
 
+    @Get('/clone/info/:industry_tree_id')
+    createNode(@Param('industry_tree_id') industry_tree_id) {
+      return this.VDIndustryTree.clonedCouple(industry_tree_id)
+    }
+
     @Put('/clone/:masterNodeId/:industryNodeId')
     clone(@Param() params) {
       return this.VDIndustryTree.cloneMasterToIndustry(params)

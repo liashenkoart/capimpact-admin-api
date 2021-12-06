@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, QueryBuilder, TreeRepository } from 'typeorm';
+import { InjectRepository, } from '@nestjs/typeorm';
+import { Repository, QueryBuilder, TreeRepository, FindOneOptions } from 'typeorm';
 import { ValudDriverType } from '../velue-driver-type.enum';
 import { ValueDriverTree } from '../value-driver-tree.entity';
 
@@ -73,12 +73,13 @@ export class VDMasterTreeService extends VDTreeService {
   }
 
 
-  async getMasterBranchByParent(params = { }): Promise<ValueDriverTree[]> {
+  async getFlattenedMasterBranchByParent(params: FindOneOptions = {}): Promise<ValueDriverTree[]> {
     const masterRoot = await this.findNode(params);
+    
 
     const masterDescendants = await this.treeRepository.findDescendants(masterRoot);
 
-    return masterDescendants.reverse();
+    return masterDescendants;
   }
 
   async addNode({ value_driver_lib_id }) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TreeRepository } from 'typeorm';
+import { TreeRepository, FindOneOptions } from 'typeorm';
 import { ValudDriverType } from '../velue-driver-type.enum';
 import { ValueDriverTree } from '../value-driver-tree.entity';
 // Services 
@@ -11,13 +11,14 @@ import { VDMasterTreeService } from './vd-master-tree.service';
 // Libs
 import { VDTreeService } from './vd-tree.service';
 
+import { IsNull, Not } from 'typeorm';
+import { size } from 'lodash';
 
 export async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array);
   }
 }
-
 
 @Injectable()
 export class VDIndustryTreeService  extends VDTreeService {  
@@ -30,8 +31,6 @@ export class VDIndustryTreeService  extends VDTreeService {
     ) {
         super(tagService,kpisSrv,treeRepository);
      }
-
-     
 
      async getIndustryRootNode(): Promise<ValueDriverTree> {
       const rootNode = await this.queryBuilder()
@@ -55,10 +54,7 @@ export class VDIndustryTreeService  extends VDTreeService {
 
      async getRootVDIndustryNode(id: number): Promise<ValueDriverTree> {
 
-      const root =  await this.getIndustryRootNode();
-
-
-        const industry = await this.industryTreeSrv.test(id)
+        const industry = await this.industryTreeSrv.findNode({ where: { id }})
 
         const rootNode = await this.queryBuilder()
                                        .select('tree.id','id')
@@ -71,27 +67,20 @@ export class VDIndustryTreeService  extends VDTreeService {
                                        .addSelect('tree.value_driver_lib_id','value_driver_lib_id')
                                        .where('tree.type = :type', { type: ValudDriverType.INDUSTRY})
                                        .andWhere('tree.industry_tree_id = :id', { id })
-                                     
                                        .getRawOne();
 
-    
-        if(rootNode) {
-            return rootNode;
-        } else {
-      
-            return  await this.treeRepository.save(new ValueDriverTree({name: industry.name, type: ValudDriverType.INDUSTRY, industry_tree_id: industry.id, parent: root}));
-        }
-      }
+        return rootNode ? rootNode : 
+        await this.saveNode(new ValueDriverTree({name: industry.name, type: ValudDriverType.INDUSTRY, industry_tree_id: industry.id}));
+     }
      
-
-      async getVDIndustryTreeByIndustryId(id: number) {
+      async getVDIndustryTreeByIndustryId(id: number): Promise<ValueDriverTree> {
         const root = await this.getRootVDIndustryNode(id);
         return await this.treeRepository.findDescendantsTree(root);
       }
 
 
       async cloneMasterEntityToIndustry({ name, kpis, tags }: ValueDriverTree, industry_tree_id: number, parent: ValueDriverTree) {
-        return  await this.treeRepository.save(new ValueDriverTree({name, type: ValudDriverType.INDUSTRY, industry_tree_id, parent, kpis, tags}));
+        return  await this.saveNode(new ValueDriverTree({name, type: ValudDriverType.INDUSTRY, industry_tree_id, parent, kpis, tags}));
       }
 
       public async updateNodeTags(id: number,{ tags }):Promise<any> {
@@ -103,6 +92,10 @@ export class VDIndustryTreeService  extends VDTreeService {
         return this.saveNode(node);
      }
 
+     public async findIndustryNodeById(id: number) {
+       return  await this.findNode({ where: { id, type: ValudDriverType.INDUSTRY }});
+     }
+
      public async updateNodeName({ name },id: number):Promise<any> {
     
       const node = await this.findNode({ where: { id }});
@@ -112,10 +105,61 @@ export class VDIndustryTreeService  extends VDTreeService {
       return this.saveNode(node);
    }
 
-      async cloneMasterToIndustry({ masterNodeId, industryNodeId }) {
+   async getFlattenedIndustryBranch(params: FindOneOptions = {}): Promise<ValueDriverTree[]> {
+
+    const industryRoot = await this.findNode(params);
+
+    return await this.treeRepository.findDescendants(industryRoot);
+  }
+
+  async getIndustryBranch(params: FindOneOptions = {}): Promise<ValueDriverTree> {
+
+    const industryRoot = await this.findNode(params);
+
+    return  await this.treeRepository.findDescendantsTree(industryRoot);
+  }
+
+  async clonedCouple(industryId: number) {
+       const { id, parentId } = await this.industryTreeSrv.findNode({ where: { id:industryId, parentId: Not(IsNull()) }, relations:['parent']})
+
+       const [tree, parentTree] = await Promise.all([this.getVDIndustryTreeByIndustryId(id),
+                                                     this.getVDIndustryTreeByIndustryId(parentId)]);
+       return { tree, parentTree }
+
+  }
+
+  async cloneIndustry({ industryId }, client): Promise<any> {
+
+    const industry = await this.industryTreeSrv.findNode({ where: { id:industryId, parentId: Not(IsNull()) }, relations:['parent']});
+
+    const [node,parentBranch] = await Promise.all([await this.findNode({ where: { industry_tree_id: industry.id, parentId: IsNull() }}),
+                                                   await this.getFlattenedIndustryBranch({ where: { industry_tree_id: industry.parent.id, parentId: IsNull()}})]);
+
+     await this.removeNode(node.id);
+
+     const newNode = await this.getRootVDIndustryNode(industryId);
+     
+    
+     const [topParentNode] = parentBranch;
+     const check = { [`${topParentNode.id}`]: newNode };
+
+     parentBranch.shift();
+     
+     await asyncForEach(parentBranch, async (node: ValueDriverTree, index: number) => {
+           const parent =  check[node.parentId];
+           const savedNode  = await this.cloneMasterEntityToIndustry(node,node.industry_tree_id, parent);
+           const progress = Math.round(100 / size(parentBranch) *  (index + 1));
+           client.emit('cloningStatus', progress);
+           check[node.id] = savedNode;  
+     })
+
+     return this.treeRepository.findDescendantsTree(newNode)
+  }
+
+      async cloneMasterToIndustry({ masterNodeId, industryNodeId }): Promise<ValueDriverTree> {
 
         const industryNode: ValueDriverTree = await this.findNode({ where: { id: industryNodeId, type: ValudDriverType.INDUSTRY }});
-        const flattenedMasterBranch: ValueDriverTree[] = await this.masterTreeSrv.getMasterBranchByParent({ where: { id: masterNodeId, type: ValudDriverType.MASTER } } );
+        const flattenedMasterBranch: ValueDriverTree[] = await this.masterTreeSrv.getFlattenedMasterBranchByParent({ where: { id: masterNodeId, type: ValudDriverType.MASTER } } );
 
         const [topMasterNode] = flattenedMasterBranch;
 
@@ -129,12 +173,9 @@ export class VDIndustryTreeService  extends VDTreeService {
           const industry_tree_id = industryNode.id;
 
           const savedNode  = await this.cloneMasterEntityToIndustry(node,industry_tree_id, parent);
-
                 check[node.id] = savedNode;   
                 savedNodes.push(savedNode)
-
           })
-
    
        return this.treeRepository.findDescendantsTree(savedNodes[0])
       }

@@ -4,7 +4,6 @@ import {
     ClassSerializerInterceptor,
     Put,
     Param,
-    Delete,
     Post,
     Get
   } from '@nestjs/common';

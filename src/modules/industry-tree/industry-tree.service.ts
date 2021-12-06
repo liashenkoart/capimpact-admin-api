@@ -31,13 +31,11 @@ export class IndustryTreeService extends BaseService {
         order: { code : `ASC`}})
   }
 
-   async test(id) {
-   const node = await this.industryTreeRepository.findOne(id);
+   async findNode(params = {}) {
+   const node = await this.industryTreeRepository.findOne(params);
    if(!node) throw new NotFoundException('Industry not found')
    return node;
   }
-
-
 
   findOneById(id: number): Promise<IndustryTree> {
     return this.getOneByIdWithCompanies(id);

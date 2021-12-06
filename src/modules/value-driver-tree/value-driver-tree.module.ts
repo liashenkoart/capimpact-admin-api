@@ -13,11 +13,14 @@ import { VDMasterController,
          VDIndustryController } from './controllers/index'
 
 // Services 
-import { VDMasterTreeService, VDIndustryTreeService, VDTreeService } from './services';
+import { VDMasterTreeService, 
+         VDIndustryTreeService,
+         VDTreeService } from './services';
+
+import { ChatGateway } from './socket/socket.gateway';
 
 // Entities 
 import { ValueDriverTree } from './value-driver-tree.entity';
-
 
 @Module({
   imports: [
@@ -36,10 +39,12 @@ import { ValueDriverTree } from './value-driver-tree.entity';
   providers: [
     VDMasterTreeService,
     VDTreeService,
-    VDIndustryTreeService],
+    VDIndustryTreeService,
+    ChatGateway],
   exports: [
     VDMasterTreeService,
     VDTreeService,
-    VDIndustryTreeService]
+    VDIndustryTreeService,
+    ChatGateway]
 })
 export class ValueDriverTreeModule {}
