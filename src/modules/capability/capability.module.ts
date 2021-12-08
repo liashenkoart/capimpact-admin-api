@@ -6,11 +6,12 @@ import { CapabilityService } from './services/capability.service';
 import { CapabilityGraphService } from './services/capability.graph.service';
 import { CapabilityResolver} from './resolvers/capability.resolver';
 import { Capability } from './capability.entity';
+import { Classification } from '../classifications/classification.entity';
 
 @Global()
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Capability]),
+    TypeOrmModule.forFeature([Capability, Classification]),
     PassportModule.register({ defaultStrategy: 'jwt' })
  ],
   controllers: [CapabilityController],

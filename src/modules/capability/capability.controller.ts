@@ -66,6 +66,11 @@ import {
     async create(@Body() data: CapabilityCreationInput, @Req() req: any) {
       return this.capabilityService.create(data, { user: req.user });
     }
+
+    @Post('bulk')
+    async bulk(@Body() data, @Req() req: any) {
+      return this.capabilityService.saveBulk(data, { user: req.user });
+    }
   
     @ApiBody({ type: [CapabilityInput] })
     @Post('/tags/bulk')

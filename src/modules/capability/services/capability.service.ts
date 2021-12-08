@@ -7,12 +7,15 @@ import { getPath } from '@lib/getPath';
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { CapabilityGraphService } from './capability.graph.service';
 
+import { Classification } from '../../classifications/classification.entity';
 import { Industry } from '../../industry/industry.entity';
 import { Capability } from '../capability.entity';
 import { CapabilitiesArgs, CapabilityCreationInput, CapabilityInput } from '../dto';
 
 import { CapabilityTreeService } from "../../capability-tree/capability-tree.service"
 import { IndustryService } from "../../industry/service/industry.service";
+
+import { map } from 'lodash';
 
 @Injectable()
 export class CapabilityService {
@@ -24,7 +27,8 @@ export class CapabilityService {
     @Inject(forwardRef(() => CapabilityGraphService))
     private readonly capabilityGraphService: CapabilityGraphService,
     @InjectRepository(Capability) private readonly capabilityRepository: Repository<Capability>,
-    @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>
+    @InjectRepository(Capability) private readonly treeRepository: TreeRepository<Capability>,
+    @InjectRepository(Classification) private readonly classificationsRepository: Repository<Classification>
   ) {}
 
   private listToTree(data, options?) {
@@ -233,6 +237,27 @@ export class CapabilityService {
 
     return data;
   }
+
+  async saveBulk(body: CapabilityInput[], context?: any) {
+    const { user } = context;
+
+   await  asyncForEach(body, async (item) => {
+        const treeNode  =  await this.capTreeSrv.treeRepository.findOne({ where: { id: item.id }, relations: ['capability']});
+        const classifications = await this.classificationsRepository.findByIds(map(item.classifications,'id'));
+
+        const {  capability, cap_name  } = treeNode;
+        if(capability) {
+            capability.classifications = classifications;
+            await this.capabilityRepository.save(capability);
+        } else {
+            const newCapability =  await this.capabilityRepository.save(new Capability({ name: cap_name, classifications , user }))
+
+            treeNode.capability = newCapability;
+            await this.capTreeSrv.treeRepository.save(treeNode);
+        }
+    })
+  }
+
 
   async saveManyTags(input: CapabilityInput[], context?: any) {
     const { user } = context;

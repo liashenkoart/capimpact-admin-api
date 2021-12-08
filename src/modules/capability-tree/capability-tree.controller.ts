@@ -18,7 +18,7 @@ import {
   import { CapabilityTreeService } from './capability-tree.service';
   import { CapabilityTreeArgs, UpdateCapabilityTreeNode, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput,CapabilityTreeLocationDto } from './dto';
   import { CapabilityTreeIndustryCreationInput } from './dto/capability-tree-industry-creation.dto';
-  import { SaveCapTreeTechsDto } from "./dto";
+  import { SaveCapTreeTechsDto, GetTopChildrenQuery} from "./dto";
   import { CAPABILITY_TREE_API_TAG } from "./capability-tree.constants"
   import { CapabilityTree } from './capability-tree.entity';
 
@@ -63,12 +63,12 @@ import {
       return this.capabilityTreeService.nodeExcellToIndustry(id, res);
     }
 
-    @Get('')
+    @Get('children')
     @UseGuards(AuthGuard())
-    async findAll(@Query() query: CapabilityTreeArgs) {
-      return this.capabilityTreeService.findAll(query);
+    async findAll(@Query() query: GetTopChildrenQuery) {
+      return this.capabilityTreeService.topLevelNodsOfTreeByCompany(query)
     }
-  
+
     @Get('tree')
     @UseGuards(AuthGuard())
     async tree(@Query() query: CapabilityTreeArgs) {

@@ -1,6 +1,6 @@
-import { Entity, Column, OneToOne, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, OneToOne, ManyToOne, JoinColumn, PrimaryGeneratedColumn, JoinTable, ManyToMany} from 'typeorm';
 import { ObjectType, Field, ID, Int } from 'type-graphql';
-
+import { Capability } from '../capability/capability.entity';
 import { Lense } from '../lense/lense.entity';
 
 @ObjectType()

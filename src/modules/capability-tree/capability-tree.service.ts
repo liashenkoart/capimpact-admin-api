@@ -3,7 +3,7 @@ import { Injectable, forwardRef, Inject, NotFoundException, Request,
   Res,
   Response } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository, Raw } from 'typeorm';
+import { Repository, TreeRepository, Raw, IsNull } from 'typeorm';
 import { sortTreeByField, flattenTree, asyncForEach } from '@lib/sorting';
 import { BaseService } from '@modules/common/services';
 import { CapabilityTreesArgs, CapabilityTreeCreationInput, CapabilityTreeIndustryCloneInput, CapabilityTreeLocationDto, CapabilityTreeOrderDto } from './dto';
@@ -41,6 +41,12 @@ export class CapabilityTreeService extends BaseService {
     @InjectRepository(CapabilityTree) public readonly treeRepository: TreeRepository<CapabilityTree>
   ) {
     super();
+  }
+
+
+  async topLevelNodsOfTreeByCompany(query = { }) {
+      const node = await this.treeRepository.findOne({ where: { ...query }});
+      return await this.treeRepository.find({ where: { parentId: node.id }, relations: ['capability','capability.classifications','capability.classifications.lense']});
   }
 
   async findAll(query: CapabilityTreesArgs): Promise<CapabilityTree[] | void> {
@@ -831,7 +837,7 @@ export class CapabilityTreeService extends BaseService {
     if (!root) {
       throw new NotFoundException();
     }
-    return this.treeRepository.findDescendantsTree(root);
+    return this.treeRepository.findDescendantsTree(root, {});
   }
 
   async collectEntityFields(capabilityTree: CapabilityTree): Promise<CapabilityTree> {
