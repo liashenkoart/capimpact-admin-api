@@ -15,13 +15,13 @@ export class SaveCapTreeTechsDto {
 export class GetTopChildrenQuery {
   @ApiProperty()
   @IsOptional()
-  @IsNumber()
+  @IsNumberString()
   @Type(() => Number)
   company_id?: number;
 
   @ApiProperty()
   @IsOptional()
-  @IsNumber()
+  @IsNumberString()
   @Type(() => Number)
   parentId?: number;
 }
