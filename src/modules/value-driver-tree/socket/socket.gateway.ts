@@ -15,7 +15,9 @@ export async function asyncForEach(array, callback) {
   }
 }
 
-@WebSocketGateway(8080)
+const PORT = Number(process.env.VD_TREE_SOCKET_PORT);
+
+@WebSocketGateway(PORT)
   export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     constructor(private treeSrv: VDIndustryTreeService) {}
 
