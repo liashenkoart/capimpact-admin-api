@@ -33,5 +33,5 @@ RUN apk add --no-cache git
 RUN yarn
 RUN yarn cache clean
 
-EXPOSE 4001
+EXPOSE $VD_TREE_SOCKET_PORT
 CMD [ "pm2-runtime", "start", "ecosystem.config.js"]
