@@ -12,6 +12,7 @@ import {
   import { GroupFilter } from '../groupfilter/groupfilter.entity';
   import { IndustryTree } from '../industry-tree/industry-tree.entity';
   import { CapabilityTree } from '../capability-tree/capability-tree.entity';
+  import { ValueDriverTree } from '../value-driver-tree/value-driver-tree.entity';
   import { COMPANY_COLUMN_NAME } from './company.constants';
 
   @ObjectType()
@@ -66,6 +67,10 @@ import {
     @Field(() => [CapabilityTree], { nullable: true })
     @OneToMany(type => CapabilityTree, capabilityTree => capabilityTree.company, { cascade: true})
     capability_trees?: CapabilityTree[];
+
+    @Field(() => [ValueDriverTree], { nullable: true })
+    @OneToMany(type => ValueDriverTree, value_driver_tree => value_driver_tree.company, { cascade: true})
+    value_driver_tree?: ValueDriverTree[];
   
     @Field(() => [Capability], { nullable: true })
     @OneToMany(

@@ -1,6 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository, } from '@nestjs/typeorm';
-import { Repository, QueryBuilder, TreeRepository, FindOneOptions } from 'typeorm';
+import { Repository, TreeRepository, FindOneOptions } from 'typeorm';
 import { ValudDriverType } from '../velue-driver-type.enum';
 import { ValueDriverTree } from '../value-driver-tree.entity';
 
@@ -12,6 +12,9 @@ import { VDTreeService } from './vd-tree.service';
 
 @Injectable()
 export class VDMasterTreeService extends VDTreeService {  
+   
+   protected TREE_TYPE = ValudDriverType.MASTER;
+
     constructor(
        @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
        @InjectRepository(ValueDriverTree) public readonly valueDriverTreeRepository: Repository<ValueDriverTree>,
@@ -19,72 +22,11 @@ export class VDMasterTreeService extends VDTreeService {
        public valueDriverLib: ValueDriverLibService,
        public kpisSrv: KpiLibService,) {
         super(tagService,kpisSrv,treeRepository);
-       }
-
-  async getMasterRootNode(): Promise<ValueDriverTree> {
-    const rootNode = await this.queryBuilder()
-                                   .select('id')
-                                   .where('type = :type', { type: ValudDriverType.MASTER})
-                                   .andWhere('tree.parentId IS NULL')
-                                   .getRawOne();
-
-    if(rootNode) {
-        return rootNode;
-    } else {
-        const { raw: [entity] } =  await this.queryBuilder()
-        .insert()
-        .into(ValueDriverTree)
-        .values({ name: 'Master Value Driver', type: ValudDriverType.MASTER })
-        .returning(['name','description','tags','kpis'])
-        .execute();
-        return entity;
-    }
-  }
-
-  async getMasterTree() {
-    const root = await this.getMasterRootNode();
- 
-    return await this.treeRepository.findDescendantsTree(root);
-  }
-
-  async moveNode({ nodeId, parentId }) {
-    const [node, parent] = await Promise.all([ await this.findNode({ where: { id: nodeId }}),
-                                               await this.findNode({ where: { id: parentId }})]);
-       node.parent = parent;
-
-     return this.valueDriverTreeRepository.save(node);
-  }
-
-  async updateMasterNodeKpis(id,dto) {
-    return this.updateNodeKpis(id,dto);
-  }
-
-
-  async updateMasterNodeTags(id,dto) {
-    return this.updateNodeTags(id,dto);
-  }
-
-  async moverToMasterRoot(nodeId) {
-    const node =  await this.findNode({ where: { id: nodeId }});
-
-          node.parent = await this.getMasterRootNode()
-
-    return this.valueDriverTreeRepository.save(node);
-  }
-
-
-  async getFlattenedMasterBranchByParent(params: FindOneOptions = {}): Promise<ValueDriverTree[]> {
-    const masterRoot = await this.findNode(params);
-    
-
-    const masterDescendants = await this.treeRepository.findDescendants(masterRoot);
-
-    return masterDescendants;
-  }
+      }
 
   async addNode({ value_driver_lib_id }) {
        const [valueDriverLib, parent] = await Promise.all([await this.valueDriverLib.findOneSimple(value_driver_lib_id),
-                                                           await this.getMasterRootNode()]);
+                                                           await this.getTypeRootNode()]);
        const { name, tags } = valueDriverLib;
 
        return await this.treeRepository.save(new ValueDriverTree({ name, tags, type: ValudDriverType.MASTER, parent, value_driver_lib_id }))

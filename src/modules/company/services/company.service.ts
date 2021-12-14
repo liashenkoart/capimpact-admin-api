@@ -1,6 +1,6 @@
 import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository, FindManyOptions, Raw } from 'typeorm';
+import { Repository, TreeRepository, FindManyOptions, Raw, FindOneOptions } from 'typeorm';
 import { CompanyCreationInput, CompanyInput, CompaniesArgs } from '../dto';
 import { asyncForEach } from '@lib/sorting';
 import { CapabilityTreeService } from '../../capability-tree/capability-tree.service';
@@ -56,6 +56,14 @@ export class CompanyService {
 
   findOneById(id: number): Promise<Company> {
     return this.getOneByIdWithIndustryTrees(id)
+  }
+
+  async findCompanyById(options: FindOneOptions): Promise<Company> {
+    const company = await  this.companyRepository.findOne(options);
+
+    if(!company) throw new NotFoundException("Company not found");
+    
+    return company;
   }
 
   async count() {

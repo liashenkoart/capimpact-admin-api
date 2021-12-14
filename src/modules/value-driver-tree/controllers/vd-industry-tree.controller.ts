@@ -29,8 +29,13 @@ import { VDIndustryTreeService } from '../services';
       return this.VDIndustryTree.cloneMasterToIndustry(params)
     }
 
+    @Put('move/:nodeId/:parentId')
+    move(@Param() params) {
+      return this.VDIndustryTree.moveNode(params)
+    }
+    
     @Put('name/:nodeId')
-    move(@Body() dto, @Param('nodeId') nodeId) {
+    updateName(@Body() dto, @Param('nodeId') nodeId) {
       return this.VDIndustryTree.updateNodeName(dto,nodeId)
     }
   }

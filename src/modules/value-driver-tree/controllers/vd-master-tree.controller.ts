@@ -16,17 +16,12 @@ import { VDMasterTreeService } from '../services';
 
     @Get()
     master() {
-      return this.valueDriverTreeSrv.getMasterTree()
+      return this.valueDriverTreeSrv.getFullTree()
     }
 
     @Post(':value_driver_lib_id')
     createNode(@Param() params) {
       return this.valueDriverTreeSrv.addNode(params)
-    }
-
-    @Put('move/:nodeId/root')
-    toMasterRoot(@Param('nodeId') nodeId) {
-      return this.valueDriverTreeSrv.moverToMasterRoot(nodeId)
     }
 
     @Put('move/:nodeId/:parentId')

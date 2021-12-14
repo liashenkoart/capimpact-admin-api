@@ -9,12 +9,14 @@ import { IndustryTreeModule } from '../industry-tree/industry-tree.module'
 
 // Controllers
 import { VDMasterController,
+         VDCompanyController,
          VDTreeController,
          VDIndustryController } from './controllers/index'
 
 // Services 
 import { VDMasterTreeService, 
          VDIndustryTreeService,
+         VDCompanyTreeService,
          VDTreeService } from './services';
 
 import { ChatGateway } from './socket/socket.gateway';
@@ -34,16 +36,19 @@ import { ValueDriverTree } from './value-driver-tree.entity';
   controllers: [
     VDMasterController,
     VDIndustryController,
+    VDCompanyController,
     VDTreeController
   ],
   providers: [
     VDMasterTreeService,
     VDTreeService,
     VDIndustryTreeService,
+    VDCompanyTreeService,
     ChatGateway],
   exports: [
     VDMasterTreeService,
     VDTreeService,
+    VDCompanyTreeService,
     VDIndustryTreeService,
     ChatGateway]
 })

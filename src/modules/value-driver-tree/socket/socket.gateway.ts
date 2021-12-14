@@ -22,14 +22,12 @@ const PORT = Number(process.env.VD_TREE_SOCKET_PORT);
     constructor(private treeSrv: VDIndustryTreeService) {}
 
     @WebSocketServer() server;
-    async handleConnection(client) {
-   
-    }
+    async handleConnection(client) { }
 
     async handleDisconnect() {}
 
     @SubscribeMessage('cloneIndustryParent')
     async cloneIndustryParent(client, body) {
-     return await this.treeSrv.cloneIndustry(body,client)
+      return await this.treeSrv.cloneIndustry(body,client)
     }
   }
