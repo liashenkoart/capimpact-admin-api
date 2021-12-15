@@ -104,6 +104,7 @@ export class VDTreeService {
         .addSelect('tree.name','name')
         .addSelect('tree.value_driver_lib_id','value_driver_lib_id')
         .where('tree.type = :type', { type })
+        .andWhere('tree.parentId is NULL')
      }
 
      async removeNode(id) {
@@ -130,7 +131,7 @@ export class VDTreeService {
 
      async moveNodeToRoot(nodeId) {
       const type = this.TREE_TYPE;
-      console.log(type)
+
       const node =  await this.findNode({ where: { id: nodeId, type }});
   
             node.parent = await this.getTypeRootNode();

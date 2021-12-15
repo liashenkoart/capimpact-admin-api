@@ -5,8 +5,7 @@ import {
     Param,
     Post,
     Get,
-    Put,
-    Body
+    Put
   } from '@nestjs/common';
 import { VDCompanyTreeService } from '../services';
 
@@ -15,19 +14,19 @@ import { VDCompanyTreeService } from '../services';
   export class VDCompanyController {
     constructor(private readonly VDCompanyTree: VDCompanyTreeService) {}
 
-    @Get(':company_id')
+    @Get('tree/:company_id')
     tree(@Param('company_id') company_id: number) {
      return this.VDCompanyTree.getVDCompanyTreeByCompanyId(company_id);
     }
 
-    @Get('/clone/:companyNodeId/:industryOrMasterNodeId')
+    @Post('/clone/:industryOrMasterNodeId/:companyNodeId')
     clone(@Param() params) {
        return this.VDCompanyTree.clone(params)
     }
 
-    @Post('/move/:fromId/:toId')
+    @Put('/move/:nodeId/:parentId')
     move(@Param() params) {
-    
+      return this.VDCompanyTree.moveNode(params)
     }
 
   }

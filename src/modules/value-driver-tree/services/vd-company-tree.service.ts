@@ -70,7 +70,7 @@ export class VDCompanyTreeService  extends VDTreeService {
                 savedNodes.push(savedNode)
           })
    
-       return this.getVDCompanyTreeByCompanyId(company_id)
+       return this.treeRepository.findDescendantsTree(savedNodes[0])
       }
 
 }
