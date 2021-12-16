@@ -50,6 +50,9 @@ import { Company } from '../company/company.entity';
     @Column({ type: 'jsonb', default: []})
     public kpis: number[];
 
+    @Column({ type: 'jsonb', default: []})
+    public technologies: number[];
+
     @Column({ nullable: true})
     value_driver_lib_id: number;
 

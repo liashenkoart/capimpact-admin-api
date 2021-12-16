@@ -30,6 +30,11 @@ import { VDTreeService } from '../services';
       return this.valueDriverTreeSrv.updateNodeTags(nodeId, dto)
     }
 
+    @Put('node/technologies/:nodeId')
+    technologies(@Param('nodeId') nodeId, @Body() dto) {
+      return this.valueDriverTreeSrv.updateTechnologies(nodeId, dto)
+    }
+
     @Delete(':id')
     delete(@Param('id') id) {
       return this.valueDriverTreeSrv.removeNode(id)

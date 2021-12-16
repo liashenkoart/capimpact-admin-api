@@ -8,6 +8,8 @@ import { ValueDriverTree } from '../value-driver-tree.entity';
 import { KpiLibService } from '../../kpi-lib/kpi-lib.service';
 import { TagService } from '../../tags/tags.service';
 import { ValueDriverLibService } from '../../value_driver_lib/value_driver_lib.service';
+import { TechnologyService } from '../../technology/technology.service';
+
 import { VDTreeService } from './vd-tree.service';
 
 @Injectable()
@@ -20,8 +22,9 @@ export class VDMasterTreeService extends VDTreeService {
        @InjectRepository(ValueDriverTree) public readonly valueDriverTreeRepository: Repository<ValueDriverTree>,
        public tagService: TagService,
        public valueDriverLib: ValueDriverLibService,
+       public technologiesSrv: TechnologyService,
        public kpisSrv: KpiLibService,) {
-        super(tagService,kpisSrv,treeRepository);
+        super(tagService,kpisSrv,technologiesSrv,treeRepository);
       }
 
   async addNode({ value_driver_lib_id }) {

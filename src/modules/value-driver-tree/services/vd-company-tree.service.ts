@@ -7,6 +7,8 @@ import { ValueDriverTree } from '../value-driver-tree.entity';
 import { KpiLibService } from '../../kpi-lib/kpi-lib.service';
 import { TagService } from '../../tags/tags.service';
 import { CompanyService } from '../../company/services/company.service';
+import { TechnologyService } from '../../technology/technology.service';
+
 
 import { VDMasterTreeService } from './vd-master-tree.service';
 // Libs
@@ -21,10 +23,11 @@ export class VDCompanyTreeService  extends VDTreeService {
         @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
         public tagService: TagService,
         public kpisSrv: KpiLibService,
+        public technologiesSrv: TechnologyService,
         public companySrv: CompanyService,
         public masterTreeSrv: VDMasterTreeService
     ) {
-        super(tagService,kpisSrv,treeRepository);
+        super(tagService,kpisSrv,technologiesSrv,treeRepository);
      }
 
     async getVDCompanyTreeByCompanyId(id: number): Promise<ValueDriverTree> {

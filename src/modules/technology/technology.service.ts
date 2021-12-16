@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { BaseService } from '@modules/common/services';
 import { Technology } from './technology.entity';
 import { asyncForEach } from '@lib/sorting';
+import { map, uniq, difference } from 'lodash';
 
 @Injectable()
 export class TechnologyService extends BaseService {
@@ -21,6 +22,31 @@ export class TechnologyService extends BaseService {
   async list(): Promise<Technology[]> {
     return this.technologyRepository.find();
   }
+
+  async insertTechsIfNew(names: string[]): Promise<number[]>{
+    if(names.length > 0) {
+        const filteredOnUniq = uniq(names);
+
+        const tags =  await  this.technologyRepository.createQueryBuilder('tags')
+        .select('tags.id','id')
+        .addSelect('tags.value','value')
+        .where("tags.value IN (:...values)")
+        .setParameter('values',filteredOnUniq)
+        .getRawMany();
+
+        const newTags = difference(filteredOnUniq,map(tags,'value'));
+        const { raw = [] } =  await this.technologyRepository.createQueryBuilder('tags')
+                                                          .insert()
+                                                          .into(Technology)
+                                                          .values(map(newTags, value => ({ value })))
+                                                          .returning(['id','value'])
+                                                          .execute();
+
+        return map(tags.concat(raw),'id');
+    } else {
+      return []
+    }
+}
 
   async addTechIfNew(tagsList:any[]):Promise<number[]> {
     let tags = tagsList;

@@ -7,6 +7,7 @@ import { ValudDriverType } from '../velue-driver-type.enum';
 // Services 
 import { KpiLibService } from '../../kpi-lib/kpi-lib.service';
 import { TagService } from '../../tags/tags.service';
+import { TechnologyService } from '../../technology/technology.service';
 
 // Libs
 import { map } from 'lodash';
@@ -21,6 +22,7 @@ export class VDTreeService {
     constructor(
         public tagService: TagService,
         public kpisSrv: KpiLibService,
+        public technologiesSrv: TechnologyService,
         @InjectRepository(ValueDriverTree) public treeRepository: TreeRepository<ValueDriverTree>
     ) { }
 
@@ -72,25 +74,35 @@ export class VDTreeService {
         return this.treeRepository.createQueryBuilder('tree');
      }
 
-     public async updateNodeKpis(id: number,{ kpis }):Promise<any> {
-        const node = await this.findNode({ where: { id }});
-    
-        const list = await this.kpisSrv.findManyKpisByIds(kpis)
-    
-              node.kpis = map(list,'id');
-    
-        return this.saveNode(node);
-      }
-
-    public async updateNodeTags(id: number,{ tags }):Promise<any> {
-    
-        const node = await this.findNode({ where: { id }});
-
-        node.tags = await this.tagService.insertTagsIfNew(tags);
-
-        return this.saveNode(node);
+     public async updateNodeKpis(id: number, { kpis }):Promise<ValueDriverTree> {
+          return await this.updateNode(id, async (node) => {   
+            const list = await this.kpisSrv.findManyKpisByIds(kpis)
+                  node.kpis = map(list,'id');
+                  return node;
+          });
+      }  
+      
+    public async updateNodeTags(id: number,{ tags }):Promise<ValueDriverTree> {
+          return await this.updateNode(id, async (node) => {
+            node.tags = await this.tagService.insertTagsIfNew(tags);
+            return node;
+          });
      }
 
+     public async updateTechnologies(id: number,{ technologies }):Promise<any> {
+      return await this.updateNode(id, async (node) => {
+        node.technologies = await this.technologiesSrv.insertTechsIfNew(technologies);
+        return node;
+      });
+   }
+
+      public async updateNode(id, callBack: Function): Promise<ValueDriverTree> {
+        let node = await this.findNode({ where: { id }});
+
+            node = await callBack(node);
+
+            return this.saveNode(node);
+      }
 
      protected getRootNodeQuery(type: ValudDriverType) {
       return  this.queryBuilder()
@@ -118,9 +130,11 @@ export class VDTreeService {
         return this.getNodeWithAgreggatedKpisAndTags(id);
       } 
 
+
       async getNodeWithAgreggatedKpisAndTags(id: number) {
         const node = await this.queryBuilder()
                     .select('*')
+                    .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',technology.id,'value',technology.value)), '[]'::json) FROM technology WHERE tree.technologies @> to_jsonb(ARRAY[technology.id]) )`,'technologies')
                     .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',tags.id,'value',tags.value)), '[]'::json) FROM tags WHERE tree.tags @> to_jsonb(ARRAY[tags.id]) )`,'tags')
                     .addSelect(`(SELECT coalesce(json_agg(json_build_object('id',kpi_libs.id,'label',kpi_libs.label)), '[]'::json) FROM kpi_libs WHERE tree.kpis @> to_jsonb(ARRAY[kpi_libs.id]) )`,'kpis')
                     .where('tree.id = :id', { id })

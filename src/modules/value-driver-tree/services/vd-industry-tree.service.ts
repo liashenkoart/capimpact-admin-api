@@ -8,6 +8,8 @@ import { KpiLibService } from '../../kpi-lib/kpi-lib.service';
 import { TagService } from '../../tags/tags.service';
 import { IndustryTreeService } from '../../industry-tree/industry-tree.service';
 import { VDMasterTreeService } from './vd-master-tree.service';
+import { TechnologyService } from '../../technology/technology.service';
+
 // Libs
 import { VDTreeService } from './vd-tree.service';
 
@@ -25,16 +27,17 @@ export class VDIndustryTreeService extends VDTreeService {
     constructor(
         public tagService: TagService,
         public kpisSrv: KpiLibService,
-        @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
         public industryTreeSrv: IndustryTreeService,
+        @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
+        public technologiesSrv: TechnologyService,
         public masterTreeSrv: VDMasterTreeService
     ) {
-        super(tagService,kpisSrv,treeRepository);
+        super(tagService,kpisSrv,technologiesSrv,treeRepository);
      }
 
      async getRootVDIndustryNode(id: number): Promise<ValueDriverTree> {
 
-        const industry = await this.industryTreeSrv.findNode({ where: { id }});
+        const industry = await this.industryTreeSrv.findNode()
 
         const rootNode = await this.getRootNodeQuery(this.TREE_TYPE)
                                                     .andWhere('tree.industry_tree_id = :id', { id })
@@ -64,12 +67,9 @@ export class VDIndustryTreeService extends VDTreeService {
 
    async getFlattenedIndustryBranch(params: FindOneOptions = {}): Promise<ValueDriverTree[]> {
 
-    console.log(params,'params')
     const industryRoot = await this.findNode(params);
 
-    const tree =  await this.treeRepository.findDescendantsTree(industryRoot);
-
-    console.log(tree)
+    const tree = await this.treeRepository.findDescendantsTree(industryRoot);
 
     return flattenTree(tree, 'children')
   }
@@ -142,7 +142,7 @@ export class VDIndustryTreeService extends VDTreeService {
 
         await asyncForEach(flattenedClonedBranch, async (node: ValueDriverTree) => {
 
-          const parent =  cached[node.parentId];
+          const parent = cached[node.parentId];
 
           const savedNode = await this.cloneBranchEntity(node, parent, { industry_tree_id } );
                 cached[node.id] = savedNode;   

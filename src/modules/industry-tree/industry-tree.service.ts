@@ -31,7 +31,7 @@ export class IndustryTreeService extends BaseService {
         order: { code : `ASC`}})
   }
 
-   async findNode(params = {}) {
+   async findNode(params = {}): Promise<IndustryTree> {
    const node = await this.industryTreeRepository.findOne(params);
    if(!node) throw new NotFoundException('Industry not found')
    return node;
