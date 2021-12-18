@@ -36,15 +36,18 @@ export class VDIndustryTreeService extends VDTreeService {
      }
 
      async getRootVDIndustryNode(id: number): Promise<ValueDriverTree> {
-
-        const industry = await this.industryTreeSrv.findNode()
-
-        const rootNode = await this.getRootNodeQuery(this.TREE_TYPE)
+        const industry = await this.industryTreeSrv.findNode({ where: { id }})
+        const root = await this.getTypeRootNode();
+        const node = await this.getTopRootNodeQuery(this.TREE_TYPE)
                                                     .andWhere('tree.industry_tree_id = :id', { id })
+                                                    .andWhere('tree.parentId = :parentId', { parentId: root.id})
                                                     .getRawOne();
 
-        return rootNode ? rootNode : 
-        await this.saveNode(new ValueDriverTree({name: industry.name, type: this.TREE_TYPE, industry_tree_id: industry.id}));
+          if(node) {
+            return node;
+          } else {
+            return  await this.saveNode(new ValueDriverTree({name: industry.name, type: this.TREE_TYPE, industry_tree_id: industry.id, parent: root}));
+          }
      }
      
       async getVDIndustryTreeByIndustryId(id: number): Promise<ValueDriverTree> {
@@ -99,10 +102,10 @@ export class VDIndustryTreeService extends VDTreeService {
 
   async cloneIndustry({ industryId }, client): Promise<any> {
 
-    const industry = await this.industryTreeSrv.findNode({ where: { id:industryId, parentId: Not(IsNull()) }, relations:['parent']});
+    const industry = await this.industryTreeSrv.findNode({ where: { id:industryId }, relations:['parent']});
 
-    const [node,parentBranch] = await Promise.all([await this.findNode({ where: { industry_tree_id: industry.id, parentId: IsNull() }}),
-                                                   await this.getFlattenedIndustryBranch({ where: { industry_tree_id: industry.parent.id, parentId: IsNull()}})]);
+     const [node,parentBranch] = await Promise.all([await this.getRootVDIndustryNode(industry.id),
+                                                    await this.getFlattenedIndustryBranch({ where: { industry_tree_id: industry.parent.id }})]);
 
      await this.removeNode(node.id);
 

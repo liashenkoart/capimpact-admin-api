@@ -8,8 +8,6 @@ import { KpiLibService } from '../../kpi-lib/kpi-lib.service';
 import { TagService } from '../../tags/tags.service';
 import { CompanyService } from '../../company/services/company.service';
 import { TechnologyService } from '../../technology/technology.service';
-
-
 import { VDMasterTreeService } from './vd-master-tree.service';
 // Libs
 import { VDTreeService } from './vd-tree.service';
@@ -36,15 +34,20 @@ export class VDCompanyTreeService  extends VDTreeService {
     }
 
     async getRootVDCompanyNode(id: number): Promise<ValueDriverTree> {
-
+        const root = await this.getTypeRootNode();
         const company = await this.companySrv.findCompanyById({ where: { id }})
 
-        const rootNode = await this.getRootNodeQuery(ValudDriverType.COMPANY)
+        const node = await this.getTopRootNodeQuery(ValudDriverType.COMPANY)
         .andWhere('tree.company_id = :id', { id })
-        .getRawOne()
-        
-        return rootNode ? rootNode : 
-        await this.saveNode(new ValueDriverTree({name: company.name, type: ValudDriverType.COMPANY, company_id: company.id}));
+        .andWhere('tree.parentId = :parentId', { parentId: root.id})
+        .getRawOne();
+
+
+        if(node) {
+           return node;
+        } else {
+           return await this.saveNode(new ValueDriverTree({name: company.name, type: ValudDriverType.COMPANY, company_id: company.id, parent:root}));
+        } 
      }
 
      async cloneMasterOrIndustryBranchToCompanyNode({ name, kpis, tags, value_driver_lib_id}: ValueDriverTree, company_id: number, parent: ValueDriverTree) {

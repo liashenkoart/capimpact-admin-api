@@ -18,12 +18,12 @@ export class VDMasterTreeService extends VDTreeService {
    protected TREE_TYPE = ValudDriverType.MASTER;
 
     constructor(
-       @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
-       @InjectRepository(ValueDriverTree) public readonly valueDriverTreeRepository: Repository<ValueDriverTree>,
        public tagService: TagService,
-       public valueDriverLib: ValueDriverLibService,
+       public kpisSrv: KpiLibService,
+       public valueDriverLib: ValueDriverLibService, 
+      @InjectRepository(ValueDriverTree) public readonly treeRepository: TreeRepository<ValueDriverTree>,
        public technologiesSrv: TechnologyService,
-       public kpisSrv: KpiLibService,) {
+       @InjectRepository(ValueDriverTree) public readonly valueDriverTreeRepository: Repository<ValueDriverTree>,) {
         super(tagService,kpisSrv,technologiesSrv,treeRepository);
       }
 

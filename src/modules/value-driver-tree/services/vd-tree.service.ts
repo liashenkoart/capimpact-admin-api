@@ -43,13 +43,7 @@ export class VDTreeService {
       if(rootNode) {
           return rootNode;
       } else {
-          const { raw: [entity] } =  await this.queryBuilder()
-          .insert()
-          .into(ValueDriverTree)
-          .values({ name: `${type.toUpperCase()} Value Driver`, type  })
-          .returning(['name','description','tags','kpis'])
-          .execute();
-          return entity;
+        return this.treeRepository.save(new ValueDriverTree({ name: `${type.toUpperCase()} Value Driver`, type }))
       }
     }
 
@@ -61,7 +55,7 @@ export class VDTreeService {
     }
 
     public async findNode(params: FindOneOptions = {}) {
-   
+
         const node = await this.treeRepository.findOne(params);
         
         if(!node) throw new NotFoundException(`Node of ${this.TREE_TYPE} type not found`);
@@ -104,7 +98,7 @@ export class VDTreeService {
             return this.saveNode(node);
       }
 
-     protected getRootNodeQuery(type: ValudDriverType) {
+     protected getTopRootNodeQuery(type: ValudDriverType) {
       return  this.queryBuilder()
         .select('tree.id','id')
         .addSelect('tree.parentId','parentId')
@@ -116,7 +110,11 @@ export class VDTreeService {
         .addSelect('tree.name','name')
         .addSelect('tree.value_driver_lib_id','value_driver_lib_id')
         .where('tree.type = :type', { type })
-        .andWhere('tree.parentId is NULL')
+     }
+
+
+     protected getNodeOrCreate() {
+
      }
 
      async removeNode(id) {
