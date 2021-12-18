@@ -85,7 +85,7 @@ export class VDIndustryTreeService extends VDTreeService {
   }
 
   async clonedCouple(industryId: number) {
-       const { id, parentId } = await this.industryTreeSrv.findNode({ where: { id:industryId, parentId: Not(IsNull()) }, relations:['parent']})
+       const { id, parentId } = await this.industryTreeSrv.findNode({ where: { id:industryId }, relations:['parent']})
        const [tree, parentTree] = await Promise.all([this.getVDIndustryTreeByIndustryId(id),
                                                      this.getVDIndustryTreeByIndustryId(parentId)]);
        return { tree, parentTree }
@@ -104,27 +104,28 @@ export class VDIndustryTreeService extends VDTreeService {
 
     const industry = await this.industryTreeSrv.findNode({ where: { id:industryId }, relations:['parent']});
 
+     const root = await this.getTypeRootNode();
      const [node,parentBranch] = await Promise.all([await this.getRootVDIndustryNode(industry.id),
-                                                    await this.getFlattenedIndustryBranch({ where: { industry_tree_id: industry.parent.id }})]);
+                                                    await this.getFlattenedIndustryBranch({ where: { industry_tree_id: industry.parent.id, parentId: root.id }})]);
 
      await this.removeNode(node.id);
 
      const newNode = await this.getRootVDIndustryNode(industryId);
      const { industry_tree_id } = newNode;
      const [topParentNode] = parentBranch;
-     const check = { [`${topParentNode.id}`]: newNode };
+     const cached = { [`${topParentNode.id}`]: newNode };
 
      parentBranch.shift();
      
      await asyncForEach(parentBranch, async (node: ValueDriverTree, index: number) => {
 
-           const parent =  check[node.parentId];
+           const parent =  cached[node.parentId];
            
            const savedNode  = await this.cloneBranchEntity(node, parent, { industry_tree_id } );
 
            const progress = Math.round(100 / size(parentBranch) *  (index + 1));
            client.emit('cloningStatus', progress);
-           check[node.id] = savedNode;  
+           cached[node.id] = savedNode;  
      })
 
      return this.treeRepository.findDescendantsTree(newNode)
