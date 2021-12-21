@@ -29,6 +29,12 @@ import {
   export class CapabilityTreeController {
     constructor(private readonly capabilityTreeService: CapabilityTreeService) {}
   
+    @Get('tree')
+    @UseGuards(AuthGuard())
+    async tree(@Query() query: CapabilityTreeArgs) {
+      return this.capabilityTreeService.tree(query);
+    }
+    
     @Get('/nodes-names')
     @UseGuards(AuthGuard())
     async getCapTreeNodesNames(@Query() query) {
@@ -67,12 +73,6 @@ import {
     @UseGuards(AuthGuard())
     async findAll(@Query() query: GetTopChildrenQuery) {
       return this.capabilityTreeService.topLevelNodsOfTreeByCompany(query)
-    }
-
-    @Get('tree')
-    @UseGuards(AuthGuard())
-    async tree(@Query() query: CapabilityTreeArgs) {
-      return this.capabilityTreeService.tree(query);
     }
    
     // Industry
