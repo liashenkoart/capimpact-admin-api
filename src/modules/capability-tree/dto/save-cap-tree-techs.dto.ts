@@ -15,7 +15,7 @@ export class SaveCapTreeTechsDto {
 export class GetTopChildrenQuery {
   @ApiProperty()
   @IsOptional()
-  @IsNumberString()
+  @IsNumber()
   @Type(() => Number)
   company_id?: number;
 

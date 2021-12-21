@@ -29,6 +29,14 @@ import {
   export class CapabilityTreeController {
     constructor(private readonly capabilityTreeService: CapabilityTreeService) {}
   
+
+    @Get('')
+    @UseGuards(AuthGuard())
+    async test(@Query() query: CapabilityTreeArgs) {
+      return this.capabilityTreeService.findAll(query);
+    }
+
+
     @Get('tree')
     @UseGuards(AuthGuard())
     async tree(@Query() query: CapabilityTreeArgs) {
